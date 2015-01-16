@@ -1,0 +1,74 @@
+﻿<Controls:MetroWindow x:Class="Window_Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        Title="Settings | osu!Sync"
+        Height="700"
+        MaxWidth="600"
+        MinHeight="700"
+        MinWidth="600"
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        ShowIconOnTitleBar="False"
+        EnableDWMDropShadow="True"
+        Icon="Resources/Icon.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="Resources/WindowSettings_Header.png" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="250" Stretch="UniformToFill"/>
+        <TextBlock TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontSize="48" Foreground="#FF27AE60" Grid.Column="1" Height="64" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Button x:Name="Button_Done" Content="_Save" VerticalAlignment="Top" Height="50" FontSize="14" IsDefault="True" Grid.Column="1" Grid.Row="2" Margin="5,0"/>
+        <Button x:Name="Button_Cancel" Content="_Cancel" VerticalAlignment="Top" Height="50" FontSize="14" IsCancel="True" Grid.Column="2" Grid.Row="2" Margin="5,0"/>
+        <TabControl x:Name="Tabber" Grid.Column="1" HorizontalAlignment="Left" Margin="0,64,0,0" Grid.Row="1" Width="572" Grid.ColumnSpan="2">
+            <TabItem Header="General">
+                <ScrollViewer Background="#FFE5E5E5">
+                    <StackPanel Margin="5">
+                        <TextBlock TextWrapping="Wrap" Text="Check for updates..."/>
+                        <ComboBox x:Name="ComboBox_Tool_CheckForUpdates">
+                            <ComboBoxItem Content="Every launch."/>
+                            <ComboBoxItem Content="Nevoar ヽ(≧Д≦)ノ (Not recommended)."/>
+                            <Separator />
+                            <ComboBoxItem Content="Maximum once a day (Recommended)."/>
+                            <ComboBoxItem Content="Maximum once a week."/>
+                            <ComboBoxItem Content="Maximum once a month (Not recommended)."/>
+                        </ComboBox>
+                        <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="Check file associations every sync." Margin="0,5,0,0" ToolTip="Helpful if you move the osu!Sync.exe to a different directory."/>
+                        <TextBlock TextWrapping="Wrap" Text="Download Update files to..." Margin="0,5,0,0"/>
+                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" Width="463" HorizontalAlignment="Left"/>
+                        <Button x:Name="Button_Tool_UpdatePathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="23" ToolTip="Use the default path"/>
+                        <Button x:Name="Button_CreateShortcut" Content="Create shortcut on desktop" Margin="0,30,0,0" FontSize="12"/>
+                        <Button x:Name="Button_Tool_DeleteConfiguration" Content="Delete Configuration" Margin="0,5,0,0" FontSize="12"/>
+                        <Button x:Name="Button_Tool_DeleteFileAssociation" Content="Delete/Unregister File Association" Margin="0,5,0,0" FontSize="12"/>
+                        <Button x:Name="Button_Tool_OpenDataFolder" Content="Open Data Folder" Margin="0,5,0,0" FontSize="12"/>
+                        <Button x:Name="Button_Tool_UpdateFileAssociation" Content="Update/Reregister File Association" Margin="0,5,0,0" FontSize="12"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="osu!">
+                <ScrollViewer Background="#FFE5E5E5">
+                    <StackPanel Margin="5">
+                        <TextBlock TextWrapping="Wrap" Text="Path to osu!" Margin="0"/>
+                        <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="0" Width="552"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Messages">
+                <ScrollViewer Background="#FFE5E5E5">
+                    <StackPanel Margin="5">
+                        <TextBlock TextWrapping="Wrap" Text="Sync" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555"/>
+                        <CheckBox x:Name="CheckBox_Messages_SyncMoreThan1000Sets" Content="Warn if you've got more than 1000 beatmap sets" Margin="5,5,5,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Controls:MetroWindow>
