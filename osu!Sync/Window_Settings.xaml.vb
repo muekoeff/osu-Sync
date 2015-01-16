@@ -68,6 +68,7 @@
 
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
         Setting_osu_Path = TextBox_osu_Path.Text
+        Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
         Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
@@ -190,8 +191,10 @@
     End Sub
 
     Private Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
+        CheckBox_Messages_SyncMoreThan1000Sets.IsChecked = Setting_Messages_SyncMoreThan1000Sets
+        CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
+        ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_Tool_UpdatePath.Text = Setting_Tool_UpdateSavePath
     End Sub

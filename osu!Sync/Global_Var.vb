@@ -20,8 +20,8 @@ Module Global_Var
     Public I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__UserAgent As String = "osu!Sync Client - " + My.Application.Info.Version.ToString
     Public I__UserInfo As JObject
-
     Public Setting_osu_Path As String = "C:\Program Files (x86)\osu!"
+    Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
     Public Setting_Tool_CheckFileAssociation As Boolean = True
     Public Setting_Tool_LastCheckForUpdates As String = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
@@ -153,6 +153,7 @@ Module Global_Var
                 .Add("_programm", "osu!Sync")
                 .Add("version", My.Application.Info.Version.ToString)
                 .Add("Setting_osu_Path", Setting_osu_Path)
+                .Add("Setting_Tool_AutoLoadCacheOnStartup", CStr(Setting_Tool_AutoLoadCacheOnStartup))
                 .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
                 .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
@@ -171,6 +172,9 @@ Module Global_Var
 
             If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then
                 Setting_osu_Path = CType(ConfigFile.SelectToken("Setting_osu_Path"), String)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup") Is Nothing Then
+                Setting_Tool_AutoLoadCacheOnStartup = CType(ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup"), Boolean)
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then
                 Setting_Tool_CheckFileAssociation = CType(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"), Boolean)

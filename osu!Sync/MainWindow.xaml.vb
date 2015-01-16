@@ -902,7 +902,7 @@ Class MainWindow
                                                                                        End Function) Then
             Importer_ReadListFile(Importer_FilePath)
         Else
-            If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
+            If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False And Setting_Tool_AutoLoadCacheOnStartup Then
                 Button_SyncDo.IsEnabled = False
                 Interface_SetLoader("Reading cache file...")
                 TextBlock_Sync_LastUpdate.Content = "Reading cache..."
