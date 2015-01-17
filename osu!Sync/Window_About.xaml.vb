@@ -8,11 +8,11 @@
         Process.Start("http://naseweis520.ml/osu!Sync/project_info")
     End Sub
 
-    Private Sub GitHub_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles GitHub.MouseDown
+    Private Sub GitHub_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles GitHub.MouseUp
         Process.Start("https://github.com/naseweis520/osu-Sync")
     End Sub
 
-    Private Sub osuForum_MouseEnter(sender As Object, e As MouseEventArgs) Handles osuForum.MouseEnter
+    Private Sub osuForum_MouseUp(sender As Object, e As MouseEventArgs) Handles osuForum.MouseUp
         Process.Start("https://osu.ppy.sh/forum/t/270446")
     End Sub
 End Class

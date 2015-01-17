@@ -24,7 +24,7 @@ Module Global_Var
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
     Public Setting_Tool_CheckFileAssociation As Boolean = True
-    Public Setting_Tool_LastCheckForUpdates As String = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
+    Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateSavePath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
     Public Setting_Messages_SyncMoreThan1000Sets As Boolean = True
 

@@ -1,4 +1,6 @@
-﻿Public Class Window_Settings
+﻿Imports System.IO
+
+Public Class Window_Settings
 
     Private Function CreateShortcut(ByVal sLinkFile As String, _
                                    ByVal sTargetFile As String, _
@@ -44,7 +46,7 @@
 
         Catch ex As Exception
             ' Fehler! ggf. Link-Datei löschen, falls bereit erstellt
-            If System.IO.File.Exists(sLinkFile) Then Kill(sLinkFile)
+            If File.Exists(sLinkFile) Then Kill(sLinkFile)
             Return False
         End Try
     End Function
@@ -54,7 +56,7 @@
     End Sub
 
     Private Sub Button_CreateShortcut_Click(sender As Object, e As RoutedEventArgs) Handles Button_CreateShortcut.Click
-        If Not System.IO.File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk") Then
+        If Not File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk") Then
             If CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk", _
                               System.Reflection.Assembly.GetExecutingAssembly().Location.ToString, "", _
                               "Launch osu!Sync.") Then
@@ -80,8 +82,8 @@
 
     Private Sub Button_Tool_DeleteConfiguration_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteConfiguration.Click
         If MessageBox.Show("Are you really sure that you want to delete the configuration file (this cannot be undone)?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
-            If System.IO.File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
-                System.IO.File.Delete(I__Path_Programm & "\Settings\Settings.config")
+            If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
+                File.Delete(I__Path_Programm & "\Settings\Settings.config")
 
                 If MessageBox.Show("Ok, that's done." & vbNewLine & "Do you want to restart osu!Sync now?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                     System.Windows.Forms.Application.Restart()
@@ -113,10 +115,45 @@
     End Sub
 
     Private Sub Button_Tool_OpenDataFolder_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_OpenDataFolder.Click
-        If System.IO.Directory.Exists(I__Path_Programm) Then
+        If Directory.Exists(I__Path_Programm) Then
             Process.Start(I__Path_Programm)
         Else
             MsgBox("Nope, this directory doesn't exist... yet.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        End If
+    End Sub
+
+    Private Sub Button_Tool_Reset_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Reset.Click
+        If MessageBox.Show("Are you really sure that you want to reset osu!Sync (this cannot be undone)?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
+            Dim RegisterError As Boolean = False
+            Dim RegisterCounter As Integer = 0
+            For Each Extension As String In FileExtensions
+                If DeleteFileAssociation(Extension, FileExtensionsLong(RegisterCounter)) Then
+                    RegisterCounter += 1
+                Else
+                    RegisterError = True
+                    Exit For
+                End If
+            Next
+
+            If RegisterError Then
+                MsgBox("Unable to delete file association.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            End If
+            If Directory.Exists(I__Path_Programm) Then
+                Try
+                    Directory.Delete(I__Path_Programm, True)
+                Catch ex As IOException
+                End Try
+            End If
+            If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync") Then
+                Try
+                    Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync", True)
+                Catch ex As IOException
+                End Try
+            End If
+            If MessageBox.Show("Ok, that's done." & vbNewLine & "Do you want to restart osu!Sync now?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                System.Windows.Forms.Application.Restart()
+            End If
+            Application.Current.Shutdown()
         End If
     End Sub
 
