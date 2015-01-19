@@ -390,15 +390,15 @@ Class MainWindow
 
     Private Sub Action_Sync_GetIDs()
         Button_SyncDo.IsEnabled = False
-        If Directory.Exists(Setting_osu_Path & "\Songs") Then
-            Interface_LoaderProgressBar.Maximum = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count
-        End If
         If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
             Interface_SetLoader("Reading cache file...")
             TextBlock_Sync_LastUpdate.Content = "Reading cache..."
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
                                                .Arg__Mode = 1})
         Else
+            If Directory.Exists(Setting_osu_Path & "\Songs") Then
+                Interface_LoaderProgressBar.Maximum = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count
+            End If
             Interface_SetLoader("Parsing installed beatmap sets...")
             TextBlock_Sync_LastUpdate.Content = "Syncing..."
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
@@ -832,8 +832,9 @@ Class MainWindow
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         ' Check if already running
         If Diagnostics.Process.GetProcessesByName(Diagnostics.Process.GetCurrentProcess.ProcessName).Count > 1 Then
-            MessageBox.Show("It seems as if there is already another instance of this program active." _
-                    , I__MsgBox_DefaultTitle, MessageBoxButton.OK, MessageBoxImage.Exclamation)
+            Dim SelectedProcess As Process = Process.GetProcessesByName(Diagnostics.Process.GetCurrentProcess.ProcessName).First
+            AppActivate(SelectedProcess.Id)
+            ShowWindow(SelectedProcess.MainWindowHandle, 1)
             Application.Current.Shutdown()
             Exit Sub
         End If
