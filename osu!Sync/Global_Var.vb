@@ -15,9 +15,9 @@ Module Global_Var
                                              """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
 
     Public I__StartUpArguments() As String
-    Public I__Path_Web_Host As String = "http://naseweis520.ml/osuSync"
+    Public Const I__Path_Web_Host As String = "http://naseweis520.ml/osuSync"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
-    Public I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
+    Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__UserAgent As String = "osu!Sync Client - " + My.Application.Info.Version.ToString
     Public I__UserInfo As JObject
     Public Setting_osu_Path As String = "C:\Program Files (x86)\osu!"

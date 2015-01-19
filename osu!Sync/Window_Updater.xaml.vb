@@ -140,6 +140,6 @@ Public Class Window_Updater
 
     Private Sub Window_Updater_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         TextBlock_Header_VersionInfo.Text = "Your version: " & My.Application.Info.Version.ToString
-        Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=Updater&updaterInterval=" & Setting_Tool_CheckForUpdates))
+        Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=Updater&updaterInterval=" & Setting_Tool_CheckForUpdates))
     End Sub
 End Class

@@ -858,7 +858,7 @@ Class MainWindow
         Select Case Setting_Tool_CheckForUpdates
             Case 0
                 TextBlock_Programm_Updater.Content = "Checking for updates..."
-                Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
+                Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
                 Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
                 Action_SaveSettings()
             Case 1
@@ -876,7 +876,7 @@ Class MainWindow
 
                 If DateDiff(DateInterval.Day, Date.ParseExact(Setting_Tool_LastCheckForUpdates, "dd-MM-yyyy hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= Interval Then
                     TextBlock_Programm_Updater.Content = "Checking for updates..."
-                    Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
+                    Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
                     Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
                     Action_SaveSettings()
                 Else
