@@ -839,14 +839,6 @@ Class MainWindow
             Exit Sub
         End If
 
-        ' Cleanup (because of older versions)
-        If Directory.Exists(I__Path_Programm & "\Log") Then
-            Directory.Delete(I__Path_Programm & "\Log", True)
-        End If
-        If Directory.Exists(Path.GetTempPath() & "naseweis520\osuSync") Then
-            Directory.Delete(Path.GetTempPath() & "naseweis520\osuSync", True)
-        End If
-
         ' Delete old downloaded beatmaps
         If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
             Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload", True)
