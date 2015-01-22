@@ -78,6 +78,10 @@ Class MainWindow
                     .ID = CInt(SelectedToken.SelectToken("id")),
                     .Title = CStr(SelectedToken.SelectToken("title")),
                     .Artist = CStr(SelectedToken.SelectToken("artist"))}
+
+                If Not SelectedToken.SelectToken("artist") Is Nothing Then
+                    CurrentBeatmap.Creator = CStr(SelectedToken.SelectToken("creator"))
+                End If
                 BeatmapList.Add(CurrentBeatmap)
             End If
         Next
@@ -916,49 +920,81 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub MenuItem_File_Export_ConvertOSBLToOSBLX_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_File_Export_ConvertOSBLToOSBLX.Click
+    Private Sub MenuItem_File_Export_ConvertSelector_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_File_Export_ConvertSelector.Click
         Dim Dialog_OpenFile As New Microsoft.Win32.OpenFileDialog()
         With Dialog_OpenFile
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = "osu!Sync Beatmap List|*.nw520-osbl"
-            .Title = "Convert OSBL to OSBLX"
+            .Filter = "All supported file formats|*.nw520-osbl;*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl|Compressed osu!Sync Beatmap List|*.nw520-osbl"
+            .Title = "Select a supported file to convert"
             .ShowDialog()
+        End With
+        Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
+        With Dialog_SaveFile
+            .AddExtension = True
+            .OverwritePrompt = True
+            .Title = "Select a destination"
+            .ValidateNames = True
         End With
 
         Dim OSBL_Content As String
         If Not Dialog_OpenFile.FileName = "" Then
             OSBL_Content = File.ReadAllText(Dialog_OpenFile.FileName)
+            Select Case Path.GetExtension(Dialog_OpenFile.FileName)
+                Case ".nw520-osbl"
+                    'Export
+                    Dialog_SaveFile.Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx"
+                    Dialog_SaveFile.ShowDialog()
+
+                    If Not Dialog_SaveFile.FileName = "" Then
+                        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                            File.Write(CompressString(OSBL_Content))
+                            File.Close()
+                        End Using
+                    Else
+                        Action_OverlayShow("Conversion aborted", "")
+                        Action_OverlayFadeOut()
+                        Exit Sub
+                    End If
+
+                    Action_OverlayShow("Conversion completed", "Converted OSBL to OSBLX-File")
+                    Action_OverlayFadeOut()
+                Case ".nw520-osblx"
+                    Try
+                        OSBL_Content = DecompressString(OSBL_Content)
+                    Catch ex As FormatException
+                        Action_OverlayShow("Conversion failed", "System.FormatException")
+                        Action_OverlayFadeOut()
+                        Exit Sub
+                    Catch ex As System.IO.InvalidDataException
+                        Action_OverlayShow("Conversion failed", "System.IO.InvalidDataException")
+                        Action_OverlayFadeOut()
+                        Exit Sub
+                    End Try
+
+                    'Export
+                    Dialog_SaveFile.Filter = "osu!Sync Beatmap List|*.nw520-osbl"
+                    Dialog_SaveFile.ShowDialog()
+                    If Not Dialog_SaveFile.FileName = "" Then
+                        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                            File.Write(OSBL_Content)
+                            File.Close()
+                        End Using
+                    Else
+                        Action_OverlayShow("Conversion aborted", "")
+                        Action_OverlayFadeOut()
+                        Exit Sub
+                    End If
+
+                    Action_OverlayShow("Conversion completed", "Converted OSBLX to OSBL-File")
+                    Action_OverlayFadeOut()
+            End Select
         Else
             Action_OverlayShow("Conversion aborted", "")
             Action_OverlayFadeOut()
             Exit Sub
         End If
-
-        Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
-        With Dialog_SaveFile
-            .AddExtension = True
-            .Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx"
-            .OverwritePrompt = True
-            .Title = "Export OSBL to OSBLX"
-            .ValidateNames = True
-            .ShowDialog()
-        End With
-
-        If Not Dialog_SaveFile.FileName = "" Then
-            Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                File.Write(CompressString(OSBL_Content))
-                File.Close()
-            End Using
-        Else
-            Action_OverlayShow("Conversion aborted", "")
-            Action_OverlayFadeOut()
-            Exit Sub
-        End If
-
-        Action_OverlayShow("Conversion completed", "Converted OSBL to OSBLX-File")
-        Action_OverlayFadeOut()
     End Sub
 
     Private Sub MenuItem_File_Export_InstalledBeatmaps_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_File_Export_InstalledBeatmaps.Click
@@ -1044,8 +1080,7 @@ Class MainWindow
 
         If Arguments.Arg__Mode = 1 Then
             Try
-                Dim File_Content_Compressed As String = File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                Dim File_Content As String = DecompressString(File_Content_Compressed)
+                Dim File_Content As String = DecompressString(File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx"))
                 Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
                 Dim Cache_Time As String = CStr(File_Content_Json.Item("_info").Item("_file_generationdate_syncFormat"))
 

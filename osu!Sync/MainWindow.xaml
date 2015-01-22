@@ -58,7 +58,7 @@
                             <Path Data="M56.850046,5.4969997L60.220999,10.69225 25.209057,33.397 21.838,28.200282 21.839826,28.199097 14.341,16.636033 19.537599,13.267 27.036416,24.829411z M0,0L45.399,0 45.399,9.6670117 38.571999,14.094078 38.571999,6.8280005 6.8280001,6.8280005 6.8280001,38.572001 38.571999,38.572001 38.571999,27.987296 45.399,23.560133 45.399,45.398001 0,45.398001z" Stretch="Uniform" Fill="#FF333333" Width="16" Height="16" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="MenuItem_File_Export_ConvertOSBLToOSBLX" Header="_Convert OSBL to OSBLX" Foreground="#FF333333" ToolTip="Compresses an existing OSBL-file">
+                    <MenuItem x:Name="MenuItem_File_Export_ConvertSelector" Header="_Convert file" Foreground="#FF333333">
                         <MenuItem.Icon>
                             <Path Data="M321.708,286.23L321.708,458.152 195.855,458.152 388.901,678.738 581.909,458.152 454.197,458.152 454.197,286.23z M143.573,45.4108L57.5312,143.823 718.228,143.823 632.149,45.4108z M124.906,0L651.472,0 776.56,143.823 777.764,143.823 777.764,145.231 777.764,514 778,514 778,555 777.764,555 777.764,758 0,758 0,143.823 0,142.956z" Stretch="Uniform" Fill="#FF333333" Width="16" Height="16" />
                         </MenuItem.Icon>
