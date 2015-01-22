@@ -73,6 +73,7 @@ Public Class Window_Settings
         Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
         Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
+        Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
         Setting_Messages_SyncMoreThan1000Sets = CType(CheckBox_Messages_SyncMoreThan1000Sets.IsChecked, Boolean)
         Action_SaveSettings()
@@ -232,6 +233,7 @@ Public Class Window_Settings
         CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
+        ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_Tool_UpdatePath.Text = Setting_Tool_UpdateSavePath
     End Sub

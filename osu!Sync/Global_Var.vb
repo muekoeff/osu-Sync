@@ -24,6 +24,7 @@ Module Global_Var
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
     Public Setting_Tool_CheckFileAssociation As Boolean = True
+    Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateSavePath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
     Public Setting_Messages_SyncMoreThan1000Sets As Boolean = True
@@ -156,6 +157,7 @@ Module Global_Var
                 .Add("Setting_Tool_AutoLoadCacheOnStartup", CStr(Setting_Tool_AutoLoadCacheOnStartup))
                 .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
                 .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
+                .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
                 .Add("Setting_Messages_SyncMoreThan1000Sets", CStr(Setting_Messages_SyncMoreThan1000Sets))
@@ -181,6 +183,9 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then
                 Setting_Tool_CheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"), Integer)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then
+                Setting_Tool_DownloadMirror = CType(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"), Integer)
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
                 Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)

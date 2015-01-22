@@ -45,8 +45,6 @@ Class MainWindow
     Private Importer_BeatmapsTotal As Integer
     Private Importer_FilePath As String
 
-    Const osu_DownloadURI As String = "http://bloodcat.com/osu/s/"
-
     Private Color_999999 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF999999"), Brush)          ' Light Gray
     Private Color_8E44AD As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF8E44AD"), Brush)          ' Dark Purple
     Private Color_555555 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF555555"), Brush)          ' Gray
@@ -656,6 +654,12 @@ Class MainWindow
                 Importer_Run.IsEnabled = True
             End If
             Importer_UpdateInfo("osu!Sync")
+            Select Case Setting_Tool_DownloadMirror
+                Case 0
+                    Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
+                Case 1
+                    Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
+            End Select
         ElseIf Destination = "Exporter" Then
             ExporterWrapper.Children.Clear()
             For Each SelectedBeatmap As Beatmap In BeatmapList
@@ -1428,7 +1432,14 @@ Class MainWindow
         Importer_Progress.IsIndeterminate = True
         Dim RequestURI As String
         TextBlock_Progress.Content = "Fetching " & CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & "..."
-        RequestURI = osu_DownloadURI + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
+        Select Case Setting_Tool_DownloadMirror
+            Case 0
+                Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
+                RequestURI = "http://bloodcat.com/osu/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
+            Case 1
+                Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
+                RequestURI = "http://loli.al/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
+        End Select
 
         With Importer_BeatmapList_Tag_ToInstall.First
             .UI_DecoBorderLeft.Fill = Color_3498DB
@@ -1501,8 +1512,7 @@ Class MainWindow
         TextBlock_Progress.Content = "Downloading " & CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & "..."
         Importer_UpdateInfo("Downloading")
         Importer_Progress.IsIndeterminate = False
-        'Console.WriteLine(osu_DownloadURI + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
-        Importer_Downloader.DownloadFileAsync(New Uri(osu_DownloadURI + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)), Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
+        Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
     End Sub
 
     Private Sub Importer_Downloader_ToNextDownload()
@@ -1668,7 +1678,12 @@ Class MainWindow
     End Sub
 
     Private Sub Importer_DownloadMirrorInfo_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles Importer_DownloadMirrorInfo.MouseDown
-        Process.Start("http://bloodcat.com/osu")
+        Select Case Setting_Tool_DownloadMirror
+            Case 0
+                Process.Start("http://bloodcat.com/osu")
+            Case 1
+                Process.Start("http://loli.al/")
+        End Select
     End Sub
 
     Private Sub Importer_Run_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Run.Click
