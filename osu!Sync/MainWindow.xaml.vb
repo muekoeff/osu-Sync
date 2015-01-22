@@ -511,7 +511,7 @@ Class MainWindow
             TextBlock_BeatmapCounter.Text = BeatmapList.Count & " Beatmap sets found"
             Button_SyncDo.IsEnabled = True
         ElseIf Destination = "Importer" Then
-            Dim MapsTotal As Integer = 0
+            Importer_BeatmapsTotal = 0
             TabberItem_Import.Visibility = Windows.Visibility.Visible
             Tabber.SelectedIndex = 1
             ImporterWrapper.Children.Clear()
@@ -646,8 +646,8 @@ Class MainWindow
                 UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
                 UI_Grid.Children.Add(UI_Checkbox_IsSelected)
                 ImporterWrapper.Children.Add(UI_Grid)
+                Importer_BeatmapsTotal += 1
             Next
-            Importer_BeatmapsTotal = Sync_BeatmapList_ID_Installed.Count
 
             Importer_Cancel.IsEnabled = True
             Importer_Info.ToolTip = Importer_Info.Text
