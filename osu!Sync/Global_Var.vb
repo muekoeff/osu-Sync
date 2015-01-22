@@ -18,6 +18,7 @@ Module Global_Var
     Public Const I__Path_Web_Host As String = "http://naseweis520.ml/osuSync"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
+    Public Const I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | This message can be disabled in the settings"
     Public I__UserAgent As String = "osu!Sync Client - " + My.Application.Info.Version.ToString
     Public I__UserInfo As JObject
     Public Setting_osu_Path As String = "C:\Program Files (x86)\osu!"
@@ -27,7 +28,9 @@ Module Global_Var
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateSavePath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-    Public Setting_Messages_SyncMoreThan1000Sets As Boolean = True
+    Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
+    Public Setting_Messages_Updater_OpenUpdater As Boolean = True
+    Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
 
     Function CompressString(ByVal text As String) As String
         Dim buffer() As Byte = Encoding.UTF8.GetBytes(text)
@@ -160,7 +163,9 @@ Module Global_Var
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
-                .Add("Setting_Messages_SyncMoreThan1000Sets", CStr(Setting_Messages_SyncMoreThan1000Sets))
+                .Add("Setting_Messages_Sync_MoreThan1000Sets", CStr(Setting_Messages_Sync_MoreThan1000Sets))
+                .Add("Setting_Messages_Updater_OpenUpdater", CStr(Setting_Messages_Updater_OpenUpdater))
+                .Add("Setting_Messages_Updater_UnableToCheckForUpdates", CStr(Setting_Messages_Updater_UnableToCheckForUpdates))
             End With
 
             Dim Serializer = New JsonSerializer()
@@ -193,8 +198,14 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateSavePath") Is Nothing Then
                 Setting_Tool_UpdateSavePath = CType(ConfigFile.SelectToken("Setting_Tool_UpdateSavePath"), String)
             End If
-            If Not ConfigFile.SelectToken("Setting_Messages_SyncMoreThan1000Sets") Is Nothing Then
-                Setting_Messages_SyncMoreThan1000Sets = CType(ConfigFile.SelectToken("Setting_Messages_SyncMoreThan1000Sets"), Boolean)
+            If Not ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets") Is Nothing Then
+                Setting_Messages_Sync_MoreThan1000Sets = CType(ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets"), Boolean)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then
+                Setting_Messages_Updater_OpenUpdater = CType(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"), Boolean)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then
+                Setting_Messages_Updater_UnableToCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"), Boolean)
             End If
         Catch ex As Exception
             MsgBox("Your configuration file seems to be invalid or outdated." & vbNewLine & "osu!Sync will delete it and restart.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)

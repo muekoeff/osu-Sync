@@ -43,8 +43,8 @@
                             <ComboBoxItem Content="Maximum once a month (Not recommended)."/>
                         </ComboBox>
                         <TextBlock TextWrapping="Wrap" Text="Download Update files to..." Margin="0,5,0,0"/>
-                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" Width="463" HorizontalAlignment="Left"/>
-                        <Button x:Name="Button_Tool_UpdatePathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="23" ToolTip="Use the default path"/>
+                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Width="463" HorizontalAlignment="Left"/>
+                        <Button x:Name="Button_Tool_UpdatePathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="25" ToolTip="Use the default path"/>
                         <TextBlock TextWrapping="Wrap" Text="General" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="Autoload cache file on startup (Programm will hang)." Margin="0,5,0,0" ToolTip="Program will hang | Duration depends on total beatmap count"/>
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="Check file associations every sync." Margin="0,5,0,0" ToolTip="Helpful if you move the osu!Sync.exe to a different directory."/>
@@ -65,8 +65,8 @@
             <TabItem Header="osu!">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock TextWrapping="Wrap" Text="Path to osu!" Margin="0"/>
-                        <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="0" Width="552"/>
+                        <TextBlock TextWrapping="Wrap" Text="Path to osu!"/>
+                        <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -74,7 +74,10 @@
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
                         <TextBlock TextWrapping="Wrap" Text="Sync" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555"/>
-                        <CheckBox x:Name="CheckBox_Messages_SyncMoreThan1000Sets" Content="Warn if you've got more than 1000 beatmap sets" Margin="5,5,5,0"/>
+                        <CheckBox x:Name="CheckBox_Messages_Sync_MoreThan1000Sets" Content="Warn if you've got more than 1000 beatmap sets" Margin="0,5,0,0"/>
+                        <TextBlock TextWrapping="Wrap" Text="Updater" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
+                        <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="Open updater when new version is available" Margin="0,5,0,0"/>
+                        <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="Show message when update check failed" Margin="0,5,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

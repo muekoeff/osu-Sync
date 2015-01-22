@@ -762,12 +762,12 @@ Class MainWindow
             Action_CheckFileAssociation()
         End If
 
-        If Directory.Exists(Setting_osu_Path & "\Songs") And Setting_Messages_SyncMoreThan1000Sets Then
+        If Directory.Exists(Setting_osu_Path & "\Songs") And Setting_Messages_Sync_MoreThan1000Sets Then
             Dim counter As System.Collections.ObjectModel.ReadOnlyCollection(Of String)
             counter = My.Computer.FileSystem.GetDirectories(Setting_osu_Path & "\Songs")
 
             If counter.Count > 1000 Then
-                If MessageBox.Show("You've got about " & counter.Count & " beatmap sets." & vbNewLine & "It will take some time (maybe some minutes) to read all sets, do you want to proceed?", "osu!Sync | This message can be disabled in the settings", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
+                If MessageBox.Show("You've got about " & counter.Count & " beatmap sets." & vbNewLine & "It will take some time (maybe some minutes) to read all sets, do you want to proceed?", I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
                     Exit Sub
                 End If
             End If
@@ -780,12 +780,16 @@ Class MainWindow
         Try
             Answer = JObject.Parse(e.Result)
         Catch ex As Newtonsoft.Json.JsonReaderException
-            MsgBox("Unable to check for updates!" & vbNewLine & "// Invalid Server response" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-            MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
+            If Setting_Messages_Updater_UnableToCheckForUpdates Then
+                MsgBox("Unable to check for updates!" & vbNewLine & "// Invalid Server response" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
+                MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
+            End If
             TextBlock_Programm_Updater.Content = "Unable to check for updates!"
             Exit Sub
         Catch ex As System.Reflection.TargetInvocationException
-            MsgBox("Unable to check for updates!" & vbNewLine & "// Can't connect to server" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            If Setting_Messages_Updater_UnableToCheckForUpdates Then
+                MsgBox("Unable to check for updates!" & vbNewLine & "// Can't connect to server" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
+            End If
             TextBlock_Programm_Updater.Content = "Unable to check for updates!"
             Exit Sub
         End Try
@@ -794,8 +798,10 @@ Class MainWindow
             TextBlock_Programm_Updater.Content = "Using the latest version (" + My.Application.Info.Version.ToString + ")"
         Else
             TextBlock_Programm_Updater.Content = "Update available (New: " + CStr(Answer.SelectToken("latestVersion")) + " | Running: " & My.Application.Info.Version.ToString & ")"
-            Dim Window_Updater As New Window_Updater
-            Window_Updater.ShowDialog()
+            If Setting_Messages_Updater_OpenUpdater Then
+                Dim Window_Updater As New Window_Updater
+                Window_Updater.ShowDialog()
+            End If
         End If
     End Sub
 
@@ -1433,12 +1439,12 @@ Class MainWindow
         Dim RequestURI As String
         TextBlock_Progress.Content = "Fetching " & CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & "..."
         Select Case Setting_Tool_DownloadMirror
-            Case 0
-                Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
-                RequestURI = "http://bloodcat.com/osu/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
             Case 1
                 Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
                 RequestURI = "http://loli.al/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
+            Case Else
+                Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
+                RequestURI = "http://bloodcat.com/osu/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
         End Select
 
         With Importer_BeatmapList_Tag_ToInstall.First

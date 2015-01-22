@@ -75,7 +75,9 @@ Public Class Window_Settings
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
-        Setting_Messages_SyncMoreThan1000Sets = CType(CheckBox_Messages_SyncMoreThan1000Sets.IsChecked, Boolean)
+        Setting_Messages_Sync_MoreThan1000Sets = CType(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked, Boolean)
+        Setting_Messages_Updater_OpenUpdater = CType(CheckBox_Messages_Updater_OpenUpdater.IsChecked, Boolean)
+        Setting_Messages_Updater_UnableToCheckForUpdates = CType(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked, Boolean)
         Action_SaveSettings()
 
         Me.Close()
@@ -229,7 +231,9 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        CheckBox_Messages_SyncMoreThan1000Sets.IsChecked = Setting_Messages_SyncMoreThan1000Sets
+        CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked = Setting_Messages_Sync_MoreThan1000Sets
+        CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
+        CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
