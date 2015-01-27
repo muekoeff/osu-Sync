@@ -1517,7 +1517,7 @@ Class MainWindow
                 TextBlock_Progress.Content = "Installing files..."
 
                 For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
-                    File.Move(FilePath, "C:\Program Files (x86)\osu!\Songs\" & Path.GetFileName(FilePath))
+                    File.Move(FilePath, Setting_osu_Path & Path.GetFileName(FilePath))
                 Next
                 With Importer_Progress
                     .IsIndeterminate = False
