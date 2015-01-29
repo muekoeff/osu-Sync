@@ -1,5 +1,7 @@
 ﻿Class Application
 
+    Private Declare Function ShowWindow Lib "user32" (ByVal handle As IntPtr, ByVal nCmdShow As Integer) As Integer
+
     Private Sub Application_DispatcherUnhandledException(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs) Handles Me.DispatcherUnhandledException
         e.Handled = True
         Clipboard.SetDataObject(e.Exception.ToString)
@@ -12,9 +14,19 @@
     End Sub
 
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+        ' Save Startup Arguments
         Dim i As Integer = 0
         If Not e.Args.Length = 0 Then
             I__StartUpArguments = e.Args
+        End If
+
+        ' Check if already running
+        If Diagnostics.Process.GetProcessesByName(Diagnostics.Process.GetCurrentProcess.ProcessName).Count > 1 Then
+            Dim SelectedProcess As Process = Process.GetProcessesByName(Diagnostics.Process.GetCurrentProcess.ProcessName).First
+            AppActivate(SelectedProcess.Id)
+            ShowWindow(SelectedProcess.MainWindowHandle, 1)
+            Application.Current.Shutdown()
+            Exit Sub
         End If
     End Sub
 End Class

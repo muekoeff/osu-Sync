@@ -1,22 +1,22 @@
-﻿<Controls:MetroWindow
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    x:Name="metroWindow"
-    x:Class="MainWindow"
-    Title="osu!Sync"
-        EnableDWMDropShadow="True"
-        ShowIconOnTitleBar="False"
-        Height="700"
-        MinHeight="600"
-        Icon="Resources/Icon.ico"
-        Width="1000"
-        MinWidth="800"
-        WindowStartupLocation="CenterScreen"
-        Visibility="Visible">
+﻿<Controls:MetroWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:tb="http://www.hardcodet.net/taskbar"
+                      mc:Ignorable="d"
+                      x:Name="metroWindow"
+                      x:Class="MainWindow"
+                      Title="osu!Sync"
+                      EnableDWMDropShadow="True"
+                      ShowIconOnTitleBar="False"
+                      Height="700"
+                      MinHeight="600"
+                      Icon="Resources/Icon.ico"
+                      Width="1000"
+                      MinWidth="800"
+                      WindowStartupLocation="CenterScreen"
+                      Visibility="Visible">
     <Grid x:Name="Grid" Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -24,6 +24,24 @@
             <RowDefinition/>
             <RowDefinition Height="33"/>
         </Grid.RowDefinitions>
+        <tb:TaskbarIcon x:Name="NotifyIcon" IconSource="/Resources/NotifyIcon.ico" ToolTipText="osu!Sync" Visibility="Collapsed">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="NotifyIcon_ShowHide" Header="Show/Hide osu!Sync">
+                        <MenuItem.Icon>
+                            <Path Data="M5.2010002,14.812L5.2010002,43.573997 56.098,43.573997 56.098,14.812z M29.868601,3.8869994C28.026201,3.8869996 26.534,5.3791947 26.534,7.2190399 26.534,9.0588851 28.026201,10.553 29.868601,10.553 31.7085,10.553 33.202,9.0588851 33.202,7.2190399 33.202,5.3791947 31.7085,3.8869996 29.868601,3.8869994z M19.200649,3.8869994C17.359457,3.8869996 15.867001,5.3791947 15.867001,7.2190399 15.867001,9.0588851 17.359457,10.553 19.200649,10.553 21.042044,10.553 22.536999,9.0588851 22.536999,7.2190399 22.536999,5.3791947 21.042044,3.8869996 19.200649,3.8869994z M8.5339746,3.8869994C6.6931,3.8869996 5.2010002,5.3791947 5.2010002,7.2190399 5.2010002,9.0588851 6.6931,10.553 8.5339746,10.553 10.37495,10.553 11.867,9.0588851 11.867,7.2190399 11.867,5.3791947 10.37495,3.8869996 8.5339746,3.8869994z M0,0L63.999001,0 63.999001,48.792999 0,48.792999z" Stretch="Uniform" Fill="#FF333333" Width="16" Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="NotifyIcon_RunOsu" Header="Run osu!" />
+                    <Separator />
+                    <MenuItem x:Name="NotifyIcon_Exit" Header="Exit osu!Sync">
+                        <MenuItem.Icon>
+                            <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Stretch="Uniform" Fill="#FF333333" Width="16" Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
         <DockPanel VerticalAlignment="Top">
             <Menu x:Name="MenuBar" DockPanel.Dock="Top" Background="#FF2D2D30" Foreground="White">
                 <MenuItem Header="_Program" Background="{Binding Background, ElementName=MenuBar}">
@@ -111,13 +129,13 @@
                     <ScrollViewer Grid.RowSpan="1" Grid.Row="1">
                         <StackPanel x:Name="ImporterWrapper">
                             <!-- [Example]
-                            <Grid Height="100" Margin="0,0,0,10">
-                                <Rectangle Fill="#3498db" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10"/>
-                                <TextBlock FontFamily="Segoe UI" FontSize="36" Foreground="#FF555555" Height="48" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                                <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                                <CheckBox HorizontalAlignment="Left" IsChecked="True" IsEnabled="False" Margin="25,72,0,0" VerticalAlignment="Top" Content="Installed?"/>
-                                <CheckBox HorizontalAlignment="Right" IsChecked="True" Margin="0,10,5,0" VerticalAlignment="Top" IsThreeState="True" Content="Download and install"/>
-                            </Grid> -->
+                                 <Grid Height="100" Margin="0,0,0,10">
+                                 <Rectangle Fill="#3498db" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10"/>
+                                 <TextBlock FontFamily="Segoe UI" FontSize="36" Foreground="#FF555555" Height="48" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                                 <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                                 <CheckBox HorizontalAlignment="Left" IsChecked="True" IsEnabled="False" Margin="25,72,0,0" VerticalAlignment="Top" Content="Installed?"/>
+                                 <CheckBox HorizontalAlignment="Right" IsChecked="True" Margin="0,10,5,0" VerticalAlignment="Top" IsThreeState="True" Content="Download and install"/>
+                                 </Grid> -->
                         </StackPanel>
                     </ScrollViewer>
                     <TextBlock x:Name="Importer_DownloadMirrorInfo" TextWrapping="Wrap" Text="Welcome to osu!Sync" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,25,0" Foreground="#FFDDDDDD" Cursor="Hand"/>
@@ -134,12 +152,12 @@
                     <ScrollViewer Grid.RowSpan="1" Grid.Row="1">
                         <StackPanel x:Name="ExporterWrapper">
                             <!-- [Example]
-                            <Grid Height="50" Margin="0,0,0,10">
-                                <Rectangle Fill="#3498db" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10"/>
-                                <TextBlock FontFamily="Segoe UI" FontSize="22" Foreground="#FF555555" Height="30" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                                <TextBlock FontFamily="Segoe UI Light" FontSize="12" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                                <CheckBox HorizontalAlignment="Right" IsChecked="True" Margin="0,10,5,0" VerticalAlignment="Top" IsThreeState="True" Content="Select to Export"/>
-                            </Grid> -->
+                                 <Grid Height="50" Margin="0,0,0,10">
+                                 <Rectangle Fill="#3498db" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10"/>
+                                 <TextBlock FontFamily="Segoe UI" FontSize="22" Foreground="#FF555555" Height="30" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                                 <TextBlock FontFamily="Segoe UI Light" FontSize="12" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                                 <CheckBox HorizontalAlignment="Right" IsChecked="True" Margin="0,10,5,0" VerticalAlignment="Top" IsThreeState="True" Content="Select to Export"/>
+                                 </Grid> -->
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

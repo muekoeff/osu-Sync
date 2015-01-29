@@ -1,17 +1,17 @@
 ﻿<Controls:MetroWindow x:Class="Window_Settings"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="Settings | osu!Sync"
-        Height="700"
-        MaxWidth="600"
-        MinHeight="700"
-        MinWidth="600"
-        Width="600"
-        WindowStartupLocation="CenterScreen"
-        ShowIconOnTitleBar="False"
-        EnableDWMDropShadow="True"
-        Icon="Resources/Icon.ico">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      Title="Settings | osu!Sync"
+                      Height="700"
+                      MaxWidth="600"
+                      MinHeight="700"
+                      MinWidth="600"
+                      Width="600"
+                      WindowStartupLocation="CenterScreen"
+                      ShowIconOnTitleBar="False"
+                      EnableDWMDropShadow="True"
+                      Icon="Resources/Icon.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
@@ -48,6 +48,7 @@
                         <TextBlock TextWrapping="Wrap" Text="General" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="Autoload cache file on startup (Programm will hang)." Margin="0,5,0,0" ToolTip="Program will hang | Duration depends on total beatmap count"/>
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="Check file associations every sync." Margin="0,5,0,0" ToolTip="Helpful if you move the osu!Sync.exe to a different directory."/>
+                        <CheckBox x:Name="CheckBox_Tool_EnableNotifyIcon" Content="Enable notify icon in tray (Takes affect after next restart)." Margin="0,5,0,0"/>
                         <TextBlock TextWrapping="Wrap" Text="Use this osu! Download Mirror..." Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_DownloadMirror">
                             <ComboBoxItem Content="Bloodcat.com"/>

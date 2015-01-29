@@ -1,18 +1,18 @@
 ﻿<Controls:MetroWindow x:Class="Window_Updater"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-        Cursor="AppStarting"
-        Title="Updater | osu!Sync"
-        Height="700"
-        MaxWidth="600"
-        MinHeight="700"
-        MinWidth="600"
-        Width="600"
-        WindowStartupLocation="CenterScreen"
-        ShowIconOnTitleBar="False"
-        EnableDWMDropShadow="True"
-        Icon="Resources/Icon.ico">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      Cursor="AppStarting"
+                      Title="Updater | osu!Sync"
+                      Height="700"
+                      MaxWidth="600"
+                      MinHeight="700"
+                      MinWidth="600"
+                      Width="600"
+                      WindowStartupLocation="CenterScreen"
+                      ShowIconOnTitleBar="False"
+                      EnableDWMDropShadow="True"
+                      Icon="Resources/Icon.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>

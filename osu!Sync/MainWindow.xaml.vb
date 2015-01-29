@@ -1,8 +1,10 @@
-﻿Imports System.IO
+﻿Imports Hardcodet.Wpf.TaskbarNotification
 Imports Newtonsoft.Json, Newtonsoft.Json.Linq
+Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices, System.Runtime.Serialization.Formatters.Binary
 Imports System.Windows.Media.Animation
+
 
 Public Class Beatmap
     Public Property ID As Integer
@@ -27,6 +29,7 @@ Class MainWindow
     Private WithEvents Client As New WebClient
     Private WithEvents FadeOut As New DoubleAnimation()
     Private FadeOut_Status As String = "FadeOut"
+    Private Notify_NextAction As Integer    ' 1 = OpenUpdater
     Private Sync_BeatmapList_Installed As New List(Of Beatmap)
     Private Sync_BeatmapList_ID_Installed As New List(Of Integer)
     Private Sync_Done As Boolean = False
@@ -400,12 +403,13 @@ Class MainWindow
         Else
             If Directory.Exists(Setting_osu_Path & "\Songs") Then
                 Interface_LoaderProgressBar.Maximum = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count
+                Console.WriteLine(Interface_LoaderProgressBar.Maximum)
             End If
             Interface_SetLoader("Parsing installed beatmap sets...")
             TextBlock_Sync_LastUpdate.Content = "Syncing..."
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
         End If
-        
+
     End Sub
 
     Private Sub Action_UpdateBeatmapDisplay(ByVal BeatmapList As List(Of Beatmap), Optional ByVal Destination As String = "Installed", Optional LastUpdateTime As String = Nothing)
@@ -767,11 +771,9 @@ Class MainWindow
         End If
 
         If Directory.Exists(Setting_osu_Path & "\Songs") And Setting_Messages_Sync_MoreThan1000Sets Then
-            Dim counter As System.Collections.ObjectModel.ReadOnlyCollection(Of String)
-            counter = My.Computer.FileSystem.GetDirectories(Setting_osu_Path & "\Songs")
-
-            If counter.Count > 1000 Then
-                If MessageBox.Show("You've got about " & counter.Count & " beatmap sets." & vbNewLine & "It will take some time (maybe some minutes) to read all sets, do you want to proceed?", I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
+            Dim counter As Integer = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count
+            If counter > 1000 Then
+                If MessageBox.Show("You've got about " & counter & " beatmap sets." & vbNewLine & "It will take some time (maybe some minutes) to read all sets, do you want to proceed?", I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
                     Exit Sub
                 End If
             End If
@@ -802,6 +804,10 @@ Class MainWindow
             TextBlock_Programm_Updater.Content = "Using the latest version (" + My.Application.Info.Version.ToString + ")"
         Else
             TextBlock_Programm_Updater.Content = "Update available (New: " + CStr(Answer.SelectToken("latestVersion")) + " | Running: " & My.Application.Info.Version.ToString & ")"
+            If Setting_Tool_EnableNotify Then
+                Notify_NextAction = 1
+                NotifyIcon.ShowBalloonTip("Updater | osu!Sync", "A new version of osu!Sync is available." & vbNewLine & "Current: " & My.Application.Info.Version.ToString & " | Latest: " & CStr(Answer.SelectToken("latestVersion")), Hardcodet.Wpf.TaskbarNotification.BalloonIcon.Info)
+            End If
             If Setting_Messages_Updater_OpenUpdater Then
                 Dim Window_Updater As New Window_Updater
                 Window_Updater.ShowDialog()
@@ -844,20 +850,6 @@ Class MainWindow
     End Sub
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        ' Check if already running
-        If Diagnostics.Process.GetProcessesByName(Diagnostics.Process.GetCurrentProcess.ProcessName).Count > 1 Then
-            Dim SelectedProcess As Process = Process.GetProcessesByName(Diagnostics.Process.GetCurrentProcess.ProcessName).First
-            AppActivate(SelectedProcess.Id)
-            ShowWindow(SelectedProcess.MainWindowHandle, 1)
-            Application.Current.Shutdown()
-            Exit Sub
-        End If
-
-        ' Delete old downloaded beatmaps
-        If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
-            Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload", True)
-        End If
-
         ' Load Configuration
         If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
             Action_LoadSettings()
@@ -868,7 +860,17 @@ Class MainWindow
             Action_SaveSettings()
         End If
 
-        'Check For Updates
+        ' Show NotifyIcon if enabled
+        If Setting_Tool_EnableNotify Then
+            NotifyIcon.Visibility = Windows.Visibility.Visible
+        End If
+
+        ' Delete old downloaded beatmaps
+        If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
+            Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload", True)
+        End If
+
+        ' Check For Updates
         Select Case Setting_Tool_CheckForUpdates
             Case 0
                 TextBlock_Programm_Updater.Content = "Checking for updates..."
@@ -1024,7 +1026,7 @@ Class MainWindow
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl"
+            .Filter = "All supported file formats|*.nw520-osbl;*.nw520-osblx|Compressed osu!Sync Beatmap List|*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl"
             .Title = "Open beatmap list"
             .ShowDialog()
         End With
@@ -1060,6 +1062,38 @@ Class MainWindow
         Window_Settings.ShowDialog()
     End Sub
 
+    Private Sub NotifyIcon_Exit_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_Exit.Click
+        Application.Current.Shutdown()
+    End Sub
+
+    Private Sub NotifyIcon_RunOsu_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_RunOsu.Click
+        Action_StartOrFocusOsu()
+    End Sub
+
+    Private Sub NotifyIcon_ShowHide_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_ShowHide.Click
+        If Me.IsVisible Then
+            Me.Visibility = Windows.Visibility.Hidden
+        Else
+            Me.Visibility = Windows.Visibility.Visible
+        End If
+    End Sub
+
+    Private Sub NotifyIcon_TrayBalloonTipClicked(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayBalloonTipClicked
+        Select Case Notify_NextAction
+            Case 1  ' OpenUpdater
+                Dim Window_Updater As New Window_Updater
+                Window_Updater.ShowDialog()
+        End Select
+    End Sub
+
+    Private Sub NotifyIcon_TrayMouseDoubleClick(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayMouseDoubleClick
+        If Me.IsVisible Then
+            Me.Visibility = Windows.Visibility.Hidden
+        Else
+            Me.Visibility = Windows.Visibility.Visible
+        End If
+    End Sub
+
     Private Sub TextBlock_Programm_Updater_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Updater.MouseDown
         Dim Window_Updater As New Window_Updater
         Window_Updater.ShowDialog()
@@ -1073,178 +1107,179 @@ Class MainWindow
         Dim Answer As New BGWcallback__Action_Sync_GetIDs
 
         If Not Directory.Exists(Setting_osu_Path & "\Songs") Then
-            Answer.Return__Status = 1
+            Answer.Return__Status = 1   ' FolderDoesntExist
             e.Result = Answer
             Exit Sub
         End If
 
-        If Arguments.Arg__Mode = 1 Then
-            Try
-                Dim File_Content As String = DecompressString(File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx"))
-                Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
-                Dim Cache_Time As String = CStr(File_Content_Json.Item("_info").Item("_file_generationdate_syncFormat"))
+        Select Case Arguments.Arg__Mode
+            Case 0
+                Dim Beatmap_InvalidFolder As String = ""
+                Dim Beatmap_InvalidIDBeatmaps As String = ""
 
-                If Not DateDiff(DateInterval.Day, Date.ParseExact(Cache_Time, "dd.MM.yyyy | HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= 14 Then
-                    With Answer
-                        .Return__Status = 2
-                        .Return__Sync_BeatmapList_ID_Installed = Action_ConvertSavedJSONtoListBeatmapIDs(File_Content_Json)
-                        .Return__Sync_BeatmapList_Installed = Action_ConvertSavedJSONtoListBeatmap(File_Content_Json)
-                        .Return__Sync_Cache_Time = Cache_Time
-                    End With
-                    e.Result = Answer
-                    Exit Sub
-                Else
-                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                .Progress__CurrentAction = 3})
-                End If
-            Catch ex As System.IO.InvalidDataException
-                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                .Progress__CurrentAction = 3})
-            Catch ex As JsonReaderException
-                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                .Progress__CurrentAction = 3})
-            Catch ex As System.FormatException
-                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                .Progress__CurrentAction = 3})
-            End Try
-        End If
+                For Each DirectoryList As String In Directory.GetDirectories(Setting_osu_Path & "\Songs")
+                    Dim DirectoryInfo As New DirectoryInfo(DirectoryList)
+                    If Not DirectoryInfo.Name.ToLower = "failed" And Not DirectoryInfo.Name.ToLower = "tutorial" Then
+                        Dim FoundFile As Boolean = False
 
-        Dim Beatmap_InvalidFolder As String = ""
-        Dim Beatmap_InvalidIDBeatmaps As String = ""
+                        For Each FileInDir In Directory.GetFiles(DirectoryList)
+                            If Path.GetExtension(FileInDir) = ".osu" Then
+                                FoundFile = True
 
-        For Each DirectoryList As String In Directory.GetDirectories(Setting_osu_Path & "\Songs")
-            Dim DirectoryInfo As New DirectoryInfo(DirectoryList)
-            If Not DirectoryInfo.Name.ToLower = "failed" And Not DirectoryInfo.Name.ToLower = "tutorial" Then
-                Dim FoundFile As Boolean = False
+                                ' Read File
+                                Dim FileReader As New System.IO.StreamReader(FileInDir)
+                                Dim TextLines As New List(Of String)
+                                Dim BeatmapDetails As New Beatmap
+                                Dim Found_ID As Boolean = False          ' Cause the older osu! file format doesn't include the set ID
+                                Dim Found_Title As Boolean = False
+                                Dim Found_Artist As Boolean = False
+                                Dim Found_Creator As Boolean = False
 
-                For Each FileInDir In Directory.GetFiles(DirectoryList)
-                    If Path.GetExtension(FileInDir) = ".osu" Then
-                        FoundFile = True
+                                Do While FileReader.Peek() <> -1 And TextLines.Count <= 50  ' Don't read more than 50 lines
+                                    TextLines.Add(FileReader.ReadLine())
+                                Loop
 
-                        ' Read File
-                        Dim FileReader As New System.IO.StreamReader(FileInDir)
-                        Dim TextLines As New List(Of String)
-                        Dim BeatmapDetails As New Beatmap
-                        Dim Found_ID As Boolean = False          ' Cause the older osu! file format doesn't include the set ID
-                        Dim Found_Title As Boolean = False
-                        Dim Found_Artist As Boolean = False
-                        Dim Found_Creator As Boolean = False
+                                For Each Line As String In TextLines
+                                    If Found_ID And Found_Title And Found_Artist And Found_Creator Then
+                                        Exit For
+                                    End If
 
-                        Do While FileReader.Peek() <> -1 And TextLines.Count <= 50  ' don't read more than 50 lines
-                            TextLines.Add(FileReader.ReadLine())
-                        Loop
+                                    If Line.StartsWith("Title:") Then
+                                        Found_Title = True
+                                        BeatmapDetails.Title = Line.Substring(6)
+                                    ElseIf Line.StartsWith("Artist:") Then
+                                        Found_Artist = True
+                                        BeatmapDetails.Artist = Line.Substring(7)
+                                    ElseIf Line.StartsWith("BeatmapSetID:") Then
+                                        Found_ID = True
+                                        Try
+                                            BeatmapDetails.ID = CInt(Line.Substring(13))
+                                        Catch ex As InvalidCastException
+                                            MsgBox("Fetched ID is not a number." & vbNewLine & "Trying to use alternative way via folder name.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                                            BeatmapDetails.ID = -1
+                                            Found_ID = False
+                                        End Try
+                                    ElseIf Line.StartsWith("Creator:") Then
+                                        Found_Creator = True
+                                        BeatmapDetails.Creator = Line.Substring(8)
+                                    End If
+                                Next
 
-                        For Each Line As String In TextLines
-                            If Found_ID And Found_Title And Found_Artist And Found_Creator Then
+                                If Found_ID = False Then
+                                    ' Looks like it's an old file, so try to get ID from folder name
+                                    Try
+                                        BeatmapDetails.ID = CInt(DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" ")))
+                                    Catch ex As Exception
+                                        BeatmapDetails.ID = -1
+                                        Beatmap_InvalidIDBeatmaps += "• " & BeatmapDetails.ID & " | " & BeatmapDetails.Artist & " | " & BeatmapDetails.Title & vbNewLine
+                                    End Try
+                                End If
+                                Answer.Return__Sync_BeatmapList_Installed.Add(BeatmapDetails)
+                                Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(BeatmapDetails.ID))
+                                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count})
                                 Exit For
-                            End If
-
-                            If Line.StartsWith("Title:") Then
-                                Found_Title = True
-                                BeatmapDetails.Title = Line.Substring(6)
-                            ElseIf Line.StartsWith("Artist:") Then
-                                Found_Artist = True
-                                BeatmapDetails.Artist = Line.Substring(7)
-                            ElseIf Line.StartsWith("BeatmapSetID:") Then
-                                Found_ID = True
-                                Try
-                                    BeatmapDetails.ID = CInt(Line.Substring(13))
-                                Catch ex As InvalidCastException
-                                    MsgBox("Fetched ID is not a number." & vbNewLine & "Trying to use alternative way via folder name.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-                                    BeatmapDetails.ID = -1
-                                    Found_ID = False
-                                End Try
-                            ElseIf Line.StartsWith("Creator:") Then
-                                Found_Creator = True
-                                BeatmapDetails.Creator = Line.Substring(8)
                             End If
                         Next
 
-                        If Found_ID = False Then
-                            ' Looks like it's an old file, so try to get ID from folder name
+                        ' Can't read/find osu! file
+                        If FoundFile = False Then
                             Try
-                                BeatmapDetails.ID = CInt(DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" ")))
+                                Dim Beatmap_ID As String = DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" "))
+                                Dim Beatmap_Artist As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + 1, DirectoryInfo.Name.IndexOf(" - ") - Beatmap_ID.Length - 1)
+                                Dim Beatmap_Name As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + Beatmap_Artist.Length + 4)
+                                Dim CurrentBeatmap As New Beatmap With { _
+                                    .ID = CInt(Beatmap_ID),
+                                    .Title = Beatmap_Name,
+                                    .Artist = Beatmap_Artist}
+                                Console.WriteLine(DirectoryInfo.Name & " | " & Beatmap_Artist & " | " & Beatmap_ID & " | " & Beatmap_Name)
+                                Answer.Return__Sync_BeatmapList_Installed.Add(CurrentBeatmap)
+                                Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(Beatmap_ID))
                             Catch ex As Exception
-                                BeatmapDetails.ID = -1
-                                Beatmap_InvalidIDBeatmaps += "• " & BeatmapDetails.ID & " | " & BeatmapDetails.Artist & " | " & BeatmapDetails.Title & vbNewLine
+                                Beatmap_InvalidFolder += "• " & DirectoryInfo.Name & vbNewLine
                             End Try
                         End If
-                        Answer.Return__Sync_BeatmapList_Installed.Add(BeatmapDetails)
-                        Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(BeatmapDetails.ID))
-                        BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                            .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count})
-                        Exit For
                     End If
                 Next
 
-                ' Can't read/find osu! file
-                If FoundFile = False Then
-                    Try
-                        Dim Beatmap_ID As String = DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" "))
-                        Dim Beatmap_Artist As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + 1, DirectoryInfo.Name.IndexOf(" - ") - Beatmap_ID.Length - 1)
-                        Dim Beatmap_Name As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + Beatmap_Artist.Length + 4)
-                        Dim CurrentBeatmap As New Beatmap With { _
-                            .ID = CInt(Beatmap_ID),
-                            .Title = Beatmap_Name,
-                            .Artist = Beatmap_Artist}
-                        Console.WriteLine(DirectoryInfo.Name & " | " & Beatmap_Artist & " | " & Beatmap_ID & " | " & Beatmap_Name)
-                        Answer.Return__Sync_BeatmapList_Installed.Add(CurrentBeatmap)
-                        Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(Beatmap_ID))
-                    Catch ex As Exception
-                        Beatmap_InvalidFolder += "• " & DirectoryInfo.Name & vbNewLine
-                    End Try
+                If Not Beatmap_InvalidFolder = "" Or Not Beatmap_InvalidIDBeatmaps = "" Then
+                    If Not Beatmap_InvalidFolder = "" Then
+                        Answer.Return__Sync_Warnings += "=====   Ignored Folders   =====" & vbNewLine & "It seems that some folder(s) can't be parsed." & vbNewLine & "They'll be ignored." & vbNewLine & vbNewLine & "// Folder(s): " & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
+                    End If
+                    If Not Beatmap_InvalidIDBeatmaps = "" Then
+                        Answer.Return__Sync_Warnings += "=====   Unable to get ID   =====" & vbNewLine & "osu!Sync was unable to get the IDs of some beatmaps." & vbNewLine & "They will be handled as unsubmitted (can't be exported)." & vbNewLine & vbNewLine & "// Beatmap(s): " & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
+                    End If
                 End If
-            End If
-        Next
 
-        If Not Beatmap_InvalidFolder = "" Or Not Beatmap_InvalidIDBeatmaps = "" Then
-            If Not Beatmap_InvalidFolder = "" Then
-                Answer.Return__Sync_Warnings += "=====   Ignored Folders   =====" & vbNewLine & "It seems that some folder(s) can't be parsed." & vbNewLine & "They'll be ignored." & vbNewLine & vbNewLine & "// Folder(s): " & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
-            End If
-            If Not Beatmap_InvalidIDBeatmaps = "" Then
-                Answer.Return__Sync_Warnings += "=====   Unable to get ID   =====" & vbNewLine & "osu!Sync was unable to get the IDs of some beatmaps." & vbNewLine & "They will be handled as unsubmitted (can't be exported)." & vbNewLine & vbNewLine & "// Beatmap(s): " & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
-            End If
-        End If
-
-        ' Write Cache
-        BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                            .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
-                            .Progress__CurrentAction = 1})
-        If Not Directory.Exists(I__Path_Programm & "\Cache") Then
-            Directory.CreateDirectory(I__Path_Programm & "\Cache")
-        End If
-        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(I__Path_Programm & "\Cache\LastSync.nw520-osblx", False)
-            Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
-            Dim Content_ProgrammInfo As New Dictionary(Of String, String)
-            Content_ProgrammInfo.Add("_author", "naseweis520")
-            Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
-            Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
-            Content_ProgrammInfo.Add("_file_generationdate_syncFormat", Date.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
-            Content_ProgrammInfo.Add("_file_usage", "Sync-Cache")
-            Content_ProgrammInfo.Add("_programm", "osu!Sync")
-            Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
-            Content.Add("_info", Content_ProgrammInfo)
-            For Each SelectedBeatmap As Beatmap In Answer.Return__Sync_BeatmapList_Installed
-                If Not SelectedBeatmap.ID = -1 And Not Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
-                    Dim ContentDictionary As New Dictionary(Of String, String)
-                    With ContentDictionary
-                        .Add("artist", SelectedBeatmap.Artist)
-                        .Add("creator", SelectedBeatmap.Creator)
-                        .Add("id", SelectedBeatmap.ID.ToString)
-                        .Add("title", SelectedBeatmap.Title)
-                    End With
-                    Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
+                ' Write Cache
+                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
+                                    .Progress__CurrentAction = 1})
+                If Not Directory.Exists(I__Path_Programm & "\Cache") Then
+                    Directory.CreateDirectory(I__Path_Programm & "\Cache")
                 End If
-            Next
-            Dim Content_Json As String
-            Content_Json = JsonConvert.SerializeObject(Content)
-            File.Write(CompressString(Content_Json))
-            BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                           .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
-                           .Progress__CurrentAction = 2})
-            File.Close()
-        End Using
-        e.Result = Answer
+                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(I__Path_Programm & "\Cache\LastSync.nw520-osblx", False)
+                    Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
+                    Dim Content_ProgrammInfo As New Dictionary(Of String, String)
+                    Content_ProgrammInfo.Add("_author", "naseweis520")
+                    Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
+                    Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
+                    Content_ProgrammInfo.Add("_file_generationdate_syncFormat", Date.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
+                    Content_ProgrammInfo.Add("_file_usage", "Sync-Cache")
+                    Content_ProgrammInfo.Add("_programm", "osu!Sync")
+                    Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
+                    Content.Add("_info", Content_ProgrammInfo)
+                    For Each SelectedBeatmap As Beatmap In Answer.Return__Sync_BeatmapList_Installed
+                        If Not SelectedBeatmap.ID = -1 And Not Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
+                            Dim ContentDictionary As New Dictionary(Of String, String)
+                            With ContentDictionary
+                                .Add("artist", SelectedBeatmap.Artist)
+                                .Add("creator", SelectedBeatmap.Creator)
+                                .Add("id", SelectedBeatmap.ID.ToString)
+                                .Add("title", SelectedBeatmap.Title)
+                            End With
+                            Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
+                        End If
+                    Next
+                    Dim Content_Json As String
+                    Content_Json = JsonConvert.SerializeObject(Content)
+                    File.Write(CompressString(Content_Json))
+                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                   .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
+                                   .Progress__CurrentAction = 2})
+                    File.Close()
+                End Using
+                e.Result = Answer
+            Case 1  'LoadFromCache
+                Try
+                    Dim File_Content As String = DecompressString(File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx"))
+                    Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
+                    Dim Cache_Time As String = CStr(File_Content_Json.Item("_info").Item("_file_generationdate_syncFormat"))
+
+                    If Not DateDiff(DateInterval.Day, Date.ParseExact(Cache_Time, "dd.MM.yyyy | HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= 14 Then
+                        With Answer
+                            .Return__Status = 2
+                            .Return__Sync_BeatmapList_ID_Installed = Action_ConvertSavedJSONtoListBeatmapIDs(File_Content_Json)
+                            .Return__Sync_BeatmapList_Installed = Action_ConvertSavedJSONtoListBeatmap(File_Content_Json)
+                            .Return__Sync_Cache_Time = Cache_Time
+                        End With
+                        e.Result = Answer
+                        Exit Sub
+                    Else
+                        BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__CurrentAction = 3})
+                    End If
+                Catch ex As System.IO.InvalidDataException
+                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__CurrentAction = 3})
+                Catch ex As JsonReaderException
+                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__CurrentAction = 3})
+                Catch ex As System.FormatException
+                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__CurrentAction = 3})
+                End Try
+        End Select
     End Sub
 
     Private Sub BGW__Action_Sync_GetIDs_ProgressChanged(sender As Object, e As ComponentModel.ProgressChangedEventArgs) Handles BGW__Action_Sync_GetIDs.ProgressChanged
@@ -1582,8 +1617,13 @@ Class MainWindow
 
             TextBlock_Progress.Content = ""
             Importer_UpdateInfo("Done")
-            My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep)
 
+            My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep)
+            NotifyIcon.ShowBalloonTip("osu!Sync", "Installation finished!" & vbNewLine & _
+                    Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
+                    Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
+                    Importer_BeatmapList_Tag_LeftOut.Count & " Left out" & vbNewLine & _
+                    Importer_BeatmapsTotal & " Sets total", BalloonIcon.None)
             MsgBox("Installation finished!" & vbNewLine & _
                     Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
                     Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
