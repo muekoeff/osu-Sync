@@ -20,15 +20,15 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Image Source="Resources/WindowSettings_Header.png" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="250" Stretch="UniformToFill"/>
         <TextBlock TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontSize="48" Foreground="#FF27AE60" Grid.Column="1" Height="64" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Button x:Name="Button_Done" Content="_Save" VerticalAlignment="Top" Height="50" FontSize="14" IsDefault="True" Grid.Column="1" Grid.Row="2" Margin="5,0"/>
-        <Button x:Name="Button_Cancel" Content="_Cancel" VerticalAlignment="Top" Height="50" FontSize="14" IsCancel="True" Grid.Column="2" Grid.Row="2" Margin="5,0"/>
-        <TabControl x:Name="Tabber" Grid.Column="1" HorizontalAlignment="Left" Margin="0,64,0,0" Grid.Row="1" Width="572" Grid.ColumnSpan="2">
+        <Button x:Name="Button_Done" Content="_Save" VerticalAlignment="Top" Height="50" FontSize="14" IsDefault="True" Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" HorizontalAlignment="Left" Width="360"/>
+        <Button x:Name="Button_Apply" Content="_Apply" VerticalAlignment="Top" Height="50" FontSize="14" Grid.Column="1" Grid.Row="2" Margin="0,0,110,0" HorizontalAlignment="Right" Width="100"/>
+        <Button x:Name="Button_Cancel" Content="_Cancel" VerticalAlignment="Top" Height="50" FontSize="14" IsCancel="True" Grid.Column="1" Grid.Row="2" Margin="0,0,5,0" HorizontalAlignment="Right" Width="100"/>
+        <TabControl x:Name="Tabber" Grid.Column="1" Margin="0,64,0,0" Grid.Row="1">
             <TabItem Header="General">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
@@ -48,7 +48,14 @@
                         <TextBlock TextWrapping="Wrap" Text="General" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="Autoload cache file on startup (Programm will hang)." Margin="0,5,0,0" ToolTip="Program will hang | Duration depends on total beatmap count"/>
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="Check file associations every sync." Margin="0,5,0,0" ToolTip="Helpful if you move the osu!Sync.exe to a different directory."/>
-                        <CheckBox x:Name="CheckBox_Tool_EnableNotifyIcon" Content="Enable notify icon in tray (Takes affect after next restart)." Margin="0,5,0,0"/>
+                        <TextBlock TextWrapping="Wrap" Text="Enable NotifyIcon in Tray Area..." Margin="0,5,0,0"/>
+                        <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">
+                            <ComboBoxItem Content="Show always - Enable NotifyBalloons."/>
+                            <Separator />
+                            <ComboBoxItem Content="Show always - Disable NotifyBalloons."/>
+                            <ComboBoxItem Content="Show only when osu!Sync hidden - Disable NotifyBalloons."/>
+                            <ComboBoxItem Content="Disable."/>
+                        </ComboBox>
                         <TextBlock TextWrapping="Wrap" Text="Use this osu! Download Mirror..." Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_DownloadMirror">
                             <ComboBoxItem Content="Bloodcat.com"/>
@@ -58,7 +65,7 @@
                         <Button x:Name="Button_Tool_OpenDataFolder" Content="Open Data Folder" Margin="0,5,0,0" FontSize="12"/>
                         <Button x:Name="Button_Tool_UpdateFileAssociation" Content="Update/Reregister File Association" Margin="0,5,0,0" FontSize="12"/>
                         <Button x:Name="Button_Tool_DeleteConfiguration" Content="Delete Configuration" Margin="0,15,0,0" FontSize="12"/>
-                        <Button x:Name="Button_Tool_DeleteFileAssociation" Content="Delete/Unregister File Association" Margin="0,5,0,0" FontSize="12"/>                        
+                        <Button x:Name="Button_Tool_DeleteFileAssociation" Content="Delete/Unregister File Association" Margin="0,5,0,0" FontSize="12"/>
                         <Button x:Name="Button_Tool_Reset" Content="Reset osu!Sync (delete configuration, file associations, etc.)" Margin="0,15,0,0" FontSize="12"/>
                     </StackPanel>
                 </ScrollViewer>

@@ -51,6 +51,24 @@ Public Class Window_Settings
         End Try
     End Function
 
+    Private Sub Action_ApplySettings()
+        Setting_osu_Path = TextBox_osu_Path.Text
+        Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
+        Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
+        Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
+        Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
+        Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
+        Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
+        Setting_Messages_Sync_MoreThan1000Sets = CType(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked, Boolean)
+        Setting_Messages_Updater_OpenUpdater = CType(CheckBox_Messages_Updater_OpenUpdater.IsChecked, Boolean)
+        Setting_Messages_Updater_UnableToCheckForUpdates = CType(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked, Boolean)
+        Action_SaveSettings()
+    End Sub
+
+    Private Sub Button_Apply_Click(sender As Object, e As RoutedEventArgs) Handles Button_Apply.Click
+        Action_ApplySettings()
+    End Sub
+
     Private Sub Button_Cancel_Click(sender As Object, e As RoutedEventArgs) Handles Button_Cancel.Click
         Me.Close()
     End Sub
@@ -69,18 +87,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
-        Setting_osu_Path = TextBox_osu_Path.Text
-        Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
-        Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
-        Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
-        Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
-        Setting_Tool_EnableNotify = CType(CheckBox_Tool_EnableNotifyIcon.IsChecked, Boolean)
-        Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
-        Setting_Messages_Sync_MoreThan1000Sets = CType(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked, Boolean)
-        Setting_Messages_Updater_OpenUpdater = CType(CheckBox_Messages_Updater_OpenUpdater.IsChecked, Boolean)
-        Setting_Messages_Updater_UnableToCheckForUpdates = CType(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked, Boolean)
-        Action_SaveSettings()
-
+        Action_ApplySettings()
         Me.Close()
     End Sub
 
@@ -237,9 +244,9 @@ Public Class Window_Settings
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
-        CheckBox_Tool_EnableNotifyIcon.IsChecked = Setting_Tool_EnableNotify
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
+        ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_Tool_UpdatePath.Text = Setting_Tool_UpdateSavePath
     End Sub

@@ -412,6 +412,21 @@ Class MainWindow
 
     End Sub
 
+    Private Sub Action_Tool_UpdateSettings()
+        Select Case Setting_Tool_EnableNotifyIcon
+            Case 0, 2, 3
+                NotifyIcon.Visibility = Windows.Visibility.Visible
+                If Setting_Tool_EnableNotifyIcon = 3 Then
+                    NotifyIcon.Visibility = Windows.Visibility.Collapsed
+                Else
+                    MenuItem_Program_MinimizeToTray.Visibility = Windows.Visibility.Visible
+                End If
+            Case 4
+                NotifyIcon.Visibility = Windows.Visibility.Collapsed
+                MenuItem_Program_MinimizeToTray.Visibility = Windows.Visibility.Collapsed
+        End Select
+    End Sub
+
     Private Sub Action_UpdateBeatmapDisplay(ByVal BeatmapList As List(Of Beatmap), Optional ByVal Destination As String = "Installed", Optional LastUpdateTime As String = Nothing)
         If Destination = "Installed" Then
             If LastUpdateTime = Nothing Then
@@ -804,7 +819,7 @@ Class MainWindow
             TextBlock_Programm_Updater.Content = "Using the latest version (" + My.Application.Info.Version.ToString + ")"
         Else
             TextBlock_Programm_Updater.Content = "Update available (New: " + CStr(Answer.SelectToken("latestVersion")) + " | Running: " & My.Application.Info.Version.ToString & ")"
-            If Setting_Tool_EnableNotify Then
+            If Setting_Tool_EnableNotifyIcon = 0 Then
                 Notify_NextAction = 1
                 NotifyIcon.ShowBalloonTip("Updater | osu!Sync", "A new version of osu!Sync is available." & vbNewLine & "Current: " & My.Application.Info.Version.ToString & " | Latest: " & CStr(Answer.SelectToken("latestVersion")), Hardcodet.Wpf.TaskbarNotification.BalloonIcon.Info)
             End If
@@ -860,10 +875,8 @@ Class MainWindow
             Action_SaveSettings()
         End If
 
-        ' Show NotifyIcon if enabled
-        If Setting_Tool_EnableNotify Then
-            NotifyIcon.Visibility = Windows.Visibility.Visible
-        End If
+        ' Set settings like NotifyIcon
+        Action_Tool_UpdateSettings()
 
         ' Delete old downloaded beatmaps
         If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
@@ -1053,6 +1066,18 @@ Class MainWindow
         Application.Current.Shutdown()
     End Sub
 
+    Private Sub MenuItem_Program_MinimizeToTray_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_MinimizeToTray.Click
+        Select Case Setting_Tool_EnableNotifyIcon
+            Case 0, 2, 3
+                Me.Visibility = Windows.Visibility.Hidden
+                If Setting_Tool_EnableNotifyIcon = 3 Then
+                    NotifyIcon.Visibility = Windows.Visibility.Visible
+                End If
+            Case Else
+                    MenuItem_Program_MinimizeToTray.IsEnabled = False
+        End Select
+    End Sub
+
     Private Sub MenuItem_Program_RunOsu_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_RunOsu.Click
         Action_StartOrFocusOsu()
     End Sub
@@ -1060,6 +1085,7 @@ Class MainWindow
     Private Sub MenuItem_Program_Settings_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Settings.Click
         Dim Window_Settings As New Window_Settings
         Window_Settings.ShowDialog()
+        Action_Tool_UpdateSettings()
     End Sub
 
     Private Sub NotifyIcon_Exit_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_Exit.Click
@@ -1091,6 +1117,10 @@ Class MainWindow
             Me.Visibility = Windows.Visibility.Hidden
         Else
             Me.Visibility = Windows.Visibility.Visible
+            Me.Focus()
+            If Setting_Tool_EnableNotifyIcon = 3 Then
+                NotifyIcon.Visibility = Windows.Visibility.Collapsed
+            End If
         End If
     End Sub
 
@@ -1619,11 +1649,13 @@ Class MainWindow
             Importer_UpdateInfo("Done")
 
             My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep)
-            NotifyIcon.ShowBalloonTip("osu!Sync", "Installation finished!" & vbNewLine & _
-                    Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
-                    Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
-                    Importer_BeatmapList_Tag_LeftOut.Count & " Left out" & vbNewLine & _
-                    Importer_BeatmapsTotal & " Sets total", BalloonIcon.None)
+            If Setting_Tool_EnableNotifyIcon = 0 Then
+                NotifyIcon.ShowBalloonTip("osu!Sync", "Installation finished!" & vbNewLine & _
+                        Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
+                        Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
+                        Importer_BeatmapList_Tag_LeftOut.Count & " Left out" & vbNewLine & _
+                        Importer_BeatmapsTotal & " Sets total", BalloonIcon.None)
+            End If
             MsgBox("Installation finished!" & vbNewLine & _
                     Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
                     Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
@@ -1638,7 +1670,7 @@ Class MainWindow
             End If
             Button_SyncDo.IsEnabled = True
             Importer_Cancel.IsEnabled = True
-        End If
+            End If
     End Sub
 
     Private Sub Importer_Init()
