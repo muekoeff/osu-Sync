@@ -27,7 +27,6 @@ Module Global_Var
     Public Setting_Tool_CheckFileAssociation As Boolean = True
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_LastCheckForUpdates As String = DateTime.Now.ToString("dd-mm-yy HH:mm:ss")
-    
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath()
     Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
