@@ -28,7 +28,7 @@ Module Global_Var
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
-    Public Setting_Tool_UpdateSavePath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+    Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath()
     Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
