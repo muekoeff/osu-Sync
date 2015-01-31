@@ -212,6 +212,8 @@ Public Class Window_Settings
             SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!"
         ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
             SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!"
+        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
+            SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!"
         Else
             SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
         End If
