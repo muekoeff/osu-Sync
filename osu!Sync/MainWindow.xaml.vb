@@ -170,7 +170,7 @@ Class MainWindow
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
             .AddExtension = True
-            .Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl|HTML page (Can't be imported)|*.html|Text file (Can't be imported)|*.txt"
+            .Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl|HTML page (Can't be imported)|*.html|Text file (Can't be imported)|*.txt|CSV file (Can't be imported)|*.csv"
             .OverwritePrompt = True
             .Title = DialogTitle
             .ValidateNames = True
@@ -335,14 +335,27 @@ Class MainWindow
                         "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
                     For Each SelectedBeatmap As Beatmap In Source
                         Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine & _
+                            "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine & _
                             "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine & _
                             "ID: " & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine & _
-                            "Name: " & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
+                            "Title: " & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
                     Next
                     File.Write(Content)
                     File.Close()
                 End Using
                 Action_OverlayShow("Export completed", "Exported as TXT-File")
+                Action_OverlayFadeOut()
+            Case 5     '.csv
+                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                    Dim Content As String = "sep=;" & vbNewLine
+                    Content += "ID;Artist;Creator;Title" & vbNewLine
+                    For Each SelectedBeatmap As Beatmap In Source
+                        Content += SelectedBeatmap.ID & ";" & """" & SelectedBeatmap.Artist & """;""" & SelectedBeatmap.Creator & """;""" & SelectedBeatmap.Title & """" & vbNewLine
+                    Next
+                    File.Write(Content)
+                    File.Close()
+                End Using
+                Action_OverlayShow("Export completed", "Exported as CSV-File")
                 Action_OverlayFadeOut()
         End Select
     End Sub
