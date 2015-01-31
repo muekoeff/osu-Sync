@@ -59,6 +59,8 @@ Public Class Window_Settings
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
+        Setting_Tool_UpdateDeleteFileAfter = CType(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked, Boolean)
+        Setting_Tool_UpdateUseDownloadPatcher = CType(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked, Boolean)
         Setting_Messages_Sync_MoreThan1000Sets = CType(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked, Boolean)
         Setting_Messages_Updater_OpenUpdater = CType(CheckBox_Messages_Updater_OpenUpdater.IsChecked, Boolean)
         Setting_Messages_Updater_UnableToCheckForUpdates = CType(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked, Boolean)
@@ -244,6 +246,8 @@ Public Class Window_Settings
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
+        CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_UpdateDeleteFileAfter
+        CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked = Setting_Tool_UpdateUseDownloadPatcher
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon

@@ -30,7 +30,7 @@
         <TextBlock x:Name="TextBlock_Status" Margin="0,95,0,0" TextWrapping="Wrap" FontSize="20" Foreground="#FF222222" Grid.Column="1" VerticalAlignment="Top" Grid.Row="1" FontWeight="SemiBold"><Run Text="Please wait... checking for updates."/></TextBlock>
         <Button x:Name="Button_Done" Content="_Done" VerticalAlignment="Top" Height="50" FontSize="14" IsDefault="True" Grid.Column="1" Grid.Row="2" Margin="0,0,292,0"/>
         <ProgressBar x:Name="ProgressBar_Progress" HorizontalAlignment="Left" Margin="0,240,0,0" VerticalAlignment="Top" Width="600" Grid.ColumnSpan="4" IsIndeterminate="True"/>
-        <Button x:Name="Button_Update" Content="_Download" VerticalAlignment="Top" Height="50" FontSize="14" Grid.Column="1" Grid.Row="2" Margin="292,0,0,0" IsEnabled="False"/>
+        <Button x:Name="Button_Update" Content="_Download &amp; Install" VerticalAlignment="Top" Height="50" FontSize="14" Grid.Column="1" Grid.Row="2" Margin="292,0,0,0" IsEnabled="False"/>
         <RichTextBox x:Name="RichTextBox_Changelog" IsReadOnly="True" Margin="0,127,0,5" Grid.Row="1" Grid.Column="1" ScrollViewer.CanContentScroll="True" FontSize="18" FontFamily="Courier New">
             <FlowDocument>
                 <Paragraph>Please wait...</Paragraph>

@@ -28,7 +28,9 @@ Module Global_Var
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
+    Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath()
+    Public Setting_Tool_UpdateUseDownloadPatcher As Boolean = True
     Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
@@ -164,7 +166,9 @@ Module Global_Var
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
                 .Add("Setting_Tool_EnableNotifyIcon", CStr(Setting_Tool_EnableNotifyIcon))
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
+                .Add("Setting_Tool_UpdateDeleteFileAfter", CStr(Setting_Tool_UpdateDeleteFileAfter))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
+                .Add("Setting_Tool_UpdateUseDownloadPatcher", CStr(Setting_Tool_UpdateUseDownloadPatcher))
                 .Add("Setting_Messages_Sync_MoreThan1000Sets", CStr(Setting_Messages_Sync_MoreThan1000Sets))
                 .Add("Setting_Messages_Updater_OpenUpdater", CStr(Setting_Messages_Updater_OpenUpdater))
                 .Add("Setting_Messages_Updater_UnableToCheckForUpdates", CStr(Setting_Messages_Updater_UnableToCheckForUpdates))
@@ -199,8 +203,14 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
                 Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)
             End If
+            If Not ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter") Is Nothing Then
+                Setting_Tool_UpdateDeleteFileAfter = CType(ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter"), Boolean)
+            End If
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateSavePath") Is Nothing Then
                 Setting_Tool_UpdateSavePath = CType(ConfigFile.SelectToken("Setting_Tool_UpdateSavePath"), String)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher") Is Nothing Then
+                Setting_Tool_UpdateUseDownloadPatcher = CType(ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher"), Boolean)
             End If
             If Not ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets") Is Nothing Then
                 Setting_Messages_Sync_MoreThan1000Sets = CType(ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets"), Boolean)

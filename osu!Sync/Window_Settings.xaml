@@ -42,9 +42,11 @@
                             <ComboBoxItem Content="Maximum once a week."/>
                             <ComboBoxItem Content="Maximum once a month (Not recommended)."/>
                         </ComboBox>
-                        <TextBlock TextWrapping="Wrap" Text="Download Update files to..." Margin="0,5,0,0"/>
+                        <TextBlock TextWrapping="Wrap" Text="Download update package to..." Margin="0,5,0,0"/>
                         <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Width="463" HorizontalAlignment="Left"/>
                         <Button x:Name="Button_Tool_UpdatePathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="25" ToolTip="Use the default path"/>
+                        <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="Use update patcher to automatically install the updates." Margin="0,5,0,0"/>
+                        <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="Delete update package after installation. (Only affects if update patcher enabled.)" Margin="0,5,0,0"/>
                         <TextBlock TextWrapping="Wrap" Text="General" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="Autoload cache file on startup (Programm will hang)." Margin="0,5,0,0" ToolTip="Program will hang | Duration depends on total beatmap count"/>
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="Check file associations every sync." Margin="0,5,0,0" ToolTip="Helpful if you move the osu!Sync.exe to a different directory."/>

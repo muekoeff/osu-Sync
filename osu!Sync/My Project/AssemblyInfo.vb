@@ -13,7 +13,7 @@ Imports System.Windows
 
 <Assembly: AssemblyTitle("osu!Sync")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("naseweis520 Technologies")> 
+<Assembly: AssemblyCompany("nw520 Technologies")> 
 <Assembly: AssemblyProduct("osu!Sync")> 
 <Assembly: AssemblyCopyright("Copyright ©  2014")> 
 <Assembly: AssemblyTrademark("")> 
@@ -55,5 +55,5 @@ Imports System.Windows
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.0.0.6")> 
-<Assembly: AssemblyFileVersion("0.0.0.6")> 
+<Assembly: AssemblyVersion("0.0.0.7")> 
+<Assembly: AssemblyFileVersion("0.0.0.7")> 
