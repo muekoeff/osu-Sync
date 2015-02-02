@@ -22,7 +22,7 @@ Public Class BGWcallback__Action_Sync_GetIDs
     Public Property Return__Sync_Cache_Time As String
     Public Property Return__Sync_Warnings As String
     Public Property Progress__Current As Integer
-    Public Property Progress__CurrentAction As Integer  ' 0 = Sync | 1 = Writing Cache | 2 = Done | 3 = CacheFileOutdatedAndSyncing
+    Public Property Progress__CurrentAction As Integer  ' 0 = Sync | 1 = Writing Cache | 2 = Done | 3 = CacheFileOutdatedAndSyncing | 4 = Counting total folders
 End Class
 
 Class MainWindow
@@ -414,10 +414,6 @@ Class MainWindow
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
                                                .Arg__Mode = 1})
         Else
-            If Directory.Exists(Setting_osu_Path & "\Songs") Then
-                Interface_LoaderProgressBar.Maximum = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count
-                Console.WriteLine(Interface_LoaderProgressBar.Maximum)
-            End If
             Interface_SetLoader("Parsing installed beatmap sets...")
             TextBlock_Sync_LastUpdate.Content = "Syncing..."
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
@@ -1157,6 +1153,10 @@ Class MainWindow
 
         Select Case Arguments.Arg__Mode
             Case 0
+                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Progress__CurrentAction = 4,
+                                    .Progress__Current = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count})
+
                 Dim Beatmap_InvalidFolder As String = ""
                 Dim Beatmap_InvalidIDBeatmaps As String = ""
 
@@ -1329,19 +1329,21 @@ Class MainWindow
         Dim Answer As New BGWcallback__Action_Sync_GetIDs
         Answer = CType(e.UserState, BGWcallback__Action_Sync_GetIDs)
         Select Case Answer.Progress__CurrentAction
-            Case 0
+            Case 0  ' Sync
                 Interface_LoaderText.Text = Answer.Progress__Current & " beatmap sets parsed." & vbNewLine & "And still working..."
                 With Interface_LoaderProgressBar
                     .Value = Answer.Progress__Current
                     .Visibility = Windows.Visibility.Visible
                 End With
-            Case 1
+            Case 1  ' Writing Cache
                 Interface_LoaderProgressBar.IsIndeterminate = True
                 Interface_LoaderText.Text = Answer.Progress__Current & " beatmap sets in total parsed." & vbNewLine & "Writing cache file..."
-            Case 2
+            Case 2  ' Done
                 Interface_LoaderText.Text = Answer.Progress__Current & " beatmap sets in total parsed." & vbNewLine & "Generating interface..."
-            Case 3
+            Case 3  ' CacheFileOutdatedAndSyncing
                 TextBlock_Sync_LastUpdate.Content = "Cache file outdated/Syncing..."
+            Case 4  ' Counting total folders
+                Interface_LoaderProgressBar.Maximum = Answer.Progress__Current
         End Select
     End Sub
 
