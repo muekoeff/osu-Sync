@@ -2,7 +2,10 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      Height="400" ResizeMode="NoResize" Title="About | osu!Sync" Width="900"  WindowStartupLocation="CenterScreen" Icon="Resources/Icon.ico"
+                      Height="400" ResizeMode="NoResize"
+                      Title="About | osu!Sync"
+                      Width="900"
+                      WindowStartupLocation="CenterScreen"
                       ShowIconOnTitleBar="False"
                       EnableDWMDropShadow="True">
     <Grid Background="#FFF7F7F7">

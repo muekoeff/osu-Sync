@@ -10,8 +10,7 @@
                       Width="600"
                       WindowStartupLocation="CenterScreen"
                       ShowIconOnTitleBar="False"
-                      EnableDWMDropShadow="True"
-                      Icon="Resources/Icon.ico">
+                      EnableDWMDropShadow="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

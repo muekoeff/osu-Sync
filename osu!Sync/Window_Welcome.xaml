@@ -6,7 +6,6 @@
                       Height="500"
                       EnableDWMDropShadow="True"
                       ShowIconOnTitleBar="False"
-                      Icon="Resources/Icon.ico"
                       MinHeight="400"
                       MinWidth="600"
                       Width="750"

@@ -6,8 +6,7 @@
         Width="700"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="#FF444444"
-        Icon="Resources/Icon.ico">
+        Background="#FF444444">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>

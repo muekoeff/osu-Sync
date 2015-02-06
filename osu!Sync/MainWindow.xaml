@@ -12,7 +12,6 @@
                       ShowIconOnTitleBar="False"
                       Height="700"
                       MinHeight="600"
-                      Icon="Resources/Icon.ico"
                       Width="1000"
                       MinWidth="800"
                       WindowStartupLocation="CenterScreen"
