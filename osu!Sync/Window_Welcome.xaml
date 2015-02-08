@@ -26,6 +26,5 @@
         <TextBlock Margin="0,85,0,0" TextWrapping="Wrap" FontSize="20" Foreground="#FF222222" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"><Run Text="osu!Sync is a free tool which allows you to generate, export and import beatmaps to osu!."/><LineBreak/><Run/></TextBlock>
         <Button x:Name="Button_SkipLogin" Content="_Ok" VerticalAlignment="Top" Height="50" FontSize="14" Grid.Column="1" Grid.Row="2"/>
         <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="#FFAAAAAA" TextAlignment="Center" Grid.Column="1" Grid.Row="2"><Run Text="Please remember that this is an unofficial tool. We're not affiliated with osu! nor peppy."/></TextBlock>
-        <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="#FFAAAAAA" TextAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0"><Run Text="External sync currently in development."/></TextBlock>
     </Grid>
 </Controls:MetroWindow>
