@@ -106,6 +106,10 @@ Class MainWindow
 
     Private Declare Function ShowWindow Lib "user32" (ByVal handle As IntPtr, ByVal nCmdShow As Integer) As Integer
 
+    ''' <summary>
+    ''' Checks osu!Sync's file associations and creates them if necessary.
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub Action_CheckFileAssociation()
         Dim FileExtension_Check As Integer = 0        '0 = OK, 1 = Missing File Extension, 2 = Invalid/Outdated File Extension
         For Each FileExtension As String In FileExtensions
@@ -391,6 +395,10 @@ Class MainWindow
         End With
     End Sub
 
+    ''' <summary>
+    ''' Determines wheter to start or (when it's running) to focus osu!.
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub Action_StartOrFocusOsu()
         If Not Process.GetProcessesByName("osu!").Count > 0 Then
             If File.Exists(Setting_osu_Path & "\osu!.exe") Then
@@ -406,6 +414,10 @@ Class MainWindow
         End If
     End Sub
 
+    ''' <summary>
+    ''' Determines wether to load cache or to sync and will start the progress.
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub Action_Sync_GetIDs()
         Button_SyncDo.IsEnabled = False
         If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
@@ -436,357 +448,365 @@ Class MainWindow
         End Select
     End Sub
 
+    ''' <summary>
+    ''' Updates the beatmap list interface.
+    ''' </summary>
+    ''' <param name="BeatmapList">List of Beatmaps to display</param>
+    ''' <param name="Destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
+    ''' <param name="LastUpdateTime">Only required when <paramref name="Destination"/> = Installed</param>
+    ''' <remarks></remarks>
     Private Sub Action_UpdateBeatmapDisplay(ByVal BeatmapList As List(Of Beatmap), Optional ByVal Destination As String = "Installed", Optional LastUpdateTime As String = Nothing)
-        If Destination = "Installed" Then
-            If LastUpdateTime = Nothing Then
-                With TextBlock_Sync_LastUpdate
-                    .Content = "Last sync: " & DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
-                    .Tag = DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
-                End With
-            Else
-                With TextBlock_Sync_LastUpdate
-                    .Content = "Last sync: " & LastUpdateTime
-                    .Tag = LastUpdateTime
-                End With
-            End If
-
-            BeatmapWrapper.Children.Clear()
-
-            For Each SelectedBeatmap As Beatmap In BeatmapList
-                Dim UI_Grid = New Grid() With { _
-                    .Height = 100,
-                    .Margin = New Thickness(0, 0, 0, 10),
-                    .Tag = SelectedBeatmap,
-                    .Width = Double.NaN}
-
-                ' Color_27AE60 = Light Green
-                Dim UI_DecoBorderLeft = New Rectangle With { _
-                    .Fill = Color_27AE60,
-                    .Height = 100,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Tag = SelectedBeatmap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top,
-                    .Width = 10}
-
-                ' Color_555555 = Gray
-                Dim UI_TextBlock_Title = New TextBlock With { _
-                    .FontFamily = New FontFamily("Segoe UI"),
-                    .FontSize = 36,
-                    .Foreground = Color_555555,
-                    .Height = 48,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Margin = New Thickness(25, 0, 0, 0),
-                    .Text = SelectedBeatmap.Title,
-                    .Tag = SelectedBeatmap,
-                    .TextWrapping = TextWrapping.Wrap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-
-                ' Color_008136 = Dark Green
-                Dim UI_TextBlock_Caption = New TextBlock With { _
-                    .FontFamily = New FontFamily("Segoe UI Light"),
-                    .FontSize = 14,
-                    .Foreground = Color_008136,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Tag = SelectedBeatmap,
-                    .Margin = New Thickness(25, 47, 0, 0),
-                    .TextWrapping = TextWrapping.Wrap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-
-                If Not SelectedBeatmap.ID = -1 Then
-                    UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
-                Else
-                    UI_TextBlock_Caption.Text = "Unsubmitted | " & SelectedBeatmap.Artist
-                End If
-                If Not SelectedBeatmap.Creator = "Unknown" Then
-                    UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
-                End If
-
-                Dim UI_Checkbox_IsInstalled = New CheckBox With { _
-                    .Content = "Installed?",
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .IsChecked = True,
-                    .IsEnabled = False,
-                    .Margin = New Thickness(25, 72, 0, 0),
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-                ' Click Event
-                UI_Grid.Children.Add(UI_DecoBorderLeft)
-                UI_Grid.Children.Add(UI_TextBlock_Title)
-                UI_Grid.Children.Add(UI_TextBlock_Caption)
-                UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
-                BeatmapWrapper.Children.Add(UI_Grid)
-            Next
-            If BeatmapList.Count = 0 Then
-                Dim UI_TextBlock As New TextBlock With { _
-                    .FontSize = 72,
-                    .Foreground = Color_27AE60,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                    .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = "0 Beatmaps found.",
-                    .VerticalAlignment = Windows.VerticalAlignment.Center}
-                Dim UI_TextBlock_SubTitle As New TextBlock With { _
-                    .FontSize = 24,
-                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FF2ECC71"), Brush),
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                    .Text = "That's... impressive, I guess.",
-                    .VerticalAlignment = Windows.VerticalAlignment.Center}
-
-                With BeatmapWrapper.Children
-                    .Add(UI_TextBlock)
-                    .Add(UI_TextBlock_SubTitle)
-                End With
-            End If
-
-            TextBlock_BeatmapCounter.Text = BeatmapList.Count & " Beatmap sets found"
-            Button_SyncDo.IsEnabled = True
-        ElseIf Destination = "Importer" Then
-            Importer_BeatmapsTotal = 0
-            TabberItem_Import.Visibility = Windows.Visibility.Visible
-            Tabber.SelectedIndex = 1
-            ImporterWrapper.Children.Clear()
-            Importer_Cancel.IsEnabled = False
-            Importer_Run.IsEnabled = False
-            If Sync_Done = False Then
-                Sync_Done_ImporterRequest = True
-                Button_SyncDo.IsEnabled = False
-                Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With { _
-                   .Height = 150,
-                   .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                   .IsActive = True,
-                   .Margin = New Thickness(0, 100, 0, 0),
-                   .VerticalAlignment = Windows.VerticalAlignment.Center,
-                   .Width = 150}
-                Dim UI_TextBlock_SubTitle As New TextBlock With { _
-                           .FontSize = 24,
-                           .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                           .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                           .Text = "Please wait..." & vbNewLine & "Syncing beatmaps (check progress in Installed tab)",
-                           .TextAlignment = TextAlignment.Center,
-                           .VerticalAlignment = Windows.VerticalAlignment.Center}
-
-                Interface_LoaderText = UI_TextBlock_SubTitle
-                ImporterWrapper.Children.Add(UI_ProgressRing)
-                ImporterWrapper.Children.Add(UI_TextBlock_SubTitle)
-                Sync_Done_ImporterRequest_SaveValue = BeatmapList
-                Action_Sync_GetIDs()
-                Exit Sub
-            End If
-            For Each SelectedBeatmap As Beatmap In BeatmapList
-                Importer_Cancel.IsEnabled = True
-
-                Dim Check_IfInstalled As Boolean
-                If Sync_BeatmapList_ID_Installed.Contains(SelectedBeatmap.ID) Then
-                    Check_IfInstalled = True
-                Else
-                    Check_IfInstalled = False
-                End If
-                Dim UI_Checkbox_IsInstalled = New CheckBox With { _
-                    .Content = "Installed?",
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .IsChecked = Check_IfInstalled,
-                    .IsEnabled = False,
-                    .Margin = New Thickness(25, 72, 0, 0),
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-
-                Dim UI_Grid = New Grid() With { _
-                    .Height = 100,
-                    .Margin = New Thickness(0, 0, 0, 10),
-                    .Width = Double.NaN}
-
-                ' Color_27AE60 = Light Green
-                ' Color_E74C3C = Red
-                Dim UI_DecoBorderLeft = New Rectangle With { _
-                    .Height = 100,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top,
-                    .Width = 10}
-                If Check_IfInstalled Then
-                    UI_DecoBorderLeft.Fill = Color_27AE60
-                Else
-                    UI_DecoBorderLeft.Fill = Color_E74C3C
-                End If
-
-                ' Color_555555 = Gray
-                Dim UI_TextBlock_Title = New TextBlock With { _
-                    .FontFamily = New FontFamily("Segoe UI"),
-                    .FontSize = 36,
-                    .Foreground = Color_555555,
-                    .Height = 48,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Margin = New Thickness(25, 0, 0, 0),
-                    .Text = SelectedBeatmap.Title,
-                    .TextWrapping = TextWrapping.Wrap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-
-                ' Color_008136 = Dark Green
-                Dim UI_TextBlock_Caption = New TextBlock With { _
-                    .FontFamily = New FontFamily("Segoe UI Light"),
-                    .FontSize = 14,
-                    .Foreground = Color_008136,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
-                    .Margin = New Thickness(25, 47, 0, 0),
-                    .TextWrapping = TextWrapping.Wrap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-
-                Dim UI_Checkbox_IsSelected = New CheckBox With { _
-                    .Content = "Download and install",
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Right,
-                    .Margin = New Thickness(10, 5, 0, 0),
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
-                If Check_IfInstalled Then
-                    With UI_Checkbox_IsSelected
-                        .IsChecked = False
-                        .IsEnabled = False
+        Select Case Destination
+            Case "Installed"
+                If LastUpdateTime = Nothing Then
+                    With TextBlock_Sync_LastUpdate
+                        .Content = "Last sync: " & DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
+                        .Tag = DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
                     End With
                 Else
-                    With UI_Checkbox_IsSelected
-                        .IsChecked = True
-                        .IsEnabled = True
+                    With TextBlock_Sync_LastUpdate
+                        .Content = "Last sync: " & LastUpdateTime
+                        .Tag = LastUpdateTime
                     End With
                 End If
 
-                AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Importer_AddBeatmapToSelection
-                AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Importer_RemoveBeatmapFromSelection
+                BeatmapWrapper.Children.Clear()
 
-                Dim TagData As New Importer_TagData With { _
-                    .Beatmap = SelectedBeatmap,
-                    .UI_Checkbox_IsInstalled = UI_Checkbox_IsInstalled,
-                    .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
-                    .UI_DecoBorderLeft = UI_DecoBorderLeft,
-                    .UI_Grid = UI_Grid,
-                    .UI_TextBlock_Caption = UI_TextBlock_Caption,
-                    .UI_TextBlock_Title = UI_TextBlock_Title}
+                For Each SelectedBeatmap As Beatmap In BeatmapList
+                    Dim UI_Grid = New Grid() With { _
+                        .Height = 100,
+                        .Margin = New Thickness(0, 0, 0, 10),
+                        .Tag = SelectedBeatmap,
+                        .Width = Double.NaN}
 
-                If Check_IfInstalled = False Then
-                    Importer_BeatmapList_Tag_ToInstall.Add(TagData)
+                    ' Color_27AE60 = Light Green
+                    Dim UI_DecoBorderLeft = New Rectangle With { _
+                        .Fill = Color_27AE60,
+                        .Height = 100,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Tag = SelectedBeatmap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top,
+                        .Width = 10}
+
+                    ' Color_555555 = Gray
+                    Dim UI_TextBlock_Title = New TextBlock With { _
+                        .FontFamily = New FontFamily("Segoe UI"),
+                        .FontSize = 36,
+                        .Foreground = Color_555555,
+                        .Height = 48,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Margin = New Thickness(25, 0, 0, 0),
+                        .Text = SelectedBeatmap.Title,
+                        .Tag = SelectedBeatmap,
+                        .TextWrapping = TextWrapping.Wrap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+
+                    ' Color_008136 = Dark Green
+                    Dim UI_TextBlock_Caption = New TextBlock With { _
+                        .FontFamily = New FontFamily("Segoe UI Light"),
+                        .FontSize = 14,
+                        .Foreground = Color_008136,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Tag = SelectedBeatmap,
+                        .Margin = New Thickness(25, 47, 0, 0),
+                        .TextWrapping = TextWrapping.Wrap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+
+                    If Not SelectedBeatmap.ID = -1 Then
+                        UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
+                    Else
+                        UI_TextBlock_Caption.Text = "Unsubmitted | " & SelectedBeatmap.Artist
+                    End If
+                    If Not SelectedBeatmap.Creator = "Unknown" Then
+                        UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
+                    End If
+
+                    Dim UI_Checkbox_IsInstalled = New CheckBox With { _
+                        .Content = "Installed?",
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .IsChecked = True,
+                        .IsEnabled = False,
+                        .Margin = New Thickness(25, 72, 0, 0),
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    ' Click Event
+                    UI_Grid.Children.Add(UI_DecoBorderLeft)
+                    UI_Grid.Children.Add(UI_TextBlock_Title)
+                    UI_Grid.Children.Add(UI_TextBlock_Caption)
+                    UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
+                    BeatmapWrapper.Children.Add(UI_Grid)
+                Next
+                If BeatmapList.Count = 0 Then
+                    Dim UI_TextBlock As New TextBlock With { _
+                        .FontSize = 72,
+                        .Foreground = Color_27AE60,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                        .Margin = New Thickness(0, 100, 0, 0),
+                        .Text = "0 Beatmaps found.",
+                        .VerticalAlignment = Windows.VerticalAlignment.Center}
+                    Dim UI_TextBlock_SubTitle As New TextBlock With { _
+                        .FontSize = 24,
+                        .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FF2ECC71"), Brush),
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                        .Text = "That's... impressive, I guess.",
+                        .VerticalAlignment = Windows.VerticalAlignment.Center}
+
+                    With BeatmapWrapper.Children
+                        .Add(UI_TextBlock)
+                        .Add(UI_TextBlock_SubTitle)
+                    End With
                 End If
-                UI_Checkbox_IsInstalled.Tag = TagData
-                UI_Checkbox_IsSelected.Tag = TagData
-                UI_Checkbox_IsSelected.Tag = TagData
-                UI_DecoBorderLeft.Tag = TagData
-                UI_Grid.Tag = TagData
-                UI_TextBlock_Caption.Tag = TagData
-                UI_TextBlock_Title.Tag = TagData
 
-                UI_Grid.Children.Add(UI_DecoBorderLeft)
-                UI_Grid.Children.Add(UI_TextBlock_Title)
-                UI_Grid.Children.Add(UI_TextBlock_Caption)
-                UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
-                UI_Grid.Children.Add(UI_Checkbox_IsSelected)
-                ImporterWrapper.Children.Add(UI_Grid)
-                Importer_BeatmapsTotal += 1
-            Next
-
-            Importer_Cancel.IsEnabled = True
-            Importer_Info.ToolTip = Importer_Info.Text
-
-            If Importer_BeatmapList_Tag_ToInstall.Count = 0 Then
+                TextBlock_BeatmapCounter.Text = BeatmapList.Count & " Beatmap sets found"
+                Button_SyncDo.IsEnabled = True
+            Case "Importer"
+                Importer_BeatmapsTotal = 0
+                TabberItem_Import.Visibility = Windows.Visibility.Visible
+                Tabber.SelectedIndex = 1
+                ImporterWrapper.Children.Clear()
+                Importer_Cancel.IsEnabled = False
                 Importer_Run.IsEnabled = False
-            Else
-                Importer_Run.IsEnabled = True
-            End If
-            Importer_UpdateInfo("osu!Sync")
-            Select Case Setting_Tool_DownloadMirror
-                Case 0
-                    Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
-                Case 1
-                    Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
-            End Select
-        ElseIf Destination = "Exporter" Then
-            ExporterWrapper.Children.Clear()
-            For Each SelectedBeatmap As Beatmap In BeatmapList
-                Dim UI_Grid = New Grid() With { _
-                    .Height = 50,
-                    .Margin = New Thickness(0, 0, 0, 10),
-                    .Width = Double.NaN}
+                If Sync_Done = False Then
+                    Sync_Done_ImporterRequest = True
+                    Button_SyncDo.IsEnabled = False
+                    Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With { _
+                       .Height = 150,
+                       .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                       .IsActive = True,
+                       .Margin = New Thickness(0, 100, 0, 0),
+                       .VerticalAlignment = Windows.VerticalAlignment.Center,
+                       .Width = 150}
+                    Dim UI_TextBlock_SubTitle As New TextBlock With { _
+                               .FontSize = 24,
+                               .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                               .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                               .Text = "Please wait..." & vbNewLine & "Syncing beatmaps (check progress in Installed tab)",
+                               .TextAlignment = TextAlignment.Center,
+                               .VerticalAlignment = Windows.VerticalAlignment.Center}
 
-                ' Color_27AE60 = Light Green
-                Dim UI_DecoBorderLeft = New Rectangle With { _
-                    .Fill = Color_27AE60,
-                    .Height = 50,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top,
-                    .Width = 10}
+                    Interface_LoaderText = UI_TextBlock_SubTitle
+                    ImporterWrapper.Children.Add(UI_ProgressRing)
+                    ImporterWrapper.Children.Add(UI_TextBlock_SubTitle)
+                    Sync_Done_ImporterRequest_SaveValue = BeatmapList
+                    Action_Sync_GetIDs()
+                    Exit Sub
+                End If
+                For Each SelectedBeatmap As Beatmap In BeatmapList
+                    Importer_Cancel.IsEnabled = True
 
-                ' Color_555555 = Gray
-                Dim UI_TextBlock_Title = New TextBlock With { _
-                    .FontFamily = New FontFamily("Segoe UI"),
-                    .FontSize = 22,
-                    .Foreground = Color_555555,
-                    .Height = 30,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Margin = New Thickness(25, 0, 0, 0),
-                    .Text = SelectedBeatmap.Title,
-                    .TextWrapping = TextWrapping.Wrap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Dim Check_IfInstalled As Boolean
+                    If Sync_BeatmapList_ID_Installed.Contains(SelectedBeatmap.ID) Then
+                        Check_IfInstalled = True
+                    Else
+                        Check_IfInstalled = False
+                    End If
+                    Dim UI_Checkbox_IsInstalled = New CheckBox With { _
+                        .Content = "Installed?",
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .IsChecked = Check_IfInstalled,
+                        .IsEnabled = False,
+                        .Margin = New Thickness(25, 72, 0, 0),
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
 
-                ' Color_008136 = Dark Green
-                Dim UI_TextBlock_Caption = New TextBlock With { _
-                    .FontFamily = New FontFamily("Segoe UI Light"),
-                    .FontSize = 12,
-                    .Foreground = Color_008136,
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                    .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
-                    .Margin = New Thickness(25, 30, 0, 0),
-                    .TextWrapping = TextWrapping.Wrap,
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Dim UI_Grid = New Grid() With { _
+                        .Height = 100,
+                        .Margin = New Thickness(0, 0, 0, 10),
+                        .Width = Double.NaN}
 
-                If Not SelectedBeatmap.ID = -1 Then
-                    UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
+                    ' Color_27AE60 = Light Green
+                    ' Color_E74C3C = Red
+                    Dim UI_DecoBorderLeft = New Rectangle With { _
+                        .Height = 100,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top,
+                        .Width = 10}
+                    If Check_IfInstalled Then
+                        UI_DecoBorderLeft.Fill = Color_27AE60
+                    Else
+                        UI_DecoBorderLeft.Fill = Color_E74C3C
+                    End If
+
+                    ' Color_555555 = Gray
+                    Dim UI_TextBlock_Title = New TextBlock With { _
+                        .FontFamily = New FontFamily("Segoe UI"),
+                        .FontSize = 36,
+                        .Foreground = Color_555555,
+                        .Height = 48,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Margin = New Thickness(25, 0, 0, 0),
+                        .Text = SelectedBeatmap.Title,
+                        .TextWrapping = TextWrapping.Wrap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+
+                    ' Color_008136 = Dark Green
+                    Dim UI_TextBlock_Caption = New TextBlock With { _
+                        .FontFamily = New FontFamily("Segoe UI Light"),
+                        .FontSize = 14,
+                        .Foreground = Color_008136,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
+                        .Margin = New Thickness(25, 47, 0, 0),
+                        .TextWrapping = TextWrapping.Wrap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+
+                    Dim UI_Checkbox_IsSelected = New CheckBox With { _
+                        .Content = "Download and install",
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Right,
+                        .Margin = New Thickness(10, 5, 0, 0),
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    If Check_IfInstalled Then
+                        With UI_Checkbox_IsSelected
+                            .IsChecked = False
+                            .IsEnabled = False
+                        End With
+                    Else
+                        With UI_Checkbox_IsSelected
+                            .IsChecked = True
+                            .IsEnabled = True
+                        End With
+                    End If
+
+                    AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Importer_AddBeatmapToSelection
+                    AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Importer_RemoveBeatmapFromSelection
+
+                    Dim TagData As New Importer_TagData With { _
+                        .Beatmap = SelectedBeatmap,
+                        .UI_Checkbox_IsInstalled = UI_Checkbox_IsInstalled,
+                        .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
+                        .UI_DecoBorderLeft = UI_DecoBorderLeft,
+                        .UI_Grid = UI_Grid,
+                        .UI_TextBlock_Caption = UI_TextBlock_Caption,
+                        .UI_TextBlock_Title = UI_TextBlock_Title}
+
+                    If Check_IfInstalled = False Then
+                        Importer_BeatmapList_Tag_ToInstall.Add(TagData)
+                    End If
+                    UI_Checkbox_IsInstalled.Tag = TagData
+                    UI_Checkbox_IsSelected.Tag = TagData
+                    UI_Checkbox_IsSelected.Tag = TagData
+                    UI_DecoBorderLeft.Tag = TagData
+                    UI_Grid.Tag = TagData
+                    UI_TextBlock_Caption.Tag = TagData
+                    UI_TextBlock_Title.Tag = TagData
+
+                    UI_Grid.Children.Add(UI_DecoBorderLeft)
+                    UI_Grid.Children.Add(UI_TextBlock_Title)
+                    UI_Grid.Children.Add(UI_TextBlock_Caption)
+                    UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
+                    UI_Grid.Children.Add(UI_Checkbox_IsSelected)
+                    ImporterWrapper.Children.Add(UI_Grid)
+                    Importer_BeatmapsTotal += 1
+                Next
+
+                Importer_Cancel.IsEnabled = True
+                Importer_Info.ToolTip = Importer_Info.Text
+
+                If Importer_BeatmapList_Tag_ToInstall.Count = 0 Then
+                    Importer_Run.IsEnabled = False
                 Else
-                    UI_TextBlock_Caption.Text = "You can't export unsubmitted maps | " & SelectedBeatmap.Artist
+                    Importer_Run.IsEnabled = True
                 End If
-                If Not SelectedBeatmap.Creator = "Unknown" Then
-                    UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
-                End If
+                Importer_UpdateInfo("osu!Sync")
+                Select Case Setting_Tool_DownloadMirror
+                    Case 0
+                        Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
+                    Case 1
+                        Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
+                End Select
+            Case "Exporter"
+                ExporterWrapper.Children.Clear()
+                For Each SelectedBeatmap As Beatmap In BeatmapList
+                    Dim UI_Grid = New Grid() With { _
+                        .Height = 50,
+                        .Margin = New Thickness(0, 0, 0, 10),
+                        .Width = Double.NaN}
 
-                Dim UI_Checkbox_IsSelected = New CheckBox With { _
-                    .Content = "Select to export",
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Right,
-                    .IsChecked = True,
-                    .Margin = New Thickness(10, 5, 0, 0),
-                    .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    ' Color_27AE60 = Light Green
+                    Dim UI_DecoBorderLeft = New Rectangle With { _
+                        .Fill = Color_27AE60,
+                        .Height = 50,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top,
+                        .Width = 10}
 
-                If SelectedBeatmap.ID = -1 Then
-                    With UI_Checkbox_IsSelected
-                        .IsChecked = False
-                        .IsEnabled = False
-                    End With
-                    UI_DecoBorderLeft.Fill = Color_999999
-                Else
-                    AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Exporter_AddBeatmapToSelection
-                    AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
-                    AddHandler (UI_TextBlock_Title.MouseDown), AddressOf Exporter_DetermineWheterAddOrRemove
-                    AddHandler (UI_DecoBorderLeft.MouseDown), AddressOf Exporter_DetermineWheterAddOrRemove
-                End If
+                    ' Color_555555 = Gray
+                    Dim UI_TextBlock_Title = New TextBlock With { _
+                        .FontFamily = New FontFamily("Segoe UI"),
+                        .FontSize = 22,
+                        .Foreground = Color_555555,
+                        .Height = 30,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Margin = New Thickness(25, 0, 0, 0),
+                        .Text = SelectedBeatmap.Title,
+                        .TextWrapping = TextWrapping.Wrap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
 
-                Dim TagData As New Importer_TagData With { _
-                    .Beatmap = SelectedBeatmap,
-                    .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
-                    .UI_DecoBorderLeft = UI_DecoBorderLeft,
-                    .UI_Grid = UI_Grid,
-                    .UI_TextBlock_Caption = UI_TextBlock_Caption,
-                    .UI_TextBlock_Title = UI_TextBlock_Title}
+                    ' Color_008136 = Dark Green
+                    Dim UI_TextBlock_Caption = New TextBlock With { _
+                        .FontFamily = New FontFamily("Segoe UI Light"),
+                        .FontSize = 12,
+                        .Foreground = Color_008136,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
+                        .Margin = New Thickness(25, 30, 0, 0),
+                        .TextWrapping = TextWrapping.Wrap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
 
-                Exporter_BeatmapList_Tag_Selected.Add(TagData)
+                    If Not SelectedBeatmap.ID = -1 Then
+                        UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
+                    Else
+                        UI_TextBlock_Caption.Text = "You can't export unsubmitted maps | " & SelectedBeatmap.Artist
+                    End If
+                    If Not SelectedBeatmap.Creator = "Unknown" Then
+                        UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
+                    End If
 
-                UI_Checkbox_IsSelected.Tag = TagData
-                UI_Checkbox_IsSelected.Tag = TagData
-                UI_DecoBorderLeft.Tag = TagData
-                UI_Grid.Tag = TagData
-                UI_TextBlock_Caption.Tag = TagData
-                UI_TextBlock_Title.Tag = TagData
+                    Dim UI_Checkbox_IsSelected = New CheckBox With { _
+                        .Content = "Select to export",
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Right,
+                        .IsChecked = True,
+                        .Margin = New Thickness(10, 5, 0, 0),
+                        .VerticalAlignment = Windows.VerticalAlignment.Top}
 
-                UI_Grid.Children.Add(UI_DecoBorderLeft)
-                UI_Grid.Children.Add(UI_TextBlock_Title)
-                UI_Grid.Children.Add(UI_TextBlock_Caption)
-                UI_Grid.Children.Add(UI_Checkbox_IsSelected)
-                ExporterWrapper.Children.Add(UI_Grid)
-            Next
+                    If SelectedBeatmap.ID = -1 Then
+                        With UI_Checkbox_IsSelected
+                            .IsChecked = False
+                            .IsEnabled = False
+                        End With
+                        UI_DecoBorderLeft.Fill = Color_999999
+                    Else
+                        AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Exporter_AddBeatmapToSelection
+                        AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
+                        AddHandler (UI_TextBlock_Title.MouseDown), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler (UI_DecoBorderLeft.MouseDown), AddressOf Exporter_DetermineWheterAddOrRemove
+                    End If
 
-            TabberItem_Export.Visibility = Windows.Visibility.Visible
-            Tabber.SelectedIndex = 2
-        End If
+                    Dim TagData As New Importer_TagData With { _
+                        .Beatmap = SelectedBeatmap,
+                        .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
+                        .UI_DecoBorderLeft = UI_DecoBorderLeft,
+                        .UI_Grid = UI_Grid,
+                        .UI_TextBlock_Caption = UI_TextBlock_Caption,
+                        .UI_TextBlock_Title = UI_TextBlock_Title}
+
+                    Exporter_BeatmapList_Tag_Selected.Add(TagData)
+
+                    UI_Checkbox_IsSelected.Tag = TagData
+                    UI_Checkbox_IsSelected.Tag = TagData
+                    UI_DecoBorderLeft.Tag = TagData
+                    UI_Grid.Tag = TagData
+                    UI_TextBlock_Caption.Tag = TagData
+                    UI_TextBlock_Title.Tag = TagData
+
+                    UI_Grid.Children.Add(UI_DecoBorderLeft)
+                    UI_Grid.Children.Add(UI_TextBlock_Title)
+                    UI_Grid.Children.Add(UI_TextBlock_Caption)
+                    UI_Grid.Children.Add(UI_Checkbox_IsSelected)
+                    ExporterWrapper.Children.Add(UI_Grid)
+                Next
+
+                TabberItem_Export.Visibility = Windows.Visibility.Visible
+                Tabber.SelectedIndex = 2
+        End Select
     End Sub
 
     Private Sub Button_SyncDo_Click(sender As Object, e As RoutedEventArgs) Handles Button_SyncDo.Click
