@@ -16,7 +16,7 @@ End Class
 Public Class BGWcallback__Action_Sync_GetIDs
     Public Property Arg__Mode As Integer         ' 0 = Sync | 1 = LoadFromCache
     Public Property Arg__AutoSync As Boolean = False
-    Public Property Return__Status As Integer   ' 1 = FolderDoesntExist | 2 = LoadedFromCache
+    Public Property Return__Status As Integer   ' 1 = FolderDoesntExist | 2 = LoadedFromCache | 3 = CacheFileOutdatedAndSyncing
     Public Property Return__Sync_BeatmapList_Installed As New List(Of Beatmap)
     Public Property Return__Sync_BeatmapList_ID_Installed As New List(Of Integer)
     Public Property Return__Sync_Cache_Time As String
@@ -1309,18 +1309,22 @@ Class MainWindow
                         e.Result = Answer
                         Exit Sub
                     Else
-                        BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Progress__CurrentAction = 3})
+                        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                        e.Result = New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Return__Status = 3}
                     End If
                 Catch ex As System.IO.InvalidDataException
-                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Progress__CurrentAction = 3})
+                    File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                    e.Result = New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Return__Status = 3}
                 Catch ex As JsonReaderException
-                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Progress__CurrentAction = 3})
+                    File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                    e.Result = New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Return__Status = 3}
                 Catch ex As System.FormatException
-                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Progress__CurrentAction = 3})
+                    File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                    e.Result = New BGWcallback__Action_Sync_GetIDs With { _
+                                    .Return__Status = 3}
                 End Try
         End Select
     End Sub
@@ -1414,6 +1418,27 @@ Class MainWindow
                     Sync_Done_ImporterRequest = False
                     Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, "Importer")
                 End If
+            Case 3
+                Dim UI_TextBlock As New TextBlock With { _
+                    .FontSize = 72,
+                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                    .Margin = New Thickness(0, 100, 0, 0),
+                    .Text = "Last sync failed.",
+                    .VerticalAlignment = Windows.VerticalAlignment.Center}
+                Dim UI_TextBlock_SubTitle As New TextBlock With { _
+                    .FontSize = 24,
+                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                    .Text = "Cache file outdated",
+                    .VerticalAlignment = Windows.VerticalAlignment.Center}
+
+                With BeatmapWrapper.Children
+                    .Clear()
+                    .Add(UI_TextBlock)
+                    .Add(UI_TextBlock_SubTitle)
+                End With
+                Button_SyncDo.IsEnabled = True
         End Select
     End Sub
 #End Region

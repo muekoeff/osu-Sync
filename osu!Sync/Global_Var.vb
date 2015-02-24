@@ -19,8 +19,6 @@ Module Global_Var
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public Const I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | This message can be disabled in the settings"
-    Public I__UserAgent As String = "osu!Sync Client - " + My.Application.Info.Version.ToString
-    Public I__UserInfo As JObject
     Public Setting_osu_Path As String = "C:\Program Files (x86)\osu!"
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
