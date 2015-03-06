@@ -341,8 +341,8 @@ Class MainWindow
                         Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine & _
                             "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine & _
                             "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine & _
-                            "ID: " & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine & _
-                            "Title: " & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
+                            "ID: " & vbTab & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine & _
+                            "Title: " & vbTab & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
                     Next
                     File.Write(Content)
                     File.Close()

@@ -27,7 +27,7 @@ Module Global_Var
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
-    Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "\naseweis520\osu!Sync\Updater"
+    Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     Public Setting_Tool_UpdateUseDownloadPatcher As Boolean = True
     Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True

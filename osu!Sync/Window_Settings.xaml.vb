@@ -194,7 +194,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_UpdatePathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_UpdatePathDefault.Click
-        TextBox_Tool_UpdatePath.Text = Path.GetTempPath() & "\naseweis520\osu!Sync\Updater"
+        TextBox_Tool_UpdatePath.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     End Sub
 
     Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus
