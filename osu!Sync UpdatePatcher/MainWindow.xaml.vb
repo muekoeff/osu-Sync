@@ -69,6 +69,7 @@ Class MainWindow
         ' Assign variables
         For Each Current In I__StartUpArguments
             Dim CurrentSplit() As String = Current.Split(CChar("="))
+            CurrentSplit(1).Replace("\\", "\")      ' In order to correct a mistake from version 0.0.0.7
             Select Case CurrentSplit(0)
                 Case "-deletePackageAfter"
                     Argument_deletePackageAfter = CType(CurrentSplit(1), Boolean)
