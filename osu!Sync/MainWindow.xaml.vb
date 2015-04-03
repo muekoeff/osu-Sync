@@ -170,6 +170,124 @@ Class MainWindow
         End If
     End Sub
 
+    ''' <summary>
+    ''' Converts the given <code>List(Of Beatmap)</code> to a CSV-String.
+    ''' </summary>
+    ''' <param name="Source">List of beatmaps</param>
+    ''' <returns><code>List(Of Beatmap)</code> as CSV-String.</returns>
+    ''' <remarks></remarks>
+    Private Function Action_ConvertBeatmapListToCSV(ByVal Source As List(Of Beatmap)) As String
+        Dim Content As String = "sep=;" & vbNewLine
+        Content += "ID;Artist;Creator;Title" & vbNewLine
+        For Each SelectedBeatmap As Beatmap In Source
+            Content += SelectedBeatmap.ID & ";" & """" & SelectedBeatmap.Artist & """;""" & SelectedBeatmap.Creator & """;""" & SelectedBeatmap.Title & """" & vbNewLine
+        Next
+        Return Content
+    End Function
+
+    ''' <summary>
+    ''' Converts the given <code>List(Of Beatmap)</code> to HTML-Code.
+    ''' </summary>
+    ''' <param name="Source">List of beatmaps</param>
+    ''' <returns><code>List(Of Beatmap)</code> as HTML and possible warnings together in a String().</returns>
+    ''' <remarks></remarks>
+    Private Function Action_ConvertBeatmapListToHTML(ByVal Source As List(Of Beatmap)) As String()
+        Dim Failed As String = ""
+        Dim HTML_Source As String = "<!doctype html>" & vbNewLine & _
+            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine & _
+            "<html>" & vbNewLine & _
+            "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine & _
+            "<body>" & vbNewLine & _
+            "<div id=""Wrapper"">" & vbNewLine & _
+            vbTab & "<header><p>Beatmap List | osu!Sync</p></header>" & vbNewLine & _
+            vbTab & "<div id=""Sort""><ul><li><strong>Sort by...</strong></li><li><a class=""SortParameter"" href=""#Sort_Artist"">Artist</a></li><li><a class=""SortParameter"" href=""#Sort_Creator"">Creator</a></li><li><a class=""SortParameter"" href=""#Sort_SetName"">Name</a></li><li><a class=""SortParameter"" href=""#Sort_SetID"">Set ID</a></li></ul></div>" & vbNewLine & _
+            vbTab & "<div id=""ListWrapper"">"
+
+        For Each SelectedBeatmap As Beatmap In Source
+            If SelectedBeatmap.ID = -1 Then
+                Failed += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
+            Else
+                SelectedBeatmap.Artist.Replace("""", "'")
+                SelectedBeatmap.Creator.Replace("""", "'")
+                SelectedBeatmap.Title.Replace("""", "'")
+                HTML_Source += vbNewLine & vbTab & vbTab & "<article id=""beatmap-" & SelectedBeatmap.ID & """ data-artist=""" & SelectedBeatmap.Artist & """ data-creator=""" & SelectedBeatmap.Creator & """ data-setName=""" & SelectedBeatmap.Title & """ data-setID=""" & SelectedBeatmap.ID & """><a class=""DownloadArrow"" href=""https://osu.ppy.sh/d/" & SelectedBeatmap.ID & """ target=""_blank"">&#8250;</a><h1><span title=""Beatmap Set Name"">" & SelectedBeatmap.Title & "</span></h1><h2><span title=""Beatmap Set ID"">" & SelectedBeatmap.ID & "</span></h2><p><a class=""InfoTitle"" data-function=""artist"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Artist & """ target=""_blank"">Artist.</a> " & SelectedBeatmap.Artist & " <a class=""InfoTitle"" data-function=""creator"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Creator & """ target=""_blank"">Creator.</a> " & SelectedBeatmap.Creator & " <a class=""InfoTitle"" data-function=""overview"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & """ target=""_blank"">Overview.</a> <a class=""InfoTitle"" data-function=""discussion"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & "#disqus_thread"" target=""_blank"">Discussion.</a></p></article>"
+            End If
+        Next
+        HTML_Source += "</div>" & vbNewLine & _
+        "</div>" & vbNewLine & _
+        "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://naseweis520.ml/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine & _
+        "<script src=""http://code.jquery.com/jquery-latest.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js""></script>" & vbNewLine & _
+        "</body>" & vbNewLine & _
+        "</html>"
+
+        Dim Answer As String() = {HTML_Source, Failed}
+        Return Answer
+    End Function
+
+    ''' <summary>
+    ''' Converts the given <code>List(Of Beatmap)</code> to OSBL.
+    ''' </summary>
+    ''' <param name="Source">List of beatmaps</param>
+    ''' <returns><code>List(Of Beatmap)</code> as OSBL and possible warnings together in a String().</returns>
+    ''' <remarks></remarks>
+    Private Function Action_ConvertBeatmapListToOSBL(ByVal Source As List(Of Beatmap)) As String()
+        Dim Failed_Unsubmitted As String = ""
+        Dim Failed_Alread_Assigned As String = ""
+        Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
+        Dim Content_ProgrammInfo As New Dictionary(Of String, String)
+        Content_ProgrammInfo.Add("_author", "naseweis520")
+        Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
+        Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
+        Content_ProgrammInfo.Add("_programm", "osu!Sync")
+        Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
+        Content.Add("_info", Content_ProgrammInfo)
+        For Each SelectedBeatmap As Beatmap In Source
+            If SelectedBeatmap.ID = -1 Then
+                Failed_Unsubmitted += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
+            ElseIf Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
+                Failed_Alread_Assigned += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
+            Else
+                Dim ContentDictionary As New Dictionary(Of String, String)
+                With ContentDictionary
+                    .Add("artist", SelectedBeatmap.Artist)
+                    .Add("creator", SelectedBeatmap.Creator)
+                    .Add("id", SelectedBeatmap.ID.ToString)
+                    .Add("title", SelectedBeatmap.Title)
+                End With
+                Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
+            End If
+        Next
+        Dim Content_Json As String = JsonConvert.SerializeObject(Content)
+
+        Dim Failed As String = ""
+        If Not Failed_Unsubmitted = "" Then
+            Failed += "======   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Unsubmitted & vbNewLine & vbNewLine
+        End If
+        If Not Failed_Alread_Assigned = "" Then
+            Failed += "=====   ID already assigned   =====" & vbNewLine & "Beatmap IDs can be used only for one set." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Alread_Assigned
+        End If
+        Dim Answer As String() = {Content_Json, Failed}
+        Return Answer
+    End Function
+
+    ''' <summary>
+    ''' Converts the given <code>List(Of Beatmap)</code> to a TXT-String.
+    ''' </summary>
+    ''' <param name="Source">List of beatmaps</param>
+    ''' <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
+    ''' <remarks></remarks>
+    Private Function Action_ConvertBeatmapListToTXT(ByVal Source As List(Of Beatmap)) As String
+        Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
+        For Each SelectedBeatmap As Beatmap In Source
+            Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine & _
+                "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine & _
+                "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine & _
+                "ID: " & vbTab & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine & _
+                "Title: " & vbTab & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
+        Next
+        Return Content
+    End Function
+
     Public Sub Action_ExportBeatmapDialog(ByRef Source As List(Of Beatmap), Optional ByRef DialogTitle As String = "Export installed beatmaps")
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
@@ -188,175 +306,64 @@ Class MainWindow
 
         Select Case Dialog_SaveFile.FilterIndex
             Case 1      '.nw520-osblx
+                Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                    Dim Failed_Unsubmitted As String = ""
-                    Dim Failed_Alread_Assigned As String = ""
-                    Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
-                    Dim Content_ProgrammInfo As New Dictionary(Of String, String)
-                    Content_ProgrammInfo.Add("_author", "naseweis520")
-                    Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
-                    Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
-                    Content_ProgrammInfo.Add("_programm", "osu!Sync")
-                    Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
-                    Content.Add("_info", Content_ProgrammInfo)
-                    For Each SelectedBeatmap As Beatmap In Source
-                        If SelectedBeatmap.ID = -1 Then
-                            Failed_Unsubmitted += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
-                        ElseIf Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
-                            Failed_Alread_Assigned += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
-                        Else
-                            Dim ContentDictionary As New Dictionary(Of String, String)
-                            With ContentDictionary
-                                .Add("artist", SelectedBeatmap.Artist)
-                                .Add("creator", SelectedBeatmap.Creator)
-                                .Add("id", SelectedBeatmap.ID.ToString)
-                                .Add("title", SelectedBeatmap.Title)
-                            End With
-                            Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
-                        End If
-                    Next
-                    Dim Content_Json As String
-                    Content_Json = JsonConvert.SerializeObject(Content)
-                    File.Write(CompressString(Content_Json))
+                    File.Write(CompressString(Content(0)))
                     File.Close()
-
-                    Dim Failed As String = ""
-                    If Not Failed_Unsubmitted = "" Then
-                        Failed += "======   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Unsubmitted & vbNewLine & vbNewLine
-                    End If
-                    If Not Failed_Alread_Assigned = "" Then
-                        Failed += "=====   ID already assigned   =====" & vbNewLine & "Beatmap IDs can be used only for one set." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Alread_Assigned
-                    End If
-
-                    If Not Failed = "" Then
-                        If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
-                                "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                            Dim Window_Message As New Window_MessageWindow
-                            Window_Message.SetMessage(Failed, "Skipped Beatmaps", "Export")
-                            Window_Message.ShowDialog()
-                        End If
-                    End If
                 End Using
+                If Not Content(1) = "" Then
+                    If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
+                            "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                        Dim Window_Message As New Window_MessageWindow
+                        Window_Message.SetMessage(Content(1), "Skipped Beatmaps", "Export")
+                        Window_Message.ShowDialog()
+                    End If
+                End If
                 Action_OverlayShow("Export completed", "Exported as OSBLX-File")
                 Action_OverlayFadeOut()
             Case 2      '.nw520-osbl
+                Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                    Dim Failed_Unsubmitted As String = ""
-                    Dim Failed_Alread_Assigned As String = ""
-                    Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
-                    Dim Content_ProgrammInfo As New Dictionary(Of String, String)
-                    Content_ProgrammInfo.Add("_author", "naseweis520")
-                    Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
-                    Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
-                    Content_ProgrammInfo.Add("_programm", "osu!Sync")
-                    Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
-                    Content.Add("_info", Content_ProgrammInfo)
-                    For Each SelectedBeatmap As Beatmap In Source
-                        If SelectedBeatmap.ID = -1 Then
-                            Failed_Unsubmitted += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
-                        ElseIf Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
-                            Failed_Alread_Assigned += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
-                        Else
-                            Dim ContentDictionary As New Dictionary(Of String, String)
-                            With ContentDictionary
-                                .Add("artist", SelectedBeatmap.Artist)
-                                .Add("creator", SelectedBeatmap.Creator)
-                                .Add("id", SelectedBeatmap.ID.ToString)
-                                .Add("title", SelectedBeatmap.Title)
-                            End With
-                            Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
-                        End If
-                    Next
-                    Dim Serializer = New JsonSerializer()
-                    Serializer.Serialize(File, Content)
+                    File.Write(Content(0))
                     File.Close()
-
-                    Dim Failed As String = ""
-                    If Not Failed_Unsubmitted = "" Then
-                        Failed += "======   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Unsubmitted & vbNewLine & vbNewLine
-                    End If
-                    If Not Failed_Alread_Assigned = "" Then
-                        Failed += "=====   ID already assigned   =====" & vbNewLine & "Beatmap IDs can be used only for one set." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Alread_Assigned
-                    End If
-
-                    If Not Failed = "" Then
-                        If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
-                                "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                            Dim Window_Message As New Window_MessageWindow
-                            Window_Message.SetMessage(Failed, "Skipped Beatmaps", "Export")
-                            Window_Message.ShowDialog()
-                        End If
-                    End If
                 End Using
+                If Not Content(1) = "" Then
+                    If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
+                            "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                        Dim Window_Message As New Window_MessageWindow
+                        Window_Message.SetMessage(Content(1), "Skipped Beatmaps", "Export")
+                        Window_Message.ShowDialog()
+                    End If
+                End If
                 Action_OverlayShow("Export completed", "Exported as OSBL-File")
                 Action_OverlayFadeOut()
             Case 3      '.html
-                Dim Failed As String = ""
+                Dim Content As String() = Action_ConvertBeatmapListToHTML(Source)
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                    Dim HTML_Source As String = "<!doctype html>" & vbNewLine & _
-                        "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine & _
-                        "<html>" & vbNewLine & _
-                        "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine & _
-                        "<body>" & vbNewLine & _
-                        "<div id=""Wrapper"">" & vbNewLine & _
-                        vbTab & "<header><p>Beatmap List | osu!Sync</p></header>" & vbNewLine & _
-                        vbTab & "<div id=""Sort""><ul><li><strong>Sort by...</strong></li><li><a class=""SortParameter"" href=""#Sort_Artist"">Artist</a></li><li><a class=""SortParameter"" href=""#Sort_Creator"">Creator</a></li><li><a class=""SortParameter"" href=""#Sort_SetName"">Name</a></li><li><a class=""SortParameter"" href=""#Sort_SetID"">Set ID</a></li></ul></div>" & vbNewLine & _
-                        vbTab & "<div id=""ListWrapper"">"
-
-                    For Each SelectedBeatmap As Beatmap In Source
-                        If SelectedBeatmap.ID = -1 Then
-                            Failed += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
-                        Else
-                            SelectedBeatmap.Artist.Replace("""", "'")
-                            SelectedBeatmap.Creator.Replace("""", "'")
-                            SelectedBeatmap.Title.Replace("""", "'")
-                            HTML_Source += vbNewLine & vbTab & vbTab & "<article id=""beatmap-" & SelectedBeatmap.ID & """ data-artist=""" & SelectedBeatmap.Artist & """ data-creator=""" & SelectedBeatmap.Creator & """ data-setName=""" & SelectedBeatmap.Title & """ data-setID=""" & SelectedBeatmap.ID & """><a class=""DownloadArrow"" href=""https://osu.ppy.sh/d/" & SelectedBeatmap.ID & """ target=""_blank"">&#8250;</a><h1><span title=""Beatmap Set Name"">" & SelectedBeatmap.Title & "</span></h1><h2><span title=""Beatmap Set ID"">" & SelectedBeatmap.ID & "</span></h2><p><a class=""InfoTitle"" data-function=""artist"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Artist & """ target=""_blank"">Artist.</a> " & SelectedBeatmap.Artist & " <a class=""InfoTitle"" data-function=""creator"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Creator & """ target=""_blank"">Creator.</a> " & SelectedBeatmap.Creator & " <a class=""InfoTitle"" data-function=""overview"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & """ target=""_blank"">Overview.</a> <a class=""InfoTitle"" data-function=""discussion"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & "#disqus_thread"" target=""_blank"">Discussion.</a></p></article>"
-                        End If
-                    Next
-                    HTML_Source += "</div>" & vbNewLine & _
-                    "</div>" & vbNewLine & _
-                    "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://naseweis520.ml/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine & _
-                    "<script src=""http://code.jquery.com/jquery-latest.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js""></script>" & vbNewLine & _
-                    "</body>" & vbNewLine & _
-                    "</html>"
-                    File.Write(HTML_Source)
+                    File.Write(Content(0))
                     File.Close()
-                    If Not Failed = "" Then
-                        Failed = Failed.Insert(0, "=====   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s):")
-                        If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
-                                "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                            Dim Window_Message As New Window_MessageWindow
-                            Window_Message.SetMessage(Failed, "Skipped Beatmaps", "Export")
-                            Window_Message.ShowDialog()
-                        End If
-                    End If
                 End Using
+                If Not Content(1) = "" Then
+                    Content(1) = Content(1).Insert(0, "=====   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s):")
+                    If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
+                            "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                        Dim Window_Message As New Window_MessageWindow
+                        Window_Message.SetMessage(Content(1), "Skipped Beatmaps", "Export")
+                        Window_Message.ShowDialog()
+                    End If
+                End If
                 Action_OverlayShow("Export completed", "Exported as HTML-File")
                 Action_OverlayFadeOut()
             Case 4     '.txt
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                    Dim Content As String = _
-                        "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
-                    For Each SelectedBeatmap As Beatmap In Source
-                        Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine & _
-                            "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine & _
-                            "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine & _
-                            "ID: " & vbTab & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine & _
-                            "Title: " & vbTab & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
-                    Next
-                    File.Write(Content)
+                    File.Write(Action_ConvertBeatmapListToTXT(Source))
                     File.Close()
                 End Using
                 Action_OverlayShow("Export completed", "Exported as TXT-File")
                 Action_OverlayFadeOut()
             Case 5     '.csv
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                    Dim Content As String = "sep=;" & vbNewLine
-                    Content += "ID;Artist;Creator;Title" & vbNewLine
-                    For Each SelectedBeatmap As Beatmap In Source
-                        Content += SelectedBeatmap.ID & ";" & """" & SelectedBeatmap.Artist & """;""" & SelectedBeatmap.Creator & """;""" & SelectedBeatmap.Title & """" & vbNewLine
-                    Next
-                    File.Write(Content)
+                    File.Write(Action_ConvertBeatmapListToCSV(Source))
                     File.Close()
                 End Using
                 Action_OverlayShow("Export completed", "Exported as CSV-File")
@@ -987,23 +994,7 @@ Class MainWindow
             OSBL_Content = File.ReadAllText(Dialog_OpenFile.FileName)
             Select Case Path.GetExtension(Dialog_OpenFile.FileName)
                 Case ".nw520-osbl"
-                    'Export
-                    Dialog_SaveFile.Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx"
-                    Dialog_SaveFile.ShowDialog()
-
-                    If Not Dialog_SaveFile.FileName = "" Then
-                        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                            File.Write(CompressString(OSBL_Content))
-                            File.Close()
-                        End Using
-                    Else
-                        Action_OverlayShow("Conversion aborted", "")
-                        Action_OverlayFadeOut()
-                        Exit Sub
-                    End If
-
-                    Action_OverlayShow("Conversion completed", "Converted OSBL to OSBLX-File")
-                    Action_OverlayFadeOut()
+                    Action_ExportBeatmapDialog(Action_ConvertSavedJSONtoListBeatmap(JObject.Parse(OSBL_Content)), "Convert selected file")
                 Case ".nw520-osblx"
                     Try
                         OSBL_Content = DecompressString(OSBL_Content)
@@ -1016,23 +1007,7 @@ Class MainWindow
                         Action_OverlayFadeOut()
                         Exit Sub
                     End Try
-
-                    'Export
-                    Dialog_SaveFile.Filter = "osu!Sync Beatmap List|*.nw520-osbl"
-                    Dialog_SaveFile.ShowDialog()
-                    If Not Dialog_SaveFile.FileName = "" Then
-                        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
-                            File.Write(OSBL_Content)
-                            File.Close()
-                        End Using
-                    Else
-                        Action_OverlayShow("Conversion aborted", "")
-                        Action_OverlayFadeOut()
-                        Exit Sub
-                    End If
-
-                    Action_OverlayShow("Conversion completed", "Converted OSBLX to OSBL-File")
-                    Action_OverlayFadeOut()
+                    Action_ExportBeatmapDialog(Action_ConvertSavedJSONtoListBeatmap(JObject.Parse(OSBL_Content)), "Convert selected file")
             End Select
         Else
             Action_OverlayShow("Conversion aborted", "")
@@ -1103,7 +1078,7 @@ Class MainWindow
                     NotifyIcon.Visibility = Windows.Visibility.Visible
                 End If
             Case Else
-                    MenuItem_Program_MinimizeToTray.IsEnabled = False
+                MenuItem_Program_MinimizeToTray.IsEnabled = False
         End Select
     End Sub
 
@@ -1730,7 +1705,7 @@ Class MainWindow
             End If
             Button_SyncDo.IsEnabled = True
             Importer_Cancel.IsEnabled = True
-            End If
+        End If
     End Sub
 
     Private Sub Importer_Init()
