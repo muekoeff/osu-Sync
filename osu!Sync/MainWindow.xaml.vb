@@ -60,6 +60,7 @@ Class MainWindow
     Private Sync_LoadedFromCache As Boolean = False
 
     Private Exporter_BeatmapList_Tag_Selected As New List(Of Importer_TagData)
+    Private Exporter_BeatmapList_Tag_Unselected As New List(Of Importer_TagData)
 
     Private WithEvents Importer_CurrentFileName As String
     Private WithEvents Importer_Downloader As New Net.WebClient
@@ -1467,6 +1468,7 @@ Class MainWindow
         Dim SelectedSender As CheckBox = CType(sender, CheckBox)
         Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
         Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
+        Exporter_BeatmapList_Tag_Unselected.Remove(SelectedSender_Tag)
         Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
 
         If Exporter_BeatmapList_Tag_Selected.Count > 0 Then
@@ -1541,6 +1543,7 @@ Class MainWindow
         Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
         Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
         Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
+        Exporter_BeatmapList_Tag_Unselected.Add(SelectedSender_Tag)
 
         If Exporter_BeatmapList_Tag_Selected.Count = 0 Then
             Export_Run.IsEnabled = False

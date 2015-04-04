@@ -19,7 +19,7 @@ Module Global_Var
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public Const I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | This message can be disabled in the settings"
-    Public Setting_osu_Path As String = "C:\Program Files (x86)\osu!"
+    Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
     Public Setting_Tool_CheckFileAssociation As Boolean = True
@@ -128,6 +128,20 @@ Module Global_Var
 
         SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
         Return True
+    End Function
+
+    Function GetDetectedOsuPath() As String
+        If IO.Directory.Exists(Setting_osu_Path) Then
+            Return Setting_osu_Path
+        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!") Then
+            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!"
+        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
+            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!"
+        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
+            Return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!"
+        Else
+            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+        End If
     End Function
 
     Function md5(ByVal Input As String) As String

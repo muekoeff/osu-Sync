@@ -206,25 +206,15 @@ Public Class Window_Settings
             .Filter = "Executable Files (*.exe)|*.exe",
             .Multiselect = False,
             .Title = "Please open the osu!.exe"}
-        If IO.Directory.Exists(Setting_osu_Path) Then
-            SelectFile.InitialDirectory = Setting_osu_Path
-        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!") Then
-            SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!"
-        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
-            SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!"
-        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
-            SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!"
-        Else
-            SelectFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-        End If
+        SelectFile.InitialDirectory = GetDetectedOsuPath()
 
-        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
-            If IO.Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
-                TextBox_osu_Path.Text = IO.Path.GetDirectoryName(SelectFile.FileName)
-            Else
-                MsgBox("You selected the wrong file." & vbNewLine & "Please select the ""osu!.exe"".", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
+                If IO.Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
+                    TextBox_osu_Path.Text = IO.Path.GetDirectoryName(SelectFile.FileName)
+                Else
+                    MsgBox("You selected the wrong file." & vbNewLine & "Please select the ""osu!.exe"".", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                End If
             End If
-        End If
     End Sub
 
     Private Sub TextBox_Tool_UpdatePath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_UpdatePath.GotFocus
