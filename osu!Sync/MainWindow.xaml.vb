@@ -1559,6 +1559,33 @@ Class MainWindow
         ExporterWrapper.Children.Clear()
     End Sub
 
+    Private Sub Export_InvertSelection_Click(sender As Object, e As RoutedEventArgs) Handles Export_InvertSelection.Click
+        ' Save unselected elements
+        Dim ListUnselected As New List(Of Importer_TagData)
+        ListUnselected = Exporter_BeatmapList_Tag_Unselected.ToList
+        ' Save selected elements
+        Dim ListSelected As New List(Of Importer_TagData)
+        ListSelected = Exporter_BeatmapList_Tag_Selected.ToList
+
+        ' --- Loop for selected elements
+        Dim LoopPreviousCount As Integer = 0
+        Dim LoopCount As Integer = 0
+        Do While LoopCount < ListSelected.Count
+            ListSelected(LoopCount).UI_Checkbox_IsSelected.IsChecked = False
+            Console.WriteLine(LoopCount & " | " & ListSelected(LoopCount).UI_TextBlock_Title.Text)
+            LoopCount += 1
+        Loop
+
+        ' --- Loop for unselected elements
+        LoopPreviousCount = 0
+        LoopCount = 0
+        Do While LoopCount < ListUnselected.Count
+            ListUnselected(LoopCount).UI_Checkbox_IsSelected.IsChecked = True
+            Console.WriteLine(LoopCount & " | " & ListUnselected(LoopCount).UI_TextBlock_Title.Text)
+            LoopCount += 1
+        Loop
+    End Sub
+
     Private Sub Export_Run_Click(sender As Object, e As RoutedEventArgs) Handles Export_Run.Click
         Dim Result As New List(Of Beatmap)
 

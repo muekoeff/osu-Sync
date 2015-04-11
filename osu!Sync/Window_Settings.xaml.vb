@@ -204,17 +204,17 @@ Public Class Window_Settings
             .DefaultExt = "exe",
             .FileName = "osu!",
             .Filter = "Executable Files (*.exe)|*.exe",
+            .InitialDirectory = GetDetectedOsuPath(),
             .Multiselect = False,
             .Title = "Please open the osu!.exe"}
-        SelectFile.InitialDirectory = GetDetectedOsuPath()
 
-            If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
-                If IO.Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
-                    TextBox_osu_Path.Text = IO.Path.GetDirectoryName(SelectFile.FileName)
-                Else
-                    MsgBox("You selected the wrong file." & vbNewLine & "Please select the ""osu!.exe"".", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-                End If
+        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
+            If IO.Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
+                TextBox_osu_Path.Text = IO.Path.GetDirectoryName(SelectFile.FileName)
+            Else
+                MsgBox("You selected the wrong file." & vbNewLine & "Please select the ""osu!.exe"".", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             End If
+        End If
     End Sub
 
     Private Sub TextBox_Tool_UpdatePath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_UpdatePath.GotFocus

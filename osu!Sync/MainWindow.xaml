@@ -151,8 +151,9 @@
                         <RowDefinition Height="39"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button x:Name="Export_Run" Content="Export" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Width="225" Margin="0,3,5,0"/>
-                    <Button x:Name="Export_Cancel" Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Width="100" Margin="0,3,235,0"/>
+                    <Button x:Name="Export_Run" Content="_Export" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Width="225" Margin="0,3,5,0"/>
+                    <Button x:Name="Export_Cancel" Content="_Cancel" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Width="100" Margin="0,3,235,0"/>
+                    <Button x:Name="Export_InvertSelection" Content="_Invert Selection" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="175" Margin="5,3,0,0"/>
                     <ScrollViewer Grid.RowSpan="1" Grid.Row="1">
                         <StackPanel x:Name="ExporterWrapper">
                             <!-- [Example]
