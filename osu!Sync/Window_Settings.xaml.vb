@@ -53,6 +53,7 @@ Public Class Window_Settings
 
     Private Sub Action_ApplySettings()
         Setting_osu_Path = TextBox_osu_Path.Text
+        Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
         Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
         Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
@@ -91,6 +92,10 @@ Public Class Window_Settings
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
         Action_ApplySettings()
         Me.Close()
+    End Sub
+
+    Private Sub Button_osu_SongPathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_osu_SongPathDefault.Click
+        TextBox_osu_SongsPath.Text = TextBox_osu_Path.Text & "\Songs"
     End Sub
 
     Private Sub Button_Tool_DeleteConfiguration_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteConfiguration.Click
@@ -217,6 +222,15 @@ Public Class Window_Settings
         End If
     End Sub
 
+    Private Sub TextBox_osu_SongsPath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_SongsPath.GotFocus
+        Dim SelectFile As New Forms.FolderBrowserDialog With {
+            .Description = "Please select your songs folder."}
+
+        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
+            TextBox_osu_SongsPath.Text = SelectFile.SelectedPath
+        End If
+    End Sub
+
     Private Sub TextBox_Tool_UpdatePath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_UpdatePath.GotFocus
         Dim SelectDirectory As New Forms.FolderBrowserDialog With { _
             .Description = "Please select the directory where to save updates.",
@@ -244,6 +258,7 @@ Public Class Window_Settings
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
         TextBox_osu_Path.Text = Setting_osu_Path
+        TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
         TextBox_Tool_UpdatePath.Text = Setting_Tool_UpdateSavePath
     End Sub
 End Class

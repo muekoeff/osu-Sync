@@ -844,8 +844,8 @@ Class MainWindow
             Action_CheckFileAssociation()
         End If
 
-        If Directory.Exists(Setting_osu_Path & "\Songs") And Setting_Messages_Sync_MoreThan1000Sets Then
-            Dim counter As Integer = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count
+        If Directory.Exists(Setting_osu_SongsPath) And Setting_Messages_Sync_MoreThan1000Sets Then
+            Dim counter As Integer = Directory.GetDirectories(Setting_osu_SongsPath).Count
             If counter > 1000 Then
                 If MessageBox.Show("You've got about " & counter & " beatmap sets." & vbNewLine & "It will take some time (maybe some minutes) to read all sets, do you want to proceed?", I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
                     Exit Sub
@@ -1169,7 +1169,7 @@ Class MainWindow
         Arguments = TryCast(e.Argument, BGWcallback__Action_Sync_GetIDs)
         Dim Answer As New BGWcallback__Action_Sync_GetIDs
 
-        If Not Directory.Exists(Setting_osu_Path & "\Songs") Then
+        If Not Directory.Exists(Setting_osu_SongsPath) Then
             Answer.Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.FolderDoesNotExist
             e.Result = Answer
             Exit Sub
@@ -1179,12 +1179,12 @@ Class MainWindow
             Case BGWcallback_ActionSyncGetIDs_ArgMode.Sync
                 BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
                                     .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders,
-                                    .Progress__Current = Directory.GetDirectories(Setting_osu_Path & "\Songs").Count})
+                                    .Progress__Current = Directory.GetDirectories(Setting_osu_SongsPath).Count})
 
                 Dim Beatmap_InvalidFolder As String = ""
                 Dim Beatmap_InvalidIDBeatmaps As String = ""
 
-                For Each DirectoryList As String In Directory.GetDirectories(Setting_osu_Path & "\Songs")
+                For Each DirectoryList As String In Directory.GetDirectories(Setting_osu_SongsPath)
                     Dim DirectoryInfo As New DirectoryInfo(DirectoryList)
                     If Not DirectoryInfo.Name.ToLower = "failed" And Not DirectoryInfo.Name.ToLower = "tutorial" Then
                         Dim FoundFile As Boolean = False
@@ -1675,7 +1675,7 @@ Class MainWindow
                 TextBlock_Progress.Content = "Installing files..."
 
                 For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
-                    File.Move(FilePath, Setting_osu_Path & Path.GetFileName(FilePath))
+                    File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
                 Next
                 With Importer_Progress
                     .IsIndeterminate = False
@@ -1727,8 +1727,8 @@ Class MainWindow
             TextBlock_Progress.Content = "Installing files..."
 
             For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
-                If Not File.Exists(Setting_osu_Path & "\Songs\" & Path.GetFileName(FilePath)) Then
-                    File.Move(FilePath, Setting_osu_Path & "\Songs\" & Path.GetFileName(FilePath))
+                If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
+                    File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
                 Else
                     File.Delete(FilePath)
                 End If

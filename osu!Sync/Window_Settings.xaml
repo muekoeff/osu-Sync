@@ -42,7 +42,7 @@
                             <ComboBoxItem Content="Maximum once a month (Not recommended)."/>
                         </ComboBox>
                         <TextBlock TextWrapping="Wrap" Text="Download update package to..." Margin="0,5,0,0"/>
-                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Width="463" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Width="470" HorizontalAlignment="Left"/>
                         <Button x:Name="Button_Tool_UpdatePathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="25" ToolTip="Use the default path"/>
                         <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="Use update patcher to automatically install the updates." Margin="0,5,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="Delete update package after installation. (Only affects if update patcher enabled.)" Margin="0,5,0,0"/>
@@ -76,6 +76,9 @@
                     <StackPanel Margin="5">
                         <TextBlock TextWrapping="Wrap" Text="Path to osu!"/>
                         <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0" Text="Path to songs folder"/>
+                        <TextBox x:Name="TextBox_osu_SongsPath" Height="23" TextWrapping="Wrap" Width="470" HorizontalAlignment="Left"/>
+                        <Button x:Name="Button_osu_SongPathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="25" ToolTip="Use the default path"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
