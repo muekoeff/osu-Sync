@@ -924,6 +924,7 @@ Class MainWindow
     End Sub
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString
         ' Load Configuration
         If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
             Action_LoadSettings()
@@ -1154,6 +1155,11 @@ Class MainWindow
     Private Sub TextBlock_Programm_Updater_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Updater.MouseDown
         Dim Window_Updater As New Window_Updater
         Window_Updater.ShowDialog()
+    End Sub
+
+    Private Sub TextBlock_Programm_Version_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Version.MouseDown
+        Dim Window_About As New Window_About
+        Window_About.ShowDialog()
     End Sub
 
 #Region "Background Worker"

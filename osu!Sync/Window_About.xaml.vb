@@ -15,4 +15,8 @@
     Private Sub osuForum_MouseUp(sender As Object, e As MouseEventArgs) Handles osuForum.MouseUp
         Process.Start("https://osu.ppy.sh/forum/t/270446")
     End Sub
+
+    Private Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        TextBlock_Version.Text = "osu!Sync Version " & My.Application.Info.Version.ToString
+    End Sub
 End Class
