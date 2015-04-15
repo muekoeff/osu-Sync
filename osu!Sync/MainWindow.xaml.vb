@@ -883,8 +883,7 @@ Class MainWindow
                 NotifyIcon.ShowBalloonTip("Updater | osu!Sync", "A new version of osu!Sync is available." & vbNewLine & "Current: " & My.Application.Info.Version.ToString & " | Latest: " & CStr(Answer.SelectToken("latestVersion")), Hardcodet.Wpf.TaskbarNotification.BalloonIcon.Info)
             End If
             If Setting_Messages_Updater_OpenUpdater Then
-                Dim Window_Updater As New Window_Updater
-                Window_Updater.ShowDialog()
+                Interface_ShowUpdaterWindow()
             End If
         End If
     End Sub
@@ -922,6 +921,18 @@ Class MainWindow
         BeatmapWrapper.Children.Add(UI_ProgressRing)
         BeatmapWrapper.Children.Add(UI_TextBlock_SubTitle)
     End Sub
+
+    Shared Sub Interface_ShowSettingsWindow(Optional ByVal SelectedIndex As Integer = 0)
+        Dim Window_Settings As New Window_Settings
+        Window_Settings.Tabber.SelectedIndex = SelectedIndex
+        Window_Settings.ShowDialog()
+    End Sub
+
+    Shared Sub Interface_ShowUpdaterWindow()
+        Dim Window_Updater As New Window_Updater
+        Window_Updater.ShowDialog()
+    End Sub
+
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString
@@ -1086,8 +1097,7 @@ Class MainWindow
     End Sub
 
     Private Sub MenuItem_Help_Updater_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Help_Updater.Click
-        Dim Window_Updater As New Window_Updater
-        Window_Updater.ShowDialog()
+        Interface_ShowUpdaterWindow()
     End Sub
 
     Private Sub MenuItem_Program_Exit_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Exit.Click
@@ -1111,8 +1121,7 @@ Class MainWindow
     End Sub
 
     Private Sub MenuItem_Program_Settings_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Settings.Click
-        Dim Window_Settings As New Window_Settings
-        Window_Settings.ShowDialog()
+        Interface_ShowSettingsWindow()
         Action_Tool_UpdateSettings()
     End Sub
 
@@ -1135,8 +1144,7 @@ Class MainWindow
     Private Sub NotifyIcon_TrayBalloonTipClicked(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayBalloonTipClicked
         Select Case Notify_NextAction
             Case NotifyNextAction.OpenUpdater
-                Dim Window_Updater As New Window_Updater
-                Window_Updater.ShowDialog()
+                Interface_ShowUpdaterWindow
         End Select
     End Sub
 
@@ -1153,8 +1161,7 @@ Class MainWindow
     End Sub
 
     Private Sub TextBlock_Programm_Updater_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Updater.MouseDown
-        Dim Window_Updater As New Window_Updater
-        Window_Updater.ShowDialog()
+        Interface_ShowUpdaterWindow()
     End Sub
 
     Private Sub TextBlock_Programm_Version_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Version.MouseDown
@@ -1404,9 +1411,7 @@ Class MainWindow
                 End If
             Case BGWcallback_ActionSyncGetIDs_ReturnStatus.FolderDoesNotExist
                 MsgBox("Unable to find osu! folder." & vbNewLine & "Please specify the path to osu! in the following window.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                Dim Window_Settings As New Window_Settings
-                Window_Settings.Tabber.SelectedIndex = 1
-                Window_Settings.ShowDialog()
+                Interface_ShowSettingsWindow(1)
 
                 Dim UI_TextBlock As New TextBlock With { _
                     .FontSize = 72,

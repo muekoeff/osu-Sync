@@ -51,6 +51,14 @@ Public Class Window_Settings
         End Try
     End Function
 
+    Function ValidateEmail(ByVal email As String) As Boolean
+        Dim emailRegex As New System.Text.RegularExpressions.Regex(
+            "^(?<user>[^@]+)@(?<host>.+)$")
+        Dim emailMatch As System.Text.RegularExpressions.Match =
+           emailRegex.Match(email)
+        Return emailMatch.Success
+    End Function
+
     Private Sub Action_ApplySettings()
         Setting_osu_Path = TextBox_osu_Path.Text
         Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
@@ -92,6 +100,45 @@ Public Class Window_Settings
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
         Action_ApplySettings()
         Me.Close()
+    End Sub
+
+    Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
+        ' TODO: Check if server is available.
+        Dim Content As New Dictionary(Of String, String)
+        With Content
+            .Add("downloadMirror", Setting_Tool_DownloadMirror.ToString)
+            .Add("lastCheckForUpdates", Setting_Tool_LastCheckForUpdates)
+            .Add("operatingSystem", Environment.OSVersion.Version.ToString)
+            .Add("programVersion", My.Application.Info.Version.ToString)
+            .Add("systemArchitecture_is64bit", CStr(Environment.Is64BitOperatingSystem))
+            .Add("updateInterval", Setting_Tool_CheckForUpdates.ToString)
+        End With
+        TextBox_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Content)
+        With Button_Feedback_Prepare
+            .IsEnabled = False
+            .Visibility = Windows.Visibility.Collapsed
+        End With
+        With StackPanel_Feedback
+            .IsEnabled = True
+            .Margin = New Thickness(0, 0, 0, 0)
+            .Visibility = Windows.Visibility.Visible
+        End With
+    End Sub
+
+    Private Sub Button_Feedback_Submit_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Submit.Click
+        Dim RichTextBox_Feedback_Message_TextRange As New TextRange(RichTextBox_Feedback_Message.Document.ContentStart, RichTextBox_Feedback_Message.Document.ContentEnd)
+
+        If Not TextBox_Feedback_Username.Text.Length >= 5 Then
+            MsgBox("Your username seems to be quite short.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        ElseIf Not ValidateEmail(TextBox_Feedback_eMail.Text) Then
+            MsgBox("The selected email seems to be invalid.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        ElseIf ComboBox_Feedback_Category.SelectedIndex = -1 Then
+            MsgBox("You need to select a category.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        ElseIf Not RichTextBox_Feedback_Message_TextRange.Text.Length >= 5 Then
+            MsgBox("Your message seems to be quite short. Please try to explain as detailed as possible.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        Else
+            ' TODO: Submit form to server.
+        End If
     End Sub
 
     Private Sub Button_osu_SongPathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_osu_SongPathDefault.Click
