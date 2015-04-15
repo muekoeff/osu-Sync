@@ -172,7 +172,7 @@
             <Grid Width="{Binding ActualWidth, ElementName=StatusBar, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
                     <Label x:Name="TextBlock_Sync_LastUpdate" Content="Last sync: Never" Tag="Never" Foreground="{Binding Foreground, ElementName=StatusBar}"/>
-                    <Label x:Name="TextBlock_Programm_Updater" Content="Running osu!Sync by naseweis520" Foreground="{Binding Foreground, ElementName=StatusBar}" ToolTip="Open updater" Cursor="Hand"/>
+                    <Label x:Name="TextBlock_Programm_Updater" Content="Running osu!Sync by naseweis520" Foreground="{Binding Foreground, ElementName=StatusBar}" ToolTip="Open updater." Cursor="Hand"/>
                     <Label x:Name="TextBlock_Progress" Foreground="{Binding Foreground, ElementName=StatusBar}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">

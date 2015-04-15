@@ -1,6 +1,8 @@
-﻿Imports System.IO
+﻿Imports System.IO, System.Net
+Imports Newtonsoft.Json
 
 Public Class Window_Settings
+    Private WithEvents Client As New WebClient
 
     Private Function CreateShortcut(ByVal sLinkFile As String, _
                                    ByVal sTargetFile As String, _
@@ -103,7 +105,6 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
-        ' TODO: Check if server is available.
         Dim Content As New Dictionary(Of String, String)
         With Content
             .Add("downloadMirror", Setting_Tool_DownloadMirror.ToString)
@@ -137,7 +138,16 @@ Public Class Window_Settings
         ElseIf Not RichTextBox_Feedback_Message_TextRange.Text.Length >= 5 Then
             MsgBox("Your message seems to be quite short. Please try to explain as detailed as possible.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         Else
-            ' TODO: Submit form to server.
+            Dim Message As New Dictionary(Of String, String)
+            With Message
+                .Add("username", TextBox_Feedback_Username.Text)
+                .Add("email", TextBox_Feedback_eMail.Text)
+                .Add("category", ComboBox_Feedback_Category.Text)
+                .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
+            End With
+
+            Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
+            ' TODO: Catch exceptions
         End If
     End Sub
 
@@ -247,6 +257,12 @@ Public Class Window_Settings
 
     Private Sub Button_Tool_UpdatePathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_UpdatePathDefault.Click
         TextBox_Tool_UpdatePath.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
+    End Sub
+
+    Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
+        StackPanel_Feedback.IsEnabled = False
+        MsgBox("Server-side answer:" & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+        MsgBox("Feedback successfully submitted!", MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
     End Sub
 
     Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus
