@@ -132,7 +132,7 @@ Public Class Window_Settings
         If Not TextBox_Feedback_Username.Text.Length >= 5 Then
             MsgBox("Your username seems to be quite short.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf Not ValidateEmail(TextBox_Feedback_eMail.Text) Then
-            MsgBox("The selected email seems to be invalid.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox("The entered email seems to be invalid.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf ComboBox_Feedback_Category.SelectedIndex = -1 Then
             MsgBox("You need to select a category.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf Not RichTextBox_Feedback_Message_TextRange.Text.Length >= 5 Then
@@ -144,10 +144,13 @@ Public Class Window_Settings
                 .Add("email", TextBox_Feedback_eMail.Text)
                 .Add("category", ComboBox_Feedback_Category.Text)
                 .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
+                .Add("debugData", TextBox_Feedback_FurtherInfo.Text)
             End With
-
+            With StackPanel_Feedback
+                .IsEnabled = False
+            End With
+            Grid_Feedback_Overlay.Visibility = Windows.Visibility.Visible
             Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
-            ' TODO: Catch exceptions
         End If
     End Sub
 
@@ -260,9 +263,13 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
-        StackPanel_Feedback.IsEnabled = False
-        MsgBox("Server-side answer:" & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
-        MsgBox("Feedback successfully submitted!", MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+        Try
+            MsgBox("Server-side answer:" & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+        Catch ex As System.Reflection.TargetInvocationException
+            MsgBox("Unable to submit feedback!" & vbNewLine & "// Can't connect to server" & vbNewLine & vbNewLine & "Please try again later or contact us directly: team@naseweis520.ml .", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            Exit Sub
+        End Try
+        Grid_Feedback_Overlay.Visibility = Windows.Visibility.Collapsed
     End Sub
 
     Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus

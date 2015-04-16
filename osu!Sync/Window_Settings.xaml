@@ -95,8 +95,8 @@
             </TabItem>
             <TabItem Header="Feedback">
                 <ScrollViewer Background="#FFE5E5E5">
-                    <StackPanel Margin="5">
-                        <Button x:Name="Button_Feedback_Prepare" Height="40" Margin="0,75,0,0">Prepare Form</Button>
+                    <Grid Margin="5">
+                        <Button x:Name="Button_Feedback_Prepare" Height="40" Margin="0">Prepare Form</Button>
                         <StackPanel x:Name="StackPanel_Feedback" Margin="0,10,0,0" IsEnabled="False" Visibility="Collapsed">
                             <TextBlock TextWrapping="Wrap" Text="Your name/osu!Username"/>
                             <TextBox x:Name="TextBox_Feedback_Username"/>
@@ -117,7 +117,10 @@
                             <TextBox x:Name="TextBox_Feedback_FurtherInfo" IsEnabled="False"/>
                             <Button x:Name="Button_Feedback_Submit" Margin="0,5,0,0" Height="40">Submit</Button>
                         </StackPanel>
-                    </StackPanel>
+                        <Grid x:Name="Grid_Feedback_Overlay" Background="#CC27AE60" Visibility="Hidden">
+                            <TextBlock x:Name="Overlay_Title" Text="Submitting…" HorizontalAlignment="Center" Foreground="White" FontSize="48" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
