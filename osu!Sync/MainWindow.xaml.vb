@@ -69,6 +69,7 @@ Class MainWindow
     Private Importer_BeatmapList_Tag_Done As New List(Of Importer_TagData)
     Private Importer_BeatmapList_Tag_Failed As New List(Of Importer_TagData)
     Private Importer_BeatmapsTotal As Integer
+    Private Importer_Counter As Integer
     Private Importer_FilePath As String
 
     Private Color_999999 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF999999"), Brush)          ' Light Gray
@@ -1721,6 +1722,23 @@ Class MainWindow
 
     Private Sub Importer_Downloader_ToNextDownload()
         If Importer_BeatmapList_Tag_ToInstall.Count > 0 Then
+            If Not Setting_Tool_ImporterAutoInstallCounter = 0 And Setting_Tool_ImporterAutoInstallCounter <= Importer_Counter Then
+                Importer_Counter = 0
+                With Importer_Progress
+                    .IsIndeterminate = True
+                End With
+
+                Importer_UpdateInfo("Installing")
+                TextBlock_Progress.Content = "Installing files..."
+
+                For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+                    If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
+                        File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                    Else
+                        File.Delete(FilePath)
+                    End If
+                Next
+            End If
             Importer_DownloadBeatmap()
         Else
             With Importer_Progress
@@ -1864,6 +1882,7 @@ Class MainWindow
     End Sub
 
     Private Sub Importer_Downloader_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles Importer_Downloader.DownloadFileCompleted
+        Importer_Counter += 1
         If File.ReadAllBytes(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName).Length = 0 Then
             ' File Empty
             Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange

@@ -57,11 +57,18 @@
                             <ComboBoxItem Content="Show only when osu!Sync hidden - Disable NotifyBalloons."/>
                             <ComboBoxItem Content="Disable."/>
                         </ComboBox>
+                        <TextBlock TextWrapping="Wrap" Text="Import/Download" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
                         <TextBlock TextWrapping="Wrap" Text="Use this osu! Download Mirror..." Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_DownloadMirror">
                             <ComboBoxItem Content="Bloodcat.com"/>
                             <ComboBoxItem Content="Loli.al"/>
                         </ComboBox>
+                        <TextBlock TextWrapping="Wrap" Text="Auto-Import downloaded beatmaps after x beatmaps. (Needs to be numeric)" Margin="0,5,0,0"/>
+                        <Grid>
+                            <TextBox x:Name="Textbox_Tool_ImporterAutoInstallCounter" Margin="0" Width="500" Text="0" HorizontalAlignment="Left" ToolTip="Enter &quot;0&quot; to install when download finished." />
+                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Up" Margin="0" Content="˄" Width="20" HorizontalAlignment="Right" />
+                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Down" Margin="0,0,22,0"  Content="˅" Width="20" HorizontalAlignment="Right" />
+                        </Grid>
                         <Button x:Name="Button_CreateShortcut" Content="Create shortcut on desktop" Margin="0,15,0,0" FontSize="12"/>
                         <Button x:Name="Button_Tool_OpenDataFolder" Content="Open Data Folder" Margin="0,5,0,0" FontSize="12"/>
                         <Button x:Name="Button_Tool_UpdateFileAssociation" Content="Update/Reregister File Association" Margin="0,5,0,0" FontSize="12"/>

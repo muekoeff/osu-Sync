@@ -69,6 +69,10 @@ Public Class Window_Settings
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
+        Dim Val As Integer
+        If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
+            Setting_Tool_ImporterAutoInstallCounter = Val
+        End If
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
         Setting_Tool_UpdateDeleteFileAfter = CType(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked, Boolean)
         Setting_Tool_UpdateUseDownloadPatcher = CType(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked, Boolean)
@@ -189,6 +193,24 @@ Public Class Window_Settings
             MsgBox("File association successfully deleted, :/.", MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
         Else
             MsgBox("Unable to delete file association.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+        End If
+    End Sub
+
+    Private Sub Button_Tool_ImporterAutoInstallCounter_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAutoInstallCounter_Down.Click
+        Dim Val As Integer
+        If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
+            Textbox_Tool_ImporterAutoInstallCounter.Text = CStr(Val - 1)
+        Else
+            Textbox_Tool_ImporterAutoInstallCounter.Text = "10"
+        End If
+    End Sub
+
+    Private Sub Button_Tool_ImporterAutoInstallCounter_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAutoInstallCounter_Up.Click
+        Dim Val As Integer
+        If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
+            Textbox_Tool_ImporterAutoInstallCounter.Text = CStr(Val + 1)
+        Else
+            Textbox_Tool_ImporterAutoInstallCounter.Text = "10"
         End If
     End Sub
 
@@ -329,6 +351,7 @@ Public Class Window_Settings
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
+        Textbox_Tool_ImporterAutoInstallCounter.Text = Setting_Tool_ImporterAutoInstallCounter.ToString
         TextBox_Tool_UpdatePath.Text = Setting_Tool_UpdateSavePath
     End Sub
 End Class

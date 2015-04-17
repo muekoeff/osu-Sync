@@ -26,6 +26,7 @@ Module Global_Var
     Public Setting_Tool_CheckFileAssociation As Boolean = True
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
+    Public Setting_Tool_ImporterAutoInstallCounter As Integer = 10
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
@@ -179,6 +180,7 @@ Module Global_Var
                 .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
                 .Add("Setting_Tool_EnableNotifyIcon", CStr(Setting_Tool_EnableNotifyIcon))
+                .Add("Setting_Tool_ImporterAutoInstallCounter", CStr(Setting_Tool_ImporterAutoInstallCounter))
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
                 .Add("Setting_Tool_UpdateDeleteFileAfter", CStr(Setting_Tool_UpdateDeleteFileAfter))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
@@ -216,6 +218,9 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then
                 Setting_Tool_EnableNotifyIcon = CType(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"), Integer)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter") Is Nothing Then
+                Setting_Tool_ImporterAutoInstallCounter = CType(ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter"), Integer)
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
                 Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)
