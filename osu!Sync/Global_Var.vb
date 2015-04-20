@@ -9,8 +9,8 @@ Module Global_Var
                                          ".nw520-osblx"}
     Public FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList", _
                                              "naseweis520.osuSync.compressedOsuBeatmapList"}
-    Public FileExtensionsDescription() As String = {"osu! Beatmap List for osu!Sync", _
-                                                    "Compressed osu! Beatmap List for osu!Sync"}
+    Public FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"), _
+                                                    _e("GlobalVar_extensionCompressedBeatmapList")}
     Public FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2", _
                                              """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
 
@@ -18,7 +18,7 @@ Module Global_Var
     Public Const I__Path_Web_Host As String = "http://naseweis520.ml/osuSync"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
-    Public Const I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | This message can be disabled in the settings"
+    Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
     Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
@@ -34,6 +34,10 @@ Module Global_Var
     Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
+
+    Function _e(ByRef Text As String) As String
+        Return Application.Current.FindResource(Text).ToString
+    End Function
 
     Function CompressString(ByVal text As String) As String
         Dim buffer() As Byte = Encoding.UTF8.GetBytes(text)
@@ -123,7 +127,7 @@ Module Global_Var
                 Microsoft.Win32.Registry.ClassesRoot.DeleteSubKeyTree(className)
             End If
         Catch e As Exception
-            MsgBox("Sorry, something went wrong.", MsgBoxStyle.OkOnly)
+            MsgBox(_e("GlobalVar_sorrySomethingWentWrong"), MsgBoxStyle.OkOnly)
             MsgBox(e.Message, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
             Return False
         End Try
@@ -144,6 +148,15 @@ Module Global_Var
         Else
             Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
         End If
+    End Function
+
+    Function GetTranslationName(ByVal LanguageCode As String) As String
+        Select Case LanguageCode
+            Case "de"
+                Return "de_de"
+            Case Else
+                Return ""
+        End Select
     End Function
 
     Function md5(ByVal Input As String) As String
@@ -244,7 +257,7 @@ Module Global_Var
                 Setting_Messages_Updater_UnableToCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"), Boolean)
             End If
         Catch ex As Exception
-            MsgBox("Your configuration file seems to be invalid or outdated." & vbNewLine & "osu!Sync will delete it and restart.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             File.Delete(I__Path_Programm & "\Settings\Settings.config")
             System.Windows.Forms.Application.Restart()
             Application.Current.Shutdown()

@@ -94,12 +94,12 @@ Public Class Window_Settings
         If Not File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk") Then
             If CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk", _
                               System.Reflection.Assembly.GetExecutingAssembly().Location.ToString, "", _
-                              "Launch osu!Sync.") Then
+                              _e("WindowSettings_launchOsuSync")) Then
             Else
-                MsgBox("Unable to create shortcut!", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                MsgBox(_e("WindowSettings_unableToCreateShortcut"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             End If
         Else
-            MsgBox("It looks like there's already a shortcut on your desktop.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_theresAlreadyAShortcut"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End If
     End Sub
 
@@ -134,13 +134,13 @@ Public Class Window_Settings
         Dim RichTextBox_Feedback_Message_TextRange As New TextRange(RichTextBox_Feedback_Message.Document.ContentStart, RichTextBox_Feedback_Message.Document.ContentEnd)
 
         If Not TextBox_Feedback_Username.Text.Length >= 5 Then
-            MsgBox("Your username seems to be quite short.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_yourNameIsTooShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf Not ValidateEmail(TextBox_Feedback_eMail.Text) Then
-            MsgBox("The entered email seems to be invalid.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_yourEmailInvalid"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf ComboBox_Feedback_Category.SelectedIndex = -1 Then
-            MsgBox("You need to select a category.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_youHaveToSelectACategory"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf Not RichTextBox_Feedback_Message_TextRange.Text.Length >= 5 Then
-            MsgBox("Your message seems to be quite short. Please try to explain as detailed as possible.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_yourMessageSeemsToBeQuiteShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         Else
             Dim Message As New Dictionary(Of String, String)
             With Message
@@ -163,16 +163,16 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_DeleteConfiguration_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteConfiguration.Click
-        If MessageBox.Show("Are you really sure that you want to delete the configuration file (this cannot be undone)?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
+        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToDeleteConfig"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
             If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
                 File.Delete(I__Path_Programm & "\Settings\Settings.config")
 
-                If MessageBox.Show("Ok, that's done." & vbNewLine & "Do you want to restart osu!Sync now?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                     System.Windows.Forms.Application.Restart()
                 End If
                 Application.Current.Shutdown()
             Else
-                MsgBox("Nope, there is no configuration file...", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                MsgBox(_e("WindowSettings_nopeNoConfig"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             End If
         End If
     End Sub
@@ -190,9 +190,9 @@ Public Class Window_Settings
         Next
 
         If Not RegisterError Then
-            MsgBox("File association successfully deleted, :/.", MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_extensionDeleteDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
         Else
-            MsgBox("Unable to delete file association.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
         End If
     End Sub
 
@@ -218,12 +218,12 @@ Public Class Window_Settings
         If Directory.Exists(I__Path_Programm) Then
             Process.Start(I__Path_Programm)
         Else
-            MsgBox("Nope, this directory doesn't exist... yet.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End If
     End Sub
 
     Private Sub Button_Tool_Reset_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Reset.Click
-        If MessageBox.Show("Are you really sure that you want to reset osu!Sync (this cannot be undone)?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
+        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToResetOsuSync"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
             Dim RegisterError As Boolean = False
             Dim RegisterCounter As Integer = 0
             For Each Extension As String In FileExtensions
@@ -236,7 +236,7 @@ Public Class Window_Settings
             Next
 
             If RegisterError Then
-                MsgBox("Unable to delete file association.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             End If
             If Directory.Exists(I__Path_Programm) Then
                 Try
@@ -250,7 +250,7 @@ Public Class Window_Settings
                 Catch ex As IOException
                 End Try
             End If
-            If MessageBox.Show("Ok, that's done." & vbNewLine & "Do you want to restart osu!Sync now?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+            If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                 System.Windows.Forms.Application.Restart()
             End If
             Application.Current.Shutdown()
@@ -274,9 +274,9 @@ Public Class Window_Settings
         Next
 
         If Not RegisterError Then
-            MsgBox("File association successfully registered, thank you :).", MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
         Else
-            MsgBox("Unable to register file association.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
         End If
     End Sub
 
@@ -286,9 +286,9 @@ Public Class Window_Settings
 
     Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
         Try
-            MsgBox("Server-side answer:" & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
         Catch ex As System.Reflection.TargetInvocationException
-            MsgBox("Unable to submit feedback!" & vbNewLine & "// Can't connect to server" & vbNewLine & vbNewLine & "Please try again later or contact us directly: team@naseweis520.ml .", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             Exit Sub
         End Try
         Grid_Feedback_Overlay.Visibility = Windows.Visibility.Collapsed
@@ -300,23 +300,23 @@ Public Class Window_Settings
             .CheckPathExists = True,
             .DefaultExt = "exe",
             .FileName = "osu!",
-            .Filter = "Executable Files (*.exe)|*.exe",
+            .Filter = _e("WindowSettings_executableFiles") & " (*.exe)|*.exe",
             .InitialDirectory = GetDetectedOsuPath(),
             .Multiselect = False,
-            .Title = "Please open the osu!.exe"}
+            .Title = _e("WindowSettings_pleaseOpenOsu")}
 
         If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
             If IO.Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
                 TextBox_osu_Path.Text = IO.Path.GetDirectoryName(SelectFile.FileName)
             Else
-                MsgBox("You selected the wrong file." & vbNewLine & "Please select the ""osu!.exe"".", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                MsgBox(_e("WindowSettings_youSelectedTheWrongFile"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             End If
         End If
     End Sub
 
     Private Sub TextBox_osu_SongsPath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_SongsPath.GotFocus
         Dim SelectFile As New Forms.FolderBrowserDialog With {
-            .Description = "Please select your songs folder."}
+            .Description = _e("WindowSettings_pleaseSelectSongsFolder")}
 
         If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
             TextBox_osu_SongsPath.Text = SelectFile.SelectedPath
@@ -325,7 +325,7 @@ Public Class Window_Settings
 
     Private Sub TextBox_Tool_UpdatePath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_UpdatePath.GotFocus
         Dim SelectDirectory As New Forms.FolderBrowserDialog With { _
-            .Description = "Please select the directory where to save updates.",
+            .Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
             .ShowNewFolderButton = False}
         If IO.Directory.Exists(Setting_Tool_UpdateSavePath) Then
             SelectDirectory.SelectedPath = Setting_Tool_UpdateSavePath

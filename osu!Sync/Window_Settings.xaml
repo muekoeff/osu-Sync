@@ -1,131 +1,131 @@
 ﻿<Controls:MetroWindow x:Class="Window_Settings"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      Title="Settings | osu!Sync"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      EnableDWMDropShadow="True"
                       Height="700"
-                      MaxWidth="600"
                       MinHeight="700"
-                      MinWidth="600"
-                      Width="600"
-                      WindowStartupLocation="CenterScreen"
                       ShowIconOnTitleBar="False"
-                      EnableDWMDropShadow="True">
+                      Title="Settings | osu!Sync"
+                      Width="600"
+                      MinWidth="600"
+                      MaxWidth="600"
+                      WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
-            <RowDefinition/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="250" />
+            <RowDefinition />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <Image Source="Resources/WindowSettings_Header.png" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="250" Stretch="UniformToFill"/>
-        <TextBlock TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontSize="48" Foreground="#FF27AE60" Grid.Column="1" Height="64" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Button x:Name="Button_Done" Content="_Save" VerticalAlignment="Top" Height="50" FontSize="14" IsDefault="True" Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" HorizontalAlignment="Left" Width="360"/>
-        <Button x:Name="Button_Apply" Content="_Apply" VerticalAlignment="Top" Height="50" FontSize="14" Grid.Column="1" Grid.Row="2" Margin="0,0,110,0" HorizontalAlignment="Right" Width="100"/>
-        <Button x:Name="Button_Cancel" Content="_Cancel" VerticalAlignment="Top" Height="50" FontSize="14" IsCancel="True" Grid.Column="1" Grid.Row="2" Margin="0,0,5,0" HorizontalAlignment="Right" Width="100"/>
-        <TabControl x:Name="Tabber" Grid.Column="1" Margin="0,64,0,0" Grid.Row="1">
-            <TabItem Header="General">
+        <Image Height="250" Source="Resources/WindowSettings_Header.png" Stretch="UniformToFill" VerticalAlignment="Top" Grid.ColumnSpan="4" />
+        <TextBlock FontSize="48" Foreground="#FF27AE60" Height="64" Text="{DynamicResource MainWindow_settings}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" />
+        <Button x:Name="Button_Done" Content="{DynamicResource WindowSettings_save}" FontSize="14" Height="50" HorizontalAlignment="Left" IsDefault="True" Margin="5,0,0,0" VerticalAlignment="Top" Width="360" Grid.Column="1" Grid.Row="2" />
+        <Button x:Name="Button_Apply" Content="{DynamicResource WindowSettings_apply}" FontSize="14" Height="50" HorizontalAlignment="Right" Margin="0,0,110,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="2" />
+        <Button x:Name="Button_Cancel" Content="{DynamicResource MainWindow_cancel}" FontSize="14" Height="50" HorizontalAlignment="Right" IsCancel="True" Margin="0,0,5,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="2" />
+        <TabControl x:Name="Tabber" Margin="0,64,0,0" Grid.Column="1" Grid.Row="1">
+            <TabItem Header="{DynamicResource WindowSettings_general}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock TextWrapping="Wrap" Text="Updater" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555"/>
-                        <TextBlock TextWrapping="Wrap" Text="Check for updates..."/>
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" TextWrapping="Wrap" />
                         <ComboBox x:Name="ComboBox_Tool_CheckForUpdates">
-                            <ComboBoxItem Content="Every launch."/>
-                            <ComboBoxItem Content="Nevoar ヽ(≧Д≦)ノ (Not recommended)."/>
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_everyLaunch}" />
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_never}" />
                             <Separator />
-                            <ComboBoxItem Content="Maximum once a day (Recommended)."/>
-                            <ComboBoxItem Content="Maximum once a week."/>
-                            <ComboBoxItem Content="Maximum once a month (Not recommended)."/>
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceADay}" />
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAWeek}" />
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAMonth}" />
                         </ComboBox>
-                        <TextBlock TextWrapping="Wrap" Text="Download update package to..." Margin="0,5,0,0"/>
-                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" Width="470" HorizontalAlignment="Left"/>
-                        <Button x:Name="Button_Tool_UpdatePathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="25" ToolTip="Use the default path"/>
-                        <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="Use update patcher to automatically install the updates." Margin="0,5,0,0"/>
-                        <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="Delete update package after installation. (Only affects if update patcher enabled.)" Margin="0,5,0,0"/>
-                        <TextBlock TextWrapping="Wrap" Text="General" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
-                        <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="Autoload cache file on startup (Programm will hang)." Margin="0,5,0,0" ToolTip="Program will hang | Duration depends on total beatmap count"/>
-                        <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="Check file associations every sync." Margin="0,5,0,0" ToolTip="Helpful if you move the osu!Sync.exe to a different directory."/>
-                        <TextBlock TextWrapping="Wrap" Text="Enable NotifyIcon in Tray Area..." Margin="0,5,0,0"/>
+                        <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" TextWrapping="Wrap" Margin="0,5,0,0" />
+                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" HorizontalAlignment="Left" TextWrapping="Wrap" Width="462" />
+                        <Button x:Name="Button_Tool_UpdatePathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Height="25" HorizontalAlignment="Right" Margin="0,-25,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Width="80" />
+                        <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
+                        <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="General" TextWrapping="Wrap" Margin="0,15,0,0" VerticalAlignment="Top" />
+                        <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="{DynamicResource WindowSettings_autoloadCacheFileOnStartup}" Margin="0,5,0,0" />
+                        <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
+                        <TextBlock Text="Enable NotifyIcon in Tray Area..." TextWrapping="Wrap" Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">
-                            <ComboBoxItem Content="Show always - Enable NotifyBalloons."/>
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysEnableNotifyBalloons}" />
                             <Separator />
-                            <ComboBoxItem Content="Show always - Disable NotifyBalloons."/>
-                            <ComboBoxItem Content="Show only when osu!Sync hidden - Disable NotifyBalloons."/>
-                            <ComboBoxItem Content="Disable."/>
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysDisableNotifyBalloons}" />
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons}" />
+                            <ComboBoxItem Content="{DynamicResource WindowSettings_disable}" />
                         </ComboBox>
-                        <TextBlock TextWrapping="Wrap" Text="Import/Download" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
-                        <TextBlock TextWrapping="Wrap" Text="Use this osu! Download Mirror..." Margin="0,5,0,0"/>
+                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="Import/Download" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_useThisDownloadMirror}" TextWrapping="Wrap" />
                         <ComboBox x:Name="ComboBox_Tool_DownloadMirror">
-                            <ComboBoxItem Content="Bloodcat.com"/>
-                            <ComboBoxItem Content="Loli.al"/>
+                            <ComboBoxItem Content="Bloodcat.com" />
+                            <ComboBoxItem Content="Loli.al" />
                         </ComboBox>
-                        <TextBlock TextWrapping="Wrap" Text="Auto-Import downloaded beatmaps after x beatmaps. (Needs to be numeric)" Margin="0,5,0,0"/>
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" TextWrapping="Wrap" />
                         <Grid>
-                            <TextBox x:Name="Textbox_Tool_ImporterAutoInstallCounter" Margin="0" Width="500" Text="0" HorizontalAlignment="Left" ToolTip="Enter &quot;0&quot; to install when download finished." />
-                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Up" Margin="0" Content="˄" Width="20" HorizontalAlignment="Right" />
-                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Down" Margin="0,0,22,0"  Content="˅" Width="20" HorizontalAlignment="Right" />
+                            <TextBox x:Name="Textbox_Tool_ImporterAutoInstallCounter" HorizontalAlignment="Left" Margin="0" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" Width="500" />
+                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Up" Content="˄" HorizontalAlignment="Right" Margin="0" Width="20" />
+                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Down" Content="˅" HorizontalAlignment="Right" Margin="0,0,22,0" Width="20" />
                         </Grid>
-                        <Button x:Name="Button_CreateShortcut" Content="Create shortcut on desktop" Margin="0,15,0,0" FontSize="12"/>
-                        <Button x:Name="Button_Tool_OpenDataFolder" Content="Open Data Folder" Margin="0,5,0,0" FontSize="12"/>
-                        <Button x:Name="Button_Tool_UpdateFileAssociation" Content="Update/Reregister File Association" Margin="0,5,0,0" FontSize="12"/>
-                        <Button x:Name="Button_Tool_DeleteConfiguration" Content="Delete Configuration" Margin="0,15,0,0" FontSize="12"/>
-                        <Button x:Name="Button_Tool_DeleteFileAssociation" Content="Delete/Unregister File Association" Margin="0,5,0,0" FontSize="12"/>
-                        <Button x:Name="Button_Tool_Reset" Content="Reset osu!Sync (delete configuration, file associations, etc.)" Margin="0,15,0,0" FontSize="12"/>
+                        <Button x:Name="Button_CreateShortcut" Content="{DynamicResource WindowSettings_createShortcutOnDesktop}" FontSize="12" Margin="0,15,0,0" />
+                        <Button x:Name="Button_Tool_OpenDataFolder" Content="{DynamicResource WindowSettings_openDataFolder}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Button_Tool_UpdateFileAssociation" Content="{DynamicResource WindowSettings_updateFileAssocations}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Button_Tool_DeleteConfiguration" Content="{DynamicResource WindowSettings_deleteConfiguration}" FontSize="12" Margin="0,15,0,0" />
+                        <Button x:Name="Button_Tool_DeleteFileAssociation" Content="{DynamicResource WindowSettings_deleteFileAssociation}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Button_Tool_Reset" Content="{DynamicResource WindowSettings_resetOsuSync}" FontSize="12" Margin="0,15,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="osu!">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock TextWrapping="Wrap" Text="Path to osu!"/>
-                        <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap"/>
-                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0" Text="Path to songs folder"/>
-                        <TextBox x:Name="TextBox_osu_SongsPath" Height="23" TextWrapping="Wrap" Width="470" HorizontalAlignment="Left"/>
-                        <Button x:Name="Button_osu_SongPathDefault" Content="Default" FontSize="12" Width="72" HorizontalAlignment="Right" Margin="0,-25,0,0" Height="25" ToolTip="Use the default path"/>
+                        <TextBlock Text="{DynamicResource WindowSettings_pathToOsu}" TextWrapping="Wrap" />
+                        <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap" />
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_pathToSongsFolder}" TextWrapping="Wrap" />
+                        <TextBox x:Name="TextBox_osu_SongsPath" Height="23" HorizontalAlignment="Left" TextWrapping="Wrap" Width="462" />
+                        <Button x:Name="Button_osu_SongPathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Height="25" HorizontalAlignment="Right" Margin="0,-25,0,0" ToolTip="Use the default path" Width="80" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Messages">
+            <TabItem Header="{DynamicResource WindowSettings_notifications}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock TextWrapping="Wrap" Text="Sync" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555"/>
-                        <CheckBox x:Name="CheckBox_Messages_Sync_MoreThan1000Sets" Content="Warn if you've got more than 1000 beatmap sets" Margin="0,5,0,0"/>
-                        <TextBlock TextWrapping="Wrap" Text="Updater" VerticalAlignment="Top" FontSize="24" Foreground="#FF555555" Margin="0,15,0,0"/>
-                        <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="Open updater when new version is available" Margin="0,5,0,0"/>
-                        <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="Show message when update check failed" Margin="0,5,0,0"/>
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_sync}" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <CheckBox x:Name="CheckBox_Messages_Sync_MoreThan1000Sets" Content="{DynamicResource WindowSettings_warnIfMoreThan100Beatmaps}" Margin="0,5,0,0" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
+                        <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Feedback">
+            <TabItem Header="{DynamicResource WindowSettings_feedback}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <Grid Margin="5">
-                        <Button x:Name="Button_Feedback_Prepare" Height="40" Margin="0">Prepare Form</Button>
-                        <StackPanel x:Name="StackPanel_Feedback" Margin="0,10,0,0" IsEnabled="False" Visibility="Collapsed">
-                            <TextBlock TextWrapping="Wrap" Text="Your name/osu!Username"/>
+                        <Button x:Name="Button_Feedback_Prepare" Content="{DynamicResource WindowSettings_prepareForm}" Height="40" />
+                        <StackPanel x:Name="StackPanel_Feedback" IsEnabled="False" Margin="0,10,0,0" Visibility="Collapsed">
+                            <TextBlock Text="{DynamicResource WindowSettings_yourName}" TextWrapping="Wrap" />
                             <TextBox x:Name="TextBox_Feedback_Username"/>
-                            <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Text="Your eMail"/>
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_yourEmail}" TextWrapping="Wrap" />
                             <TextBox x:Name="TextBox_Feedback_eMail"/>
-                            <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Text="Category"/>
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_category}" TextWrapping="Wrap" />
                             <ComboBox x:Name="ComboBox_Feedback_Category">
-                                <ComboBoxItem>Bug</ComboBoxItem>
-                                <ComboBoxItem>Feature Request</ComboBoxItem>
-                                <ComboBoxItem>General Feedback</ComboBoxItem>
-                                <ComboBoxItem>Question/Help Request</ComboBoxItem>
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_bug}" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_featureRequest}" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_generalFeedback}" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_questionHelpRequest}" />
                                 <Separator/>
-                                <ComboBoxItem>Other</ComboBoxItem>
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_other}" />
                             </ComboBox>
-                            <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Text="Message"/>
-                            <RichTextBox x:Name="RichTextBox_Feedback_Message" Height="75"/>
-                            <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Text="Further Information"/>
-                            <TextBox x:Name="TextBox_Feedback_FurtherInfo" IsEnabled="False"/>
-                            <Button x:Name="Button_Feedback_Submit" Margin="0,5,0,0" Height="40">Submit</Button>
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" TextWrapping="Wrap" />
+                            <RichTextBox x:Name="RichTextBox_Feedback_Message" Height="75" />
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_furtherInformation}" TextWrapping="Wrap" />
+                            <TextBox x:Name="TextBox_Feedback_FurtherInfo" IsEnabled="False" />
+                            <Button x:Name="Button_Feedback_Submit" Content="{DynamicResource WindowSettings_submit}" Height="40" Margin="0,5,0,0" />
                         </StackPanel>
                         <Grid x:Name="Grid_Feedback_Overlay" Background="#CC27AE60" Visibility="Hidden">
-                            <TextBlock x:Name="Overlay_Title" Text="Submitting…" HorizontalAlignment="Center" Foreground="White" FontSize="48" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="Overlay_Title" FontSize="48" Foreground="White" HorizontalAlignment="Center" Text="{DynamicResource WindowSettings_submitting}" VerticalAlignment="Center" />
                         </Grid>
                     </Grid>
                 </ScrollViewer>

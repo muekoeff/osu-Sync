@@ -4,7 +4,7 @@ Imports Newtonsoft.Json.Linq
 
 Public Class Window_Updater
     Private WithEvents Client As New WebClient
-    Private DownloadMode As String = "Info"
+    Private DownloadMode As DownloadModes = DownloadModes.Info
     Private Update_DownloadToPath As String
     Private Update_Path As String
     Private Update_Path_UpdatePatcher As String
@@ -13,8 +13,15 @@ Public Class Window_Updater
     Private Update_FileExtension As String
     Private Update_TotalBytes As String
 
+    Private Enum DownloadModes
+        Info = 0
+        DownloadPatcher = 1
+        DownloadUpdate = 2
+        Changelog = 3
+    End Enum
+
     Private Sub Action_DownloadUpdate()
-        DownloadMode = "DownloadUpdate"
+        DownloadMode = DownloadModes.DownloadUpdate
         Client.DownloadFileAsync(New Uri(Update_Path), Path.GetTempPath() & "naseweis520\osu!Sync\Update\osu!Sync Version " & Update_Version & Update_FileExtension & ".tmp")
     End Sub
 
@@ -37,7 +44,7 @@ Public Class Window_Updater
                 If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp") Then
                     File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp")
                 End If
-                DownloadMode = "DownloadPatcher"
+                DownloadMode = DownloadModes.DownloadUpdate
                 Client.DownloadFileAsync(New Uri(Update_Path_UpdatePatcher), Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp")
             Else
                 Action_DownloadUpdate()
@@ -49,13 +56,13 @@ Public Class Window_Updater
 
     Private Sub Client_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles Client.DownloadFileCompleted
         Select Case DownloadMode
-            Case "DownloadPatcher"
+            Case DownloadModes.DownloadPatcher
                 Action_DownloadUpdate()
                 File.Move(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp", _
                               Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe")
-            Case "DownloadUpdate"
+            Case DownloadModes.DownloadUpdate
                 Me.Cursor = Cursors.Arrow
-                TextBlock_Status.Text = "Download finished. (" & Update_TotalBytes & " Bytes)"
+                TextBlock_Status.Text = _e("WindowUpdater_downloadFinished").Replace("%0", Update_TotalBytes)
                 Button_Done.IsEnabled = True
                 If Not Directory.Exists(Setting_Tool_UpdateSavePath) Then
                     Directory.CreateDirectory(Setting_Tool_UpdateSavePath)
@@ -72,12 +79,12 @@ Public Class Window_Updater
                         Application.Current.Shutdown()
                         Exit Sub
                     Else
-                        If MessageBox.Show("Do you want to open the path where the updated files have been saved?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                        If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                             Process.Start(Setting_Tool_UpdateSavePath)
                         End If
                     End If
                 Else
-                    MsgBox("Unable to move update to correct directory, because there's already a file with the same name.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                    MsgBox(_e("WindowUpdater_unableToMoveUpdate"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
                     Process.Start(Path.GetTempPath() & "naseweis520\osu!Sync\Update")
                 End If
         End Select
@@ -85,57 +92,55 @@ Public Class Window_Updater
 
     Private Sub Client_DownloadProgressChanged(sender As Object, e As System.Net.DownloadProgressChangedEventArgs) Handles Client.DownloadProgressChanged
         Select Case DownloadMode
-            Case "DownloadPatcher"
+            Case DownloadModes.DownloadPatcher
                 Update_TotalBytes = CStr(e.TotalBytesToReceive)
                 ProgressBar_Progress.Value = e.ProgressPercentage
-                TextBlock_Status.Text = "Downloading Installer | " & e.BytesReceived & " of " & e.TotalBytesToReceive & " Bytes"
-            Case "DownloadUpdate"
+                TextBlock_Status.Text = _e("WindowUpdater_downloadingInstaller").Replace("%0", e.BytesReceived.ToString).Replace("%1", e.TotalBytesToReceive.ToString)
+            Case DownloadModes.DownloadUpdate
                 Update_TotalBytes = CStr(e.TotalBytesToReceive)
                 ProgressBar_Progress.Value = e.ProgressPercentage
-                TextBlock_Status.Text = "Downloading Update Package | " & e.BytesReceived & " of " & e.TotalBytesToReceive & " Bytes"
+                TextBlock_Status.Text = _e("WindowUpdater_downloadingUpdatePackage").Replace("%0", e.BytesReceived.ToString).Replace("%1", e.TotalBytesToReceive.ToString)
         End Select
     End Sub
 
     Private Sub Client_DownloadStringCompleted(sender As Object, e As Net.DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
         Select Case DownloadMode
-            case  "Info"
+            Case DownloadModes.Info
                 Dim Answer As JObject
                 Try
                     Answer = JObject.Parse(e.Result)
                 Catch ex As Newtonsoft.Json.JsonReaderException
-                    Clipboard.SetText("https://osu.ppy.sh/forum/t/270446")
-                    MsgBox("Unable to check for updates!" & vbNewLine & "// Invalid Server response" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    'Console.WriteLine(e.Result)
-                    TextBlock_Header_VersionInfo.Text += " | Can't fetch latest version"
-                    TextBlock_Status.Text = "Can't fetch latest version"
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_cantFetchLatestVersion")
+                    TextBlock_Status.Text = _e("WindowUpdater_cantFetchLatestVersion")
                     ProgressBar_Progress.IsIndeterminate = False
                     Exit Sub
                 Catch ex As System.Reflection.TargetInvocationException
                     Clipboard.SetText("https://osu.ppy.sh/forum/t/270446")
-                    MsgBox("Unable to check for updates!" & vbNewLine & "// Can't connect to server" & vbNewLine & vbNewLine & "Try to close and reopen the updater. If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    TextBlock_Header_VersionInfo.Text += " | Can't fetch latest version"
-                    TextBlock_Status.Text = "Can't fetch latest version"
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_cantFetchLatestVersion")
+                    TextBlock_Status.Text = _e("WindowUpdater_cantFetchLatestVersion")
                     ProgressBar_Progress.IsIndeterminate = False
                     Exit Sub
                 End Try
 
-                TextBlock_Header_VersionInfo.Text += " | Latest version: " & CStr(Answer.SelectToken("latestVersion"))
+                TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_latestVersion").Replace("%0", CStr(Answer.SelectToken("latestVersion")))
 
                 Dim Paragraph As New Paragraph()
                 Dim FlowDocument As New FlowDocument()
                 With Paragraph
-                    .Inlines.Add(New Run("Date of Publication: " & CStr(Answer.SelectToken("dateOfPublication"))))
+                    .Inlines.Add(New Run(_e("WindowUpdater_dateOfPublication").Replace("%0", CStr(Answer.SelectToken("dateOfPublication")))))
                     .Inlines.Add(New LineBreak())
-                    .Inlines.Add(New Run("Published by: " & CStr(Answer.SelectToken("admin"))))
+                    .Inlines.Add(New Run(_e("WindowUpdater_publishedBy").Replace("%0", CStr(Answer.SelectToken("admin")))))
                 End With
                 FlowDocument.Blocks.Add(Paragraph)
                 RichTextBox_Changelog.Document = FlowDocument
 
                 If CStr(Answer.SelectToken("latestVersion")) = My.Application.Info.Version.ToString Then
-                    TextBlock_Status.Text = "You're using the latest version of osu!Sync"
+                    TextBlock_Status.Text = _e("WindowUpdater_yourUsingTheLatestVersion")
                     Me.Cursor = Cursors.Arrow
                 Else
-                    TextBlock_Status.Text = "A new version of osu!Sync is available"
+                    TextBlock_Status.Text = _e("WindowUpdater_aNewVersionIsAvailable")
 
                     Update_Path = CStr(Answer.SelectToken("downloadPath"))
                     Update_Path_UpdatePatcher = CStr(Answer.SelectToken("downloadPath_updatePatcher"))
@@ -147,24 +152,24 @@ Public Class Window_Updater
                     Button_Update.IsEnabled = True
                 End If
 
-                DownloadMode = "Changelog"
+                DownloadMode = DownloadModes.Changelog
                 If Not CStr(Answer.SelectToken("pathToChangelog")) = "undefined" Then
                     Client.DownloadStringAsync(New Uri(CStr(Answer.SelectToken("pathToChangelog")) & "?version=" & My.Application.Info.Version.ToString & "&from=Updater"))
                 Else
                     Paragraph = New Paragraph()
                     With Paragraph
-                        .Inlines.Add(New Run("No changelog available"))
+                        .Inlines.Add(New Run(_e("WindowUpdater_noChangelogAvailable")))
                     End With
                     RichTextBox_Changelog.Document.Blocks.Add(Paragraph)
                     ProgressBar_Progress.IsIndeterminate = False
                     Me.Cursor = Cursors.Arrow
                 End If
-            Case "Changelog"
+            Case DownloadModes.Changelog
                 Dim Results() As String
                 Try
                     Results = Split(e.Result, "\n")
                 Catch ex As System.Reflection.TargetInvocationException
-                    MsgBox("Unable to dowload changelog!" & vbNewLine & "// Can't connect to server", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    MsgBox(_e("WindowUpdater_unableToDownloadChangelog") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                     ProgressBar_Progress.IsIndeterminate = False
                     Me.Cursor = Cursors.Arrow
                     Exit Sub
@@ -185,9 +190,9 @@ Public Class Window_Updater
 
     Private Sub Window_Updater_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If Setting_Tool_UpdateUseDownloadPatcher = False Then
-            Button_Update.Content = "Download"
+            Button_Update.Content = _e("WindowUpdater_download")
         End If
-        TextBlock_Header_VersionInfo.Text = "Your version: " & My.Application.Info.Version.ToString
+        TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
         Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=Updater&updaterInterval=" & Setting_Tool_CheckForUpdates))
     End Sub
 End Class

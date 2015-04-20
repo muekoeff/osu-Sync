@@ -28,6 +28,12 @@ Public Enum NotifyNextAction
     OpenUpdater = 1
 End Enum
 
+Public Enum UpdateBeatmapDisplayDestinations
+    Installed = 0
+    Importer = 1
+    Exporter = 2
+End Enum
+
 Public Class Beatmap
     Public Property ID As Integer
     Public Property Title As String
@@ -50,8 +56,8 @@ End Class
 Class MainWindow
     Private WithEvents Client As New WebClient
     Private WithEvents FadeOut As New DoubleAnimation()
-    Private FadeOut_Status As String = "FadeOut"
     Private Notify_NextAction As NotifyNextAction
+
     Private Sync_BeatmapList_Installed As New List(Of Beatmap)
     Private Sync_BeatmapList_ID_Installed As New List(Of Integer)
     Private Sync_Done As Boolean = False
@@ -165,9 +171,9 @@ Class MainWindow
         If Not FileExtension_Check = 0 Then
             Dim MessageBox_Content As String
             If FileExtension_Check = 1 Then
-                MessageBox_Content = "It looks like some file extensions aren't associated with osu!Sync." & vbNewLine & "Do you want to fix that?"
+                MessageBox_Content = _e("MainWindow_extensionNotAssociated") & vbNewLine & _e("MainWindow_doYouWantToFixThat")
             Else
-                MessageBox_Content = "It looks like some file extensions have got wrong values." & vbNewLine & "Do you want to fix that?"
+                MessageBox_Content = _e("MainWindow_extensionWrong") & vbNewLine & _e("MainWindow_doYouWantToFixThat")
             End If
             If MessageBox.Show(MessageBox_Content, I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                 Dim RegisterError As Boolean = False
@@ -186,9 +192,9 @@ Class MainWindow
                 Next
 
                 If Not RegisterError Then
-                    MsgBox("File association successfully registered, thank you :).", MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+                    MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
                 Else
-                    MsgBox("Unable to register file association.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                 End If
             End If
         End If
@@ -285,10 +291,10 @@ Class MainWindow
 
         Dim Failed As String = ""
         If Not Failed_Unsubmitted = "" Then
-            Failed += "======   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Unsubmitted & vbNewLine & vbNewLine
+            Failed += "======   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Unsubmitted & vbNewLine & vbNewLine
         End If
         If Not Failed_Alread_Assigned = "" Then
-            Failed += "=====   ID already assigned   =====" & vbNewLine & "Beatmap IDs can be used only for one set." & vbNewLine & vbNewLine & "// Beatmap set(s): " & Failed_Alread_Assigned
+            Failed += "=====   " & _e("MainWindow_idAlreadyAssigned") & "   =====" & vbNewLine & _e("MainWindow_beatmapsIdsCanBeUsedOnlyOnce") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Alread_Assigned
         End If
         Dim Answer As String() = {Content_Json, Failed}
         Return Answer
@@ -312,18 +318,21 @@ Class MainWindow
         Return Content
     End Function
 
-    Public Sub Action_ExportBeatmapDialog(ByRef Source As List(Of Beatmap), Optional ByRef DialogTitle As String = "Export installed beatmaps")
+    Public Sub Action_ExportBeatmapDialog(ByRef Source As List(Of Beatmap), Optional ByRef DialogTitle As String = "")
+        If DialogTitle = "" Then
+            DialogTitle = _e("MainWindow_exportInstalledBeatmaps1")
+        End If
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
             .AddExtension = True
-            .Filter = "Compressed osu!Sync Beatmap List|*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl|HTML page (Can't be imported)|*.html|Text file (Can't be imported)|*.txt|CSV file (Can't be imported)|*.csv"
+            .Filter = _e("MainWindow_compressedOsuSyncBeatmapList") & "|*.nw520-osblx|" & _e("MainWindow_osuSyncBeatmapList") & "|*.nw520-osbl|HTML page (" & _e("MainWindow_notImportable") & ")|*.html|Text file (" & _e("MainWindow_notImportable") & ")|*.txt|CSV file (" & _e("MainWindow_notImportable") & ")|*.csv"
             .OverwritePrompt = True
             .Title = DialogTitle
             .ValidateNames = True
             .ShowDialog()
         End With
         If Dialog_SaveFile.FileName = "" Then
-            Action_OverlayShow("Export aborted", "")
+            Action_OverlayShow(_e("MainWindow_exportAborted"), "")
             Action_OverlayFadeOut()
             Exit Sub
         End If
@@ -336,14 +345,14 @@ Class MainWindow
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
-                            "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine & _
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
-                        Window_Message.SetMessage(Content(1), "Skipped Beatmaps", "Export")
+                        Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
                         Window_Message.ShowDialog()
                     End If
                 End If
-                Action_OverlayShow("Export completed", "Exported as OSBLX-File")
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBLX"))
                 Action_OverlayFadeOut()
             Case 2      '.nw520-osbl
                 Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
@@ -352,14 +361,14 @@ Class MainWindow
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
-                            "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine & _
+                             _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
-                        Window_Message.SetMessage(Content(1), "Skipped Beatmaps", "Export")
+                        Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
                         Window_Message.ShowDialog()
                     End If
                 End If
-                Action_OverlayShow("Export completed", "Exported as OSBL-File")
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBL"))
                 Action_OverlayFadeOut()
             Case 3      '.html
                 Dim Content As String() = Action_ConvertBeatmapListToHTML(Source)
@@ -368,29 +377,29 @@ Class MainWindow
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    Content(1) = Content(1).Insert(0, "=====   Unsubmitted Beatmap Sets   =====" & vbNewLine & "Unsubmitted beatmap sets can't be exported to this format." & vbNewLine & vbNewLine & "// Beatmap set(s):")
-                    If MessageBox.Show("Some beatmap sets hadn't been exported." & vbNewLine & _
-                            "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                    Content(1) = Content(1).Insert(0, "=====   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":")
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine & _
+                             _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
-                        Window_Message.SetMessage(Content(1), "Skipped Beatmaps", "Export")
+                        Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
                         Window_Message.ShowDialog()
                     End If
                 End If
-                Action_OverlayShow("Export completed", "Exported as HTML-File")
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "HTML"))
                 Action_OverlayFadeOut()
             Case 4     '.txt
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Action_ConvertBeatmapListToTXT(Source))
                     File.Close()
                 End Using
-                Action_OverlayShow("Export completed", "Exported as TXT-File")
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "TXT"))
                 Action_OverlayFadeOut()
             Case 5     '.csv
                 Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Action_ConvertBeatmapListToCSV(Source))
                     File.Close()
                 End Using
-                Action_OverlayShow("Export completed", "Exported as CSV-File")
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "CSV"))
                 Action_OverlayFadeOut()
         End Select
     End Sub
@@ -435,7 +444,7 @@ Class MainWindow
             If File.Exists(Setting_osu_Path & "\osu!.exe") Then
                 Process.Start(Setting_osu_Path & "\osu!.exe")
             Else
-                MsgBox("Unable to find osu!.exe", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                MsgBox(_e("MainWindow_unableToFindOsuExe"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             End If
         Else
             For Each ObjProcess As Process In Process.GetProcessesByName("osu!")
@@ -453,12 +462,12 @@ Class MainWindow
         Button_SyncDo.IsEnabled = False
         If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
             Interface_SetLoader("Reading cache file...")
-            TextBlock_Sync_LastUpdate.Content = "Reading cache..."
+            TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
                                                .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache})
         Else
-            Interface_SetLoader("Parsing installed beatmap sets...")
-            TextBlock_Sync_LastUpdate.Content = "Syncing..."
+            Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
+            TextBlock_Sync_LastUpdate.Content = _e("MainWindow_syncing")
             BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
         End If
 
@@ -486,17 +495,17 @@ Class MainWindow
     ''' <param name="Destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
     ''' <param name="LastUpdateTime">Only required when <paramref name="Destination"/> = Installed</param>
     ''' <remarks></remarks>
-    Private Sub Action_UpdateBeatmapDisplay(ByVal BeatmapList As List(Of Beatmap), Optional ByVal Destination As String = "Installed", Optional LastUpdateTime As String = Nothing)
+    Private Sub Action_UpdateBeatmapDisplay(ByVal BeatmapList As List(Of Beatmap), Optional ByVal Destination As UpdateBeatmapDisplayDestinations = UpdateBeatmapDisplayDestinations.Installed, Optional LastUpdateTime As String = Nothing)
         Select Case Destination
-            Case "Installed"
+            Case UpdateBeatmapDisplayDestinations.Installed
                 If LastUpdateTime = Nothing Then
                     With TextBlock_Sync_LastUpdate
-                        .Content = "Last sync: " & DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
+                        .Content = _e("MainWindow_lastSync").Replace("%0", DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
                         .Tag = DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
                     End With
                 Else
                     With TextBlock_Sync_LastUpdate
-                        .Content = "Last sync: " & LastUpdateTime
+                        .Content = _e("MainWindow_lastSync").Replace("%0", LastUpdateTime)
                         .Tag = LastUpdateTime
                     End With
                 End If
@@ -546,14 +555,14 @@ Class MainWindow
                     If Not SelectedBeatmap.ID = -1 Then
                         UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
                     Else
-                        UI_TextBlock_Caption.Text = "Unsubmitted | " & SelectedBeatmap.Artist
+                        UI_TextBlock_Caption.Text = _e("MainWindow_unsubmitted") & " | " & SelectedBeatmap.Artist
                     End If
                     If Not SelectedBeatmap.Creator = "Unknown" Then
                         UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
                     End If
 
                     Dim UI_Checkbox_IsInstalled = New CheckBox With { _
-                        .Content = "Installed?",
+                        .Content = _e("MainWindow_installed") & "?",
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = True,
                         .IsEnabled = False,
@@ -572,13 +581,13 @@ Class MainWindow
                         .Foreground = Color_27AE60,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Center,
                         .Margin = New Thickness(0, 100, 0, 0),
-                        .Text = "0 Beatmaps found.",
+                        .Text = _e("MainWindow_beatmapsFound").Replace("%0", "0"),
                         .VerticalAlignment = Windows.VerticalAlignment.Center}
                     Dim UI_TextBlock_SubTitle As New TextBlock With { _
                         .FontSize = 24,
                         .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FF2ECC71"), Brush),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                        .Text = "That's... impressive, I guess.",
+                        .Text = _e("MainWindow_thatsImpressiveIGuess"),
                         .VerticalAlignment = Windows.VerticalAlignment.Center}
 
                     With BeatmapWrapper.Children
@@ -587,9 +596,9 @@ Class MainWindow
                     End With
                 End If
 
-                TextBlock_BeatmapCounter.Text = BeatmapList.Count & " Beatmap sets found"
+                TextBlock_BeatmapCounter.Text = _e("MainWindow_beatmapsFound").Replace("%0", BeatmapList.Count.ToString)
                 Button_SyncDo.IsEnabled = True
-            Case "Importer"
+            Case UpdateBeatmapDisplayDestinations.Importer
                 Importer_BeatmapsTotal = 0
                 TabberItem_Import.Visibility = Windows.Visibility.Visible
                 Tabber.SelectedIndex = 1
@@ -610,7 +619,7 @@ Class MainWindow
                                .FontSize = 24,
                                .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                                .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                               .Text = "Please wait..." & vbNewLine & "Syncing beatmaps (check progress in Installed tab)",
+                               .Text = _e("MainWindow_pleaseWait") & vbNewLine & _e("MainWindow_syncing"),
                                .TextAlignment = TextAlignment.Center,
                                .VerticalAlignment = Windows.VerticalAlignment.Center}
 
@@ -631,7 +640,7 @@ Class MainWindow
                         Check_IfInstalled = False
                     End If
                     Dim UI_Checkbox_IsInstalled = New CheckBox With { _
-                        .Content = "Installed?",
+                        .Content = _e("MainWindow_installed") & "?",
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = Check_IfInstalled,
                         .IsEnabled = False,
@@ -680,7 +689,7 @@ Class MainWindow
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With { _
-                        .Content = "Download and install",
+                        .Content = _e("MainWindow_downloadAndInstall"),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Right,
                         .Margin = New Thickness(10, 5, 0, 0),
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
@@ -739,11 +748,11 @@ Class MainWindow
                 Importer_UpdateInfo("osu!Sync")
                 Select Case Setting_Tool_DownloadMirror
                     Case 0
-                        Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
+                        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Bloodcat.com"
                     Case 1
-                        Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
+                        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Loli.al"
                 End Select
-            Case "Exporter"
+            Case UpdateBeatmapDisplayDestinations.Exporter
                 ExporterWrapper.Children.Clear()
                 For Each SelectedBeatmap As Beatmap In BeatmapList
                     Dim UI_Grid = New Grid() With { _
@@ -785,14 +794,14 @@ Class MainWindow
                     If Not SelectedBeatmap.ID = -1 Then
                         UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
                     Else
-                        UI_TextBlock_Caption.Text = "You can't export unsubmitted maps | " & SelectedBeatmap.Artist
+                        UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelectedBeatmap.Artist
                     End If
                     If Not SelectedBeatmap.Creator = "Unknown" Then
                         UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
                     End If
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With { _
-                        .Content = "Select to export",
+                        .Content = _e("MainWindow_selectToExport"),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Right,
                         .IsChecked = True,
                         .Margin = New Thickness(10, 5, 0, 0),
@@ -848,7 +857,7 @@ Class MainWindow
         If Directory.Exists(Setting_osu_SongsPath) And Setting_Messages_Sync_MoreThan1000Sets Then
             Dim counter As Integer = Directory.GetDirectories(Setting_osu_SongsPath).Count
             If counter > 1000 Then
-                If MessageBox.Show("You've got about " & counter & " beatmap sets." & vbNewLine & "It will take some time (maybe some minutes) to read all sets, do you want to proceed?", I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
+                If MessageBox.Show(_e("MainWindow_youveGotAboutBeatmaps").Replace("%0", counter.ToString), I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
                     Exit Sub
                 End If
             End If
@@ -862,26 +871,26 @@ Class MainWindow
             Answer = JObject.Parse(e.Result)
         Catch ex As Newtonsoft.Json.JsonReaderException
             If Setting_Messages_Updater_UnableToCheckForUpdates Then
-                MsgBox("Unable to check for updates!" & vbNewLine & "// Invalid Server response" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
+                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
                 MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
             End If
-            TextBlock_Programm_Updater.Content = "Unable to check for updates!"
+            TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
             Exit Sub
         Catch ex As System.Reflection.TargetInvocationException
             If Setting_Messages_Updater_UnableToCheckForUpdates Then
-                MsgBox("Unable to check for updates!" & vbNewLine & "// Can't connect to server" & vbNewLine & vbNewLine & "If this problem persists you can visit the osu! forum at http://bit.ly/1Bbmn6E (in your clipboard).", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
+                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
             End If
-            TextBlock_Programm_Updater.Content = "Unable to check for updates!"
+            TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
             Exit Sub
         End Try
 
         If CStr(Answer.SelectToken("latestVersion")) = My.Application.Info.Version.ToString Then
-            TextBlock_Programm_Updater.Content = "Using the latest version (" + My.Application.Info.Version.ToString + ")"
+            TextBlock_Programm_Updater.Content = _e("MainWindow_latestVersion")
         Else
-            TextBlock_Programm_Updater.Content = "Update available (New: " + CStr(Answer.SelectToken("latestVersion")) + " | Running: " & My.Application.Info.Version.ToString & ")"
+            TextBlock_Programm_Updater.Content = _e("MainWindow_updateAvailable").Replace("%0", CStr(Answer.SelectToken("latestVersion")))
             If Setting_Tool_EnableNotifyIcon = 0 Then
                 Notify_NextAction = NotifyNextAction.OpenUpdater
-                NotifyIcon.ShowBalloonTip("Updater | osu!Sync", "A new version of osu!Sync is available." & vbNewLine & "Current: " & My.Application.Info.Version.ToString & " | Latest: " & CStr(Answer.SelectToken("latestVersion")), Hardcodet.Wpf.TaskbarNotification.BalloonIcon.Info)
+                NotifyIcon.ShowBalloonTip("Updater | osu!Sync", _e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", CStr(Answer.SelectToken("latestVersion"))), Hardcodet.Wpf.TaskbarNotification.BalloonIcon.Info)
             End If
             If Setting_Messages_Updater_OpenUpdater Then
                 Interface_ShowUpdaterWindow()
@@ -890,9 +899,7 @@ Class MainWindow
     End Sub
 
     Private Sub FadeOut_Completed(sender As Object, e As EventArgs) Handles FadeOut.Completed
-        If FadeOut_Status = "FadeOut" Then
-            Overlay.Visibility = Windows.Visibility.Hidden
-        End If
+        Overlay.Visibility = Windows.Visibility.Hidden
     End Sub
 
     Private Sub Interface_SetLoader(Optional Message As String = "Please wait")
@@ -934,9 +941,9 @@ Class MainWindow
         Window_Updater.ShowDialog()
     End Sub
 
-
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString
+
         ' Load Configuration
         If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
             Action_LoadSettings()
@@ -958,12 +965,12 @@ Class MainWindow
         ' Check For Updates
         Select Case Setting_Tool_CheckForUpdates
             Case 0
-                TextBlock_Programm_Updater.Content = "Checking for updates..."
+                TextBlock_Programm_Updater.Content = _e("MainWindow_checkingForUpdates")
                 Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
                 Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
                 Action_SaveSettings()
             Case 1
-                TextBlock_Programm_Updater.Content = "Updates disabled"
+                TextBlock_Programm_Updater.Content = _e("MainWindow_updatesDisabled")
             Case Else
                 Dim Interval As Integer
                 Select Case Setting_Tool_CheckForUpdates
@@ -976,12 +983,12 @@ Class MainWindow
                 End Select
 
                 If DateDiff(DateInterval.Day, Date.ParseExact(Setting_Tool_LastCheckForUpdates, "dd-MM-yyyy hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= Interval Then
-                    TextBlock_Programm_Updater.Content = "Checking for updates..."
+                    TextBlock_Programm_Updater.Content = _e("MainWindow_checkingForUpdates")
                     Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
                     Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
                     Action_SaveSettings()
                 Else
-                    TextBlock_Programm_Updater.Content = "Update check not necessary"
+                    TextBlock_Programm_Updater.Content = _e("MainWindow_updateCheckNotNecessary")
                 End If
         End Select
 
@@ -998,8 +1005,8 @@ Class MainWindow
         Else
             If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False And Setting_Tool_AutoLoadCacheOnStartup Then
                 Button_SyncDo.IsEnabled = False
-                Interface_SetLoader("Reading cache file...")
-                TextBlock_Sync_LastUpdate.Content = "Reading cache..."
+                Interface_SetLoader(_e("MainWindow_readingCache"))
+                TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
                 BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
                                                    .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache,
                                                    .Arg__AutoSync = True})
@@ -1013,15 +1020,15 @@ Class MainWindow
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = "All supported file formats|*.nw520-osbl;*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl|Compressed osu!Sync Beatmap List|*.nw520-osbl"
-            .Title = "Select a supported file to convert"
+            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.nw520-osbl;*.nw520-osblx|" & _e("MainWindow_osuSyncBeatmapList") & "|*.nw520-osbl|" & _e("MainWindow_compressedOsuSyncBeatmapList") & "|*.nw520-osbl"
+            .Title = _e("MainWindow_selectASupportedFileToConvert")
             .ShowDialog()
         End With
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
             .AddExtension = True
             .OverwritePrompt = True
-            .Title = "Select a destination"
+            .Title = _e("MainWindow_selectADestination")
             .ValidateNames = True
         End With
 
@@ -1030,23 +1037,23 @@ Class MainWindow
             OSBL_Content = File.ReadAllText(Dialog_OpenFile.FileName)
             Select Case Path.GetExtension(Dialog_OpenFile.FileName)
                 Case ".nw520-osbl"
-                    Action_ExportBeatmapDialog(Action_ConvertSavedJSONtoListBeatmap(JObject.Parse(OSBL_Content)), "Convert selected file")
+                    Action_ExportBeatmapDialog(Action_ConvertSavedJSONtoListBeatmap(JObject.Parse(OSBL_Content)), _e("MainWindow_convertSelectedFile"))
                 Case ".nw520-osblx"
                     Try
                         OSBL_Content = DecompressString(OSBL_Content)
                     Catch ex As FormatException
-                        Action_OverlayShow("Conversion failed", "System.FormatException")
+                        Action_OverlayShow(_e("MainWindow_conversionFailed"), "System.FormatException")
                         Action_OverlayFadeOut()
                         Exit Sub
                     Catch ex As System.IO.InvalidDataException
-                        Action_OverlayShow("Conversion failed", "System.IO.InvalidDataException")
+                        Action_OverlayShow(_e("MainWindow_conversionFailed"), "System.IO.InvalidDataException")
                         Action_OverlayFadeOut()
                         Exit Sub
                     End Try
                     Action_ExportBeatmapDialog(Action_ConvertSavedJSONtoListBeatmap(JObject.Parse(OSBL_Content)), "Convert selected file")
             End Select
         Else
-            Action_OverlayShow("Conversion aborted", "")
+            Action_OverlayShow(_e("MainWindow_conversionAborted"), "")
             Action_OverlayFadeOut()
             Exit Sub
         End If
@@ -1054,7 +1061,7 @@ Class MainWindow
 
     Private Sub MenuItem_File_Export_InstalledBeatmaps_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_File_Export_InstalledBeatmaps.Click
         If Sync_Done = False Then
-            MsgBox("In order to use this function you need to sync first.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_youNeedToSyncFirst"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             Exit Sub
         End If
         Action_ExportBeatmapDialog(Sync_BeatmapList_Installed)
@@ -1062,16 +1069,16 @@ Class MainWindow
 
     Private Sub MenuItem_File_Export_SelectedMaps_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_File_Export_SelectedMaps.Click
         If Sync_Done = False Then
-            MsgBox("In order to use this function you need to sync first.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_youNeedToSyncFirst"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             Exit Sub
         End If
 
-        Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, "Exporter")
+        Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, UpdateBeatmapDisplayDestinations.Exporter)
     End Sub
 
     Private Sub MenuItem_File_OpenBeatmapList_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_File_OpenBeatmapList.Click
         If Sync_Done = False Then
-            MsgBox("In order to use this function you need to sync first.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_youNeedToSyncFirst"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             Exit Sub
         End If
         Dim Dialog_OpenFile As New Microsoft.Win32.OpenFileDialog()
@@ -1079,15 +1086,15 @@ Class MainWindow
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = "All supported file formats|*.nw520-osbl;*.nw520-osblx|Compressed osu!Sync Beatmap List|*.nw520-osblx|osu!Sync Beatmap List|*.nw520-osbl"
-            .Title = "Open beatmap list"
+            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.nw520-osbl;*.nw520-osblx|" & _e("MainWindow_compressedOsuSyncBeatmapList") & "|*.nw520-osblx|" & _e("MainWindow_osuSyncBeatmapList") & "|*.nw520-osbl"
+            .Title = _e("MainWindow_openBeatmapList")
             .ShowDialog()
         End With
 
         If Not Dialog_OpenFile.FileName = "" Then
             Importer_ReadListFile(Dialog_OpenFile.FileName)
         Else
-            Action_OverlayShow("Import aborted", "")
+            Action_OverlayShow(_e("MainWindow_importAborted"), "")
             Action_OverlayFadeOut()
         End If
     End Sub
@@ -1145,7 +1152,7 @@ Class MainWindow
     Private Sub NotifyIcon_TrayBalloonTipClicked(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayBalloonTipClicked
         Select Case Notify_NextAction
             Case NotifyNextAction.OpenUpdater
-                Interface_ShowUpdaterWindow
+                Interface_ShowUpdaterWindow()
         End Select
     End Sub
 
@@ -1230,7 +1237,7 @@ Class MainWindow
                                         Try
                                             BeatmapDetails.ID = CInt(Line.Substring(13))
                                         Catch ex As InvalidCastException
-                                            MsgBox("Fetched ID is not a number." & vbNewLine & "Trying to use alternative way via folder name.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                                            MsgBox(_e("MainWindow_fetchedIdIsNaN"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
                                             BeatmapDetails.ID = -1
                                             Found_ID = False
                                         End Try
@@ -1279,10 +1286,10 @@ Class MainWindow
 
                 If Not Beatmap_InvalidFolder = "" Or Not Beatmap_InvalidIDBeatmaps = "" Then
                     If Not Beatmap_InvalidFolder = "" Then
-                        Answer.Return__Sync_Warnings += "=====   Ignored Folders   =====" & vbNewLine & "It seems that some folder(s) can't be parsed." & vbNewLine & "They'll be ignored." & vbNewLine & vbNewLine & "// Folder(s): " & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
+                        Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
                     End If
                     If Not Beatmap_InvalidIDBeatmaps = "" Then
-                        Answer.Return__Sync_Warnings += "=====   Unable to get ID   =====" & vbNewLine & "osu!Sync was unable to get the IDs of some beatmaps." & vbNewLine & "They will be handled as unsubmitted (can't be exported)." & vbNewLine & vbNewLine & "// Beatmap(s): " & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
+                        Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
                     End If
                 End If
 
@@ -1366,18 +1373,18 @@ Class MainWindow
         Answer = CType(e.UserState, BGWcallback__Action_Sync_GetIDs)
         Select Case Answer.Progress__CurrentAction
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Sync
-                Interface_LoaderText.Text = Answer.Progress__Current & " beatmap sets parsed." & vbNewLine & "And still working..."
+                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_andStillWorking")
                 With Interface_LoaderProgressBar
                     .Value = Answer.Progress__Current
                     .Visibility = Windows.Visibility.Visible
                 End With
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache
                 Interface_LoaderProgressBar.IsIndeterminate = True
-                Interface_LoaderText.Text = Answer.Progress__Current & " beatmap sets in total parsed." & vbNewLine & "Writing cache file..."
+                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_writingCacheFile")
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done
-                Interface_LoaderText.Text = Answer.Progress__Current & " beatmap sets in total parsed." & vbNewLine & "Generating interface..."
+                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_generatingInterface")
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CacheFileOutdatedAndSyncing
-                TextBlock_Sync_LastUpdate.Content = "Cache file outdated/Syncing..."
+                TextBlock_Sync_LastUpdate.Content = _e("MainWindow_cacheFileOutdatedSyncing")
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders
                 Interface_LoaderProgressBar.Maximum = Answer.Progress__Current
         End Select
@@ -1389,12 +1396,12 @@ Class MainWindow
         Select Case Answer.Return__Status
             Case 0
                 Sync_LoadedFromCache = True
-                Interface_LoaderText.Text = Answer.Return__Sync_BeatmapList_ID_Installed.Count & " beatmap sets parsed."
+                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BeatmapList_ID_Installed.Count.ToString)
                 If Not Answer.Return__Sync_Warnings = "" Then
-                    If MessageBox.Show("It seems like some of your beatmap sets differ from the normal format." & vbNewLine & _
-                                       "Do you want to check which beatmap sets are affected?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                    If MessageBox.Show(_e("MainWindow_itSeemsThatSomeBeatmapsDiffer") & vbNewLine & _
+                                       _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
-                        Window_Message.SetMessage(Answer.Return__Sync_Warnings, "Exceptions", "Sync")
+                        Window_Message.SetMessage(Answer.Return__Sync_Warnings, _e("MainWindow_exceptions"), "Sync")
                         Window_Message.ShowDialog()
                     End If
                 End If
@@ -1403,15 +1410,15 @@ Class MainWindow
 
                 Sync_Done = True
                 Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed)
-                Action_OverlayShow("Sync completed", "")
+                Action_OverlayShow(_e("MainWindow_syncCompleted"), "")
                 Action_OverlayFadeOut()
 
                 If Sync_Done_ImporterRequest Then
                     Sync_Done_ImporterRequest = False
-                    Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, "Importer")
+                    Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, UpdateBeatmapDisplayDestinations.Importer)
                 End If
             Case BGWcallback_ActionSyncGetIDs_ReturnStatus.FolderDoesNotExist
-                MsgBox("Unable to find osu! folder." & vbNewLine & "Please specify the path to osu! in the following window.", MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                MsgBox(_e("MainWindow_unableToFindOsuFolderPleaseSpecify"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                 Interface_ShowSettingsWindow(1)
 
                 Dim UI_TextBlock As New TextBlock With { _
@@ -1419,13 +1426,13 @@ Class MainWindow
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                     .HorizontalAlignment = Windows.HorizontalAlignment.Center,
                     .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = "Last sync failed.",
+                    .Text = _e("MainWindow_lastSyncFailed"),
                     .VerticalAlignment = Windows.VerticalAlignment.Center}
                 Dim UI_TextBlock_SubTitle As New TextBlock With { _
                     .FontSize = 24,
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                     .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                    .Text = "Please retry.",
+                    .Text = _e("MainWindow_pleaseRetry"),
                     .VerticalAlignment = Windows.VerticalAlignment.Center}
 
                 With BeatmapWrapper.Children
@@ -1440,13 +1447,13 @@ Class MainWindow
                 Sync_BeatmapList_ID_Installed = Answer.Return__Sync_BeatmapList_ID_Installed
 
                 Sync_Done = True
-                Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, "Installed", Answer.Return__Sync_Cache_Time)
-                Action_OverlayShow("Sync completed", "Loaded from cache")
+                Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, UpdateBeatmapDisplayDestinations.Installed, Answer.Return__Sync_Cache_Time)
+                Action_OverlayShow(_e("MainWindow_syncCompleted"), _e("MainWindow_loadedFromCache"))
                 Action_OverlayFadeOut()
 
                 If Sync_Done_ImporterRequest Then
                     Sync_Done_ImporterRequest = False
-                    Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, "Importer")
+                    Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, UpdateBeatmapDisplayDestinations.Importer)
                 End If
             Case BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing
                 Dim UI_TextBlock As New TextBlock With { _
@@ -1454,13 +1461,13 @@ Class MainWindow
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                     .HorizontalAlignment = Windows.HorizontalAlignment.Center,
                     .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = "Last sync failed.",
+                    .Text = _e("MainWindow_lastSyncFailed"),
                     .VerticalAlignment = Windows.VerticalAlignment.Center}
                 Dim UI_TextBlock_SubTitle As New TextBlock With { _
                     .FontSize = 24,
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                     .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                    .Text = "Cache file outdated",
+                    .Text = _e("MainWindow_cacheFileOutdated"),
                     .VerticalAlignment = Windows.VerticalAlignment.Center}
 
                 With BeatmapWrapper.Children
@@ -1636,13 +1643,13 @@ Class MainWindow
         Importer_Progress.Value = 0
         Importer_Progress.IsIndeterminate = True
         Dim RequestURI As String
-        TextBlock_Progress.Content = "Fetching " & CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & "..."
+        TextBlock_Progress.Content = _e("MainWindow_fetching").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
         Select Case Setting_Tool_DownloadMirror
             Case 1
-                Importer_DownloadMirrorInfo.Text = "Download Mirror: Loli.al"
+                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Loli.al"
                 RequestURI = "http://loli.al/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
             Case Else
-                Importer_DownloadMirrorInfo.Text = "Download Mirror: Bloodcat.com"
+                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Bloodcat.com"
                 RequestURI = "http://bloodcat.com/osu/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
         End Select
 
@@ -1655,14 +1662,14 @@ Class MainWindow
             .UI_Checkbox_IsInstalled.IsChecked = Nothing
         End With
 
-        Importer_UpdateInfo("Fetching")
+        Importer_UpdateInfo(_e("MainWindow_fetching1"))
 
         Dim req As HttpWebRequest = DirectCast(HttpWebRequest.Create(RequestURI), HttpWebRequest)
         Dim Res As WebResponse
         Try
             Res = req.GetResponse()
         Catch ex As WebException
-            If MessageBox.Show("It looks, like something is wrong with this download, do you want to skip this file (Yes) or to cancel the whole download (No)?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
+            If MessageBox.Show(_e("MainWindow_itLooksLikeSomethingIsWrongWithThisDownload"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
                 'Yes
                 Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
                 Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
@@ -1671,14 +1678,14 @@ Class MainWindow
             Else
                 'No
                 Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
-                Importer_Info.Text = "Installing"
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_Done.Count & " Sets done"
+                Importer_Info.Text = _e("MainWindow_installing")
+                Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
                 If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then
-                    Importer_Info.Text += " | " & Importer_BeatmapList_Tag_LeftOut.Count & " Left out"
+                    Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
                 End If
-                Importer_Info.Text += " | " & Importer_BeatmapsTotal & " Sets total"
+                Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
 
-                TextBlock_Progress.Content = "Installing files..."
+                TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
                 For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
                     File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
@@ -1689,12 +1696,12 @@ Class MainWindow
                 End With
 
                 TextBlock_Progress.Content = ""
-                Importer_Info.Text = "Aborted"
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_Done.Count & " Sets done"
+                Importer_Info.Text = _e("MainWindow_aborted")
+                Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
                 If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then
-                    Importer_Info.Text += " | " & Importer_BeatmapList_Tag_LeftOut.Count & " Left out"
+                    Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
                 End If
-                Importer_Info.Text += " | " & Importer_BeatmapsTotal & " Sets total"
+                Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
                 Button_SyncDo.IsEnabled = True
                 Importer_Run.IsEnabled = True
                 Importer_Cancel.IsEnabled = True
@@ -1714,8 +1721,8 @@ Class MainWindow
             Importer_CurrentFileName = CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & ".osz"
         End If
 
-        TextBlock_Progress.Content = "Downloading " & CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & "..."
-        Importer_UpdateInfo("Downloading")
+        TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
+        Importer_UpdateInfo(_e("MainWindow_downloading1"))
         Importer_Progress.IsIndeterminate = False
         Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
     End Sub
@@ -1728,8 +1735,8 @@ Class MainWindow
                     .IsIndeterminate = True
                 End With
 
-                Importer_UpdateInfo("Installing")
-                TextBlock_Progress.Content = "Installing files..."
+                Importer_UpdateInfo(_e("MainWindow_installing"))
+                TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
                 For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
                     If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
@@ -1746,8 +1753,8 @@ Class MainWindow
                 .Value = 0
             End With
 
-            Importer_UpdateInfo("Installing")
-            TextBlock_Progress.Content = "Installing files..."
+            Importer_UpdateInfo(_e("MainWindow_installing"))
+            TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
             For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
                 If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
@@ -1762,25 +1769,25 @@ Class MainWindow
             End With
 
             TextBlock_Progress.Content = ""
-            Importer_UpdateInfo("Done")
+            Importer_UpdateInfo(_e("MainWindow_done"))
 
             My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep)
             If Setting_Tool_EnableNotifyIcon = 0 Then
-                NotifyIcon.ShowBalloonTip("osu!Sync", "Installation finished!" & vbNewLine & _
-                        Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
-                        Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
-                        Importer_BeatmapList_Tag_LeftOut.Count & " Left out" & vbNewLine & _
-                        Importer_BeatmapsTotal & " Sets total", BalloonIcon.None)
+                NotifyIcon.ShowBalloonTip("osu!Sync", _e("MainWindow_installationFinished") & vbNewLine & _
+                        _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine & _
+                        _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine & _
+                         _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine & _
+                         _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString), BalloonIcon.None)
             End If
-            MsgBox("Installation finished!" & vbNewLine & _
-                    Importer_BeatmapList_Tag_Done.Count & " Sets done" & vbNewLine & _
-                    Importer_BeatmapList_Tag_Failed.Count & " Sets failed" & vbNewLine & _
-                    Importer_BeatmapList_Tag_LeftOut.Count & " Left out" & vbNewLine & _
-                    Importer_BeatmapsTotal & " Sets total" & vbNewLine & vbNewLine & _
-                    "Press F5 in osu! to reload your beatmaps or go back to the main menu.")
+            MsgBox(_e("MainWindow_installationFinished") & vbNewLine & _
+                        _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine & _
+                        _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine & _
+                         _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine & _
+                         _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString) & vbNewLine & vbNewLine & _
+                    _e("MainWindow_pressF5"))
 
             If Not Process.GetProcessesByName("osu!").Count > 0 Then
-                If MessageBox.Show("Do you want to start osu! now?", I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then
+                If MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then
                     Action_StartOrFocusOsu()
                 End If
             End If
@@ -1806,13 +1813,13 @@ Class MainWindow
             Dim File_Content As String = DecompressString(File_Content_Compressed)
             Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
             Importer_Info.Text = FilePath
-            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), "Importer")
+            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
         ElseIf Path.GetExtension(FilePath) = ".nw520-osbl" Then
             Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(FilePath)), JObject)
             Importer_Info.Text = FilePath
-            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), "Importer")
+            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
         Else
-            MsgBox("Unknown file extension:" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_unknownFileExtension") & ":" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End If
     End Sub
 
@@ -1833,44 +1840,16 @@ Class MainWindow
 
     Private Sub Importer_UpdateInfo(ByRef Title As String)
         Importer_Info.Text = Title
-        If Title = "Fetching" Or Title = "Downloading" Or Title = "Installing" Then
-            If Importer_BeatmapList_Tag_ToInstall.Count = 1 Then
-                Importer_Info.Text += " | 1 Set left to install"
-            Else
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_ToInstall.Count & " Sets left to install"
-            End If
-            If Importer_BeatmapList_Tag_Done.Count = 1 Then
-                Importer_Info.Text += " | 1 Set done"
-            ElseIf Importer_BeatmapList_Tag_Done.Count > 1 Then
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_Done.Count & " Sets done"
-            End If
-            If Importer_BeatmapList_Tag_Failed.Count = 1 Then
-                Importer_Info.Text += " | 1 Set failed"
-            ElseIf Importer_BeatmapList_Tag_Failed.Count > 1 Then
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_Failed.Count & " Sets failed"
-            End If
-            If Importer_BeatmapList_Tag_LeftOut.Count = 1 Then
-                Importer_Info.Text += " | 1 Set Left out"
-            ElseIf Importer_BeatmapList_Tag_LeftOut.Count > 1 Then
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_LeftOut.Count & " Sets Left out"
-            End If
-            Importer_Info.Text += " | " & Importer_BeatmapsTotal & " Sets total"
+        If Title = _e("MainWindow_fetching1") Or Title = _e("MainWindow_downloading1") Or Title = _e("MainWindow_installing") Then
+            Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", Importer_BeatmapList_Tag_ToInstall.Count.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
         Else
-            If Importer_BeatmapList_Tag_ToInstall.Count = 1 Then
-                Importer_Info.Text += " | 1 Set to install"
-            Else
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_ToInstall.Count & " Sets to install"
-            End If
-            If Importer_BeatmapList_Tag_LeftOut.Count = 1 Then
-                Importer_Info.Text += " | 1 Set Left out"
-            ElseIf Importer_BeatmapList_Tag_LeftOut.Count > 1 Then
-                Importer_Info.Text += " | " & Importer_BeatmapList_Tag_LeftOut.Count & " Sets Left out"
-            End If
-            If Importer_BeatmapsTotal = 1 Then
-                Importer_Info.Text += " | 1 Set total"
-            Else
-                Importer_Info.Text += " | " & Importer_BeatmapsTotal & " Sets total"
-            End If
+            Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", Importer_BeatmapList_Tag_ToInstall.Count.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
         End If
     End Sub
 #End Region
