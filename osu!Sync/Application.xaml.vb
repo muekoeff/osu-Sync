@@ -28,5 +28,12 @@
             Application.Current.Shutdown()
             Exit Sub
         End If
+
+        ' Load language library
+        If Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then
+            Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))
+            Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With { _
+                                                                 .Source = New Uri("Languages/" & GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & ".xaml", UriKind.Relative)})
+        End If
     End Sub
 End Class
