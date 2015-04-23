@@ -6,7 +6,6 @@
 
     Private Sub Feedback_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles Feedback.MouseUp
         MainWindow.Interface_ShowSettingsWindow(3)
-        Me.Close()
     End Sub
 
     Private Sub GitHub_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles GitHub.MouseUp

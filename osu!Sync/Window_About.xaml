@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <TextBlock FontFamily="Fira Sans Light" FontSize="48" Foreground="#FF555555" HorizontalAlignment="Left" Margin="270,39,10,0" Text="osu!Sync" TextWrapping="Wrap" VerticalAlignment="Top" />
         <TextBlock x:Name="TextBlock_Version" Cursor="Hand" FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF555555" HorizontalAlignment="Left" Margin="270,110,10,0" Text="{DynamicResource WindowAbout_version}" TextWrapping="Wrap" ToolTip="{DynamicResource MainWindow_tt_openUpdater}" VerticalAlignment="Top" />
-        <TextBlock FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF555555" Height="116" Margin="270,135,10,0" Text="{DynamicResource WindowAbout_message}" TextWrapping="Wrap" VerticalAlignment="Top" />
+        <TextBlock FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF555555" Height="83" Margin="270,135,10,0" Text="{DynamicResource WindowAbout_message}" TextWrapping="Wrap" VerticalAlignment="Top" />
         <Image Height="200" HorizontalAlignment="Left" Margin="25,0,0,0" Source="Resources/WindowAbout_Logo.png" VerticalAlignment="Center" Width="200" />
         <Grid Background="#FFF0F0F0" Height="75" VerticalAlignment="Bottom" Grid.Row="1">
             <TextBlock FontSize="14" Foreground="#FF555555" Margin="0,0,0,10" Text="{DynamicResource WindowAbout_copyright}" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" />
@@ -25,5 +25,6 @@
             <TextBlock x:Name="osuForum" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#FF0088CC" HorizontalAlignment="Center" Margin="225,15,0,0" Text="{DynamicResource WindowAbout_osuForum}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_osuForum}" VerticalAlignment="Top" Width="200" />
             <TextBlock x:Name="GitHub" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#FF0088CC" HorizontalAlignment="Right" Margin="0,15,10,0" Text="{DynamicResource WindowAbout_github}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_github}" VerticalAlignment="Top" Width="200" />
         </Grid>
+        <TextBlock FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF555555" Margin="270,223,10,0" Text="{DynamicResource Meta_translators}" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" />
     </Grid>
 </Controls:MetroWindow>
