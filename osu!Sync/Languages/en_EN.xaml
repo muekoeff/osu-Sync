@@ -32,7 +32,7 @@
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 beatmaps found.</system:String>
-    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap-IDs können nur einmal verwendet werden.</system:String>
+    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap IDs can be assigned only once.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets in total parsed.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets parsed.</system:String>
     <!-- | C -->
@@ -57,7 +57,7 @@
     <system:String x:Key="MainWindow_doYouWantToFixThat">Do you want to fix that?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Do you want to start osu! now?</system:String>
     <!-- | E -->
-    <system:String x:Key="MainWindow_exceptions">Ausnahmen</system:String>
+    <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
     <system:String x:Key="MainWindow_exitOsuSync">E_xit osu!Sync</system:String>
     <system:String x:Key="MainWindow_export">Export</system:String>
     <system:String x:Key="MainWindow_exportAborted">Export aborted</system:String>
