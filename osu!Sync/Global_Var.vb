@@ -153,7 +153,9 @@ Module Global_Var
     Function GetTranslationName(ByVal LanguageCode As String) As String
         Select Case LanguageCode
             Case "de"
-                Return "de_de"
+                Return "de_DE"
+            Case "id"
+                Return "id_ID"
             Case Else
                 Return ""
         End Select
