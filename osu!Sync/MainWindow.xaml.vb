@@ -404,6 +404,12 @@ Class MainWindow
         End Select
     End Sub
 
+    Private Sub Action_OpenBeatmapListingPageInBrowser(sender As Object, e As MouseButtonEventArgs)
+        Dim SelectedSender As Image = CType(sender, Image)
+        Dim SelectedSender_Tag As Beatmap = CType(SelectedSender.Tag, Beatmap)
+        Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag.ID)
+    End Sub
+
     Private Sub Action_OverlayFadeOut()
         Me.Visibility = Windows.Visibility.Visible
 
@@ -535,10 +541,14 @@ Class MainWindow
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
 
                     Dim UI_Thumbnail = New Image With { _
+                        .Cursor = Cursors.Hand,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
+                        .Tag = SelectedBeatmap,
+                        .ToolTip = _e("MainWindow_openBeatmapListingPageInBrowser"),
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
+                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapListingPageInBrowser
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
