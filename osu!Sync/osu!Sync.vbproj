@@ -134,16 +134,20 @@
       <DependentUpon>Window_Welcome.xaml</DependentUpon>
     </Compile>
     <Page Include="Languages\de_DE.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Languages\en_EN.xaml">
+    <Page Include="Languages\en_US.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Languages\id_ID.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Languages\pl_PL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -220,6 +224,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <None Include="Development\osu!Sync Logo.psd" />
+    <None Include="Development\osu!Sync NoThumbnail.psd" />
     <None Include="Development\osu!Sync SplashScreen.psd" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
@@ -279,6 +284,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\NotifyIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NoThumbnail.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

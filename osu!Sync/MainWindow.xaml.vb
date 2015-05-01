@@ -514,32 +514,50 @@ Class MainWindow
 
                 For Each SelectedBeatmap As Beatmap In BeatmapList
                     Dim UI_Grid = New Grid() With { _
-                        .Height = 100,
+                        .Height = 80,
                         .Margin = New Thickness(0, 0, 0, 10),
                         .Tag = SelectedBeatmap,
                         .Width = Double.NaN}
 
+                    With UI_Grid.ColumnDefinitions
+                        .Add(New ColumnDefinition With { _
+                            .Width = New GridLength(10)})
+                        .Add(New ColumnDefinition With { _
+                            .Width = New GridLength(125)})
+                        .Add(New ColumnDefinition)
+                    End With
+
                     ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With { _
                         .Fill = Color_27AE60,
-                        .Height = 100,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .Tag = SelectedBeatmap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top,
-                        .Width = 10}
+                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+
+                    Dim UI_Thumbnail = New Image With { _
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
+                        .Margin = New Thickness(5, 0, 0, 0),
+                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+                    Grid.SetColumn(UI_Thumbnail, 1)
+                    If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                        UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                    Else
+                        UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+                    End If
 
                     ' Color_555555 = Gray
                     Dim UI_TextBlock_Title = New TextBlock With { _
                         .FontFamily = New FontFamily("Segoe UI"),
-                        .FontSize = 36,
+                        .FontSize = 28,
                         .Foreground = Color_555555,
-                        .Height = 48,
+                        .Height = 36,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                        .Margin = New Thickness(25, 0, 0, 0),
+                        .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .Tag = SelectedBeatmap,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With { _
@@ -548,9 +566,10 @@ Class MainWindow
                         .Foreground = Color_008136,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .Tag = SelectedBeatmap,
-                        .Margin = New Thickness(25, 47, 0, 0),
+                        .Margin = New Thickness(10, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Grid.SetColumn(UI_TextBlock_Caption, 2)
 
                     If Not SelectedBeatmap.ID = -1 Then
                         UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
@@ -566,13 +585,17 @@ Class MainWindow
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = True,
                         .IsEnabled = False,
-                        .Margin = New Thickness(25, 72, 0, 0),
+                        .Margin = New Thickness(10, 62, 0, 0),
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
-                    ' Click Event
-                    UI_Grid.Children.Add(UI_DecoBorderLeft)
-                    UI_Grid.Children.Add(UI_TextBlock_Title)
-                    UI_Grid.Children.Add(UI_TextBlock_Caption)
-                    UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
+                    Grid.SetColumn(UI_Checkbox_IsInstalled, 2)
+
+                    With UI_Grid.Children
+                        .Add(UI_DecoBorderLeft)
+                        .Add(UI_Thumbnail)
+                        .Add(UI_TextBlock_Title)
+                        .Add(UI_TextBlock_Caption)
+                        .Add(UI_Checkbox_IsInstalled)
+                    End With
                     BeatmapWrapper.Children.Add(UI_Grid)
                 Next
                 If BeatmapList.Count = 0 Then
@@ -580,7 +603,7 @@ Class MainWindow
                         .FontSize = 72,
                         .Foreground = Color_27AE60,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                        .Margin = New Thickness(0, 100, 0, 0),
+                        .Margin = New Thickness(0, 86, 0, 0),
                         .Text = _e("MainWindow_beatmapsFound").Replace("%0", "0"),
                         .VerticalAlignment = Windows.VerticalAlignment.Center}
                     Dim UI_TextBlock_SubTitle As New TextBlock With { _
@@ -644,19 +667,18 @@ Class MainWindow
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = Check_IfInstalled,
                         .IsEnabled = False,
-                        .Margin = New Thickness(25, 72, 0, 0),
+                        .Margin = New Thickness(10, 62, 0, 0),
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
 
                     Dim UI_Grid = New Grid() With { _
-                        .Height = 100,
+                        .Height = 80,
                         .Margin = New Thickness(0, 0, 0, 10),
                         .Width = Double.NaN}
 
                     ' Color_27AE60 = Light Green
                     ' Color_E74C3C = Red
                     Dim UI_DecoBorderLeft = New Rectangle With { _
-                        .Height = 100,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .VerticalAlignment = Windows.VerticalAlignment.Top,
                         .Width = 10}
                     If Check_IfInstalled Then
@@ -668,11 +690,11 @@ Class MainWindow
                     ' Color_555555 = Gray
                     Dim UI_TextBlock_Title = New TextBlock With { _
                         .FontFamily = New FontFamily("Segoe UI"),
-                        .FontSize = 36,
+                        .FontSize = 28,
                         .Foreground = Color_555555,
-                        .Height = 48,
+                        .Height = 36,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                        .Margin = New Thickness(25, 0, 0, 0),
+                        .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
@@ -684,7 +706,7 @@ Class MainWindow
                         .Foreground = Color_008136,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
-                        .Margin = New Thickness(25, 47, 0, 0),
+                        .Margin = New Thickness(10, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
 

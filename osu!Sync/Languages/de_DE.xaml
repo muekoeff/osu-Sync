@@ -1,16 +1,14 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
-    <!-- \/ Replace "English" with the language of your translation -->
+    <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">Dieses Programm ist auf Deutsch verfügbar.</system:String>
 
     <!-- Meta & More -->
     <!-- | T -->
-    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) -->
+    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Übersetzung von: naseweis520</system:String>
-    
+
     <!-- GlobalVar -->
     <!-- | E -->
     <system:String x:Key="GlobalVar_extensionBeatmapList">osu! Beatmap-Liste für osu!Sync</system:String>
@@ -50,9 +48,9 @@
     <system:String x:Key="MainWindow_done">Fertig</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Downloaden and installieren</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Beatmaps herunterladen</system:String>
+    <system:String x:Key="MainWindow_downloadMirror">Download-Mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Lädt %0 herunter...</system:String>
     <system:String x:Key="MainWindow_downloading1">Herunterladen</system:String>
-    <system:String x:Key="MainWindow_downloadMirror">Download-Mrror</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Möchtest du prüfen, welche Beatmap-Sets betroffen sind?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Möchtest du das beheben?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Möchtest du jetzt osu! starten?</system:String>
@@ -138,7 +136,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Übersprungene Beatmaps</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Einige Beatmap-Sets wurden nicht exportiert.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Sync abgeschlossen</system:String>
-    <system:String x:Key="MainWindow_syncing">Syncing...</system:String>
+    <system:String x:Key="MainWindow_syncing">Synct...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Das ist,.... denke ich mal, eindrucksvoll.</system:String>
     <!-- | U -->
@@ -171,7 +169,7 @@
 
     <!-- Window_About -->
     <!-- | C -->
-    <system:String x:Key="WindowAbout_copyright">osu!Sync ist ein Open-Source Tool, erstellt vo naseweis520.</system:String>
+    <system:String x:Key="WindowAbout_copyright">osu!Sync ist ein Open-Source Tool, erstellt von naseweis520.</system:String>
     <!-- | E -->
     <system:String x:Key="WindowAbout_email">eMail-Kontakt</system:String>
     <!-- | F -->
@@ -197,7 +195,7 @@
     <!-- Window_Message -->
     <system:String x:Key="WindowMessage_close">_Schließen</system:String>
     <system:String x:Key="WindowMessage_message">Nachricht</system:String>
-    
+
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_apply">_Anwenden</system:String>
@@ -220,8 +218,8 @@
     <system:String x:Key="WindowSettings_disable">Deaktivieren.</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Updatepaket herunterladen zu...</system:String>
     <!-- | E -->
-    <system:String x:Key="WindowSettings_everyLaunch">Jeden Programmstart.</system:String>
     <system:String x:Key="WindowSettings_executableFiles">Ausführbare Dateien</system:String>
+    <system:String x:Key="WindowSettings_everyLaunch">Jeden Programmstart.</system:String>
     <!-- | F -->
     <system:String x:Key="WindowSettings_featureRequest">Featureanfrage</system:String>
     <system:String x:Key="WindowSettings_feedback">Feedback</system:String>
@@ -289,10 +287,10 @@
     <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Du hast die falsche Datei gewählt.#x0a;Bitte wähle die "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
-    <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">Gib &quot;0&quot; ein, um nach abgeschlossenem Download zu importieren.</system:String>
+    <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">Gib "0" ein, um nach abgeschlossenem Download zu importieren.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_tt_useDefaultPath">Standardpfad verwenden.</system:String>
-
+    
     <!-- Window_Updater -->
     <!-- | A -->
     <system:String x:Key="WindowUpdater_aNewVersionIsAvailable">Eine neue Version von osu!Sync ist verfügbar</system:String>

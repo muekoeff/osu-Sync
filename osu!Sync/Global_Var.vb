@@ -156,6 +156,8 @@ Module Global_Var
                 Return "de_DE"
             Case "id"
                 Return "id_ID"
+            Case "pl"
+                Return "pl_PL"
             Case Else
                 Return ""
         End Select
