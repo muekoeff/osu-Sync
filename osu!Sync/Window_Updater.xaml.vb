@@ -44,7 +44,7 @@ Public Class Window_Updater
                 If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp") Then
                     File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp")
                 End If
-                DownloadMode = DownloadModes.DownloadUpdate
+                DownloadMode = DownloadModes.DownloadPatcher
                 Client.DownloadFileAsync(New Uri(Update_Path_UpdatePatcher), Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp")
             Else
                 Action_DownloadUpdate()
