@@ -22,5 +22,6 @@
         <Button x:Name="Button_startOsusync" Content="_Start osu!Sync" FontSize="20" HorizontalAlignment="Right" IsDefault="True" Margin="0,0,15,10" VerticalAlignment="Bottom" Visibility="Hidden" Width="150" Grid.Column="1" />
         <Button x:Name="Button_closeUpdater" Content="_Close Updater" FontSize="20" HorizontalAlignment="Right" IsCancel="True" Margin="0,0,170,10" VerticalAlignment="Bottom" Visibility="Hidden" Width="150" Grid.Column="1"  />
         <TextBlock x:Name="TextBlock_VersionInfo" Foreground="#FFBBBBBB" Margin="0,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" />
+        <TextBlock x:Name="TextBlock_Paths" Foreground="#FFBBBBBB" Margin="0,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" />
     </Grid>
 </Window>
