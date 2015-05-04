@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
+    <!-- \/ Replace "English" with the language of your translation and translate, wrap the language with b-Tags -->
+    <system:String x:Key="Forum_translationInfo">This application is available in [b]English[/b].</system:String>
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationInfo">This application is available in English.</system:String>
+    <system:String x:Key="Forum_translationLanguageName">English</system:String>
 
     <!-- Meta & More -->
     <!-- | T -->
@@ -219,8 +221,9 @@
     <system:String x:Key="WindowSettings_disable">Disable.</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Download update package to...</system:String>
     <!-- | E -->
-    <system:String x:Key="WindowSettings_executableFiles">Executable Files</system:String>
+    <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Enable NotifyIcon in Tray Area...</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">Every launch.</system:String>
+    <system:String x:Key="WindowSettings_executableFiles">Executable Files</system:String>
     <!-- | F -->
     <system:String x:Key="WindowSettings_featureRequest">Feature Request</system:String>
     <system:String x:Key="WindowSettings_feedback">Feedback</system:String>
@@ -228,7 +231,11 @@
     <!-- | G -->
     <system:String x:Key="WindowSettings_general">General</system:String>
     <system:String x:Key="WindowSettings_generalFeedback">General Feedback</system:String>
+    <!-- | I -->
+    <system:String x:Key="WindowSettings_importDownload">Import/Download</system:String>
     <!-- | L -->
+    <system:String x:Key="WindowSettings_language">Language</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">It looks like you changed the language. Most elements have been updated, however, some will still remain in the language set before. To correct that you need to restart osu!Sync.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Launch osu!Sync.</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maximum once a day (Recommended).</system:String>

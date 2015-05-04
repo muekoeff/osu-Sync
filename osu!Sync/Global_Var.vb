@@ -27,6 +27,7 @@ Module Global_Var
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
     Public Setting_Tool_ImporterAutoInstallCounter As Integer = 10
+    Public Setting_Tool_Language As String = System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
@@ -154,6 +155,8 @@ Module Global_Var
         Select Case LanguageCode
             Case "de"
                 Return "de_DE"
+            Case "en"
+                Return "en_US"
             Case "id"
                 Return "id_ID"
             Case "pl"
@@ -162,6 +165,11 @@ Module Global_Var
                 Return ""
         End Select
     End Function
+
+    Sub LoadLanguage(ByVal FileName As String)
+        Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With { _
+                                                                     .Source = New Uri("Languages/" & FileName & ".xaml", UriKind.Relative)})
+    End Sub
 
     Function md5(ByVal Input As String) As String
         Dim MD5StringHash As New MD5CryptoServiceProvider
@@ -198,6 +206,7 @@ Module Global_Var
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
                 .Add("Setting_Tool_EnableNotifyIcon", CStr(Setting_Tool_EnableNotifyIcon))
                 .Add("Setting_Tool_ImporterAutoInstallCounter", CStr(Setting_Tool_ImporterAutoInstallCounter))
+                .Add("Setting_Tool_Language", Setting_Tool_Language)
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
                 .Add("Setting_Tool_UpdateDeleteFileAfter", CStr(Setting_Tool_UpdateDeleteFileAfter))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
@@ -238,6 +247,9 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter") Is Nothing Then
                 Setting_Tool_ImporterAutoInstallCounter = CType(ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter"), Integer)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
+                Setting_Tool_Language = CType(ConfigFile.SelectToken("Setting_Tool_Language"), String)
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
                 Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)

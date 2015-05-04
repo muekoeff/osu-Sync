@@ -73,6 +73,15 @@ Public Class Window_Settings
         If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
             Setting_Tool_ImporterAutoInstallCounter = Val
         End If
+        ' Load Language
+        Console.WriteLine(ComboBox_Tool_Languages.Text.Substring(0, 2))
+        If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = ComboBox_Tool_Languages.Text.Substring(0, 2) Then
+            If Not GetTranslationName(ComboBox_Tool_Languages.Text.Substring(0, 2)) = "" Then
+                LoadLanguage(GetTranslationName(ComboBox_Tool_Languages.Text.Substring(0, 2)))
+                MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+            End If
+        End If
+        Setting_Tool_Language = ComboBox_Tool_Languages.Text.Substring(0, 2)
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
         Setting_Tool_UpdateDeleteFileAfter = CType(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked, Boolean)
         Setting_Tool_UpdateUseDownloadPatcher = CType(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked, Boolean)
@@ -349,6 +358,23 @@ Public Class Window_Settings
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
+        ' Select Language
+        Dim Counter As Integer = 0
+        Dim IndexEN As Integer = 0
+        For Each Item As ComboBoxItem In ComboBox_Tool_Languages.Items
+            If Item.Content.ToString.Substring(0, 2) = Setting_Tool_Language Then
+                Console.WriteLine(Item.Content.ToString.Substring(0, 2) & " | " & Setting_Tool_Language)
+                ComboBox_Tool_Languages.SelectedIndex = Counter
+                Counter = -1
+                Exit For
+            ElseIf Item.Content.ToString.Substring(0, 2) = "en" Then
+                IndexEN = Counter
+            End If
+            Counter += 1
+        Next
+        If Not Counter = -1 Then
+            ComboBox_Tool_Languages.SelectedIndex = IndexEN
+        End If
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
         Textbox_Tool_ImporterAutoInstallCounter.Text = Setting_Tool_ImporterAutoInstallCounter.ToString

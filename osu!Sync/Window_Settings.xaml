@@ -46,10 +46,17 @@
                         <Button x:Name="Button_Tool_UpdatePathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Height="25" HorizontalAlignment="Right" Margin="0,-25,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Width="80" />
                         <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="General" TextWrapping="Wrap" Margin="0,15,0,0" VerticalAlignment="Top" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_language}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBox_Tool_Languages">
+                            <ComboBoxItem Content="de | German/Deutsch" />
+                            <ComboBoxItem Content="en | English/English" />
+                            <ComboBoxItem Content="id | Indonesian/Bahasa Indonesia" />
+                            <ComboBoxItem Content="pl | Polish/Polski" />
+                        </ComboBox>
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
                         <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="{DynamicResource WindowSettings_autoloadCacheFileOnStartup}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
-                        <TextBlock Text="Enable NotifyIcon in Tray Area..." TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">
                             <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysEnableNotifyBalloons}" />
                             <Separator />
@@ -57,7 +64,7 @@
                             <ComboBoxItem Content="{DynamicResource WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons}" />
                             <ComboBoxItem Content="{DynamicResource WindowSettings_disable}" />
                         </ComboBox>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="Import/Download" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_importDownload}" TextWrapping="Wrap" VerticalAlignment="Top" />
                         <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_useThisDownloadMirror}" TextWrapping="Wrap" />
                         <ComboBox x:Name="ComboBox_Tool_DownloadMirror">
                             <ComboBoxItem Content="Bloodcat.com" />
