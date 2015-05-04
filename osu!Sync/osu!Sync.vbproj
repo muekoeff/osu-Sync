@@ -118,6 +118,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Global_Var.vb" />
+    <Compile Include="OsuReader.vb" />
     <Compile Include="Window_Settings.xaml.vb">
       <DependentUpon>Window_Settings.xaml</DependentUpon>
     </Compile>
