@@ -74,7 +74,6 @@ Public Class Window_Settings
             Setting_Tool_ImporterAutoInstallCounter = Val
         End If
         ' Load Language
-        Console.WriteLine(ComboBox_Tool_Languages.Text.Substring(0, 2))
         If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = ComboBox_Tool_Languages.Text.Substring(0, 2) Then
             If Not GetTranslationName(ComboBox_Tool_Languages.Text.Substring(0, 2)) = "" Then
                 LoadLanguage(GetTranslationName(ComboBox_Tool_Languages.Text.Substring(0, 2)))
@@ -363,7 +362,6 @@ Public Class Window_Settings
         Dim IndexEN As Integer = 0
         For Each Item As ComboBoxItem In ComboBox_Tool_Languages.Items
             If Item.Content.ToString.Substring(0, 2) = Setting_Tool_Language Then
-                Console.WriteLine(Item.Content.ToString.Substring(0, 2) & " | " & Setting_Tool_Language)
                 ComboBox_Tool_Languages.SelectedIndex = Counter
                 Counter = -1
                 Exit For

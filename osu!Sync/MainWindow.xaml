@@ -146,7 +146,8 @@
                     <TextBlock x:Name="Importer_DownloadMirrorInfo" Cursor="Hand" Foreground="#FFDDDDDD" HorizontalAlignment="Right" Margin="0,0,25,0" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TabberItem_Export" Header="{DynamicResource MainWindow_export}" Visibility="Collapsed">
+            <TabItem x:Name="TabberItem_Export" Header="{DynamicResource MainWindow_export}" >
+                <!-- Visibility="Collapsed" -->
                 <Grid x:Name="TabberItem_Export_Grid" Margin="-5,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="39" />
@@ -160,12 +161,18 @@
                     <ScrollViewer Grid.Row="1" Grid.RowSpan="1" Margin="0,0,5,0">
                         <StackPanel x:Name="ExporterWrapper">
                             <!-- [Example]
-                                 <Grid Height="50" Margin="0,0,0,10">
-                                 <Rectangle Fill="#3498db" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" />
-                                 <TextBlock FontFamily="Segoe UI" FontSize="22" Foreground="#FF555555" Height="30" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" />
-                                 <TextBlock FontFamily="Segoe UI Light" FontSize="12" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                                 <CheckBox Content="Select to Export" HorizontalAlignment="Right" IsChecked="True" IsThreeState="True" Margin="0,10,5,0" VerticalAlignment="Top" />
-                                 </Grid> -->
+                            <Grid Height="51" Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="73" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Fill="#3498db" VerticalAlignment="Stretch" />
+                                <Image Margin="5,0,0,0" Source="Resources/NoThumbnail.png" Grid.Column="1" />
+                                <TextBlock FontFamily="Segoe UI" FontSize="22" Foreground="#FF555555" Height="30" HorizontalAlignment="Left" Margin="15,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" />
+                                <TextBlock FontFamily="Segoe UI Light" FontSize="12" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="15,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" />
+                                <CheckBox Content="Select to Export" HorizontalAlignment="Right" IsChecked="True" IsThreeState="True" Margin="0,10,5,0" VerticalAlignment="Top" Grid.Column="2" />
+                            </Grid> -->
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

@@ -788,17 +788,35 @@ Class MainWindow
                 ExporterWrapper.Children.Clear()
                 For Each SelectedBeatmap As Beatmap In BeatmapList
                     Dim UI_Grid = New Grid() With { _
-                        .Height = 50,
+                        .Height = 51,
                         .Margin = New Thickness(0, 0, 0, 10),
                         .Width = Double.NaN}
+
+                    With UI_Grid.ColumnDefinitions
+                        .Add(New ColumnDefinition With { _
+                            .Width = New GridLength(10)})
+                        .Add(New ColumnDefinition With { _
+                            .Width = New GridLength(73)})
+                        .Add(New ColumnDefinition)
+                    End With
 
                     ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With { _
                         .Fill = Color_27AE60,
-                        .Height = 50,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top,
-                        .Width = 10}
+                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+
+                    Dim UI_Thumbnail = New Image With { _
+                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
+                        .Margin = New Thickness(5, 0, 0, 0),
+                        .Tag = SelectedBeatmap,
+                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+                    Grid.SetColumn(UI_Thumbnail, 1)
+                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapListingPageInBrowser
+                    If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                        UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                    Else
+                        UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+                    End If
 
                     ' Color_555555 = Gray
                     Dim UI_TextBlock_Title = New TextBlock With { _
@@ -807,10 +825,11 @@ Class MainWindow
                         .Foreground = Color_555555,
                         .Height = 30,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
-                        .Margin = New Thickness(25, 0, 0, 0),
+                        .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With { _
@@ -819,9 +838,10 @@ Class MainWindow
                         .Foreground = Color_008136,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
-                        .Margin = New Thickness(25, 30, 0, 0),
+                        .Margin = New Thickness(10, 30, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Grid.SetColumn(UI_TextBlock_Caption, 2)
 
                     If Not SelectedBeatmap.ID = -1 Then
                         UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
@@ -838,6 +858,7 @@ Class MainWindow
                         .IsChecked = True,
                         .Margin = New Thickness(10, 5, 0, 0),
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    Grid.SetColumn(UI_Checkbox_IsSelected, 2)
 
                     If SelectedBeatmap.ID = -1 Then
                         With UI_Checkbox_IsSelected
@@ -848,8 +869,9 @@ Class MainWindow
                     Else
                         AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Exporter_AddBeatmapToSelection
                         AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
-                        AddHandler (UI_TextBlock_Title.MouseDown), AddressOf Exporter_DetermineWheterAddOrRemove
-                        AddHandler (UI_DecoBorderLeft.MouseDown), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler (UI_DecoBorderLeft.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler (UI_TextBlock_Title.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler (UI_Thumbnail.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
                     End If
 
                     Dim TagData As New Importer_TagData With { _
@@ -868,11 +890,16 @@ Class MainWindow
                     UI_Grid.Tag = TagData
                     UI_TextBlock_Caption.Tag = TagData
                     UI_TextBlock_Title.Tag = TagData
+                    UI_Thumbnail.Tag = TagData
 
-                    UI_Grid.Children.Add(UI_DecoBorderLeft)
-                    UI_Grid.Children.Add(UI_TextBlock_Title)
-                    UI_Grid.Children.Add(UI_TextBlock_Caption)
-                    UI_Grid.Children.Add(UI_Checkbox_IsSelected)
+                    With UI_Grid.Children
+                        .Add(UI_Checkbox_IsSelected)
+                        .Add(UI_DecoBorderLeft)
+                        .Add(UI_TextBlock_Title)
+                        .Add(UI_TextBlock_Caption)
+                        .Add(UI_Thumbnail)
+                    End With
+
                     ExporterWrapper.Children.Add(UI_Grid)
                 Next
 
@@ -1311,7 +1338,6 @@ Class MainWindow
                                     .ID = CInt(Beatmap_ID),
                                     .Title = Beatmap_Name,
                                     .Artist = Beatmap_Artist}
-                                Console.WriteLine(DirectoryInfo.Name & " | " & Beatmap_Artist & " | " & Beatmap_ID & " | " & Beatmap_Name)
                                 Answer.Return__Sync_BeatmapList_Installed.Add(CurrentBeatmap)
                                 Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(Beatmap_ID))
                             Catch ex As Exception
@@ -1628,7 +1654,6 @@ Class MainWindow
         Dim LoopCount As Integer = 0
         Do While LoopCount < ListSelected.Count
             ListSelected(LoopCount).UI_Checkbox_IsSelected.IsChecked = False
-            Console.WriteLine(LoopCount & " | " & ListSelected(LoopCount).UI_TextBlock_Title.Text)
             LoopCount += 1
         Loop
 
@@ -1637,7 +1662,6 @@ Class MainWindow
         LoopCount = 0
         Do While LoopCount < ListUnselected.Count
             ListUnselected(LoopCount).UI_Checkbox_IsSelected.IsChecked = True
-            Console.WriteLine(LoopCount & " | " & ListUnselected(LoopCount).UI_TextBlock_Title.Text)
             LoopCount += 1
         Loop
     End Sub
