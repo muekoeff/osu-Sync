@@ -291,6 +291,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(DevEnvDir)..\Tools\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)Icons"</PostBuildEvent>
+    <PostBuildEvent>"$(DevEnvDir)Tools\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)Icons"</PostBuildEvent>
   </PropertyGroup>
 </Project>

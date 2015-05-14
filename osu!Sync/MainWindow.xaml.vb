@@ -35,10 +35,11 @@ Public Enum UpdateBeatmapDisplayDestinations
 End Enum
 
 Public Class Beatmap
-    Public Property ID As Integer
-    Public Property Title As String
     Public Property Artist As String
     Public Property Creator As String = "Unknown"
+    Public Property ID As Integer
+    Public Property MD5 As String
+    Public Property Title As String
 End Class
 
 Public Class BGWcallback__Action_Sync_GetIDs
@@ -719,6 +720,9 @@ Class MainWindow
                         .Margin = New Thickness(10, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
+                    If Not SelectedBeatmap.Creator = "Unknown" Then
+                        UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
+                    End If
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With { _
                         .Content = _e("MainWindow_downloadAndInstall"),
@@ -1017,7 +1021,7 @@ Class MainWindow
         If Not GetTranslationName(Setting_Tool_Language) = "" Then
             LoadLanguage(GetTranslationName(Setting_Tool_Language))
         End If
-        
+
         ' Set settings like NotifyIcon
         Action_Tool_UpdateSettings()
 
@@ -1273,40 +1277,40 @@ Class MainWindow
                         Dim User = Reader.ReadString()
                         Dim FoundIDs As New List(Of Integer)
                         Dim BeatmapCount = Reader.ReadInt32()
-                        For i = 1 To BeatmapCount
+                        For i = 1 To BeatmapCount                                   ' More details: http://j.mp/1PIyjCY
                             Dim BeatmapDetails As New Beatmap
-                            BeatmapDetails.Artist = Reader.ReadString()
-                            Reader.ReadString() 'Artist Unicode
-                            BeatmapDetails.Title = Reader.ReadString()
-                            Reader.ReadString() 'Title Unicode
-                            BeatmapDetails.Creator = Reader.ReadString()
-                            Reader.ReadString() 'Difficulty
-                            Reader.ReadString() 'Audio file name
-                            Reader.ReadString() 'Hash
-                            Reader.ReadString() 'Path
-                            Reader.ReadBytes(39) 'Other data No. of Circles/Sliders/Spinners, Last Edit, Settings etc.
-                            For j = 1 To 4 'Star difficulties with various mods
+                            BeatmapDetails.Artist = Reader.ReadString()             ' Artist name
+                            Reader.ReadString()                                     '  Artist name, in Unicode
+                            BeatmapDetails.Title = Reader.ReadString()              ' Song title
+                            Reader.ReadString()                                     '  Song title, in Unicode
+                            BeatmapDetails.Creator = Reader.ReadString()            ' Creator name
+                            Reader.ReadString()                                     '  Difficulty (e.g. Hard, Insane, etc.)
+                            Reader.ReadString()                                     '  Audio file name
+                            BeatmapDetails.MD5 = Reader.ReadString()                ' MD5 hash of the beatmap
+                            Reader.ReadString()                                     '  Name of the .osu file corresponding to this beatmap
+                            Reader.ReadBytes(39)                                    '  Other data No. of Circles/Sliders/Spinners, Last Edit, Settings etc.
+                            For j = 1 To 4                                          '  Star difficulties with various mods
                                 Dim Count = Reader.ReadInt32()
                                 If Count < 0 Then Continue For
                                 For k = 1 To Count
                                     Reader.ReadBytes(14)
                                 Next
                             Next
-                            Reader.ReadBytes(12) 'Drain/Total/Preview Time
+                            Reader.ReadBytes(12)                                    '  Drain/Total/Preview Time
                             Dim TimingPointCount = Reader.ReadInt32() 'You could probably optimise these loops. Reader.ReadBytes(Count*17) maybe. I don't have the time to test it.
                             For j = 1 To TimingPointCount
                                 Reader.ReadBytes(17)
                             Next
-                            Reader.ReadInt32() 'Map ID
-                            BeatmapDetails.ID = Reader.ReadInt32()
-                            Reader.ReadInt32() 'Thread ID
+                            Reader.ReadInt32()                                      '  Beatmap ID
+                            BeatmapDetails.ID = Reader.ReadInt32()                  ' Beatmap set ID
+                            Reader.ReadInt32()                                      '  Thread ID
                             Reader.ReadBytes(11)
-                            Reader.ReadString() 'Source
-                            Reader.ReadString() 'Tags
-                            Reader.ReadInt16() 'Online Offset
-                            Reader.ReadString() 'Formatted Title
+                            Reader.ReadString()                                     '  Song source
+                            Reader.ReadString()                                     '  Song tags
+                            Reader.ReadInt16()                                      '  Online offset 
+                            Reader.ReadString()                                     '  Font used for the title of the song 
                             Reader.ReadBytes(10)
-                            Reader.ReadString() 'Map Directory
+                            Reader.ReadString()                                     '  Folder name of the beatmap, relative to Songs folder 
                             Reader.ReadBytes(18)
 
                             If Not FoundIDs.Contains(BeatmapDetails.ID) Then

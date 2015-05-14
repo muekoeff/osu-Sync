@@ -58,7 +58,7 @@
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Do you want to start osu! now?</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
-    <system:String x:Key="MainWindow_exitOsuSync">E_xit osu!Sync</system:String>
+    <system:String x:Key="MainWindow_exit">E_xit</system:String>
     <system:String x:Key="MainWindow_export">Export</system:String>
     <system:String x:Key="MainWindow_exportAborted">Export aborted</system:String>
     <system:String x:Key="MainWindow_exportCompleted">Export completed</system:String>
@@ -106,7 +106,7 @@
     <system:String x:Key="MainWindow_leftOut">%0 left out</system:String>
     <system:String x:Key="MainWindow_loadedFromCache">Loaded from cache</system:String>
     <!-- | M -->
-    <system:String x:Key="MainWindow_minimizeOsuSyncToTray">_Minimize osu!Sync to tray</system:String>
+    <system:String x:Key="MainWindow_minimizeToTray">_Minimize to tray</system:String>
     <!-- | N -->
     <system:String x:Key="MainWindow_notImportable">Not importable</system:String>
     <!-- | O -->
