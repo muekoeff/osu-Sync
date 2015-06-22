@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
+    <!-- \/ Replace "English" with the language of your translation and translate, wrap the language with b-Tags -->
+    <system:String x:Key="Forum_translationInfo">Ta aplikacja jest dostępna w języku [b]polskim[/b].</system:String>
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationInfo">Ta aplikacja jest dostępna w języku polskim.</system:String>
+    <system:String x:Key="Forum_translationLanguageName">Polski</system:String>
 
     <!-- Meta & More -->
     <!-- | T -->
@@ -24,7 +26,7 @@
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Anulowano</system:String>
     <system:String x:Key="MainWindow_about">_O programie</system:String>
-    <system:String x:Key="MainWindow_allSupportedFileFormats">Wspierane formaty plików</system:String>
+    <system:String x:Key="MainWindow_allSupportedFileFormats">Wszystkie wspierane formaty plików</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Pracuję dalej...</system:String>
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">Nowa wersja osu!Sync jest dostępna.&#x0a;Obecna: %0 | Najnowsza: %1</system:String>
     <!-- | B -->
@@ -56,7 +58,7 @@
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Czy chcesz uruchomić osu! teraz?</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">Wyjątki</system:String>
-    <system:String x:Key="MainWindow_exitOsuSync">Z_akończ osu!Sync</system:String>
+    <system:String x:Key="MainWindow_exit">Z_akończ</system:String>
     <system:String x:Key="MainWindow_export">Wyeksportuj</system:String>
     <system:String x:Key="MainWindow_exportAborted">Eksportowanie anulowane</system:String>
     <system:String x:Key="MainWindow_exportCompleted">Eksportowanie zakończone</system:String>
@@ -104,11 +106,12 @@
     <system:String x:Key="MainWindow_leftOut">%0 zostało</system:String>
     <system:String x:Key="MainWindow_loadedFromCache">Załadowano z pamięci podręcznej.</system:String>
     <!-- | M -->
-    <system:String x:Key="MainWindow_minimizeOsuSyncToTray">_Zminimalizuj osu!Sync do paska zadań</system:String>
+    <system:String x:Key="MainWindow_minimizeToTray">_Zminimalizuj do paska zadań</system:String>
     <!-- | N -->
     <system:String x:Key="MainWindow_notImportable">Nieimportowalne</system:String>
     <!-- | O -->
     <system:String x:Key="MainWindow_openBeatmapList">Otwórz listę beatmap</system:String>
+    <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Otwieraj listowanie beatmap w przeglądarkę.</system:String>
     <system:String x:Key="MainWindow_openUpdater">Otwórz _Updater</system:String>
     <system:String x:Key="MainWindow_osuSyncBeatmapList">Lista beatmap osu!Sync</system:String>
     <!-- | P -->
@@ -116,7 +119,7 @@
     <system:String x:Key="MainWindow_pleaseRetry">Spróbuj ponownie.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Zsynchronizuj.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Proszę czekać...</system:String>
-    <system:String x:Key="MainWindow_pressF5">Naciśnij F5 w osu! by przeładować Twoje beatmapy, lub wróć do głównego menu.</system:String>
+    <system:String x:Key="MainWindow_pressF5">Naciśnij klawisz F5 w osu! by odświeżyć listę beatmap, lub wróć do głównego menu.</system:String>
     <system:String x:Key="MainWindow_program">_Program</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_readingCache">Odczytywanie pamięci podręcznej...</system:String>
@@ -129,7 +132,7 @@
     <system:String x:Key="MainWindow_setsDone">%0 zestawów ukończonych</system:String>
     <system:String x:Key="MainWindow_setsFailed">%0 zestawów nieudanych</system:String>
     <system:String x:Key="MainWindow_setsLeft">%0 zestawów zostało</system:String>
-    <system:String x:Key="MainWindow_setsLeftOut">%0 zestawów zostało</system:String>
+    <system:String x:Key="MainWindow_setsLeftOut">%0 zestawów pozostało</system:String>
     <system:String x:Key="MainWindow_setsTotal">%0 zestawów ogółem</system:String>
     <system:String x:Key="MainWindow_settings">Ustawienia</system:String>
     <system:String x:Key="MainWindow_showHideOsuSync">Pokaż/ukryj osu!Sync</system:String>
@@ -186,7 +189,7 @@
     <!-- |> E -->
     <system:String x:Key="WindowAbout_tt_email">Pytania? Po prostu napisz maila, a odpowiemy. :)</system:String>
     <!-- |> F -->
-    <system:String x:Key="WindowAbout_tt_feedback">Otwórz okno opinii</system:String>
+    <system:String x:Key="WindowAbout_tt_feedback">Otwórz okno opinii.</system:String>
     <!-- |> G -->
     <system:String x:Key="WindowAbout_tt_github">Pomóż nam tworzyć osu!Sync.</system:String>
     <!-- |> O -->
@@ -201,8 +204,8 @@
     <system:String x:Key="WindowSettings_apply">_Akceptuj</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Jesteś pewien, że chcesz usunąć plik konfiguracyjny (nieodwracalne!)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToResetOsuSync">Jesteś pewien, że chcesz zresetować osu!Sync (nieodwracalne!)?</system:String>
-    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Automatycznie importuj pobrane beatmapy po osiągnięciu ilości: x . (Musi być numeryczna)</system:String>
-    <system:String x:Key="WindowSettings_autoloadCacheFileOnStartup">Automatycznie ładuj plik cache przy starcie (Program stanie w zależności od ilości beatmap).</system:String>
+    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Automatycznie importuj pobrane beatmapy po osiągnięciu numerycznej ilości:</system:String>
+    <system:String x:Key="WindowSettings_autoloadCacheFileOnStartup">Automatycznie ładuj plik cache przy starcie (program zawiesi się na jakiś czas w zależności od ilości beatmap).</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_bug">Bugi</system:String>
     <!-- | C -->
@@ -216,18 +219,23 @@
     <system:String x:Key="WindowSettings_deleteFileAssociation">Usuń/usuń z rejestru powiązania plików</system:String>
     <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Usuń pakiet aktualizacji po instalacji (ma wpływ jedynie jeśli aktualizator jest włączony).</system:String>
     <system:String x:Key="WindowSettings_disable">Wyłącz.</system:String>
-    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Pobierz pakiet aktualizacji do...</system:String>
+    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Pobierz pakiet aktualizacji do:</system:String>
     <!-- | E -->
-    <system:String x:Key="WindowSettings_executableFiles">Pliki wykonywalne.</system:String>
+    <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Włącz ikonę w obszarze powiadomień...</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">Przy każdym uruchomieniu.</system:String>
+    <system:String x:Key="WindowSettings_executableFiles">Pliki wykonywalne.</system:String>
     <!-- | F -->
     <system:String x:Key="WindowSettings_featureRequest">Zasugeruj funkcję</system:String>
     <system:String x:Key="WindowSettings_feedback">Opinia</system:String>
     <system:String x:Key="WindowSettings_furtherInformation">Dalsze informacje</system:String>
     <!-- | G -->
-    <system:String x:Key="WindowSettings_general">Główne</system:String>
-    <system:String x:Key="WindowSettings_generalFeedback">Generalna opinia</system:String>
+    <system:String x:Key="WindowSettings_general">Ogólne</system:String>
+    <system:String x:Key="WindowSettings_generalFeedback">Ogólna opinia</system:String>
+    <!-- | I -->
+    <system:String x:Key="WindowSettings_importDownload">Importuj/Pobierz</system:String>
     <!-- | L -->
+    <system:String x:Key="WindowSettings_language">Język</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">Wygląda na to, że zmieniłeś język. Większość elementów została zmieniona, ale część pozostała w poprzednim języku. Możesz uruchumić osu!Sync ponownie aby to naprawić.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Uruchom osu!Sync</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maksymalnie raz dziennie (rekomendowane).</system:String>
@@ -245,8 +253,8 @@
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Otwórz aktualizator, gdy nowa wersja jest dostępna</system:String>
     <system:String x:Key="WindowSettings_other">Inne</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowSettings_pathToOsu">Ścieżka osu!</system:String>
-    <system:String x:Key="WindowSettings_pathToSongsFolder">Ścieżka folderu z piosenkami</system:String>
+    <system:String x:Key="WindowSettings_pathToOsu">Ścieżka osu!:</system:String>
+    <system:String x:Key="WindowSettings_pathToSongsFolder">Ścieżka folderu z piosenkami:</system:String>
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Otwórz osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Wybierz miejsce zapisu aktualizacji</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Wybierz swój folder z piosenkami</system:String>
@@ -326,7 +334,7 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync to darmowe narzędzie, które pozwala Ci eksportować i importować mapy do osu!. Możesz generować listy łatwe do udostępnienia, by podzielić się swoimi beatmapami.</system:String>
     <!-- | T -->
-    <system:String x:Key="WindowWelcome_subtitle">... do osu!Sync dzięki naseweis520</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... do osu!Sync autorstwa naseweis520</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Witaj!</system:String>
     <!-- | W -->

@@ -1398,7 +1398,6 @@ Class MainWindow
                                         .ID = CInt(Beatmap_ID),
                                         .Title = Beatmap_Name,
                                         .Artist = Beatmap_Artist}
-                                    Console.WriteLine(DirectoryInfo.Name & " | " & Beatmap_Artist & " | " & Beatmap_ID & " | " & Beatmap_Name)
                                     Answer.Return__Sync_BeatmapList_Installed.Add(CurrentBeatmap)
                                     Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(Beatmap_ID))
                                 Catch ex As Exception

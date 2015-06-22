@@ -157,12 +157,20 @@ Module Global_Var
                 Return "de_DE"
             Case "en"
                 Return "en_US"
+            Case "es", "es-EM"
+                Return "es_EM"
             Case "id"
                 Return "id_ID"
+            Case "no"
+                Return "no_NO"
             Case "pl"
                 Return "pl_PL"
+            Case "zh", "zh-CN"
+                Return "zh_CN"
+            Case "zh-TW"
+                Return "zh_TW"
             Case Else
-                Return ""
+                Return "en_US"
         End Select
     End Function
 

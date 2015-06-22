@@ -50,8 +50,12 @@
                         <ComboBox x:Name="ComboBox_Tool_Languages">
                             <ComboBoxItem Content="de | German/Deutsch" />
                             <ComboBoxItem Content="en | English/English" />
+                            <ComboBoxItem Content="es-EM | Spanish (Modern)/Español" />
                             <ComboBoxItem Content="id | Indonesian/Bahasa Indonesia" />
+                            <ComboBoxItem Content="no | Norwegian/Norsk" />
                             <ComboBoxItem Content="pl | Polish/Polski" />
+                            <ComboBoxItem Content="zh-CN | Chinese Simplified/中文 (简体)" />
+                            <ComboBoxItem Content="zh-TW | Chinese Traditional/中文 (繁體)" />
                         </ComboBox>
                         <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
                         <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="{DynamicResource WindowSettings_autoloadCacheFileOnStartup}" Margin="0,5,0,0" />
