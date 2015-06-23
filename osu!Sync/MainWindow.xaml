@@ -18,9 +18,18 @@
                       Visibility="Visible">
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="Flyout_BeatmapDetails" Header="Beatmap Details" Position="Right">
-                <Grid Margin="10,0,10,10">
-                    <RichTextBox />
+            <Controls:Flyout x:Name="Flyout_BeatmapDetails" Background="#BF222222" Header="{DynamicResource MainWindow_detailsPanel_beatmapsDetails}" Position="Right">
+                <Grid Margin="10,0">
+                    <StackPanel>
+                        <Image x:Name="BeatmapDetails_Thumbnail" Width="160" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="BeatmapDetails_Title" Foreground="#FF50BD7E" FontSize="36" />
+                        <TextBlock x:Name="BeatmapDetails_Artist" Foreground="#FF3DB670" FontSize="20" />
+                        <TextBlock x:Name="BeatmapDetails_Creator" Foreground="#FF27AE60" FontSize="16" />
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Bottom">
+                        <Button x:Name="BeatmapDetails_BeatmapListing" Content="{DynamicResource MainWindow_detailsPanel_openBeatmapListing}" FontSize="14" Height="45" Margin="0,0,0,6" />
+                        <TextBlock x:Name="BeatmapDetails_RankedStatus" Background="#BF00AEFF" Height="32" Margin="-10,0" Padding="0,6,0,0" TextAlignment="Center" />
+                    </StackPanel>
                 </Grid>
             </Controls:Flyout>
         </Controls:FlyoutsControl>

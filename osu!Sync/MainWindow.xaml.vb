@@ -39,6 +39,14 @@ Public Class Beatmap
     Public Property Creator As String = "Unknown"
     Public Property ID As Integer
     Public Property MD5 As String
+    Public Property RankedStatus As Byte
+    Public Property Title As String
+End Class
+
+Public Class BeatmapPanelDetails
+    Public Property Artist As String = "Unknown"
+    Public Property Creator As String = "Unknown"
+    Public Property RankedStatus As Byte = Convert.ToByte(0)
     Public Property Title As String
 End Class
 
@@ -405,10 +413,15 @@ Class MainWindow
         End Select
     End Sub
 
-    Private Sub Action_OpenBeatmapListingPageInBrowser(sender As Object, e As MouseButtonEventArgs)
+    Private Sub Action_OpenBeatmapDetails(sender As Object, e As MouseButtonEventArgs)
         Dim SelectedSender As Image = CType(sender, Image)
         Dim SelectedSender_Tag As Beatmap = CType(SelectedSender.Tag, Beatmap)
-        Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag.ID)
+
+        Interface_ShowBeatmapDetails(SelectedSender_Tag.ID, New BeatmapPanelDetails With { _
+                                     .Artist = SelectedSender_Tag.Artist,
+                                     .Creator = SelectedSender_Tag.Creator,
+                                     .RankedStatus = SelectedSender_Tag.RankedStatus,
+                                     .Title = SelectedSender_Tag.Title})
     End Sub
 
     Private Sub Action_OverlayFadeOut()
@@ -467,17 +480,17 @@ Class MainWindow
     ''' <remarks></remarks>
     Private Sub Action_Sync_GetIDs()
         Button_SyncDo.IsEnabled = False
-        If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
-            Interface_SetLoader("Reading cache file...")
-            TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
-            BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
-                                               .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache})
-        Else
-            Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
-            TextBlock_Sync_LastUpdate.Content = _e("MainWindow_syncing")
-            BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
-        End If
-
+        ' [DEV][DEACTIVATED]
+        'If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
+        '    Interface_SetLoader("Reading cache file...")
+        '    TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
+        '    BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
+        '                                       .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache})
+        'Else
+        Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
+        TextBlock_Sync_LastUpdate.Content = _e("MainWindow_syncing")
+        BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
+        'End If
     End Sub
 
     Private Sub Action_Tool_UpdateSettings()
@@ -549,7 +562,7 @@ Class MainWindow
                         .ToolTip = _e("MainWindow_openBeatmapListingPageInBrowser"),
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
-                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapListingPageInBrowser
+                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
@@ -815,7 +828,7 @@ Class MainWindow
                         .Tag = SelectedBeatmap,
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
-                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapListingPageInBrowser
+                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
@@ -912,6 +925,12 @@ Class MainWindow
         End Select
     End Sub
 
+    Private Sub BeatmapDetails_BeatmapListing_Click(sender As Object, e As RoutedEventArgs) Handles BeatmapDetails_BeatmapListing.Click
+        Dim SelectedSender As Button = CType(sender, Button)
+        Dim SelectedSender_Tag As String = CType(SelectedSender.Tag, String)
+        Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag)
+    End Sub
+
     Private Sub Button_SyncDo_Click(sender As Object, e As RoutedEventArgs) Handles Button_SyncDo.Click
         If Setting_Tool_CheckFileAssociation Then
             Action_CheckFileAssociation()
@@ -965,6 +984,10 @@ Class MainWindow
         Overlay.Visibility = Windows.Visibility.Hidden
     End Sub
 
+    Private Sub Flyout_BeatmapDetails_RequestBringIntoView(sender As Object, e As RequestBringIntoViewEventArgs) Handles Flyout_BeatmapDetails.RequestBringIntoView
+        Flyout_BeatmapDetails.Width = 2 * (Me.Width / 5)
+    End Sub
+
     Private Sub Interface_SetLoader(Optional Message As String = "Please wait")
         Dim UI_ProgressBar = New ProgressBar With { _
             .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
@@ -991,6 +1014,46 @@ Class MainWindow
         BeatmapWrapper.Children.Add(UI_ProgressBar)
         BeatmapWrapper.Children.Add(UI_ProgressRing)
         BeatmapWrapper.Children.Add(UI_TextBlock_SubTitle)
+    End Sub
+
+    Private Sub Interface_ShowBeatmapDetails(ID As Integer, Details As BeatmapPanelDetails)
+        BeatmapDetails_Artist.Text = Details.Artist
+        BeatmapDetails_BeatmapListing.Tag = ID
+        BeatmapDetails_Creator.Text = Details.Creator
+        BeatmapDetails_Title.Text = Details.Title
+
+        ' Ranked status
+        Select Case Details.RankedStatus
+            Case Convert.ToByte(4)      ' Ranked
+                With BeatmapDetails_RankedStatus
+                    .Background = Color_008136
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked")
+                End With
+            Case Convert.ToByte(5)      ' Approved
+                With BeatmapDetails_RankedStatus
+                    .Background = Color_008136
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_approved")
+                End With
+            Case Convert.ToByte(6)      ' Pending
+                With BeatmapDetails_RankedStatus
+                    .Background = Color_8E44AD
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_pending")
+                End With
+            Case Else
+                With BeatmapDetails_RankedStatus
+                    .Background = Color_999999
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked")
+                End With
+        End Select
+
+        ' Thumbnail
+        If File.Exists(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg") Then
+            BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg"))
+        Else
+            BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+        End If
+
+        Flyout_BeatmapDetails.IsOpen = True
     End Sub
 
     Shared Sub Interface_ShowSettingsWindow(Optional ByVal SelectedIndex As Integer = 0)
@@ -1288,7 +1351,8 @@ Class MainWindow
                             Reader.ReadString()                                     '  Audio file name
                             BeatmapDetails.MD5 = Reader.ReadString()                ' MD5 hash of the beatmap
                             Reader.ReadString()                                     '  Name of the .osu file corresponding to this beatmap
-                            Reader.ReadBytes(39)                                    '  Other data No. of Circles/Sliders/Spinners, Last Edit, Settings etc.
+                            BeatmapDetails.RankedStatus = Reader.ReadByte           ' Ranked status
+                            Reader.ReadBytes(38)                                    '  Other data No. of Circles/Sliders/Spinners, Last Edit, Settings etc.
                             For j = 1 To 4                                          '  Star difficulties with various mods
                                 Dim Count = Reader.ReadInt32()
                                 If Count < 0 Then Continue For

@@ -54,6 +54,16 @@
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Do you want to check which beatmap sets are affected?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Do you want to fix that?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Do you want to start osu! now?</system:String>
+    <!-- | |> Beatmap Details Panel -->
+    <!-- | |> B -->
+    <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Beatmap Details</system:String>
+    <!-- | |> |> Beatmap Status -->
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_approved">Approved</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pending</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
+    <!-- | |> O -->
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Open Beatmap Listing</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
     <system:String x:Key="MainWindow_exitOsuSync">E_xit osu!Sync</system:String>
