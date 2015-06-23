@@ -118,7 +118,9 @@
     <!-- | N -->
     <system:String x:Key="MainWindow_notImportable">Not importable</system:String>
     <!-- | O -->
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Open Beatmap detail panel</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">Open Beatmap List</system:String>
+    <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Open _Updater</system:String>
     <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync Beatmap List</system:String>
     <!-- | P -->

@@ -559,7 +559,7 @@ Class MainWindow
                         .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
                         .Tag = SelectedBeatmap,
-                        .ToolTip = _e("MainWindow_openBeatmapListingPageInBrowser"),
+                        .ToolTip = _e("MainWindow_openBeatmapDetailPanel"),
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
                     AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails

@@ -8,14 +8,14 @@
                       ShowIconOnTitleBar="False"
                       Title="Settings | osu!Sync"
                       Width="600"
+                      MaxWidth="1250"
                       MinWidth="600"
-                      MaxWidth="600"
                       WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="250" />
             <RowDefinition />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="55" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
@@ -24,9 +24,16 @@
         </Grid.ColumnDefinitions>
         <Image Height="250" Source="Resources/WindowSettings_Header.png" Stretch="UniformToFill" VerticalAlignment="Top" Grid.ColumnSpan="4" />
         <TextBlock FontSize="48" Foreground="#FF27AE60" Height="64" Text="{DynamicResource MainWindow_settings}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" />
-        <Button x:Name="Button_Done" Content="{DynamicResource WindowSettings_save}" FontSize="14" Height="50" HorizontalAlignment="Left" IsDefault="True" Margin="5,0,0,0" VerticalAlignment="Top" Width="360" Grid.Column="1" Grid.Row="2" />
-        <Button x:Name="Button_Apply" Content="{DynamicResource WindowSettings_apply}" FontSize="14" Height="50" HorizontalAlignment="Right" Margin="0,0,110,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="2" />
-        <Button x:Name="Button_Cancel" Content="{DynamicResource MainWindow_cancel}" FontSize="14" Height="50" HorizontalAlignment="Right" IsCancel="True" Margin="0,0,5,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Grid.Row="2" />
+        <Grid Margin="5,0,5,10" Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Button_Done" Content="{DynamicResource WindowSettings_save}" FontSize="14" IsDefault="True" />
+            <Button x:Name="Button_Apply" Content="{DynamicResource WindowSettings_apply}" FontSize="14" Margin="5,0,0,0" Grid.Column="1" />
+            <Button x:Name="Button_Cancel" Content="{DynamicResource MainWindow_cancel}" FontSize="14" IsCancel="True" Margin="5,0,0,0" Grid.Column="2" />
+        </Grid>
         <TabControl x:Name="Tabber" Margin="0,64,0,0" Grid.Column="1" Grid.Row="1">
             <TabItem Header="{DynamicResource WindowSettings_general}">
                 <ScrollViewer Background="#FFE5E5E5">
@@ -42,8 +49,14 @@
                             <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAMonth}" />
                         </ComboBox>
                         <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" TextWrapping="Wrap" Margin="0,5,0,0" />
-                        <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" HorizontalAlignment="Left" TextWrapping="Wrap" Width="462" />
-                        <Button x:Name="Button_Tool_UpdatePathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Height="25" HorizontalAlignment="Right" Margin="0,-25,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Width="80" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TextBox_Tool_UpdatePath" Height="23" TextWrapping="Wrap" />
+                            <Button x:Name="Button_Tool_UpdatePathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Margin="5,0,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Grid.Column="1" />
+                        </Grid>
                         <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
                         <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_language}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
@@ -76,9 +89,14 @@
                         </ComboBox>
                         <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" TextWrapping="Wrap" />
                         <Grid>
-                            <TextBox x:Name="Textbox_Tool_ImporterAutoInstallCounter" HorizontalAlignment="Left" Margin="0" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" Width="500" />
-                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Up" Content="˄" HorizontalAlignment="Right" Margin="0" Width="20" />
-                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Down" Content="˅" HorizontalAlignment="Right" Margin="0,0,22,0" Width="20" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="Textbox_Tool_ImporterAutoInstallCounter" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" />
+                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Up" Content="˄" Margin="5,0,0,0" Grid.Column="1" />
+                            <Button x:Name="Button_Tool_ImporterAutoInstallCounter_Down" Content="˅" Margin="5,0,0,0" Grid.Column="2" />
                         </Grid>
                         <Button x:Name="Button_CreateShortcut" Content="{DynamicResource WindowSettings_createShortcutOnDesktop}" FontSize="12" Margin="0,15,0,0" />
                         <Button x:Name="Button_Tool_OpenDataFolder" Content="{DynamicResource WindowSettings_openDataFolder}" FontSize="12" Margin="0,5,0,0" />
@@ -95,8 +113,14 @@
                         <TextBlock Text="{DynamicResource WindowSettings_pathToOsu}" TextWrapping="Wrap" />
                         <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap" />
                         <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_pathToSongsFolder}" TextWrapping="Wrap" />
-                        <TextBox x:Name="TextBox_osu_SongsPath" Height="23" HorizontalAlignment="Left" TextWrapping="Wrap" Width="462" />
-                        <Button x:Name="Button_osu_SongPathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Height="25" HorizontalAlignment="Right" Margin="0,-25,0,0" ToolTip="Use the default path" Width="80" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TextBox_osu_SongsPath" TextWrapping="Wrap" />
+                            <Button x:Name="Button_osu_SongPathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Margin="5,0,0,0" ToolTip="Use the default path" Grid.Column="1" />
+                        </Grid>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

@@ -27,7 +27,7 @@
                         <TextBlock x:Name="BeatmapDetails_Creator" Foreground="#FF27AE60" FontSize="16" />
                     </StackPanel>
                     <StackPanel VerticalAlignment="Bottom">
-                        <Button x:Name="BeatmapDetails_BeatmapListing" Content="{DynamicResource MainWindow_detailsPanel_openBeatmapListing}" FontSize="14" Height="45" Margin="0,0,0,6" />
+                        <Button x:Name="BeatmapDetails_BeatmapListing" Content="{DynamicResource MainWindow_detailsPanel_openBeatmapListing}" FontSize="14" Height="45" Margin="0,0,0,6" ToolTip="{DynamicResource MainWindow_openBeatmapListingPageInBrowser}"/>
                         <TextBlock x:Name="BeatmapDetails_RankedStatus" Background="#BF00AEFF" Height="32" Margin="-10,0" Padding="0,6,0,0" TextAlignment="Center" />
                     </StackPanel>
                 </Grid>
