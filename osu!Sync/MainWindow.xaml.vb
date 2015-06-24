@@ -35,11 +35,12 @@ Public Enum UpdateBeatmapDisplayDestinations
 End Enum
 
 Public Class Beatmap
-    Public Property Artist As String
+    Public Property Artist As String = ""
     Public Property Creator As String = "Unknown"
     Public Property ID As Integer
     Public Property MD5 As String
-    Public Property RankedStatus As Byte
+    Public Property RankedStatus As Byte = Convert.ToByte(1)
+    Public Property SongSource As String = ""
     Public Property Title As String
 End Class
 
@@ -47,6 +48,7 @@ Public Class BeatmapPanelDetails
     Public Property Artist As String = "Unknown"
     Public Property Creator As String = "Unknown"
     Public Property RankedStatus As Byte = Convert.ToByte(0)
+    Public Property SongSource As String = "Unknown"
     Public Property Title As String
 End Class
 
@@ -1369,7 +1371,7 @@ Class MainWindow
                             BeatmapDetails.ID = Reader.ReadInt32()                  ' Beatmap set ID
                             Reader.ReadInt32()                                      '  Thread ID
                             Reader.ReadBytes(11)
-                            Reader.ReadString()                                     '  Song source
+                            Reader.ReadString()                                     ' ´Song source
                             Reader.ReadString()                                     '  Song tags
                             Reader.ReadInt16()                                      '  Online offset 
                             Reader.ReadString()                                     '  Font used for the title of the song 

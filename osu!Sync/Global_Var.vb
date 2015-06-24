@@ -19,6 +19,7 @@ Module Global_Var
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
+    Public Config_LanguageCode As String = "en_EN"
     Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
@@ -170,11 +171,12 @@ Module Global_Var
             Case "zh-TW"
                 Return "zh_TW"
             Case Else
-                Return "en_US"
+                Return ""
         End Select
     End Function
 
     Sub LoadLanguage(ByVal FileName As String)
+        Config_LanguageCode = FileName
         Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With { _
                                                                      .Source = New Uri("Languages/" & FileName & ".xaml", UriKind.Relative)})
     End Sub

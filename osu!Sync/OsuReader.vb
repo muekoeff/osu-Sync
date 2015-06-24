@@ -5,7 +5,9 @@ Public Class OsuReader
 
     Sub New(s As Stream)
         MyBase.New(s)
-    End Sub    Public Overrides Function ReadString() As String
+    End Sub
+
+    Public Overrides Function ReadString() As String
         Dim tag As Byte = ReadByte()
         If tag = 0 Then Return Nothing
         If tag = &HB Then Return MyBase.ReadString()

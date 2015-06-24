@@ -74,9 +74,10 @@ Public Class Window_Settings
             Setting_Tool_ImporterAutoInstallCounter = Val
         End If
         ' Load Language
-        If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" ")) Then
-            If Not GetTranslationName(ComboBox_Tool_Languages.Text.Substring(0, 2)) = "" Then
-                LoadLanguage(GetTranslationName(ComboBox_Tool_Languages.Text.Substring(0, 2)))
+        Dim LanguageCode As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
+        If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = LanguageCode Then
+            If Not GetTranslationName(LanguageCode) = "" Then
+                LoadLanguage(GetTranslationName(LanguageCode))
                 MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
             End If
         End If

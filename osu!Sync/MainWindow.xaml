@@ -24,7 +24,8 @@
                         <Image x:Name="BeatmapDetails_Thumbnail" Width="160" HorizontalAlignment="Left" />
                         <TextBlock x:Name="BeatmapDetails_Title" Foreground="#FF50BD7E" FontSize="36" />
                         <TextBlock x:Name="BeatmapDetails_Artist" Foreground="#FF3DB670" FontSize="20" />
-                        <TextBlock x:Name="BeatmapDetails_Creator" Foreground="#FF27AE60" FontSize="16" />
+                        <Label Margin="0,15,0,0" FontFamily="Segoe UI Light">Creator</Label>
+                        <TextBlock x:Name="BeatmapDetails_Creator" FontSize="16" Margin="10,0,0,0" />
                     </StackPanel>
                     <StackPanel VerticalAlignment="Bottom">
                         <Button x:Name="BeatmapDetails_BeatmapListing" Content="{DynamicResource MainWindow_detailsPanel_openBeatmapListing}" FontSize="14" Height="45" Margin="0,0,0,6" ToolTip="{DynamicResource MainWindow_openBeatmapListingPageInBrowser}"/>
@@ -51,7 +52,7 @@
                     </MenuItem>
                     <MenuItem x:Name="NotifyIcon_RunOsu" Header="{DynamicResource MainWindow_runOsu}" />
                     <Separator />
-                    <MenuItem x:Name="NotifyIcon_Exit" Header="{DynamicResource MainWindow_exitOsuSync}">
+                    <MenuItem x:Name="NotifyIcon_Exit" Header="{DynamicResource MainWindow_exit}">
                         <MenuItem.Icon>
                             <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
@@ -70,12 +71,12 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="MenuItem_Program_MinimizeToTray" Foreground="#FF333333" Header="{DynamicResource MainWindow_minimizeOsuSyncToTray}">
+                    <MenuItem x:Name="MenuItem_Program_MinimizeToTray" Foreground="#FF333333" Header="{DynamicResource MainWindow_minimizeToTray}">
                         <MenuItem.Icon>
                             <Path Data="M5.2010002,14.812L5.2010002,43.573997 56.098,43.573997 56.098,14.812z M29.868601,3.8869994C28.026201,3.8869996 26.534,5.3791947 26.534,7.2190399 26.534,9.0588851 28.026201,10.553 29.868601,10.553 31.7085,10.553 33.202,9.0588851 33.202,7.2190399 33.202,5.3791947 31.7085,3.8869996 29.868601,3.8869994z M19.200649,3.8869994C17.359457,3.8869996 15.867001,5.3791947 15.867001,7.2190399 15.867001,9.0588851 17.359457,10.553 19.200649,10.553 21.042044,10.553 22.536999,9.0588851 22.536999,7.2190399 22.536999,5.3791947 21.042044,3.8869996 19.200649,3.8869994z M8.5339746,3.8869994C6.6931,3.8869996 5.2010002,5.3791947 5.2010002,7.2190399 5.2010002,9.0588851 6.6931,10.553 8.5339746,10.553 10.37495,10.553 11.867,9.0588851 11.867,7.2190399 11.867,5.3791947 10.37495,3.8869996 8.5339746,3.8869994z M0,0L63.999001,0 63.999001,48.792999 0,48.792999z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="MenuItem_Program_Exit" Foreground="#FF333333" Header="{DynamicResource MainWindow_exitOsuSync}">
+                    <MenuItem x:Name="MenuItem_Program_Exit" Foreground="#FF333333" Header="{DynamicResource MainWindow_exit}">
                         <MenuItem.Icon>
                             <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
@@ -125,7 +126,7 @@
             </Menu>
         </DockPanel>
         <TextBlock x:Name="TextBlock_BeatmapCounter" FontFamily="Segoe UI Light" FontSize="22" Foreground="#FFDDDDDD" HorizontalAlignment="Left" Margin="8,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" />
-        <Button x:Name="Button_SyncDo" Content="{DynamicResource MainWindow_getBeatmapSets}" FontSize="16" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" Grid.Row="1" />
+        <Button x:Name="Button_SyncDo" Content="{DynamicResource MainWindow_getBeatmapSets}" FontSize="16" HorizontalAlignment="Right" Margin="0,5,5,0" Padding="15,6" VerticalAlignment="Top" Grid.Row="1" />
         <TabControl x:Name="Tabber" Margin="0" Grid.Row="2">
             <TabItem Header="{DynamicResource MainWindow_installed}">
                 <ScrollViewer Margin="-5,0,0,0">

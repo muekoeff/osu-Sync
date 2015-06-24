@@ -185,7 +185,7 @@
     <!-- | O -->
     <system:String x:Key="WindowAbout_osuForum">osu!Forum</system:String>
     <!-- | V -->
-    <system:String x:Key="WindowAbout_version">osu!Sync Version %0 | de_DE</system:String>
+    <system:String x:Key="WindowAbout_version">osu!Sync Version %0 | %1</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- |> E -->
     <system:String x:Key="WindowAbout_tt_email">Fragen? Schreib uns einfach eine eMail und wir antworten dir. :)</system:String>
