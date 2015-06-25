@@ -3,6 +3,8 @@
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">This application is available in [b]English[/b].</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Forum_translationLanguageName">English</system:String>
 
     <!-- Meta & More -->
     <!-- | T -->

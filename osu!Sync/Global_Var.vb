@@ -38,7 +38,12 @@ Module Global_Var
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
 
     Function _e(ByRef Text As String) As String
-        Return Application.Current.FindResource(Text).ToString
+        Try
+            Return Application.Current.FindResource(Text).ToString
+        Catch ex As ResourceReferenceKeyNotFoundException
+            MsgBox("osu!Sync just tried to load a string which isn't registered." & vbNewLine & "Normally, this shouldn't happen." & vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional informations:" & vbNewLine & Text, MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            Return "[Missing String: " + Text + "]"
+        End Try
     End Function
 
     Function CompressString(ByVal text As String) As String
