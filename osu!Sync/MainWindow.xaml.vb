@@ -1082,11 +1082,6 @@ Class MainWindow
             Action_SaveSettings()
         End If
 
-        ' Load language library
-        If Not GetTranslationName(Setting_Tool_Language) = "" Then
-            LoadLanguage(GetTranslationName(Setting_Tool_Language))
-        End If
-
         ' Set settings like NotifyIcon
         Action_Tool_UpdateSettings()
 

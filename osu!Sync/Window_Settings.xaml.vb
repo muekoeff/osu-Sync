@@ -81,7 +81,6 @@ Public Class Window_Settings
                 MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
             End If
         End If
-        Setting_Tool_Language = ComboBox_Tool_Languages.Text.Substring(0, 2)
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
         Setting_Tool_UpdateDeleteFileAfter = CType(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked, Boolean)
         Setting_Tool_UpdateUseDownloadPatcher = CType(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked, Boolean)

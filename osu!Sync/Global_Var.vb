@@ -19,7 +19,6 @@ Module Global_Var
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
-    Public Config_LanguageCode As String = "en_EN"
     Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
     Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
@@ -28,7 +27,7 @@ Module Global_Var
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
     Public Setting_Tool_ImporterAutoInstallCounter As Integer = 10
-    Public Setting_Tool_Language As String = System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)
+    Public Setting_Tool_Language As String = System.Globalization.CultureInfo.CurrentCulture.ToString()
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
@@ -171,9 +170,9 @@ Module Global_Var
                 Return "no_NO"
             Case "pl"
                 Return "pl_PL"
-            Case "zh", "zh-CN"
+            Case "zh", "zh_CN"
                 Return "zh_CN"
-            Case "zh-TW"
+            Case "zh_TW"
                 Return "zh_TW"
             Case Else
                 Return ""
@@ -181,7 +180,7 @@ Module Global_Var
     End Function
 
     Sub LoadLanguage(ByVal FileName As String)
-        Config_LanguageCode = FileName
+        Setting_Tool_Language = FileName
         Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With { _
                                                                      .Source = New Uri("Languages/" & FileName & ".xaml", UriKind.Relative)})
     End Sub
@@ -265,6 +264,11 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
                 Setting_Tool_Language = CType(ConfigFile.SelectToken("Setting_Tool_Language"), String)
+
+                ' Load language library
+                If Not GetTranslationName(Setting_Tool_Language) = "" Then
+                    LoadLanguage(GetTranslationName(Setting_Tool_Language))
+                End If
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
                 Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)
