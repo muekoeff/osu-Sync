@@ -1072,6 +1072,9 @@ Class MainWindow
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString
 
+        ' Prepare languages
+        Action_PrepareLanguages()
+
         ' Load Configuration
         If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
             Action_LoadSettings()

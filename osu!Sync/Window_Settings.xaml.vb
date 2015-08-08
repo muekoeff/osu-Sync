@@ -74,10 +74,10 @@ Public Class Window_Settings
             Setting_Tool_ImporterAutoInstallCounter = Val
         End If
         ' Load Language
-        Dim LanguageCode As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
-        If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = LanguageCode Then
-            If Not GetTranslationName(LanguageCode) = "" Then
-                LoadLanguage(GetTranslationName(LanguageCode))
+        Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
+        If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = LanguageCode_Short Then
+            If Not GetTranslationName(LanguageCode_Short) = "" Then
+                LoadLanguage(GetTranslationName(LanguageCode_Short), LanguageCode_Short)
                 MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
             End If
         End If
@@ -357,22 +357,31 @@ Public Class Window_Settings
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
-        ' Select Language
+
+        ' Load languages and select current one
+        Dim InsertedCodes As New List(Of String)
         Dim Counter As Integer = 0
+        Dim IndexUserLanguage As Integer = -1
         Dim IndexEN As Integer = 0
-        For Each Item As ComboBoxItem In ComboBox_Tool_Languages.Items
-            If Item.Content.ToString.Substring(0, Setting_Tool_Language.Length) = Setting_Tool_Language Then
-                ComboBox_Tool_Languages.SelectedIndex = Counter
-                Counter = -1
-                Exit For
-            ElseIf Item.Content.ToString.Substring(0, Setting_Tool_Language.Length) = "en" Then
-                IndexEN = Counter
+        For Each a In Application_Languages
+            If Not InsertedCodes.Contains(a.Value.Code) Then
+                If a.Value.Code = "en_US" Then
+                    IndexEN = Counter
+                End If
+                If a.Key = Setting_Tool_Language Then
+                    IndexUserLanguage = Counter
+                End If
+                InsertedCodes.Add(a.Value.Code)
+                ComboBox_Tool_Languages.Items.Add(a.Key & " | " & a.Value.DisplayName_English & "/" & a.Value.DisplayName)
+                Counter += 1
             End If
-            Counter += 1
         Next
-        If Not Counter = -1 Then
+        If Not IndexUserLanguage = -1 Then
+            ComboBox_Tool_Languages.SelectedIndex = IndexUserLanguage
+        Else
             ComboBox_Tool_Languages.SelectedIndex = IndexEN
         End If
+
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
         Textbox_Tool_ImporterAutoInstallCounter.Text = Setting_Tool_ImporterAutoInstallCounter.ToString

@@ -3,15 +3,21 @@ Imports System.IO, System.IO.Compression
 Imports System.Security.Cryptography
 Imports System.Text
 
-Module Global_Var
+Class Language
+    Property Code As String
+    Property DisplayName As String
+    Property DisplayName_English As String
+End Class
 
+Module Global_Var
+    Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareLanguages()
     Public FileExtensions() As String = {".nw520-osbl", _
                                          ".nw520-osblx"}
     Public FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList", _
                                              "naseweis520.osuSync.compressedOsuBeatmapList"}
     Public FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"), _
                                                     _e("GlobalVar_extensionCompressedBeatmapList")}
-    Public FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2", _
+    Public FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
                                              """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
 
     Public I__StartUpArguments() As String
@@ -156,33 +162,18 @@ Module Global_Var
         End If
     End Function
 
-    Function GetTranslationName(ByVal LanguageCode As String) As String
-        Select Case LanguageCode
-            Case "de"
-                Return "de_DE"
-            Case "en"
-                Return "en_US"
-            Case "es", "es-EM"
-                Return "es_EM"
-            Case "id"
-                Return "id_ID"
-            Case "no"
-                Return "no_NO"
-            Case "pl"
-                Return "pl_PL"
-            Case "zh", "zh_CN"
-                Return "zh_CN"
-            Case "zh_TW"
-                Return "zh_TW"
-            Case Else
-                Return ""
-        End Select
+    Function GetTranslationName(ByVal LanguageCode_Short As String) As String
+        If Application_Languages.ContainsKey(LanguageCode_Short) Then
+            Return Application_Languages(LanguageCode_Short).Code
+        Else
+            Return ""
+        End If
     End Function
 
-    Sub LoadLanguage(ByVal FileName As String)
-        Setting_Tool_Language = FileName
-        Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With { _
-                                                                     .Source = New Uri("Languages/" & FileName & ".xaml", UriKind.Relative)})
+    Sub LoadLanguage(ByVal LanguageCode_Long As String, ByVal LanguageCode_Short As String)
+        Setting_Tool_Language = LanguageCode_Short
+        Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
+                                                                     .Source = New Uri("Languages/" & LanguageCode_Long & ".xaml", UriKind.Relative)})
     End Sub
 
     Function md5(ByVal Input As String) As String
@@ -267,7 +258,7 @@ Module Global_Var
 
                 ' Load language library
                 If Not GetTranslationName(Setting_Tool_Language) = "" Then
-                    LoadLanguage(GetTranslationName(Setting_Tool_Language))
+                    LoadLanguage(GetTranslationName(Setting_Tool_Language), Setting_Tool_Language)
                 End If
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
@@ -298,6 +289,50 @@ Module Global_Var
             Application.Current.Shutdown()
             Exit Sub
         End Try
+    End Sub
+
+    Sub Action_PrepareLanguages()
+        Dim LangDic As New Dictionary(Of String, Language)
+        With LangDic        ' Please sort alphabetically
+            .Add("de", New Language With {
+                 .Code = "de_DE",
+                 .DisplayName = "Deutsch",
+                 .DisplayName_English = "German"})
+            .Add("en", New Language With {
+                 .Code = "en_US",
+                 .DisplayName = "English",
+                 .DisplayName_English = "English"})
+            .Add("es", New Language With {
+                 .Code = "es_EM",
+                 .DisplayName = "Español",
+                 .DisplayName_English = "Spanish (Modern)"})
+            .Add("es_EM", New Language With {
+                .Code = "es_EM",
+                .DisplayName = "Español",
+                .DisplayName_English = "Spanish (Modern)"})
+            .Add("id", New Language With {
+                .Code = "id_ID",
+                .DisplayName = "Bahasa Indonesia",
+                .DisplayName_English = "Indonesian"})
+            .Add("no", New Language With {
+                .Code = "no_NO",
+                .DisplayName = "Norwegian",
+                .DisplayName_English = "Norsk"})
+            .Add("pl", New Language With {
+                .Code = "pl_PL",
+                .DisplayName = "Polski",
+                .DisplayName_English = "Polish"})
+            .Add("zh_CN", New Language With {
+                .Code = "zh_CN",
+                .DisplayName = "中文 (简体)",
+                .DisplayName_English = "Chinese Simplified"})
+            .Add("zh_TW", New Language With {
+                .Code = "zh_TW",
+                .DisplayName = "中文 (繁體)",
+                .DisplayName_English = "Chinese Traditional"})
+        End With
+
+        Application_Languages = LangDic
     End Sub
 
     <System.Runtime.InteropServices.DllImport("shell32.dll")> Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
