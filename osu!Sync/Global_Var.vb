@@ -306,10 +306,6 @@ Module Global_Var
                  .Code = "es_EM",
                  .DisplayName = "Español",
                  .DisplayName_English = "Spanish (Modern)"})
-            .Add("es_EM", New Language With {
-                .Code = "es_EM",
-                .DisplayName = "Español",
-                .DisplayName_English = "Spanish (Modern)"})
             .Add("id", New Language With {
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",
