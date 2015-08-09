@@ -63,7 +63,7 @@
                         <!-- [REF] Languages are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
                         <ComboBox x:Name="ComboBox_Tool_Languages" />
                         <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <!-- [DEV /][REMOVE] <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="{DynamicResource WindowSettings_autoloadCacheFileOnStartup}" Margin="0,5,0,0" /> -->
+                        <CheckBox x:Name="CheckBox_Tool_SyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
                         <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">

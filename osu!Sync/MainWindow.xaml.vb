@@ -5,31 +5,18 @@ Imports System.Net
 Imports System.Runtime.InteropServices, System.Runtime.Serialization.Formatters.Binary
 Imports System.Windows.Media.Animation
 
-
-' Strings to remove
-' - MainWindow_cacheFileOutdatedSyncing
-' - MainWindow_loadedFromCache
-' - MainWindow_readingCache
-' - MainWindow_writingCacheFile
-' - WindowSettings_autoloadCacheFileOnStartup
-
 Public Enum BGWcallback_ActionSyncGetIDs_ArgMode
     Sync = 0
-    ' [DEV /][REMOVE] LoadFromCache = 1
 End Enum
 
 Public Enum BGWcallback_ActionSyncGetIDs_ProgressCurrentAction
     Sync = 0
-    ' [DEV /][REMOVE] WritingCache = 1
     Done = 2
-    ' [DEV /][REMOVE] CacheFileOutdatedAndSyncing = 3
     CountingTotalFolders = 4
 End Enum
 
 Public Enum BGWcallback_ActionSyncGetIDs_ReturnStatus
     FolderDoesNotExist = 1
-    ' [DEV /][REMOVE] LoadedFromCache = 2
-    ' [DEV /][REMOVE] CacheFileOutdatedAndSyncing = 3
 End Enum
 
 Public Enum NotifyNextAction
@@ -82,7 +69,6 @@ Class MainWindow
     Private Sync_Done As Boolean = False
     Private Sync_Done_ImporterRequest As Boolean = False
     Private Sync_Done_ImporterRequest_SaveValue As New List(Of Beatmap)
-    Private Sync_LoadedFromCache As Boolean = False
 
     Private Exporter_BeatmapList_Tag_Selected As New List(Of Importer_TagData)
     Private Exporter_BeatmapList_Tag_Unselected As New List(Of Importer_TagData)
@@ -490,18 +476,9 @@ Class MainWindow
     ''' <remarks></remarks>
     Private Sub Action_Sync_GetIDs()
         Button_SyncDo.IsEnabled = False
-        ' [DEV][REMOVE]
-        'If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
-        '    Interface_SetLoader("Reading cache file...")
-        '    TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
-        '    BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
-        '                                       .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache})
-        'Else
-        ' [/DEV][REMOVE]
         Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
         TextBlock_Sync_LastUpdate.Content = _e("MainWindow_syncing")
         BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
-        'End If
     End Sub
 
     Private Sub Action_Tool_UpdateSettings()
@@ -1142,16 +1119,10 @@ Class MainWindow
                                                                                            End If
                                                                                        End Function) Then
             Importer_ReadListFile(Importer_FilePath)
-            ' [DEV][REMOVE]
-            'Else
-            '    If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False And Setting_Tool_AutoLoadCacheOnStartup Then
-            '        Button_SyncDo.IsEnabled = False
-            '        Interface_SetLoader(_e("MainWindow_readingCache"))
-            '        TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
-            '        BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
-            '                                           .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache,
-            '                                           .Arg__AutoSync = True})
-            ' [/DEV][REMOVE]
+        Else
+            If Setting_Tool_SyncOnStartup Then
+                Action_Sync_GetIDs()
+            End If
         End If
     End Sub
 
@@ -1490,83 +1461,7 @@ Class MainWindow
                         Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
                     End If
                 End If
-
-                ' [DEV][REMOVE]
-                ' Write Cache
-                'BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                '                    .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
-                '                    .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache})
-                'If Not Directory.Exists(I__Path_Programm & "\Cache") Then
-                '    Directory.CreateDirectory(I__Path_Programm & "\Cache")
-                'End If
-                'Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(I__Path_Programm & "\Cache\LastSync.nw520-osblx", False)
-                '    Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
-                '    Dim Content_ProgrammInfo As New Dictionary(Of String, String)
-                '    Content_ProgrammInfo.Add("_author", "naseweis520")
-                '    Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
-                '    Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
-                '    Content_ProgrammInfo.Add("_file_generationdate_syncFormat", Date.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
-                '    Content_ProgrammInfo.Add("_file_usage", "Sync-Cache")
-                '    Content_ProgrammInfo.Add("_programm", "osu!Sync")
-                '    Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
-                '    Content.Add("_info", Content_ProgrammInfo)
-                '    For Each SelectedBeatmap As Beatmap In Answer.Return__Sync_BeatmapList_Installed
-                '        If Not SelectedBeatmap.ID = -1 And Not Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
-                '            Dim ContentDictionary As New Dictionary(Of String, String)
-                '            With ContentDictionary
-                '                .Add("artist", SelectedBeatmap.Artist)
-                '                .Add("creator", SelectedBeatmap.Creator)
-                '                .Add("id", SelectedBeatmap.ID.ToString)
-                '                .Add("title", SelectedBeatmap.Title)
-                '            End With
-                '            Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
-                '        End If
-                '    Next
-                '    Dim Content_Json As String
-                '    Content_Json = JsonConvert.SerializeObject(Content)
-                '    File.Write(CompressString(Content_Json))
-                '    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
-                '                   .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
-                '                   .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done})
-                '    File.Close()
-                'End Using
-                ' [/DEV][REMOVE]
                 e.Result = Answer
-                ' [DEV][REMOVE]
-                'Case BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache
-                '    Try
-                '        Dim File_Content As String = DecompressString(File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx"))
-                '        Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
-                '        Dim Cache_Time As String = CStr(File_Content_Json.Item("_info").Item("_file_generationdate_syncFormat"))
-
-                '        If Not DateDiff(DateInterval.Day, Date.ParseExact(Cache_Time, "dd.MM.yyyy | HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= 14 Then
-                '            With Answer
-                '                .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.LoadedFromCache
-                '                .Return__Sync_BeatmapList_ID_Installed = Action_ConvertSavedJSONtoListBeatmapIDs(File_Content_Json)
-                '                .Return__Sync_BeatmapList_Installed = Action_ConvertSavedJSONtoListBeatmap(File_Content_Json)
-                '                .Return__Sync_Cache_Time = Cache_Time
-                '            End With
-                '            e.Result = Answer
-                '            Exit Sub
-                '        Else
-                '            File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                '            e.Result = New BGWcallback__Action_Sync_GetIDs With {
-                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                '        End If
-                '    Catch ex As System.IO.InvalidDataException
-                '        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                '        e.Result = New BGWcallback__Action_Sync_GetIDs With {
-                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                '    Catch ex As JsonReaderException
-                '        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                '        e.Result = New BGWcallback__Action_Sync_GetIDs With {
-                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                '    Catch ex As System.FormatException
-                '        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                '        e.Result = New BGWcallback__Action_Sync_GetIDs With {
-                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                '    End Try
-                ' [/DEV][REMOVE]
         End Select
     End Sub
 
@@ -1580,17 +1475,8 @@ Class MainWindow
                     .Value = Answer.Progress__Current
                     .Visibility = Windows.Visibility.Visible
                 End With
-            ' [DEV][REMOVE] 
-            'Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache
-            '    Interface_LoaderProgressBar.IsIndeterminate = True
-            '    Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_writingCacheFile")
-            ' [/DEV][REMOVE] 
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_generatingInterface")
-            ' [DEV][REMOVE] 
-            'Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CacheFileOutdatedAndSyncing
-            '    TextBlock_Sync_LastUpdate.Content = _e("MainWindow_cacheFileOutdatedSyncing")
-            ' [/DEV][REMOVE] 
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders
                 Interface_LoaderProgressBar.Maximum = Answer.Progress__Current
         End Select
@@ -1601,7 +1487,6 @@ Class MainWindow
         Answer = TryCast(e.Result, BGWcallback__Action_Sync_GetIDs)
         Select Case Answer.Return__Status
             Case 0
-                Sync_LoadedFromCache = True
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BeatmapList_ID_Installed.Count.ToString)
                 If Not Answer.Return__Sync_Warnings = "" Then
                     If MessageBox.Show(_e("MainWindow_itSeemsThatSomeBeatmapsDiffer") & vbNewLine &
@@ -1647,43 +1532,6 @@ Class MainWindow
                     .Add(UI_TextBlock_SubTitle)
                 End With
                 Button_SyncDo.IsEnabled = True
-                ' [DEV][REMOVE] 
-                'Case BGWcallback_ActionSyncGetIDs_ReturnStatus.LoadedFromCache
-                '    Sync_LoadedFromCache = True
-                '    Sync_BeatmapList_Installed = Answer.Return__Sync_BeatmapList_Installed
-                '    Sync_BeatmapList_ID_Installed = Answer.Return__Sync_BeatmapList_ID_Installed
-
-                '    Sync_Done = True
-                '    Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, UpdateBeatmapDisplayDestinations.Installed, Answer.Return__Sync_Cache_Time)
-                '    Action_OverlayShow(_e("MainWindow_syncCompleted"), _e("MainWindow_loadedFromCache"))
-                '    Action_OverlayFadeOut()
-
-                '    If Sync_Done_ImporterRequest Then
-                '        Sync_Done_ImporterRequest = False
-                '        Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, UpdateBeatmapDisplayDestinations.Importer)
-                '    End If
-                'Case BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing
-                '    Dim UI_TextBlock As New TextBlock With {
-                '        .FontSize = 72,
-                '        .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                '        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                '        .Margin = New Thickness(0, 100, 0, 0),
-                '        .Text = _e("MainWindow_lastSyncFailed"),
-                '        .VerticalAlignment = Windows.VerticalAlignment.Center}
-                '    Dim UI_TextBlock_SubTitle As New TextBlock With {
-                '        .FontSize = 24,
-                '        .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                '        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                '        .Text = _e("MainWindow_cacheFileOutdated"),
-                '        .VerticalAlignment = Windows.VerticalAlignment.Center}
-
-                '    With BeatmapWrapper.Children
-                '        .Clear()
-                '        .Add(UI_TextBlock)
-                '        .Add(UI_TextBlock_SubTitle)
-                '    End With
-                '    Button_SyncDo.IsEnabled = True
-                ' [/DEV][REMOVE] 
         End Select
     End Sub
 #End Region

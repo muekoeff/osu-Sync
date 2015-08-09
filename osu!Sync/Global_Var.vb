@@ -27,7 +27,6 @@ Module Global_Var
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
     Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
-    ' [DEV /][REMOVE] Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
     Public Setting_Tool_CheckFileAssociation As Boolean = True
     Public Setting_Tool_DownloadMirror As Integer = 0
@@ -35,6 +34,7 @@ Module Global_Var
     Public Setting_Tool_ImporterAutoInstallCounter As Integer = 10
     Public Setting_Tool_Language As String = System.Globalization.CultureInfo.CurrentCulture.ToString()
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
+    Public Setting_Tool_SyncOnStartup As Boolean = False
     Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     Public Setting_Tool_UpdateUseDownloadPatcher As Boolean = True
@@ -205,7 +205,6 @@ Module Global_Var
                 .Add("version", My.Application.Info.Version.ToString)
                 .Add("Setting_osu_Path", Setting_osu_Path)
                 .Add("Setting_osu_SongsPath", Setting_osu_SongsPath)
-                ' [DEV /][REMOVE] .Add("Setting_Tool_AutoLoadCacheOnStartup", CStr(Setting_Tool_AutoLoadCacheOnStartup))
                 .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
                 .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
@@ -213,6 +212,7 @@ Module Global_Var
                 .Add("Setting_Tool_ImporterAutoInstallCounter", CStr(Setting_Tool_ImporterAutoInstallCounter))
                 .Add("Setting_Tool_Language", Setting_Tool_Language)
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
+                .Add("Setting_Tool_SyncOnStartup", CStr(Setting_Tool_SyncOnStartup))
                 .Add("Setting_Tool_UpdateDeleteFileAfter", CStr(Setting_Tool_UpdateDeleteFileAfter))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
                 .Add("Setting_Tool_UpdateUseDownloadPatcher", CStr(Setting_Tool_UpdateUseDownloadPatcher))
@@ -235,11 +235,6 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then
                 Setting_osu_SongsPath = CType(ConfigFile.SelectToken("Setting_osu_SongsPath"), String)
             End If
-            ' [DEV][REMOVE]
-            'If Not ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup") Is Nothing Then
-            '    Setting_Tool_AutoLoadCacheOnStartup = CType(ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup"), Boolean)
-            'End If
-            ' [/DEV][REMOVE]
             If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then
                 Setting_Tool_CheckFileAssociation = CType(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"), Boolean)
             End If
@@ -265,6 +260,9 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
                 Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then
+                Setting_Tool_SyncOnStartup = CType(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"), Boolean)
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter") Is Nothing Then
                 Setting_Tool_UpdateDeleteFileAfter = CType(ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter"), Boolean)

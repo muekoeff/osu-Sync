@@ -64,7 +64,6 @@ Public Class Window_Settings
     Private Sub Action_ApplySettings()
         Setting_osu_Path = TextBox_osu_Path.Text
         Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
-        ' [DEV /][REMOVE] Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
         Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
@@ -73,6 +72,7 @@ Public Class Window_Settings
         If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
             Setting_Tool_ImporterAutoInstallCounter = Val
         End If
+        Setting_Tool_SyncOnStartup = CType(CheckBox_Tool_SyncOnStartup.IsChecked, Boolean)
         ' Load Language
         Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
         If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = LanguageCode_Short Then
@@ -350,14 +350,13 @@ Public Class Window_Settings
         CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked = Setting_Messages_Sync_MoreThan1000Sets
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
-        ' [DEV /][REMOVE] CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
+        CheckBox_Tool_SyncOnStartup.IsChecked = Setting_Tool_SyncOnStartup
         CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_UpdateDeleteFileAfter
         CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked = Setting_Tool_UpdateUseDownloadPatcher
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
-
         ' Load languages and select current one
         Dim InsertedCodes As New List(Of String)
         Dim Counter As Integer = 0
