@@ -60,18 +60,10 @@
                         <CheckBox x:Name="CheckBox_Tool_UpdateUseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
                         <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_language}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboBox_Tool_Languages">
-                           <!-- <ComboBoxItem Content="de | German/Deutsch" />
-                            <ComboBoxItem Content="en | English/English" />
-                            <ComboBoxItem Content="es_EM | Spanish (Modern)/Español" />
-                            <ComboBoxItem Content="id | Indonesian/Bahasa Indonesia" />
-                            <ComboBoxItem Content="no | Norwegian/Norsk" />
-                            <ComboBoxItem Content="pl | Polish/Polski" />
-                            <ComboBoxItem Content="zh_CN | Chinese Simplified/中文 (简体)" />
-                            <ComboBoxItem Content="zh_TW | Chinese Traditional/中文 (繁體)" /> -->
-                        </ComboBox>
+                        <!-- [REF] Languages are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
+                        <ComboBox x:Name="ComboBox_Tool_Languages" />
                         <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="{DynamicResource WindowSettings_autoloadCacheFileOnStartup}" Margin="0,5,0,0" />
+                        <!-- [DEV /][REMOVE] <CheckBox x:Name="CheckBox_Tool_AutoLoadCacheOnStartup" Content="{DynamicResource WindowSettings_autoloadCacheFileOnStartup}" Margin="0,5,0,0" /> -->
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
                         <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
                         <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">

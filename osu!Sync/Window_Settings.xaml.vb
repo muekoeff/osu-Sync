@@ -64,7 +64,7 @@ Public Class Window_Settings
     Private Sub Action_ApplySettings()
         Setting_osu_Path = TextBox_osu_Path.Text
         Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
-        Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
+        ' [DEV /][REMOVE] Setting_Tool_AutoLoadCacheOnStartup = CType(CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked, Boolean)
         Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
@@ -350,7 +350,7 @@ Public Class Window_Settings
         CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked = Setting_Messages_Sync_MoreThan1000Sets
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
-        CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
+        ' [DEV /][REMOVE] CheckBox_Tool_AutoLoadCacheOnStartup.IsChecked = Setting_Tool_AutoLoadCacheOnStartup
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
         CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_UpdateDeleteFileAfter
         CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked = Setting_Tool_UpdateUseDownloadPatcher

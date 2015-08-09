@@ -233,8 +233,8 @@
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Download update package to...</system:String>
     <!-- | E -->
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Enable notify icon in tray area...</system:String>
-    <system:String x:Key="WindowSettings_executableFiles">Executable Files</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">Every launch.</system:String>
+    <system:String x:Key="WindowSettings_executableFiles">Executable Files</system:String>
     <!-- | F -->
     <system:String x:Key="WindowSettings_featureRequest">Feature Request</system:String>
     <system:String x:Key="WindowSettings_feedback">Feedback</system:String>
@@ -246,6 +246,7 @@
     <system:String x:Key="WindowSettings_importDownload">Import/Download</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Language</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">The language has been changed. However, some elements will remain in the previous selected language. In order to correct that a restart of osu!Sync is required.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Launch osu!Sync.</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maximum once a day (Recommended).</system:String>

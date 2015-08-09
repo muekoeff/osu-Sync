@@ -11,11 +11,11 @@ End Class
 
 Module Global_Var
     Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareLanguages()
-    Public FileExtensions() As String = {".nw520-osbl", _
+    Public FileExtensions() As String = {".nw520-osbl",
                                          ".nw520-osblx"}
-    Public FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList", _
+    Public FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList",
                                              "naseweis520.osuSync.compressedOsuBeatmapList"}
-    Public FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"), _
+    Public FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"),
                                                     _e("GlobalVar_extensionCompressedBeatmapList")}
     Public FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
                                              """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
@@ -27,7 +27,7 @@ Module Global_Var
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
     Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
-    Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
+    ' [DEV /][REMOVE] Public Setting_Tool_AutoLoadCacheOnStartup As Boolean = False
     Public Setting_Tool_CheckForUpdates As Integer = 3
     Public Setting_Tool_CheckFileAssociation As Boolean = True
     Public Setting_Tool_DownloadMirror As Integer = 0
@@ -69,8 +69,8 @@ Module Global_Var
         Return Convert.ToBase64String(gZipBuffer)
     End Function
 
-    Function CreateFileAssociation(ByVal extension As String, _
-    ByVal className As String, ByVal description As String, _
+    Function CreateFileAssociation(ByVal extension As String,
+    ByVal className As String, ByVal description As String,
     ByVal iconPath As String, ByVal exeProgram As String) As Boolean
         Const SHCNE_ASSOCCHANGED = &H8000000
         Const SHCNF_IDLIST = 0
@@ -205,7 +205,7 @@ Module Global_Var
                 .Add("version", My.Application.Info.Version.ToString)
                 .Add("Setting_osu_Path", Setting_osu_Path)
                 .Add("Setting_osu_SongsPath", Setting_osu_SongsPath)
-                .Add("Setting_Tool_AutoLoadCacheOnStartup", CStr(Setting_Tool_AutoLoadCacheOnStartup))
+                ' [DEV /][REMOVE] .Add("Setting_Tool_AutoLoadCacheOnStartup", CStr(Setting_Tool_AutoLoadCacheOnStartup))
                 .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
                 .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
@@ -235,9 +235,11 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then
                 Setting_osu_SongsPath = CType(ConfigFile.SelectToken("Setting_osu_SongsPath"), String)
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup") Is Nothing Then
-                Setting_Tool_AutoLoadCacheOnStartup = CType(ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup"), Boolean)
-            End If
+            ' [DEV][REMOVE]
+            'If Not ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup") Is Nothing Then
+            '    Setting_Tool_AutoLoadCacheOnStartup = CType(ConfigFile.SelectToken("Setting_Tool_AutoLoadCacheOnStartup"), Boolean)
+            'End If
+            ' [/DEV][REMOVE]
             If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then
                 Setting_Tool_CheckFileAssociation = CType(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"), Boolean)
             End If

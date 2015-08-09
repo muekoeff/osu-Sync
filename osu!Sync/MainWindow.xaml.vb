@@ -5,23 +5,31 @@ Imports System.Net
 Imports System.Runtime.InteropServices, System.Runtime.Serialization.Formatters.Binary
 Imports System.Windows.Media.Animation
 
+
+' Strings to remove
+' - MainWindow_cacheFileOutdatedSyncing
+' - MainWindow_loadedFromCache
+' - MainWindow_readingCache
+' - MainWindow_writingCacheFile
+' - WindowSettings_autoloadCacheFileOnStartup
+
 Public Enum BGWcallback_ActionSyncGetIDs_ArgMode
     Sync = 0
-    LoadFromCache = 1
+    ' [DEV /][REMOVE] LoadFromCache = 1
 End Enum
 
 Public Enum BGWcallback_ActionSyncGetIDs_ProgressCurrentAction
     Sync = 0
-    WritingCache = 1
+    ' [DEV /][REMOVE] WritingCache = 1
     Done = 2
-    CacheFileOutdatedAndSyncing = 3
+    ' [DEV /][REMOVE] CacheFileOutdatedAndSyncing = 3
     CountingTotalFolders = 4
 End Enum
 
 Public Enum BGWcallback_ActionSyncGetIDs_ReturnStatus
     FolderDoesNotExist = 1
-    LoadedFromCache = 2
-    CacheFileOutdatedAndSyncing = 3
+    ' [DEV /][REMOVE] LoadedFromCache = 2
+    ' [DEV /][REMOVE] CacheFileOutdatedAndSyncing = 3
 End Enum
 
 Public Enum NotifyNextAction
@@ -118,7 +126,7 @@ Class MainWindow
 
         For Each SelectedToken As JToken In Source.Values
             If Not SelectedToken.Path.StartsWith("_") Then
-                Dim CurrentBeatmap As New Beatmap With { _
+                Dim CurrentBeatmap As New Beatmap With {
                     .ID = CInt(SelectedToken.SelectToken("id")),
                     .Title = CStr(SelectedToken.SelectToken("title")),
                     .Artist = CStr(SelectedToken.SelectToken("artist"))}
@@ -190,10 +198,10 @@ Class MainWindow
                 Dim RegisterError As Boolean = False
                 Dim RegisterCounter As Integer = 0
                 For Each Extension As String In FileExtensions
-                    If CreateFileAssociation(Extension, _
-                                                             FileExtensionsLong(RegisterCounter), _
-                                                             FileExtensionsDescription(RegisterCounter), _
-                                                             FileExtensionsIcon(RegisterCounter), _
+                    If CreateFileAssociation(Extension,
+                                                             FileExtensionsLong(RegisterCounter),
+                                                             FileExtensionsDescription(RegisterCounter),
+                                                             FileExtensionsIcon(RegisterCounter),
                                                              System.Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
                         RegisterCounter += 1
                     Else
@@ -234,14 +242,14 @@ Class MainWindow
     ''' <remarks></remarks>
     Private Function Action_ConvertBeatmapListToHTML(ByVal Source As List(Of Beatmap)) As String()
         Dim Failed As String = ""
-        Dim HTML_Source As String = "<!doctype html>" & vbNewLine & _
-            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine & _
-            "<html>" & vbNewLine & _
-            "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine & _
-            "<body>" & vbNewLine & _
-            "<div id=""Wrapper"">" & vbNewLine & _
-            vbTab & "<header><p>Beatmap List | osu!Sync</p></header>" & vbNewLine & _
-            vbTab & "<div id=""Sort""><ul><li><strong>Sort by...</strong></li><li><a class=""SortParameter"" href=""#Sort_Artist"">Artist</a></li><li><a class=""SortParameter"" href=""#Sort_Creator"">Creator</a></li><li><a class=""SortParameter"" href=""#Sort_SetName"">Name</a></li><li><a class=""SortParameter"" href=""#Sort_SetID"">Set ID</a></li></ul></div>" & vbNewLine & _
+        Dim HTML_Source As String = "<!doctype html>" & vbNewLine &
+            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
+            "<html>" & vbNewLine &
+            "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine &
+            "<body>" & vbNewLine &
+            "<div id=""Wrapper"">" & vbNewLine &
+            vbTab & "<header><p>Beatmap List | osu!Sync</p></header>" & vbNewLine &
+            vbTab & "<div id=""Sort""><ul><li><strong>Sort by...</strong></li><li><a class=""SortParameter"" href=""#Sort_Artist"">Artist</a></li><li><a class=""SortParameter"" href=""#Sort_Creator"">Creator</a></li><li><a class=""SortParameter"" href=""#Sort_SetName"">Name</a></li><li><a class=""SortParameter"" href=""#Sort_SetID"">Set ID</a></li></ul></div>" & vbNewLine &
             vbTab & "<div id=""ListWrapper"">"
 
         For Each SelectedBeatmap As Beatmap In Source
@@ -254,11 +262,11 @@ Class MainWindow
                 HTML_Source += vbNewLine & vbTab & vbTab & "<article id=""beatmap-" & SelectedBeatmap.ID & """ data-artist=""" & SelectedBeatmap.Artist & """ data-creator=""" & SelectedBeatmap.Creator & """ data-setName=""" & SelectedBeatmap.Title & """ data-setID=""" & SelectedBeatmap.ID & """><a class=""DownloadArrow"" href=""https://osu.ppy.sh/d/" & SelectedBeatmap.ID & """ target=""_blank"">&#8250;</a><h1><span title=""Beatmap Set Name"">" & SelectedBeatmap.Title & "</span></h1><h2><span title=""Beatmap Set ID"">" & SelectedBeatmap.ID & "</span></h2><p><a class=""InfoTitle"" data-function=""artist"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Artist & """ target=""_blank"">Artist.</a> " & SelectedBeatmap.Artist & " <a class=""InfoTitle"" data-function=""creator"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Creator & """ target=""_blank"">Creator.</a> " & SelectedBeatmap.Creator & " <a class=""InfoTitle"" data-function=""overview"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & """ target=""_blank"">Overview.</a> <a class=""InfoTitle"" data-function=""discussion"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & "#disqus_thread"" target=""_blank"">Discussion.</a></p></article>"
             End If
         Next
-        HTML_Source += "</div>" & vbNewLine & _
-        "</div>" & vbNewLine & _
-        "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://naseweis520.ml/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine & _
-        "<script src=""http://code.jquery.com/jquery-latest.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js""></script>" & vbNewLine & _
-        "</body>" & vbNewLine & _
+        HTML_Source += "</div>" & vbNewLine &
+        "</div>" & vbNewLine &
+        "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://naseweis520.ml/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine &
+        "<script src=""http://code.jquery.com/jquery-latest.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js""></script>" & vbNewLine &
+        "</body>" & vbNewLine &
         "</html>"
 
         Dim Answer As String() = {HTML_Source, Failed}
@@ -320,10 +328,10 @@ Class MainWindow
     Private Function Action_ConvertBeatmapListToTXT(ByVal Source As List(Of Beatmap)) As String
         Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
         For Each SelectedBeatmap As Beatmap In Source
-            Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine & _
-                "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine & _
-                "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine & _
-                "ID: " & vbTab & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine & _
+            Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine &
+                "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine &
+                "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine &
+                "ID: " & vbTab & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine &
                 "Title: " & vbTab & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
         Next
         Return Content
@@ -356,7 +364,7 @@ Class MainWindow
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine & _
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
                             _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
                         Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
@@ -372,7 +380,7 @@ Class MainWindow
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine & _
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
                              _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
                         Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
@@ -389,7 +397,7 @@ Class MainWindow
                 End Using
                 If Not Content(1) = "" Then
                     Content(1) = Content(1).Insert(0, "=====   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":")
-                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine & _
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
                              _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
                         Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
@@ -419,7 +427,7 @@ Class MainWindow
         Dim SelectedSender As Image = CType(sender, Image)
         Dim SelectedSender_Tag As Beatmap = CType(SelectedSender.Tag, Beatmap)
 
-        Interface_ShowBeatmapDetails(SelectedSender_Tag.ID, New BeatmapPanelDetails With { _
+        Interface_ShowBeatmapDetails(SelectedSender_Tag.ID, New BeatmapPanelDetails With {
                                      .Artist = SelectedSender_Tag.Artist,
                                      .Creator = SelectedSender_Tag.Creator,
                                      .RankedStatus = SelectedSender_Tag.RankedStatus,
@@ -482,13 +490,14 @@ Class MainWindow
     ''' <remarks></remarks>
     Private Sub Action_Sync_GetIDs()
         Button_SyncDo.IsEnabled = False
-        ' [DEV][DEACTIVATED]
+        ' [DEV][REMOVE]
         'If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False Then
         '    Interface_SetLoader("Reading cache file...")
         '    TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
         '    BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
         '                                       .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache})
         'Else
+        ' [/DEV][REMOVE]
         Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
         TextBlock_Sync_LastUpdate.Content = _e("MainWindow_syncing")
         BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
@@ -535,28 +544,28 @@ Class MainWindow
                 BeatmapWrapper.Children.Clear()
 
                 For Each SelectedBeatmap As Beatmap In BeatmapList
-                    Dim UI_Grid = New Grid() With { _
+                    Dim UI_Grid = New Grid() With {
                         .Height = 80,
                         .Margin = New Thickness(0, 0, 0, 10),
                         .Tag = SelectedBeatmap,
                         .Width = Double.NaN}
 
                     With UI_Grid.ColumnDefinitions
-                        .Add(New ColumnDefinition With { _
+                        .Add(New ColumnDefinition With {
                             .Width = New GridLength(10)})
-                        .Add(New ColumnDefinition With { _
+                        .Add(New ColumnDefinition With {
                             .Width = New GridLength(125)})
                         .Add(New ColumnDefinition)
                     End With
 
                     ' Color_27AE60 = Light Green
-                    Dim UI_DecoBorderLeft = New Rectangle With { _
+                    Dim UI_DecoBorderLeft = New Rectangle With {
                         .Fill = Color_27AE60,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .Tag = SelectedBeatmap,
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
 
-                    Dim UI_Thumbnail = New Image With { _
+                    Dim UI_Thumbnail = New Image With {
                         .Cursor = Cursors.Hand,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
@@ -564,7 +573,7 @@ Class MainWindow
                         .ToolTip = _e("MainWindow_openBeatmapDetailPanel"),
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
-                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
+                    AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
@@ -572,7 +581,7 @@ Class MainWindow
                     End If
 
                     ' Color_555555 = Gray
-                    Dim UI_TextBlock_Title = New TextBlock With { _
+                    Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
                         .FontSize = 28,
                         .Foreground = Color_555555,
@@ -586,7 +595,7 @@ Class MainWindow
                     Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     ' Color_008136 = Dark Green
-                    Dim UI_TextBlock_Caption = New TextBlock With { _
+                    Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
                         .Foreground = Color_008136,
@@ -606,7 +615,7 @@ Class MainWindow
                         UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
                     End If
 
-                    Dim UI_Checkbox_IsInstalled = New CheckBox With { _
+                    Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_installed") & "?",
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = True,
@@ -625,14 +634,14 @@ Class MainWindow
                     BeatmapWrapper.Children.Add(UI_Grid)
                 Next
                 If BeatmapList.Count = 0 Then
-                    Dim UI_TextBlock As New TextBlock With { _
+                    Dim UI_TextBlock As New TextBlock With {
                         .FontSize = 72,
                         .Foreground = Color_27AE60,
                         .HorizontalAlignment = Windows.HorizontalAlignment.Center,
                         .Margin = New Thickness(0, 86, 0, 0),
                         .Text = _e("MainWindow_beatmapsFound").Replace("%0", "0"),
                         .VerticalAlignment = Windows.VerticalAlignment.Center}
-                    Dim UI_TextBlock_SubTitle As New TextBlock With { _
+                    Dim UI_TextBlock_SubTitle As New TextBlock With {
                         .FontSize = 24,
                         .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FF2ECC71"), Brush),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Center,
@@ -657,14 +666,14 @@ Class MainWindow
                 If Sync_Done = False Then
                     Sync_Done_ImporterRequest = True
                     Button_SyncDo.IsEnabled = False
-                    Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With { _
+                    Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With {
                        .Height = 150,
                        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
                        .IsActive = True,
                        .Margin = New Thickness(0, 100, 0, 0),
                        .VerticalAlignment = Windows.VerticalAlignment.Center,
                        .Width = 150}
-                    Dim UI_TextBlock_SubTitle As New TextBlock With { _
+                    Dim UI_TextBlock_SubTitle As New TextBlock With {
                                .FontSize = 24,
                                .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                                .HorizontalAlignment = Windows.HorizontalAlignment.Center,
@@ -688,7 +697,7 @@ Class MainWindow
                     Else
                         Check_IfInstalled = False
                     End If
-                    Dim UI_Checkbox_IsInstalled = New CheckBox With { _
+                    Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_installed") & "?",
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = Check_IfInstalled,
@@ -696,14 +705,14 @@ Class MainWindow
                         .Margin = New Thickness(10, 62, 0, 0),
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
 
-                    Dim UI_Grid = New Grid() With { _
+                    Dim UI_Grid = New Grid() With {
                         .Height = 80,
                         .Margin = New Thickness(0, 0, 0, 10),
                         .Width = Double.NaN}
 
                     ' Color_27AE60 = Light Green
                     ' Color_E74C3C = Red
-                    Dim UI_DecoBorderLeft = New Rectangle With { _
+                    Dim UI_DecoBorderLeft = New Rectangle With {
                         .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .VerticalAlignment = Windows.VerticalAlignment.Top,
                         .Width = 10}
@@ -714,7 +723,7 @@ Class MainWindow
                     End If
 
                     ' Color_555555 = Gray
-                    Dim UI_TextBlock_Title = New TextBlock With { _
+                    Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
                         .FontSize = 28,
                         .Foreground = Color_555555,
@@ -726,7 +735,7 @@ Class MainWindow
                         .VerticalAlignment = Windows.VerticalAlignment.Top}
 
                     ' Color_008136 = Dark Green
-                    Dim UI_TextBlock_Caption = New TextBlock With { _
+                    Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
                         .Foreground = Color_008136,
@@ -739,7 +748,7 @@ Class MainWindow
                         UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
                     End If
 
-                    Dim UI_Checkbox_IsSelected = New CheckBox With { _
+                    Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_downloadAndInstall"),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Right,
                         .Margin = New Thickness(10, 5, 0, 0),
@@ -756,10 +765,10 @@ Class MainWindow
                         End With
                     End If
 
-                    AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Importer_AddBeatmapToSelection
-                    AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Importer_RemoveBeatmapFromSelection
+                    AddHandler(UI_Checkbox_IsSelected.Checked), AddressOf Importer_AddBeatmapToSelection
+                    AddHandler(UI_Checkbox_IsSelected.Unchecked), AddressOf Importer_RemoveBeatmapFromSelection
 
-                    Dim TagData As New Importer_TagData With { _
+                    Dim TagData As New Importer_TagData With {
                         .Beatmap = SelectedBeatmap,
                         .UI_Checkbox_IsInstalled = UI_Checkbox_IsInstalled,
                         .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
@@ -806,31 +815,31 @@ Class MainWindow
             Case UpdateBeatmapDisplayDestinations.Exporter
                 ExporterWrapper.Children.Clear()
                 For Each SelectedBeatmap As Beatmap In BeatmapList
-                    Dim UI_Grid = New Grid() With { _
+                    Dim UI_Grid = New Grid() With {
                         .Height = 51,
                         .Margin = New Thickness(0, 0, 0, 10),
                         .Width = Double.NaN}
 
                     With UI_Grid.ColumnDefinitions
-                        .Add(New ColumnDefinition With { _
+                        .Add(New ColumnDefinition With {
                             .Width = New GridLength(10)})
-                        .Add(New ColumnDefinition With { _
+                        .Add(New ColumnDefinition With {
                             .Width = New GridLength(73)})
                         .Add(New ColumnDefinition)
                     End With
 
                     ' Color_27AE60 = Light Green
-                    Dim UI_DecoBorderLeft = New Rectangle With { _
+                    Dim UI_DecoBorderLeft = New Rectangle With {
                         .Fill = Color_27AE60,
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
 
-                    Dim UI_Thumbnail = New Image With { _
+                    Dim UI_Thumbnail = New Image With {
                         .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
                         .Tag = SelectedBeatmap,
                         .VerticalAlignment = Windows.VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
-                    AddHandler (UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
+                    AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
@@ -838,7 +847,7 @@ Class MainWindow
                     End If
 
                     ' Color_555555 = Gray
-                    Dim UI_TextBlock_Title = New TextBlock With { _
+                    Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
                         .FontSize = 22,
                         .Foreground = Color_555555,
@@ -851,7 +860,7 @@ Class MainWindow
                     Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     ' Color_008136 = Dark Green
-                    Dim UI_TextBlock_Caption = New TextBlock With { _
+                    Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 12,
                         .Foreground = Color_008136,
@@ -871,7 +880,7 @@ Class MainWindow
                         UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
                     End If
 
-                    Dim UI_Checkbox_IsSelected = New CheckBox With { _
+                    Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_selectToExport"),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Right,
                         .IsChecked = True,
@@ -886,14 +895,14 @@ Class MainWindow
                         End With
                         UI_DecoBorderLeft.Fill = Color_999999
                     Else
-                        AddHandler (UI_Checkbox_IsSelected.Checked), AddressOf Exporter_AddBeatmapToSelection
-                        AddHandler (UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
-                        AddHandler (UI_DecoBorderLeft.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
-                        AddHandler (UI_TextBlock_Title.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
-                        AddHandler (UI_Thumbnail.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler(UI_Checkbox_IsSelected.Checked), AddressOf Exporter_AddBeatmapToSelection
+                        AddHandler(UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
+                        AddHandler(UI_DecoBorderLeft.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler(UI_TextBlock_Title.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler(UI_Thumbnail.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
                     End If
 
-                    Dim TagData As New Importer_TagData With { _
+                    Dim TagData As New Importer_TagData With {
                         .Beatmap = SelectedBeatmap,
                         .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
                         .UI_DecoBorderLeft = UI_DecoBorderLeft,
@@ -991,18 +1000,18 @@ Class MainWindow
     End Sub
 
     Private Sub Interface_SetLoader(Optional Message As String = "Please wait")
-        Dim UI_ProgressBar = New ProgressBar With { _
+        Dim UI_ProgressBar = New ProgressBar With {
             .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
             .Visibility = Windows.Visibility.Hidden,
             .Height = 25}
-        Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With { _
+        Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With {
             .Height = 150,
             .HorizontalAlignment = Windows.HorizontalAlignment.Center,
             .IsActive = True,
             .Margin = New Thickness(0, 100, 0, 0),
             .VerticalAlignment = Windows.VerticalAlignment.Center,
             .Width = 150}
-        Dim UI_TextBlock_SubTitle As New TextBlock With { _
+        Dim UI_TextBlock_SubTitle As New TextBlock With {
                    .FontSize = 24,
                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
@@ -1133,15 +1142,16 @@ Class MainWindow
                                                                                            End If
                                                                                        End Function) Then
             Importer_ReadListFile(Importer_FilePath)
-        Else
-            If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False And Setting_Tool_AutoLoadCacheOnStartup Then
-                Button_SyncDo.IsEnabled = False
-                Interface_SetLoader(_e("MainWindow_readingCache"))
-                TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
-                BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
-                                                   .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache,
-                                                   .Arg__AutoSync = True})
-            End If
+            ' [DEV][REMOVE]
+            'Else
+            '    If File.Exists(I__Path_Programm & "\Cache\LastSync.nw520-osblx") And Sync_LoadedFromCache = False And Setting_Tool_AutoLoadCacheOnStartup Then
+            '        Button_SyncDo.IsEnabled = False
+            '        Interface_SetLoader(_e("MainWindow_readingCache"))
+            '        TextBlock_Sync_LastUpdate.Content = _e("MainWindow_readingCache")
+            '        BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs With { _
+            '                                           .Arg__Mode = BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache,
+            '                                           .Arg__AutoSync = True})
+            ' [/DEV][REMOVE]
         End If
     End Sub
 
@@ -1323,7 +1333,7 @@ Class MainWindow
 
         Select Case Arguments.Arg__Mode
             Case BGWcallback_ActionSyncGetIDs_ArgMode.Sync
-                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
                                     .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders,
                                     .Progress__Current = Directory.GetDirectories(Setting_osu_SongsPath).Count})
 
@@ -1381,7 +1391,7 @@ Class MainWindow
                                 FoundIDs.Add(BeatmapDetails.ID)
                                 Answer.Return__Sync_BeatmapList_Installed.Add(BeatmapDetails)
                                 Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(BeatmapDetails.ID))
-                                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
                                     .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count})
                             End If
                         Next
@@ -1446,7 +1456,7 @@ Class MainWindow
                                     End If
                                     Answer.Return__Sync_BeatmapList_Installed.Add(BeatmapDetails)
                                     Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(BeatmapDetails.ID))
-                                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
                                         .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count})
                                     Exit For
                                 End If
@@ -1458,7 +1468,7 @@ Class MainWindow
                                     Dim Beatmap_ID As String = DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" "))
                                     Dim Beatmap_Artist As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + 1, DirectoryInfo.Name.IndexOf(" - ") - Beatmap_ID.Length - 1)
                                     Dim Beatmap_Name As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + Beatmap_Artist.Length + 4)
-                                    Dim CurrentBeatmap As New Beatmap With { _
+                                    Dim CurrentBeatmap As New Beatmap With {
                                         .ID = CInt(Beatmap_ID),
                                         .Title = Beatmap_Name,
                                         .Artist = Beatmap_Artist}
@@ -1481,78 +1491,82 @@ Class MainWindow
                     End If
                 End If
 
+                ' [DEV][REMOVE]
                 ' Write Cache
-                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
-                                    .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache})
-                If Not Directory.Exists(I__Path_Programm & "\Cache") Then
-                    Directory.CreateDirectory(I__Path_Programm & "\Cache")
-                End If
-                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(I__Path_Programm & "\Cache\LastSync.nw520-osblx", False)
-                    Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
-                    Dim Content_ProgrammInfo As New Dictionary(Of String, String)
-                    Content_ProgrammInfo.Add("_author", "naseweis520")
-                    Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
-                    Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
-                    Content_ProgrammInfo.Add("_file_generationdate_syncFormat", Date.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
-                    Content_ProgrammInfo.Add("_file_usage", "Sync-Cache")
-                    Content_ProgrammInfo.Add("_programm", "osu!Sync")
-                    Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
-                    Content.Add("_info", Content_ProgrammInfo)
-                    For Each SelectedBeatmap As Beatmap In Answer.Return__Sync_BeatmapList_Installed
-                        If Not SelectedBeatmap.ID = -1 And Not Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
-                            Dim ContentDictionary As New Dictionary(Of String, String)
-                            With ContentDictionary
-                                .Add("artist", SelectedBeatmap.Artist)
-                                .Add("creator", SelectedBeatmap.Creator)
-                                .Add("id", SelectedBeatmap.ID.ToString)
-                                .Add("title", SelectedBeatmap.Title)
-                            End With
-                            Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
-                        End If
-                    Next
-                    Dim Content_Json As String
-                    Content_Json = JsonConvert.SerializeObject(Content)
-                    File.Write(CompressString(Content_Json))
-                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
-                                   .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
-                                   .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done})
-                    File.Close()
-                End Using
+                'BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With { _
+                '                    .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
+                '                    .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache})
+                'If Not Directory.Exists(I__Path_Programm & "\Cache") Then
+                '    Directory.CreateDirectory(I__Path_Programm & "\Cache")
+                'End If
+                'Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(I__Path_Programm & "\Cache\LastSync.nw520-osblx", False)
+                '    Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
+                '    Dim Content_ProgrammInfo As New Dictionary(Of String, String)
+                '    Content_ProgrammInfo.Add("_author", "naseweis520")
+                '    Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
+                '    Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
+                '    Content_ProgrammInfo.Add("_file_generationdate_syncFormat", Date.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
+                '    Content_ProgrammInfo.Add("_file_usage", "Sync-Cache")
+                '    Content_ProgrammInfo.Add("_programm", "osu!Sync")
+                '    Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
+                '    Content.Add("_info", Content_ProgrammInfo)
+                '    For Each SelectedBeatmap As Beatmap In Answer.Return__Sync_BeatmapList_Installed
+                '        If Not SelectedBeatmap.ID = -1 And Not Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
+                '            Dim ContentDictionary As New Dictionary(Of String, String)
+                '            With ContentDictionary
+                '                .Add("artist", SelectedBeatmap.Artist)
+                '                .Add("creator", SelectedBeatmap.Creator)
+                '                .Add("id", SelectedBeatmap.ID.ToString)
+                '                .Add("title", SelectedBeatmap.Title)
+                '            End With
+                '            Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
+                '        End If
+                '    Next
+                '    Dim Content_Json As String
+                '    Content_Json = JsonConvert.SerializeObject(Content)
+                '    File.Write(CompressString(Content_Json))
+                '    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
+                '                   .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count,
+                '                   .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done})
+                '    File.Close()
+                'End Using
+                ' [/DEV][REMOVE]
                 e.Result = Answer
-            Case BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache
-                Try
-                    Dim File_Content As String = DecompressString(File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx"))
-                    Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
-                    Dim Cache_Time As String = CStr(File_Content_Json.Item("_info").Item("_file_generationdate_syncFormat"))
+                ' [DEV][REMOVE]
+                'Case BGWcallback_ActionSyncGetIDs_ArgMode.LoadFromCache
+                '    Try
+                '        Dim File_Content As String = DecompressString(File.ReadAllText(I__Path_Programm & "\Cache\LastSync.nw520-osblx"))
+                '        Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
+                '        Dim Cache_Time As String = CStr(File_Content_Json.Item("_info").Item("_file_generationdate_syncFormat"))
 
-                    If Not DateDiff(DateInterval.Day, Date.ParseExact(Cache_Time, "dd.MM.yyyy | HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= 14 Then
-                        With Answer
-                            .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.LoadedFromCache
-                            .Return__Sync_BeatmapList_ID_Installed = Action_ConvertSavedJSONtoListBeatmapIDs(File_Content_Json)
-                            .Return__Sync_BeatmapList_Installed = Action_ConvertSavedJSONtoListBeatmap(File_Content_Json)
-                            .Return__Sync_Cache_Time = Cache_Time
-                        End With
-                        e.Result = Answer
-                        Exit Sub
-                    Else
-                        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                        e.Result = New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                    End If
-                Catch ex As System.IO.InvalidDataException
-                    File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                    e.Result = New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                Catch ex As JsonReaderException
-                    File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                    e.Result = New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                Catch ex As System.FormatException
-                    File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
-                    e.Result = New BGWcallback__Action_Sync_GetIDs With { _
-                                    .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
-                End Try
+                '        If Not DateDiff(DateInterval.Day, Date.ParseExact(Cache_Time, "dd.MM.yyyy | HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= 14 Then
+                '            With Answer
+                '                .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.LoadedFromCache
+                '                .Return__Sync_BeatmapList_ID_Installed = Action_ConvertSavedJSONtoListBeatmapIDs(File_Content_Json)
+                '                .Return__Sync_BeatmapList_Installed = Action_ConvertSavedJSONtoListBeatmap(File_Content_Json)
+                '                .Return__Sync_Cache_Time = Cache_Time
+                '            End With
+                '            e.Result = Answer
+                '            Exit Sub
+                '        Else
+                '            File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                '            e.Result = New BGWcallback__Action_Sync_GetIDs With {
+                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
+                '        End If
+                '    Catch ex As System.IO.InvalidDataException
+                '        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                '        e.Result = New BGWcallback__Action_Sync_GetIDs With {
+                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
+                '    Catch ex As JsonReaderException
+                '        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                '        e.Result = New BGWcallback__Action_Sync_GetIDs With {
+                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
+                '    Catch ex As System.FormatException
+                '        File.Delete(I__Path_Programm & "\Cache\LastSync.nw520-osblx")
+                '        e.Result = New BGWcallback__Action_Sync_GetIDs With {
+                '                        .Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing}
+                '    End Try
+                ' [/DEV][REMOVE]
         End Select
     End Sub
 
@@ -1566,13 +1580,17 @@ Class MainWindow
                     .Value = Answer.Progress__Current
                     .Visibility = Windows.Visibility.Visible
                 End With
-            Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache
-                Interface_LoaderProgressBar.IsIndeterminate = True
-                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_writingCacheFile")
+            ' [DEV][REMOVE] 
+            'Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.WritingCache
+            '    Interface_LoaderProgressBar.IsIndeterminate = True
+            '    Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_writingCacheFile")
+            ' [/DEV][REMOVE] 
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_generatingInterface")
-            Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CacheFileOutdatedAndSyncing
-                TextBlock_Sync_LastUpdate.Content = _e("MainWindow_cacheFileOutdatedSyncing")
+            ' [DEV][REMOVE] 
+            'Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CacheFileOutdatedAndSyncing
+            '    TextBlock_Sync_LastUpdate.Content = _e("MainWindow_cacheFileOutdatedSyncing")
+            ' [/DEV][REMOVE] 
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders
                 Interface_LoaderProgressBar.Maximum = Answer.Progress__Current
         End Select
@@ -1586,7 +1604,7 @@ Class MainWindow
                 Sync_LoadedFromCache = True
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BeatmapList_ID_Installed.Count.ToString)
                 If Not Answer.Return__Sync_Warnings = "" Then
-                    If MessageBox.Show(_e("MainWindow_itSeemsThatSomeBeatmapsDiffer") & vbNewLine & _
+                    If MessageBox.Show(_e("MainWindow_itSeemsThatSomeBeatmapsDiffer") & vbNewLine &
                                        _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
                         Window_Message.SetMessage(Answer.Return__Sync_Warnings, _e("MainWindow_exceptions"), "Sync")
@@ -1609,14 +1627,14 @@ Class MainWindow
                 MsgBox(_e("MainWindow_unableToFindOsuFolderPleaseSpecify"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                 Interface_ShowSettingsWindow(1)
 
-                Dim UI_TextBlock As New TextBlock With { _
+                Dim UI_TextBlock As New TextBlock With {
                     .FontSize = 72,
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                     .HorizontalAlignment = Windows.HorizontalAlignment.Center,
                     .Margin = New Thickness(0, 100, 0, 0),
                     .Text = _e("MainWindow_lastSyncFailed"),
                     .VerticalAlignment = Windows.VerticalAlignment.Center}
-                Dim UI_TextBlock_SubTitle As New TextBlock With { _
+                Dim UI_TextBlock_SubTitle As New TextBlock With {
                     .FontSize = 24,
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
                     .HorizontalAlignment = Windows.HorizontalAlignment.Center,
@@ -1629,41 +1647,43 @@ Class MainWindow
                     .Add(UI_TextBlock_SubTitle)
                 End With
                 Button_SyncDo.IsEnabled = True
-            Case BGWcallback_ActionSyncGetIDs_ReturnStatus.LoadedFromCache
-                Sync_LoadedFromCache = True
-                Sync_BeatmapList_Installed = Answer.Return__Sync_BeatmapList_Installed
-                Sync_BeatmapList_ID_Installed = Answer.Return__Sync_BeatmapList_ID_Installed
+                ' [DEV][REMOVE] 
+                'Case BGWcallback_ActionSyncGetIDs_ReturnStatus.LoadedFromCache
+                '    Sync_LoadedFromCache = True
+                '    Sync_BeatmapList_Installed = Answer.Return__Sync_BeatmapList_Installed
+                '    Sync_BeatmapList_ID_Installed = Answer.Return__Sync_BeatmapList_ID_Installed
 
-                Sync_Done = True
-                Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, UpdateBeatmapDisplayDestinations.Installed, Answer.Return__Sync_Cache_Time)
-                Action_OverlayShow(_e("MainWindow_syncCompleted"), _e("MainWindow_loadedFromCache"))
-                Action_OverlayFadeOut()
+                '    Sync_Done = True
+                '    Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, UpdateBeatmapDisplayDestinations.Installed, Answer.Return__Sync_Cache_Time)
+                '    Action_OverlayShow(_e("MainWindow_syncCompleted"), _e("MainWindow_loadedFromCache"))
+                '    Action_OverlayFadeOut()
 
-                If Sync_Done_ImporterRequest Then
-                    Sync_Done_ImporterRequest = False
-                    Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, UpdateBeatmapDisplayDestinations.Importer)
-                End If
-            Case BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing
-                Dim UI_TextBlock As New TextBlock With { _
-                    .FontSize = 72,
-                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                    .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = _e("MainWindow_lastSyncFailed"),
-                    .VerticalAlignment = Windows.VerticalAlignment.Center}
-                Dim UI_TextBlock_SubTitle As New TextBlock With { _
-                    .FontSize = 24,
-                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
-                    .Text = _e("MainWindow_cacheFileOutdated"),
-                    .VerticalAlignment = Windows.VerticalAlignment.Center}
+                '    If Sync_Done_ImporterRequest Then
+                '        Sync_Done_ImporterRequest = False
+                '        Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, UpdateBeatmapDisplayDestinations.Importer)
+                '    End If
+                'Case BGWcallback_ActionSyncGetIDs_ReturnStatus.CacheFileOutdatedAndSyncing
+                '    Dim UI_TextBlock As New TextBlock With {
+                '        .FontSize = 72,
+                '        .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                '        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                '        .Margin = New Thickness(0, 100, 0, 0),
+                '        .Text = _e("MainWindow_lastSyncFailed"),
+                '        .VerticalAlignment = Windows.VerticalAlignment.Center}
+                '    Dim UI_TextBlock_SubTitle As New TextBlock With {
+                '        .FontSize = 24,
+                '        .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                '        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                '        .Text = _e("MainWindow_cacheFileOutdated"),
+                '        .VerticalAlignment = Windows.VerticalAlignment.Center}
 
-                With BeatmapWrapper.Children
-                    .Clear()
-                    .Add(UI_TextBlock)
-                    .Add(UI_TextBlock_SubTitle)
-                End With
-                Button_SyncDo.IsEnabled = True
+                '    With BeatmapWrapper.Children
+                '        .Clear()
+                '        .Add(UI_TextBlock)
+                '        .Add(UI_TextBlock_SubTitle)
+                '    End With
+                '    Button_SyncDo.IsEnabled = True
+                ' [/DEV][REMOVE] 
         End Select
     End Sub
 #End Region
@@ -1959,17 +1979,17 @@ Class MainWindow
 
             My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep)
             If Setting_Tool_EnableNotifyIcon = 0 Then
-                NotifyIcon.ShowBalloonTip("osu!Sync", _e("MainWindow_installationFinished") & vbNewLine & _
-                        _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine & _
-                        _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine & _
-                         _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine & _
+                NotifyIcon.ShowBalloonTip("osu!Sync", _e("MainWindow_installationFinished") & vbNewLine &
+                        _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine &
+                        _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine &
+                         _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine &
                          _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString), BalloonIcon.None)
             End If
-            MsgBox(_e("MainWindow_installationFinished") & vbNewLine & _
-                        _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine & _
-                        _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine & _
-                         _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine & _
-                         _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString) & vbNewLine & vbNewLine & _
+            MsgBox(_e("MainWindow_installationFinished") & vbNewLine &
+                        _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine &
+                        _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine &
+                         _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine &
+                         _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString) & vbNewLine & vbNewLine &
                     _e("MainWindow_pressF5"))
 
             If Not Process.GetProcessesByName("osu!").Count > 0 Then
