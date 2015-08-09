@@ -119,9 +119,7 @@
             <TabItem Header="{DynamicResource WindowSettings_notifications}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_sync}" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <CheckBox x:Name="CheckBox_Messages_Sync_MoreThan1000Sets" Content="{DynamicResource WindowSettings_warnIfMoreThan100Beatmaps}" Margin="0,5,0,0" />
-                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
                     </StackPanel>

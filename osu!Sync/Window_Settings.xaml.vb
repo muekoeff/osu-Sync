@@ -84,7 +84,6 @@ Public Class Window_Settings
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
         Setting_Tool_UpdateDeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
         Setting_Tool_UpdateUseDownloadPatcher = CBool(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked)
-        Setting_Messages_Sync_MoreThan1000Sets = CBool(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked)
         Setting_Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
         Setting_Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
         Action_SaveSettings()
@@ -354,7 +353,6 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked = Setting_Messages_Sync_MoreThan1000Sets
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation

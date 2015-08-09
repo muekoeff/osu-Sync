@@ -923,15 +923,6 @@ Class MainWindow
         If Setting_Tool_CheckFileAssociation Then
             Action_CheckFileAssociation()
         End If
-
-        If Directory.Exists(Setting_osu_SongsPath) And Setting_Messages_Sync_MoreThan1000Sets Then
-            Dim counter As Integer = Directory.GetDirectories(Setting_osu_SongsPath).Count
-            If counter > 1000 Then
-                If MessageBox.Show(_e("MainWindow_youveGotAboutBeatmaps").Replace("%0", counter.ToString), I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.No Then
-                    Exit Sub
-                End If
-            End If
-        End If
         Action_Sync_GetIDs()
     End Sub
 

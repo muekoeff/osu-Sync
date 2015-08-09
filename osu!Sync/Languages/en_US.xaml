@@ -289,8 +289,6 @@
     <system:String x:Key="WindowSettings_updateFileAssocations">Update/Reregister file associations</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Use this osu! Download Mirror...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Use update patcher to automatically install the updates.</system:String>
-    <!-- | W -->
-    <system:String x:Key="WindowSettings_warnIfMoreThan100Beatmaps">Warn if you've got more than 1000 beatmap sets</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">Your eMail</system:String>
     <system:String x:Key="WindowSettings_yourEmailInvalid">Your eMail seems to be invalid.</system:String>

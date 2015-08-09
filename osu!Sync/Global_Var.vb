@@ -38,7 +38,6 @@ Module Global_Var
     Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
     Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     Public Setting_Tool_UpdateUseDownloadPatcher As Boolean = True
-    Public Setting_Messages_Sync_MoreThan1000Sets As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
 
@@ -216,7 +215,6 @@ Module Global_Var
                 .Add("Setting_Tool_UpdateDeleteFileAfter", CStr(Setting_Tool_UpdateDeleteFileAfter))
                 .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
                 .Add("Setting_Tool_UpdateUseDownloadPatcher", CStr(Setting_Tool_UpdateUseDownloadPatcher))
-                .Add("Setting_Messages_Sync_MoreThan1000Sets", CStr(Setting_Messages_Sync_MoreThan1000Sets))
                 .Add("Setting_Messages_Updater_OpenUpdater", CStr(Setting_Messages_Updater_OpenUpdater))
                 .Add("Setting_Messages_Updater_UnableToCheckForUpdates", CStr(Setting_Messages_Updater_UnableToCheckForUpdates))
             End With
@@ -272,9 +270,6 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher") Is Nothing Then
                 Setting_Tool_UpdateUseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets") Is Nothing Then
-                Setting_Messages_Sync_MoreThan1000Sets = CBool(ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets"))
             End If
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then
                 Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
