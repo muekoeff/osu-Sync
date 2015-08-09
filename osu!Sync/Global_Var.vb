@@ -11,13 +11,13 @@ End Class
 
 Module Global_Var
     Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareLanguages()
-    Public FileExtensions() As String = {".nw520-osbl",
+    Public Application_FileExtensions() As String = {".nw520-osbl",
                                          ".nw520-osblx"}
-    Public FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList",
+    Public Application_FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList",
                                              "naseweis520.osuSync.compressedOsuBeatmapList"}
-    Public FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"),
+    Public Application_FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"),
                                                     _e("GlobalVar_extensionCompressedBeatmapList")}
-    Public FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
+    Public Application_FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
                                              """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
 
     Public I__StartUpArguments() As String
@@ -31,13 +31,14 @@ Module Global_Var
     Public Setting_Tool_CheckFileAssociation As Boolean = True
     Public Setting_Tool_DownloadMirror As Integer = 0
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
-    Public Setting_Tool_ImporterAutoInstallCounter As Integer = 10
+    Public Setting_Tool_Importer_AutoInstallCounter As Integer = 10
+    Public Setting_Tool_Interface_BeatmapDetailPanelWidth As Integer = 40
     Public Setting_Tool_Language As String = System.Globalization.CultureInfo.CurrentCulture.ToString()
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_SyncOnStartup As Boolean = False
-    Public Setting_Tool_UpdateDeleteFileAfter As Boolean = True
-    Public Setting_Tool_UpdateSavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
-    Public Setting_Tool_UpdateUseDownloadPatcher As Boolean = True
+    Public Setting_Tool_Update_DeleteFileAfter As Boolean = True
+    Public Setting_Tool_Update_SavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
+    Public Setting_Tool_Update_UseDownloadPatcher As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
 
@@ -199,22 +200,21 @@ Module Global_Var
         Using ConfigFile = File.CreateText(I__Path_Programm & "\Settings\Settings.config")
             Dim Content As New Dictionary(Of String, String)
             With Content
-                .Add("_note", "DO NOT MODIFY THIS FILE!")
-                .Add("_programm", "osu!Sync")
-                .Add("version", My.Application.Info.Version.ToString)
+                .Add("_version", My.Application.Info.Version.ToString)
                 .Add("Setting_osu_Path", Setting_osu_Path)
                 .Add("Setting_osu_SongsPath", Setting_osu_SongsPath)
                 .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
                 .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
                 .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
                 .Add("Setting_Tool_EnableNotifyIcon", CStr(Setting_Tool_EnableNotifyIcon))
-                .Add("Setting_Tool_ImporterAutoInstallCounter", CStr(Setting_Tool_ImporterAutoInstallCounter))
+                .Add("Setting_Tool_Importer_AutoInstallCounter", CStr(Setting_Tool_Importer_AutoInstallCounter))
+                .Add("Setting_Tool_Interface_BeatmapDetailPanelWidth", CStr(Setting_Tool_Interface_BeatmapDetailPanelWidth))
                 .Add("Setting_Tool_Language", Setting_Tool_Language)
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
                 .Add("Setting_Tool_SyncOnStartup", CStr(Setting_Tool_SyncOnStartup))
-                .Add("Setting_Tool_UpdateDeleteFileAfter", CStr(Setting_Tool_UpdateDeleteFileAfter))
-                .Add("Setting_Tool_UpdateSavePath", CStr(Setting_Tool_UpdateSavePath))
-                .Add("Setting_Tool_UpdateUseDownloadPatcher", CStr(Setting_Tool_UpdateUseDownloadPatcher))
+                .Add("Setting_Tool_Update_DeleteFileAfter", CStr(Setting_Tool_Update_DeleteFileAfter))
+                .Add("Setting_Tool_Update_SavePath", CStr(Setting_Tool_Update_SavePath))
+                .Add("Setting_Tool_Update_UseDownloadPatcher", CStr(Setting_Tool_Update_UseDownloadPatcher))
                 .Add("Setting_Messages_Updater_OpenUpdater", CStr(Setting_Messages_Updater_OpenUpdater))
                 .Add("Setting_Messages_Updater_UnableToCheckForUpdates", CStr(Setting_Messages_Updater_UnableToCheckForUpdates))
             End With
@@ -245,8 +245,11 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then
                 Setting_Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter") Is Nothing Then
-                Setting_Tool_ImporterAutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter") Is Nothing Then
+                Setting_Tool_Importer_AutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter"))
+            End If
+            If Not ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth") Is Nothing Then
+                Setting_Tool_Interface_BeatmapDetailPanelWidth = CInt(ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
                 Setting_Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
@@ -262,14 +265,14 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then
                 Setting_Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter") Is Nothing Then
-                Setting_Tool_UpdateDeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then
+                Setting_Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_UpdateSavePath") Is Nothing Then
-                Setting_Tool_UpdateSavePath = CStr(ConfigFile.SelectToken("Setting_Tool_UpdateSavePath"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then
+                Setting_Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher") Is Nothing Then
-                Setting_Tool_UpdateUseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then
+                Setting_Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
             End If
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then
                 Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
@@ -313,10 +316,13 @@ Module Global_Var
                 .Code = "pl_PL",
                 .DisplayName = "Polski",
                 .DisplayName_English = "Polish"})
-            .Add("zh_CN", New Language With {
+
+            Dim Lang_zh As New Language With {
                 .Code = "zh_CN",
                 .DisplayName = "中文 (简体)",
-                .DisplayName_English = "Chinese Simplified"})
+                .DisplayName_English = "Chinese Simplified"}
+            .Add("zh_CN", Lang_zh)
+            .Add("zh", Lang_zh)
             .Add("zh_TW", New Language With {
                 .Code = "zh_TW",
                 .DisplayName = "中文 (繁體)",

@@ -147,7 +147,7 @@ Class MainWindow
     ''' <remarks></remarks>
     Private Sub Action_CheckFileAssociation()
         Dim FileExtension_Check As Integer = 0        '0 = OK, 1 = Missing File Extension, 2 = Invalid/Outdated File Extension
-        For Each FileExtension As String In FileExtensions
+        For Each FileExtension As String In Application_FileExtensions
             If My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension) Is Nothing Then
                 If FileExtension_Check = 0 Then
                     FileExtension_Check = 1
@@ -156,7 +156,7 @@ Class MainWindow
             End If
         Next
         If Not FileExtension_Check = 1 Then
-            For Each FileExtension As String In FileExtensionsLong
+            For Each FileExtension As String In Application_FileExtensionsLong
                 Dim RegistryPath As String = CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension).OpenSubKey("DefaultIcon").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None))
                 RegistryPath = RegistryPath.Substring(1)
                 RegistryPath = RegistryPath.Substring(0, RegistryPath.Length - 3)
@@ -183,11 +183,11 @@ Class MainWindow
             If MessageBox.Show(MessageBox_Content, I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                 Dim RegisterError As Boolean = False
                 Dim RegisterCounter As Integer = 0
-                For Each Extension As String In FileExtensions
+                For Each Extension As String In Application_FileExtensions
                     If CreateFileAssociation(Extension,
-                                                             FileExtensionsLong(RegisterCounter),
-                                                             FileExtensionsDescription(RegisterCounter),
-                                                             FileExtensionsIcon(RegisterCounter),
+                                                             Application_FileExtensionsLong(RegisterCounter),
+                                                             Application_FileExtensionsDescription(RegisterCounter),
+                                                             Application_FileExtensionsIcon(RegisterCounter),
                                                              System.Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
                         RegisterCounter += 1
                     Else
@@ -964,7 +964,7 @@ Class MainWindow
     End Sub
 
     Private Sub Flyout_BeatmapDetails_RequestBringIntoView(sender As Object, e As RequestBringIntoViewEventArgs) Handles Flyout_BeatmapDetails.RequestBringIntoView
-        Flyout_BeatmapDetails.Width = 2 * (Me.Width / 5)
+        Flyout_BeatmapDetails.Width = Setting_Tool_Interface_BeatmapDetailPanelWidth * (ActualWidth / 100)
     End Sub
 
     Private Sub Interface_SetLoader(Optional Message As String = "Please wait")
@@ -1047,7 +1047,11 @@ Class MainWindow
     End Sub
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+#If DEBUG Then
+        TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString & " (Dev)"
+#Else
         TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString
+#End If
 
         ' Prepare languages
         Action_PrepareLanguages()
@@ -1774,7 +1778,7 @@ Class MainWindow
 
     Private Sub Importer_Downloader_ToNextDownload()
         If Importer_BeatmapList_Tag_ToInstall.Count > 0 Then
-            If Not Setting_Tool_ImporterAutoInstallCounter = 0 And Setting_Tool_ImporterAutoInstallCounter <= Importer_Counter Then
+            If Not Setting_Tool_Importer_AutoInstallCounter = 0 And Setting_Tool_Importer_AutoInstallCounter <= Importer_Counter Then
                 Importer_Counter = 0
                 With Importer_Progress
                     .IsIndeterminate = True

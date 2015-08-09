@@ -11,11 +11,11 @@ Imports System.Windows
 
 ' Die Werte der Assemblyattribute überprüfen
 
-<Assembly: AssemblyTitle("osu!Sync")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyTitle("osu!Sync")>
+<Assembly: AssemblyDescription("Share your beatmaps.")>
 <Assembly: AssemblyCompany("nw520 Technologies")> 
-<Assembly: AssemblyProduct("osu!Sync")> 
-<Assembly: AssemblyCopyright("Copyright ©  2015")> 
+<Assembly: AssemblyProduct("osu!Sync")>
+<Assembly: AssemblyCopyright("2015 | Open-Source")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(false)>
 
@@ -42,7 +42,7 @@ Imports System.Windows
 
 
 'Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-<Assembly: Guid("da8900bf-73d7-45cb-a805-3ea353a3bb2d")> 
+<Assembly: Guid("da8900bf-73d7-45cb-a805-3ea353a3bb2d")>
 
 ' Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 '
@@ -55,5 +55,5 @@ Imports System.Windows
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.0.0.1")>
+<Assembly: AssemblyFileVersion("1.0.0.1")>

@@ -238,6 +238,8 @@
     <system:String x:Key="WindowSettings_generalFeedback">General Feedback</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Import/Download</system:String>
+    <system:String x:Key="WindowSettings_interface">Interface</system:String>
+    <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Language</system:String>
     <system:String x:Key="WindowSettings_languageUpdated">The language has been changed. However, some elements will remain in the previous selected language. In order to correct that a restart of osu!Sync is required.</system:String>
@@ -289,6 +291,8 @@
     <system:String x:Key="WindowSettings_updateFileAssocations">Update/Reregister file associations</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Use this osu! Download Mirror...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Use update patcher to automatically install the updates.</system:String>
+    <!-- | W -->
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel. (Needs to be numeric and between 5 and 95)</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">Your eMail</system:String>
     <system:String x:Key="WindowSettings_yourEmailInvalid">Your eMail seems to be invalid.</system:String>

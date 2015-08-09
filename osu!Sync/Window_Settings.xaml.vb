@@ -69,8 +69,11 @@ Public Class Window_Settings
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
         Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
-            Setting_Tool_ImporterAutoInstallCounter = Val
+        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
+            Setting_Tool_Importer_AutoInstallCounter = Val
+        End If
+        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) AndAlso Val >= 5 And Val <= 95 Then
+            Setting_Tool_Interface_BeatmapDetailPanelWidth = Val
         End If
         Setting_Tool_SyncOnStartup = CBool(CheckBox_Tool_SyncOnStartup.IsChecked)
         ' Load Language
@@ -81,9 +84,9 @@ Public Class Window_Settings
                 MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
             End If
         End If
-        Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
-        Setting_Tool_UpdateDeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
-        Setting_Tool_UpdateUseDownloadPatcher = CBool(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked)
+        Setting_Tool_Update_SavePath = TextBox_Tool_Update_Path.Text
+        Setting_Tool_Update_DeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
+        Setting_Tool_Update_UseDownloadPatcher = CBool(CheckBox_Tool_Update_UseDownloadPatcher.IsChecked)
         Setting_Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
         Setting_Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
         Action_SaveSettings()
@@ -99,8 +102,8 @@ Public Class Window_Settings
 
     Private Sub Button_CreateShortcut_Click(sender As Object, e As RoutedEventArgs) Handles Button_CreateShortcut.Click
         If Not File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk") Then
-            If CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk", _
-                              System.Reflection.Assembly.GetExecutingAssembly().Location.ToString, "", _
+            If CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk",
+                              System.Reflection.Assembly.GetExecutingAssembly().Location.ToString, "",
                               _e("WindowSettings_launchOsuSync")) Then
             Else
                 MsgBox(_e("WindowSettings_unableToCreateShortcut"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
@@ -194,8 +197,8 @@ Public Class Window_Settings
     Private Sub Button_Tool_DeleteFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteFileAssociation.Click
         Dim RegisterError As Boolean = False
         Dim RegisterCounter As Integer = 0
-        For Each Extension As String In FileExtensions
-            If DeleteFileAssociation(Extension, FileExtensionsLong(RegisterCounter)) Then
+        For Each Extension As String In Application_FileExtensions
+            If DeleteFileAssociation(Extension, Application_FileExtensionsLong(RegisterCounter)) Then
                 RegisterCounter += 1
             Else
                 RegisterError = True
@@ -210,21 +213,45 @@ Public Class Window_Settings
         End If
     End Sub
 
-    Private Sub Button_Tool_ImporterAutoInstallCounter_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAutoInstallCounter_Down.Click
+    Private Sub Button_Tool_ImporterAuto_InstallCounter_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAuto_InstallCounter_Down.Click
         Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
-            Textbox_Tool_ImporterAutoInstallCounter.Text = CStr(Val - 1)
+        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
+            If Val > 0 Then
+                Textbox_Tool_Importer_AutoInstallCounter.Text = CStr(Val - 1)
+            End If
         Else
-            Textbox_Tool_ImporterAutoInstallCounter.Text = "10"
+            Textbox_Tool_Importer_AutoInstallCounter.Text = "10"
         End If
     End Sub
 
-    Private Sub Button_Tool_ImporterAutoInstallCounter_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAutoInstallCounter_Up.Click
+    Private Sub Button_Tool_Importer_AutoInstallCounter_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Importer_AutoInstallCounter_Up.Click
         Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
-            Textbox_Tool_ImporterAutoInstallCounter.Text = CStr(Val + 1)
+        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
+            Textbox_Tool_Importer_AutoInstallCounter.Text = CStr(Val + 1)
         Else
-            Textbox_Tool_ImporterAutoInstallCounter.Text = "10"
+            Textbox_Tool_Importer_AutoInstallCounter.Text = "10"
+        End If
+    End Sub
+
+    Private Sub Button_Tool_Interface_BeatmapDetailPanelWidth_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Interface_BeatmapDetailPanelWidth_Down.Click
+        Dim Val As Integer
+        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Then
+            If Val > 5 Then
+                TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val - 1)
+            End If
+        Else
+            TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = "40"
+        End If
+    End Sub
+
+    Private Sub Button_Tool_Interface_BeatmapDetailPanelWidth_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Interface_BeatmapDetailPanelWidth_Up.Click
+        Dim Val As Integer
+        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Then
+            If Val < 95 Then
+                TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val + 1)
+            End If
+        Else
+            TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = "40"
         End If
     End Sub
 
@@ -240,8 +267,8 @@ Public Class Window_Settings
         If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToResetOsuSync"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
             Dim RegisterError As Boolean = False
             Dim RegisterCounter As Integer = 0
-            For Each Extension As String In FileExtensions
-                If DeleteFileAssociation(Extension, FileExtensionsLong(RegisterCounter)) Then
+            For Each Extension As String In Application_FileExtensions
+                If DeleteFileAssociation(Extension, Application_FileExtensionsLong(RegisterCounter)) Then
                     RegisterCounter += 1
                 Else
                     RegisterError = True
@@ -274,11 +301,11 @@ Public Class Window_Settings
     Private Sub Button_Tool_UpdateFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_UpdateFileAssociation.Click
         Dim RegisterError As Boolean = False
         Dim RegisterCounter As Integer = 0
-        For Each Extension As String In FileExtensions
-            If CreateFileAssociation(Extension, _
-                                                     FileExtensionsLong(RegisterCounter), _
-                                                     FileExtensionsDescription(RegisterCounter), _
-                                                     FileExtensionsIcon(RegisterCounter), _
+        For Each Extension As String In Application_FileExtensions
+            If CreateFileAssociation(Extension,
+                                                     Application_FileExtensionsLong(RegisterCounter),
+                                                     Application_FileExtensionsDescription(RegisterCounter),
+                                                     Application_FileExtensionsIcon(RegisterCounter),
                                                      System.Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
                 RegisterCounter += 1
             Else
@@ -294,8 +321,8 @@ Public Class Window_Settings
         End If
     End Sub
 
-    Private Sub Button_Tool_UpdatePathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_UpdatePathDefault.Click
-        TextBox_Tool_UpdatePath.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
+    Private Sub Button_Tool_Update_PathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Update_PathDefault.Click
+        TextBox_Tool_Update_Path.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     End Sub
 
     Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
@@ -309,7 +336,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus
-        Dim SelectFile As New Forms.OpenFileDialog With { _
+        Dim SelectFile As New Forms.OpenFileDialog With {
             .CheckFileExists = True,
             .CheckPathExists = True,
             .DefaultExt = "exe",
@@ -337,18 +364,32 @@ Public Class Window_Settings
         End If
     End Sub
 
-    Private Sub TextBox_Tool_UpdatePath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_UpdatePath.GotFocus
-        Dim SelectDirectory As New Forms.FolderBrowserDialog With { _
+    Private Sub Textbox_Tool_Importer_AutoInstallCounter_LostFocus(sender As Object, e As RoutedEventArgs) Handles Textbox_Tool_Importer_AutoInstallCounter.LostFocus
+        Dim Val As Integer
+        If Not Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
+            Textbox_Tool_Importer_AutoInstallCounter.Text = _e("WindowSettings_invalidValue")
+        End If
+    End Sub
+
+    Private Sub TextBox_Tool_Interface_BeatmapDetailPanelWidth_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_Interface_BeatmapDetailPanelWidth.LostFocus
+        Dim Val As Integer
+        If Not Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Or Val < 5 Or Val > 95 Then
+            TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue")
+        End If
+    End Sub
+
+    Private Sub TextBox_Tool_Update_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_Update_Path.GotFocus
+        Dim SelectDirectory As New Forms.FolderBrowserDialog With {
             .Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
             .ShowNewFolderButton = False}
-        If IO.Directory.Exists(Setting_Tool_UpdateSavePath) Then
-            SelectDirectory.SelectedPath = Setting_Tool_UpdateSavePath
+        If IO.Directory.Exists(Setting_Tool_Update_SavePath) Then
+            SelectDirectory.SelectedPath = Setting_Tool_Update_SavePath
         Else
             SelectDirectory.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
         End If
 
         If Not SelectDirectory.ShowDialog() = Forms.DialogResult.Cancel Then
-            TextBox_Tool_UpdatePath.Text = SelectDirectory.SelectedPath
+            TextBox_Tool_Update_Path.Text = SelectDirectory.SelectedPath
         End If
     End Sub
 
@@ -357,8 +398,8 @@ Public Class Window_Settings
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
         CheckBox_Tool_SyncOnStartup.IsChecked = Setting_Tool_SyncOnStartup
-        CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_UpdateDeleteFileAfter
-        CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked = Setting_Tool_UpdateUseDownloadPatcher
+        CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_Update_DeleteFileAfter
+        CheckBox_Tool_Update_UseDownloadPatcher.IsChecked = Setting_Tool_Update_UseDownloadPatcher
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
@@ -388,7 +429,8 @@ Public Class Window_Settings
 
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
-        Textbox_Tool_ImporterAutoInstallCounter.Text = Setting_Tool_ImporterAutoInstallCounter.ToString
-        TextBox_Tool_UpdatePath.Text = Setting_Tool_UpdateSavePath
+        Textbox_Tool_Importer_AutoInstallCounter.Text = Setting_Tool_Importer_AutoInstallCounter.ToString
+        TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = Setting_Tool_Interface_BeatmapDetailPanelWidth.ToString
+        TextBox_Tool_Update_Path.Text = Setting_Tool_Update_SavePath
     End Sub
 End Class

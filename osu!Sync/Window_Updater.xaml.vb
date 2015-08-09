@@ -34,9 +34,9 @@ Public Class Window_Updater
         Button_Done.IsEnabled = False
         Button_Update.IsEnabled = False
 
-        Update_DownloadToPath = Setting_Tool_UpdateSavePath & "\osu!Sync Version " & Update_Version & Update_FileExtension
+        Update_DownloadToPath = Setting_Tool_Update_SavePath & "\osu!Sync Version " & Update_Version & Update_FileExtension
 
-        If Setting_Tool_UpdateUseDownloadPatcher Then
+        If Setting_Tool_Update_UseDownloadPatcher Then
             If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\Update") Then
                 Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\Update")
             End If
@@ -58,29 +58,29 @@ Public Class Window_Updater
         Select Case DownloadMode
             Case DownloadModes.DownloadPatcher
                 Action_DownloadUpdate()
-                File.Move(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp", _
+                File.Move(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp",
                               Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe")
             Case DownloadModes.DownloadUpdate
                 Me.Cursor = Cursors.Arrow
                 TextBlock_Status.Text = _e("WindowUpdater_downloadFinished").Replace("%0", Update_TotalBytes)
                 Button_Done.IsEnabled = True
-                If Not Directory.Exists(Setting_Tool_UpdateSavePath) Then
-                    Directory.CreateDirectory(Setting_Tool_UpdateSavePath)
+                If Not Directory.Exists(Setting_Tool_Update_SavePath) Then
+                    Directory.CreateDirectory(Setting_Tool_Update_SavePath)
                 End If
-                If Not File.Exists(Setting_Tool_UpdateSavePath & "\osu!Sync Version " & Update_Version & Update_FileExtension) Then
-                    File.Move(Path.GetTempPath() & "naseweis520\osu!Sync\Update\osu!Sync Version " & Update_Version & Update_FileExtension & ".tmp", _
+                If Not File.Exists(Setting_Tool_Update_SavePath & "\osu!Sync Version " & Update_Version & Update_FileExtension) Then
+                    File.Move(Path.GetTempPath() & "naseweis520\osu!Sync\Update\osu!Sync Version " & Update_Version & Update_FileExtension & ".tmp",
                               Update_DownloadToPath)
-                    If Setting_Tool_UpdateUseDownloadPatcher Then
+                    If Setting_Tool_Update_UseDownloadPatcher Then
                         ' Run UpdatePatcher
                         Dim UpdatePatcher As New ProcessStartInfo()
-                        UpdatePatcher.Arguments = "-destinationVersion=""" & Update_Version & """ -sourceVersion=""" & My.Application.Info.Version.ToString & """ -pathToApp=""" & Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) & """ -pathToUpdate=""" & Update_DownloadToPath & """ -updateHash=""" & Update_md5Hash & """ -deletePackageAfter=""" & Setting_Tool_UpdateDeleteFileAfter.ToString & """"
+                        UpdatePatcher.Arguments = "-destinationVersion=""" & Update_Version & """ -sourceVersion=""" & My.Application.Info.Version.ToString & """ -pathToApp=""" & Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) & """ -pathToUpdate=""" & Update_DownloadToPath & """ -updateHash=""" & Update_md5Hash & """ -deletePackageAfter=""" & Setting_Tool_Update_DeleteFileAfter.ToString & """"
                         UpdatePatcher.FileName = Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe"
                         Process.Start(UpdatePatcher)
                         Application.Current.Shutdown()
                         Exit Sub
                     Else
                         If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                            Process.Start(Setting_Tool_UpdateSavePath)
+                            Process.Start(Setting_Tool_Update_SavePath)
                         End If
                     End If
                 Else
@@ -189,7 +189,7 @@ Public Class Window_Updater
     End Sub
 
     Private Sub Window_Updater_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        If Setting_Tool_UpdateUseDownloadPatcher = False Then
+        If Setting_Tool_Update_UseDownloadPatcher = False Then
             Button_Update.Content = _e("WindowUpdater_download")
         End If
         TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
