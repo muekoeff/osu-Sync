@@ -2,6 +2,7 @@
 
     Private Declare Function ShowWindow Lib "user32" (ByVal handle As IntPtr, ByVal nCmdShow As Integer) As Integer
 
+#If Not DEBUG Then
     Private Sub Application_DispatcherUnhandledException(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs) Handles Me.DispatcherUnhandledException
         e.Handled = True
         Clipboard.SetDataObject(e.Exception.ToString)
@@ -12,6 +13,7 @@
         Catch ex As Exception
         End Try
     End Sub
+#End If
 
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
         ' Save Startup Arguments
@@ -30,10 +32,10 @@
         End If
 
         ' Load language library
-        If Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then
-            Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))
-            Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With { _
-                                                                 .Source = New Uri("Languages/" & GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & ".xaml", UriKind.Relative)})
+        If Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString()) = "" Then     ' Check if full language code exists (e.g. de_DE)
+            LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString()), System.Globalization.CultureInfo.CurrentCulture.ToString())
+        ElseIf Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then ' Check if main language code exists (e.g. de)
+            LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)), System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))
         End If
     End Sub
 End Class
