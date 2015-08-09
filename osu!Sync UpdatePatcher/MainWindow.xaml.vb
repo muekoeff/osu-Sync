@@ -82,7 +82,7 @@ Class MainWindow
             Dim CurrentSplit() As String = Current.Split(CChar("="))
             Select Case CurrentSplit(0)
                 Case "-deletePackageAfter"
-                    Argument_deletePackageAfter = CType(CurrentSplit(1), Boolean)
+                    Argument_deletePackageAfter = CBool(CurrentSplit(1))
                 Case "-destinationVersion"
                     Argument_destinationVersion = CurrentSplit(1)
                 Case "-pathToApp"

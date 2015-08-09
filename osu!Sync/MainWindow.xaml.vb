@@ -915,7 +915,7 @@ Class MainWindow
 
     Private Sub BeatmapDetails_BeatmapListing_Click(sender As Object, e As RoutedEventArgs) Handles BeatmapDetails_BeatmapListing.Click
         Dim SelectedSender As Button = CType(sender, Button)
-        Dim SelectedSender_Tag As String = CType(SelectedSender.Tag, String)
+        Dim SelectedSender_Tag As String = CStr(SelectedSender.Tag)
         Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag)
     End Sub
 

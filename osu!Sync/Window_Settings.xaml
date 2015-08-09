@@ -148,7 +148,13 @@
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" TextWrapping="Wrap" />
                             <RichTextBox x:Name="RichTextBox_Feedback_Message" Height="75" />
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_furtherInformation}" TextWrapping="Wrap" />
-                            <TextBox x:Name="TextBox_Feedback_FurtherInfo" IsEnabled="False" />
+                            <RichTextBox IsReadOnly="True">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run x:Name="Run_Feedback_FurtherInfo"></Run>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
                             <Button x:Name="Button_Feedback_Submit" Content="{DynamicResource WindowSettings_submit}" Height="40" Margin="0,5,0,0" />
                         </StackPanel>
                         <Grid x:Name="Grid_Feedback_Overlay" Background="#CC27AE60" Visibility="Hidden">

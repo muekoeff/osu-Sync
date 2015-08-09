@@ -1,4 +1,4 @@
-﻿Imports System.IO, System.Net
+﻿Imports System.IO, System.Net, System.Security.Principal
 Imports Newtonsoft.Json
 
 Public Class Window_Settings
@@ -64,7 +64,7 @@ Public Class Window_Settings
     Private Sub Action_ApplySettings()
         Setting_osu_Path = TextBox_osu_Path.Text
         Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
-        Setting_Tool_CheckFileAssociation = CType(CheckBox_Tool_CheckFileAssociation.IsChecked, Boolean)
+        Setting_Tool_CheckFileAssociation = CBool(CheckBox_Tool_CheckFileAssociation.IsChecked)
         Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
@@ -72,7 +72,7 @@ Public Class Window_Settings
         If Integer.TryParse(Textbox_Tool_ImporterAutoInstallCounter.Text, Val) Then
             Setting_Tool_ImporterAutoInstallCounter = Val
         End If
-        Setting_Tool_SyncOnStartup = CType(CheckBox_Tool_SyncOnStartup.IsChecked, Boolean)
+        Setting_Tool_SyncOnStartup = CBool(CheckBox_Tool_SyncOnStartup.IsChecked)
         ' Load Language
         Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
         If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = LanguageCode_Short Then
@@ -82,11 +82,11 @@ Public Class Window_Settings
             End If
         End If
         Setting_Tool_UpdateSavePath = TextBox_Tool_UpdatePath.Text
-        Setting_Tool_UpdateDeleteFileAfter = CType(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked, Boolean)
-        Setting_Tool_UpdateUseDownloadPatcher = CType(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked, Boolean)
-        Setting_Messages_Sync_MoreThan1000Sets = CType(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked, Boolean)
-        Setting_Messages_Updater_OpenUpdater = CType(CheckBox_Messages_Updater_OpenUpdater.IsChecked, Boolean)
-        Setting_Messages_Updater_UnableToCheckForUpdates = CType(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked, Boolean)
+        Setting_Tool_UpdateDeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
+        Setting_Tool_UpdateUseDownloadPatcher = CBool(CheckBox_Tool_UpdateUseDownloadPatcher.IsChecked)
+        Setting_Messages_Sync_MoreThan1000Sets = CBool(CheckBox_Messages_Sync_MoreThan1000Sets.IsChecked)
+        Setting_Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
+        Setting_Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
         Action_SaveSettings()
     End Sub
 
@@ -117,16 +117,23 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
+        Dim identity = WindowsIdentity.GetCurrent()
+        Dim principal = New WindowsPrincipal(identity)
+        Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
+
         Dim Content As New Dictionary(Of String, String)
         With Content
             .Add("downloadMirror", Setting_Tool_DownloadMirror.ToString)
+            .Add("languageCode_long", GetTranslationName(Setting_Tool_Language))
             .Add("lastCheckForUpdates", Setting_Tool_LastCheckForUpdates)
+            .Add("ipAddress", "%SERVER:ipAddress%")
+            .Add("isElevated", CStr(isElevated))
             .Add("operatingSystem", Environment.OSVersion.Version.ToString)
             .Add("programVersion", My.Application.Info.Version.ToString)
             .Add("systemArchitecture_is64bit", CStr(Environment.Is64BitOperatingSystem))
             .Add("updateInterval", Setting_Tool_CheckForUpdates.ToString)
         End With
-        TextBox_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Content)
+        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Content)
         With Button_Feedback_Prepare
             .IsEnabled = False
             .Visibility = Windows.Visibility.Collapsed
@@ -156,7 +163,7 @@ Public Class Window_Settings
                 .Add("email", TextBox_Feedback_eMail.Text)
                 .Add("category", ComboBox_Feedback_Category.Text)
                 .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
-                .Add("debugData", TextBox_Feedback_FurtherInfo.Text)
+                .Add("debugData", Run_Feedback_FurtherInfo.Text)
             End With
             With StackPanel_Feedback
                 .IsEnabled = False

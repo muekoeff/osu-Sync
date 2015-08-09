@@ -230,28 +230,28 @@ Module Global_Var
             Dim ConfigFile As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(I__Path_Programm & "\Settings\Settings.config")), JObject)
 
             If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then
-                Setting_osu_Path = CType(ConfigFile.SelectToken("Setting_osu_Path"), String)
+                Setting_osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
             End If
             If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then
-                Setting_osu_SongsPath = CType(ConfigFile.SelectToken("Setting_osu_SongsPath"), String)
+                Setting_osu_SongsPath = CStr(ConfigFile.SelectToken("Setting_osu_SongsPath"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then
-                Setting_Tool_CheckFileAssociation = CType(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"), Boolean)
+                Setting_Tool_CheckFileAssociation = CBool(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then
-                Setting_Tool_CheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"), Integer)
+                Setting_Tool_CheckForUpdates = CInt(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then
-                Setting_Tool_DownloadMirror = CType(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"), Integer)
+                Setting_Tool_DownloadMirror = CInt(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then
-                Setting_Tool_EnableNotifyIcon = CType(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"), Integer)
+                Setting_Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter") Is Nothing Then
-                Setting_Tool_ImporterAutoInstallCounter = CType(ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter"), Integer)
+                Setting_Tool_ImporterAutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_ImporterAutoInstallCounter"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
-                Setting_Tool_Language = CType(ConfigFile.SelectToken("Setting_Tool_Language"), String)
+                Setting_Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
 
                 ' Load language library
                 If Not GetTranslationName(Setting_Tool_Language) = "" Then
@@ -259,28 +259,28 @@ Module Global_Var
                 End If
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
-                Setting_Tool_LastCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"), String)
+                Setting_Tool_LastCheckForUpdates = CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then
-                Setting_Tool_SyncOnStartup = CType(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"), Boolean)
+                Setting_Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter") Is Nothing Then
-                Setting_Tool_UpdateDeleteFileAfter = CType(ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter"), Boolean)
+                Setting_Tool_UpdateDeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_UpdateDeleteFileAfter"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateSavePath") Is Nothing Then
-                Setting_Tool_UpdateSavePath = CType(ConfigFile.SelectToken("Setting_Tool_UpdateSavePath"), String)
+                Setting_Tool_UpdateSavePath = CStr(ConfigFile.SelectToken("Setting_Tool_UpdateSavePath"))
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher") Is Nothing Then
-                Setting_Tool_UpdateUseDownloadPatcher = CType(ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher"), Boolean)
+                Setting_Tool_UpdateUseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_UpdateUseDownloadPatcher"))
             End If
             If Not ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets") Is Nothing Then
-                Setting_Messages_Sync_MoreThan1000Sets = CType(ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets"), Boolean)
+                Setting_Messages_Sync_MoreThan1000Sets = CBool(ConfigFile.SelectToken("Setting_Messages_Sync_MoreThan1000Sets"))
             End If
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then
-                Setting_Messages_Updater_OpenUpdater = CType(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"), Boolean)
+                Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
             End If
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then
-                Setting_Messages_Updater_UnableToCheckForUpdates = CType(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"), Boolean)
+                Setting_Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
             End If
         Catch ex As Exception
             MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
