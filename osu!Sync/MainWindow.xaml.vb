@@ -1305,8 +1305,7 @@ Class MainWindow
 
                 Dim Beatmap_InvalidFolder As String = ""
                 Dim Beatmap_InvalidIDBeatmaps As String = ""
-                Dim UseDatabase As Boolean = True
-                If UseDatabase Then
+                If File.Exists(Setting_osu_Path + "\osu!.db") Then
                     ' Reads straight from osu!.db
                     Dim DatabasePath As String = Setting_osu_Path + "\osu!.db"
                     Using Reader As OsuReader = New OsuReader(File.OpenRead(DatabasePath))
