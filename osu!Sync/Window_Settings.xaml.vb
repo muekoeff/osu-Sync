@@ -264,7 +264,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_Reset_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Reset.Click
-        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToResetOsuSync"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
+        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToReset"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
             Dim RegisterError As Boolean = False
             Dim RegisterCounter As Integer = 0
             For Each Extension As String In Application_FileExtensions

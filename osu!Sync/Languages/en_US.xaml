@@ -16,7 +16,7 @@
     <system:String x:Key="GlobalVar_extensionBeatmapList">osu! Beatmap List for osu!Sync</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Compressed osu! Beatmap List for osu!Sync</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated.&#x0a;osu!Sync will delete it and restart.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated.&#x0a;It will be deleted and and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Sorry, something went wrong.</system:String>
     <!-- | M -->
@@ -28,7 +28,7 @@
     <system:String x:Key="MainWindow_about">_About</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">All supported file formats</system:String>
     <system:String x:Key="MainWindow_andStillWorking">And still working...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version of osu!Sync is available.&#x0a;Current: %0 | Latest: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available.&#x0a;Current: %0 | Latest: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 beatmaps found.</system:String>
@@ -77,7 +77,7 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">Unable to delete file association.</system:String>
     <system:String x:Key="MainWindow_extensionDone">File association successfully registered, thank you. (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">Unable to register file association.</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">It looks like some file extensions aren't associated with osu!Sync.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">It looks like some file extensions aren't associated with this application.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">It looks like some file extensions are outdated.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">Fetched ID is not a number.</system:String>
@@ -154,7 +154,7 @@
     <system:String x:Key="MainWindow_unableToFindOsuExe">Unable to find osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder.&#x0a;Please specify the path to osu! in the following window.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Unable to get ID</system:String>
-    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">osu!Sync was unable to get the IDs of some beatmaps.&#x0a;They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed.&#x0a;They will be handled as unsubmitted (can't be exported).</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Unknown file extension</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Unsubmitted beatmap sets can't be exported</system:String>
@@ -209,7 +209,7 @@
     <!-- | A -->
     <system:String x:Key="WindowSettings_apply">_Apply</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Are you really sure that you want to delete the configuration file (this cannot be undone)?</system:String>
-    <system:String x:Key="WindowSettings_areYouSureYouWantToResetOsuSync">Are you really sure that you want to reset osu!Sync (this cannot be undone)?</system:String>
+    <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps. (Needs to be numeric)</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
@@ -242,7 +242,7 @@
     <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Language</system:String>
-    <system:String x:Key="WindowSettings_languageUpdated">The language has been changed. However, some elements will remain in the previous selected language. In order to correct that a restart of osu!Sync is required.</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">The language has been changed. However, some elements will remain in the previous selected language. In order to correct that a restart is required.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Launch osu!Sync.</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maximum once a day (Recommended).</system:String>
@@ -277,7 +277,7 @@
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Show always - Disable NotifyBalloons.</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons.</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Show message when update check failed</system:String>
-    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Show only when osu!Sync is hidden - Disable NotifyBalloons.</system:String>
+    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Show only when window is hidden - Disable NotifyBalloons.</system:String>
     <system:String x:Key="WindowSettings_submit">Submit</system:String>
     <system:String x:Key="WindowSettings_submitting">Submitting...</system:String>
     <system:String x:Key="WindowSettings_sync">Sync</system:String>
@@ -309,7 +309,7 @@
     
     <!-- Window_Updater -->
     <!-- | A -->
-    <system:String x:Key="WindowUpdater_aNewVersionIsAvailable">A new version of osu!Sync is available</system:String>
+    <system:String x:Key="WindowUpdater_aNewVersionIsAvailable">A new version is available</system:String>
     <!-- | C -->
     <system:String x:Key="WindowUpdater_cantFetchLatestVersion">Can't fetch latest version</system:String>
     <!-- | D -->
@@ -333,7 +333,7 @@
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Unable to dowload changelog!</system:String>
     <system:String x:Key="WindowUpdater_unableToMoveUpdate">Unable to move update to correct directory, because there's already a file with the same name.</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version of osu!Sync</system:String>
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">Your version: %0</system:String>
 
     <!-- Window_Welcome -->
