@@ -87,7 +87,6 @@
     <system:String x:Key="MainWindow_folders">Folders</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Generating interface...</system:String>
-    <system:String x:Key="MainWindow_getBeatmapSets">Get Beatmap Sets</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">_Help</system:String>
     <!-- | I -->
@@ -146,6 +145,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Skipped beatmaps</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Some beatmap sets hadn't been exported.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Sync completed</system:String>
+    <system:String x:Key="MainWindow_synchronize">Synchronize</system:String>
     <system:String x:Key="MainWindow_syncing">Syncing...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">That's... impressive, I guess.</system:String>
@@ -210,7 +210,7 @@
     <system:String x:Key="WindowSettings_apply">_Apply</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Are you really sure that you want to delete the configuration file (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
-    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps. (Needs to be numeric)</system:String>
+    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps. (Numeric)</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
@@ -292,7 +292,7 @@
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Use this osu! Download Mirror...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Use update patcher to automatically install the updates.</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel. (Needs to be numeric and between 5 and 95)</system:String>
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel. (Numeric, between 5 and 95)</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">Your eMail</system:String>
     <system:String x:Key="WindowSettings_yourEmailInvalid">Your eMail seems to be invalid.</system:String>
@@ -309,9 +309,7 @@
     
     <!-- Window_Updater -->
     <!-- | A -->
-    <system:String x:Key="WindowUpdater_aNewVersionIsAvailable">A new version is available</system:String>
-    <!-- | C -->
-    <system:String x:Key="WindowUpdater_cantFetchLatestVersion">Can't fetch latest version</system:String>
+    <system:String x:Key="WindowUpdater_anUpdateIsAvailable">An update is available</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Date of Publication: %0</system:String>
     <system:String x:Key="WindowUpdater_done">_Done</system:String>
@@ -330,6 +328,7 @@
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Please wait, checking for updates...</system:String>
     <system:String x:Key="WindowUpdater_publishedBy">Published by: %0</system:String>
     <!-- | U -->
+    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Unable to communicate with server</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Unable to dowload changelog!</system:String>
     <system:String x:Key="WindowUpdater_unableToMoveUpdate">Unable to move update to correct directory, because there's already a file with the same name.</system:String>
     <!-- | Y -->

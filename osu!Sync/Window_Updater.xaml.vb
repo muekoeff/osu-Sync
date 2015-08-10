@@ -111,15 +111,15 @@ Public Class Window_Updater
                     Answer = JObject.Parse(e.Result)
                 Catch ex As Newtonsoft.Json.JsonReaderException
                     MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_cantFetchLatestVersion")
-                    TextBlock_Status.Text = _e("WindowUpdater_cantFetchLatestVersion")
+                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
+                    TextBlock_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
                     ProgressBar_Progress.IsIndeterminate = False
                     Exit Sub
                 Catch ex As System.Reflection.TargetInvocationException
                     Clipboard.SetText("https://osu.ppy.sh/forum/t/270446")
                     MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_cantFetchLatestVersion")
-                    TextBlock_Status.Text = _e("WindowUpdater_cantFetchLatestVersion")
+                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
+                    TextBlock_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
                     ProgressBar_Progress.IsIndeterminate = False
                     Exit Sub
                 End Try
@@ -140,7 +140,7 @@ Public Class Window_Updater
                     TextBlock_Status.Text = _e("WindowUpdater_yourUsingTheLatestVersion")
                     Me.Cursor = Cursors.Arrow
                 Else
-                    TextBlock_Status.Text = _e("WindowUpdater_aNewVersionIsAvailable")
+                    TextBlock_Status.Text = _e("WindowUpdater_anUpdateIsAvailable")
 
                     Update_Path = CStr(Answer.SelectToken("downloadPath"))
                     Update_Path_UpdatePatcher = CStr(Answer.SelectToken("downloadPath_updatePatcher"))
