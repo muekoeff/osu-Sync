@@ -128,7 +128,7 @@
         <TextBlock x:Name="TextBlock_BeatmapCounter" FontFamily="Segoe UI Light" FontSize="22" Foreground="#FFDDDDDD" HorizontalAlignment="Left" Margin="8,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" />
         <Button x:Name="Button_SyncDo" Content="{DynamicResource MainWindow_synchronize}" FontSize="16" HorizontalAlignment="Right" Margin="0,5,5,0" Padding="15,6" VerticalAlignment="Top" Grid.Row="1" />
         <TabControl x:Name="Tabber" Margin="0" Grid.Row="2">
-            <TabItem Header="{DynamicResource MainWindow_installed}">
+            <TabItem Header="{DynamicResource MainWindow_overview}">
                 <ScrollViewer Margin="-5,0,0,0">
                     <StackPanel x:Name="BeatmapWrapper">
                         <Grid Margin="0,100,0,0" >

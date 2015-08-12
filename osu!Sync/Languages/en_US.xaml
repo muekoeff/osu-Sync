@@ -58,7 +58,6 @@
     <!-- | |> B -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Beatmap Details</system:String>
     <!-- | |> |> Beatmap Status -->
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_approved">Approved</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pending</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
@@ -97,7 +96,6 @@
     <system:String x:Key="MainWindow_import">Import</system:String>
     <system:String x:Key="MainWindow_importAborted">Import aborted</system:String>
     <system:String x:Key="MainWindow_installationFinished">Installation finished!</system:String>
-    <system:String x:Key="MainWindow_installed">Installed</system:String>
     <system:String x:Key="MainWindow_installing">Installing</system:String>
     <system:String x:Key="MainWindow_installingFiles">Installing files...</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">Invalid server response</system:String>
@@ -121,6 +119,7 @@
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Open _Updater</system:String>
     <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync Beatmap List</system:String>
+    <system:String x:Key="MainWindow_overview">Overview</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Parsing installed beatmap sets...</system:String>
     <system:String x:Key="MainWindow_pleaseRetry">Please retry.</system:String>

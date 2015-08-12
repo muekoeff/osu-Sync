@@ -1003,15 +1003,10 @@ Class MainWindow
 
         ' Ranked status
         Select Case Details.RankedStatus
-            Case Convert.ToByte(4)      ' Ranked
+            Case Convert.ToByte(4), Convert.ToByte(5)   ' 4 = Ranked, 5 = Approved
                 With BeatmapDetails_RankedStatus
                     .Background = Color_008136
                     .Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked")
-                End With
-            Case Convert.ToByte(5)      ' Approved
-                With BeatmapDetails_RankedStatus
-                    .Background = Color_008136
-                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_approved")
                 End With
             Case Convert.ToByte(6)      ' Pending
                 With BeatmapDetails_RankedStatus
