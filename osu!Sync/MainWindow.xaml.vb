@@ -593,7 +593,7 @@ Class MainWindow
                     End If
 
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
-                        .Content = _e("MainWindow_installed") & "?",
+                        .Content = _e("MainWindow_isInstalled"),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = True,
                         .IsEnabled = False,
@@ -675,7 +675,7 @@ Class MainWindow
                         Check_IfInstalled = False
                     End If
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
-                        .Content = _e("MainWindow_installed") & "?",
+                        .Content = _e("MainWindow_isInstalled"),
                         .HorizontalAlignment = Windows.HorizontalAlignment.Left,
                         .IsChecked = Check_IfInstalled,
                         .IsEnabled = False,
@@ -783,12 +783,7 @@ Class MainWindow
                     Importer_Run.IsEnabled = True
                 End If
                 Importer_UpdateInfo("osu!Sync")
-                Select Case Setting_Tool_DownloadMirror
-                    Case 0
-                        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Bloodcat.com"
-                    Case 1
-                        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Loli.al"
-                End Select
+                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
             Case UpdateBeatmapDisplayDestinations.Exporter
                 ExporterWrapper.Children.Clear()
                 For Each SelectedBeatmap As Beatmap In BeatmapList
@@ -1049,7 +1044,7 @@ Class MainWindow
 #End If
 
         ' Prepare languages
-        Action_PrepareLanguages()
+        Action_PrepareData()
 
         ' Load Configuration
         If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
@@ -1687,14 +1682,8 @@ Class MainWindow
         Importer_Progress.IsIndeterminate = True
         Dim RequestURI As String
         TextBlock_Progress.Content = _e("MainWindow_fetching").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
-        Select Case Setting_Tool_DownloadMirror
-            Case 1
-                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Loli.al"
-                RequestURI = "http://loli.al/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
-            Case Else
-                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": Bloodcat.com"
-                RequestURI = "http://bloodcat.com/osu/s/" + CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)
-        End Select
+        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
+        RequestURI = Application_Mirrors(Setting_Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
 
         With Importer_BeatmapList_Tag_ToInstall.First
             .UI_DecoBorderLeft.Fill = Color_3498DB
@@ -1930,12 +1919,7 @@ Class MainWindow
     End Sub
 
     Private Sub Importer_DownloadMirrorInfo_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles Importer_DownloadMirrorInfo.MouseDown
-        Select Case Setting_Tool_DownloadMirror
-            Case 0
-                Process.Start("http://bloodcat.com/osu")
-            Case 1
-                Process.Start("http://loli.al/")
-        End Select
+        Process.Start(Application_Mirrors(Setting_Tool_DownloadMirror).WebURL)
     End Sub
 
     Private Sub Importer_Run_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Run.Click

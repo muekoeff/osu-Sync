@@ -44,6 +44,7 @@
     <system:String x:Key="MainWindow_conversionFailed">Conversion failed</system:String>
     <system:String x:Key="MainWindow_convertFile">_Convert file</system:String>
     <system:String x:Key="MainWindow_convertSelectedFile">Convert selected file</system:String>
+    <system:String x:Key="MainWindow_creator">Creator</system:String>
     <!-- | D -->
     <system:String x:Key="MainWindow_done">Done</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Download and install</system:String>
@@ -100,6 +101,7 @@
     <system:String x:Key="MainWindow_installingFiles">Installing files...</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">Invalid server response</system:String>
     <system:String x:Key="MainWindow_invertSelection">Invert Selection</system:String>
+    <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
     <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">It looks, like something is wrong with this download, do you want to skip this file (Yes) or to cancel the whole download (No)?</system:String>
     <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">It seems like some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">It seems that some folder(s) can't be parsed.&#x0a;They'll be ignored.</system:String>
@@ -184,10 +186,15 @@
     <system:String x:Key="WindowAbout_feedback">Feedback</system:String>
     <!-- | G -->
     <system:String x:Key="WindowAbout_github">Source Code on GitHub</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowAbout_libraries">Libraries</system:String>
     <!-- | M -->
     <system:String x:Key="WindowAbout_message">Thank you, for using osu!Sync.</system:String>
     <!-- | O -->
     <system:String x:Key="WindowAbout_osuForum">osu!Forum</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowAbout_thanks">Thanks</system:String>
+    <system:String x:Key="WindowAbout_thanksAll">Thanks to all translators, bug reporters and developers who made osu!Sync possible.</system:String>
     <!-- | V -->
     <system:String x:Key="WindowAbout_version">osu!Sync Version %0 | %1</system:String>
     <!-- |> Tooltip (tt) -->

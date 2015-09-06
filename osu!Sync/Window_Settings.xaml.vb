@@ -150,26 +150,24 @@ Public Class Window_Settings
     Private Sub Button_Feedback_Submit_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Submit.Click
         Dim RichTextBox_Feedback_Message_TextRange As New TextRange(RichTextBox_Feedback_Message.Document.ContentStart, RichTextBox_Feedback_Message.Document.ContentEnd)
 
-        If Not TextBox_Feedback_Username.Text.Length >= 5 Then
+        If TextBox_Feedback_Username.Text.Length <= 1 Then
             MsgBox(_e("WindowSettings_yourNameIsTooShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf Not ValidateEmail(TextBox_Feedback_eMail.Text) Then
             MsgBox(_e("WindowSettings_yourEmailInvalid"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         ElseIf ComboBox_Feedback_Category.SelectedIndex = -1 Then
             MsgBox(_e("WindowSettings_youHaveToSelectACategory"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-        ElseIf Not RichTextBox_Feedback_Message_TextRange.Text.Length >= 5 Then
+        ElseIf RichTextBox_Feedback_Message_TextRange.Text.Length < 30 Then
             MsgBox(_e("WindowSettings_yourMessageSeemsToBeQuiteShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         Else
             Dim Message As New Dictionary(Of String, String)
             With Message
-                .Add("username", TextBox_Feedback_Username.Text)
-                .Add("email", TextBox_Feedback_eMail.Text)
                 .Add("category", ComboBox_Feedback_Category.Text)
-                .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
                 .Add("debugData", Run_Feedback_FurtherInfo.Text)
+                .Add("email", TextBox_Feedback_eMail.Text)
+                .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
+                .Add("username", TextBox_Feedback_Username.Text)
             End With
-            With StackPanel_Feedback
-                .IsEnabled = False
-            End With
+            StackPanel_Feedback.IsEnabled = False
             Grid_Feedback_Overlay.Visibility = Windows.Visibility.Visible
             Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
         End If
@@ -401,7 +399,15 @@ Public Class Window_Settings
         CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_Update_DeleteFileAfter
         CheckBox_Tool_Update_UseDownloadPatcher.IsChecked = Setting_Tool_Update_UseDownloadPatcher
         ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
+        ' Load mirrors and select current one
+        For Each a In Application_Mirrors
+            ComboBox_Tool_DownloadMirror.Items.Add(a.Value.DisplayName)
+            If a.Key = 0 Then
+                ComboBox_Tool_DownloadMirror.Items.Add(New Separator)
+            End If
+        Next
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
+
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
         ' Load languages and select current one
         Dim InsertedCodes As New List(Of String)

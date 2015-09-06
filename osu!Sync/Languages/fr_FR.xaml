@@ -1,0 +1,356 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- Forum -->
+    <!-- | T -->
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Forum_translationInfo">Cette application est disponible en [b]Français[/b].</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Forum_translationLanguageName">Français</system:String>
+
+    <!-- Meta & More -->
+    <!-- | T -->
+    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
+    <system:String x:Key="Meta_translators">Traduction par: Aerath, PyaKura, Rockageek</system:String>
+
+    <!-- GlobalVar -->
+    <!-- | E -->
+    <system:String x:Key="GlobalVar_extensionBeatmapList">Liste de Beatmaps pour osu!Sync</system:String>
+    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Liste compressée de Beatmaps pour osu!Sync</system:String>
+    <!-- | I -->
+    <system:String x:Key="GlobalVar_invalidConfiguration">Votre fichier de configuration semble invalide ou obsolète.&#x0a;Il va être supprimé et l'application redémmarée.</system:String>
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Désolé, une erreur s'est produite.</system:String>
+    <!-- | M -->
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Ce message peut être désactivé dans les paramètres</system:String>
+    
+    <!-- MainWindow -->
+    <!-- | A -->
+    <system:String x:Key="MainWindow_aborted">Abandonné</system:String>
+    <system:String x:Key="MainWindow_about">_A propos de</system:String>
+    <system:String x:Key="MainWindow_allSupportedFileFormats">Tous les formats de fichier supportés</system:String>
+    <system:String x:Key="MainWindow_andStillWorking">Toujours en cours...</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Une nouvelle version est disponible.&#x0a;Actuelle: %0 | Dernière: %1</system:String>
+    <!-- | B -->
+    <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
+    <system:String x:Key="MainWindow_beatmapsFound">%0 beatmaps trouvées.</system:String>
+    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">L'ID d'une beatmap ne peut être assigné qu'une seule fois.</system:String>
+    <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets analysés au total.</system:String>
+    <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets analysés.</system:String>
+    <!-- | C -->
+    <system:String x:Key="MainWindow_cancel">_Annuler</system:String>
+    <system:String x:Key="MainWindow_cantConnectToServer">Impossible de se connecter au serveur</system:String>
+    <system:String x:Key="MainWindow_checkingForUpdates">Vérification des mises à jour...</system:String>
+    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Liste osu!Sync compressée de Beatmaps</system:String>
+    <system:String x:Key="MainWindow_conversionAborted">Conversion abandonnée</system:String>
+    <system:String x:Key="MainWindow_conversionFailed">Conversion échouée</system:String>
+    <system:String x:Key="MainWindow_convertFile">_Convertir fichier</system:String>
+    <system:String x:Key="MainWindow_convertSelectedFile">Convertir fichier sélectionné</system:String>
+    <system:String x:Key="MainWindow_creator">Mappeur</system:String>
+    <!-- | D -->
+    <system:String x:Key="MainWindow_done">Terminé</system:String>
+    <system:String x:Key="MainWindow_downloadAndInstall">Télécharger et installer</system:String>
+    <system:String x:Key="MainWindow_downloadBeatmaps">_Télécharger Beatmaps</system:String>
+    <system:String x:Key="MainWindow_downloadMirror">Serveur miroir</system:String>
+    <system:String x:Key="MainWindow_downloading">Téléchargement %0...</system:String>
+    <system:String x:Key="MainWindow_downloading1">Téléchargement</system:String>
+    <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Voulez-vous vérifier quels beatmap sets sont affectés ?</system:String>
+    <system:String x:Key="MainWindow_doYouWantToFixThat">Voulez-vous corriger cela ?</system:String>
+    <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Voulez-vous démarrer osu! maintenant ?</system:String>
+    <!-- | |> Beatmap Details Panel -->
+    <!-- | |> B -->
+    <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Infos de la Beatmap</system:String>
+    <!-- | |> |> Beatmap Status -->
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pending</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
+    <!-- | |> O -->
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Ouvrir la liste des Beatmaps</system:String>
+    <!-- | E -->
+    <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
+    <system:String x:Key="MainWindow_exit">_Quitter</system:String>
+    <system:String x:Key="MainWindow_export">Exporter</system:String>
+    <system:String x:Key="MainWindow_exportAborted">Exportation abandonnée</system:String>
+    <system:String x:Key="MainWindow_exportCompleted">Exportation completée</system:String>
+    <system:String x:Key="MainWindow_exportedAs">Exporté en tant que %0</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Exporter les Beatmaps installées</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Exporter les Beatmaps installées</system:String>
+    <system:String x:Key="MainWindow_extensionDeleteDone">Associations de fichier correctement supprimées (ノД`)・゜・。</system:String>
+    <system:String x:Key="MainWindow_extensionDeleteFailed">Impossible de supprimer les associations de fichier.</system:String>
+    <system:String x:Key="MainWindow_extensionDone">Associations de fichier enregistrées avec succès, merci. (⌒▽⌒)☆</system:String>
+    <system:String x:Key="MainWindow_extensionFailed">Impossible d'enregistrer les associations de fichier.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Il semblerait que certaines extensions de fichier ne soient pas associées à cette application.</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">Il semblerait que certaines extensions de fichier soit périmées.</system:String>
+    <!-- | F -->
+    <system:String x:Key="MainWindow_fetchedIdIsNaN">L'ID récupéré n'est pas un nombre.</system:String>
+    <system:String x:Key="MainWindow_fetching">Récupération %0...</system:String>
+    <system:String x:Key="MainWindow_fetching1">Récupération...</system:String>
+    <system:String x:Key="MainWindow_file">_Fichier</system:String>
+    <system:String x:Key="MainWindow_folders">Dossiers</system:String>
+    <!-- | G -->
+    <system:String x:Key="MainWindow_generatingInterface">Génération de l'interface...</system:String>
+    <!-- | H -->
+    <system:String x:Key="MainWindow_help">_Aide</system:String>
+    <!-- | I -->
+    <system:String x:Key="MainWindow_idAlreadyAssigned">ID déjà attribué</system:String>
+    <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Si le problème persiste, veuillez nous laisser un message via l'onglet Commentaires dans les paramètres.</system:String>
+    <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">Si le problème persiste, vous pouvez visiter le forum osu! à l'adresse http://bit.ly/1Bbmn6E (dans votre presse-papiers).</system:String>
+    <system:String x:Key="MainWindow_ignoredFolders">Dossiers ignorés</system:String>
+    <system:String x:Key="MainWindow_import">Importation</system:String>
+    <system:String x:Key="MainWindow_importAborted">Importation annulée</system:String>
+    <system:String x:Key="MainWindow_installationFinished">Installation terminée!</system:String>
+    <system:String x:Key="MainWindow_installing">Installation en cours</system:String>
+    <system:String x:Key="MainWindow_installingFiles">Installation des fichiers...</system:String>
+    <system:String x:Key="MainWindow_invalidServerResponse">Réponse du serveur invalide</system:String>
+    <system:String x:Key="MainWindow_invertSelection">Inverser la sélection</system:String>
+    <system:String x:Key="MainWindow_isInstalled">Installé?</system:String>
+    <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">Il semblerait qu'il y ait un problème avec ce téléchargement. Voulez-vous ignorer ce fichier (Oui) ou annuler l'intégralité téléchargement (Non)?</system:String>
+    <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">Il semblerait que certains de vos Beatmap Sets diffèrent du format normal.</system:String>
+    <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">Il semblerait que certain(s) dossier(s) ne puissent être analysés. Ils seront ignorés.</system:String>
+    <!-- | L -->
+    <system:String x:Key="MainWindow_lastSync">Dernière synchronisation : %0</system:String>
+    <system:String x:Key="MainWindow_lastSyncFailed">Échec de la dernière synchronisation.</system:String>
+    <system:String x:Key="MainWindow_lastSyncNever">Dernière synchronisation : jamais</system:String>
+    <system:String x:Key="MainWindow_latestVersion">Dernière version</system:String>
+    <system:String x:Key="MainWindow_leftOut">%0 exclus</system:String>
+    <!-- | M -->
+    <system:String x:Key="MainWindow_minimizeToTray">_Réduire dans la barre de notifications</system:String>
+    <!-- | N -->
+    <system:String x:Key="MainWindow_notImportable">Non-importable</system:String>
+    <!-- | O -->
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Ouvrir le panneau Infos Beatmap</system:String>
+    <system:String x:Key="MainWindow_openBeatmapList">Ouvrir la liste des Beatmaps</system:String>
+    <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Ouvrir la liste des Beatmaps dans le navigateur</system:String>
+    <system:String x:Key="MainWindow_openUpdater">Ouvrir _Updater</system:String>
+    <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync liste des Beatmaps</system:String>
+    <system:String x:Key="MainWindow_overview">Aperçu</system:String>
+    <!-- | P -->
+    <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Analyse des Beatmaps Sets installés...</system:String>
+    <system:String x:Key="MainWindow_pleaseRetry">Veuillez réessayer.</system:String>
+    <system:String x:Key="MainWindow_pleaseSync">Veuillez synchroniser.</system:String>
+    <system:String x:Key="MainWindow_pleaseWait">Veuillez patienter...</system:String>
+    <system:String x:Key="MainWindow_pressF5">Appuyez sur F5 en jeu pour recharger vos Beatmaps, ou retournez au menu principal.</system:String>
+    <system:String x:Key="MainWindow_program">_Program</system:String>
+    <!-- | R -->
+    <system:String x:Key="MainWindow_runOsu">Démarrer osu!</system:String>
+    <!-- | S -->
+    <system:String x:Key="MainWindow_selectADestination">Choisissez une destination</system:String>
+    <system:String x:Key="MainWindow_selectASupportedFileToConvert">Sélectionnez un fichier pris en charge à convertir</system:String>
+    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">_Sélectionnez les Beatmaps à exporter</system:String>
+    <system:String x:Key="MainWindow_selectToExport">Sélectionnez pour exporter</system:String>
+    <system:String x:Key="MainWindow_setsDone">%0 sets complétés</system:String>
+    <system:String x:Key="MainWindow_setsFailed">%0 sets échoués</system:String>
+    <system:String x:Key="MainWindow_setsLeft">%0 sets échoués</system:String>
+    <system:String x:Key="MainWindow_setsLeftOut">%0 sets exclus</system:String>
+    <system:String x:Key="MainWindow_setsTotal">%0 sets au total</system:String>
+    <system:String x:Key="MainWindow_settings">Paramètres</system:String>
+    <system:String x:Key="MainWindow_showHideOsuSync">Afficher/Masquer osu!Sync</system:String>
+    <system:String x:Key="MainWindow_skippedBeatmaps">Beatmaps ignorées</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Certains beatmap sets n'ont pas été exportés.</system:String>
+    <system:String x:Key="MainWindow_syncCompleted">Synchronisation completée</system:String>
+    <system:String x:Key="MainWindow_synchronize">Synchroniser</system:String>
+    <system:String x:Key="MainWindow_syncing">Synchronisation...</system:String>
+    <!-- | T -->
+    <system:String x:Key="MainWindow_thatsImpressiveIGuess">C'est... Impressionnant, je suppose.</system:String>
+    <!-- | U -->
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">Impossible de vérifier les mises à jour !</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuExe">Impossible de trouver osu!.exe.</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Impossible de trouver le dossier d'osu!&#x0a;Merci de spécifier le chemin d'accès au dossier correspondant dans la fenêtre suivante.</system:String>
+    <system:String x:Key="MainWindow_unableToGetId">Impossible d'obtenir l'ID</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Les IDs de certaines beatmaps ne peuvent être analysés.&#x0a;Elles seront considérées comme non soumises (exportation impossible).</system:String>
+    <system:String x:Key="MainWindow_unknownFileExtension">Extension de fichier inconnue</system:String>
+    <system:String x:Key="MainWindow_unsubmitted">Non répertoriées</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Les beatmaps non répertoriées ne peuvent pas être exportées</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">Les beatmaps non répertoriées ne peuvent pas être exportées sous ce format.</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapSets">Beatmaps sets non répertoriés</system:String>
+    <system:String x:Key="MainWindow_updateAvailable">Mise à jour disponible (%0)</system:String>
+    <system:String x:Key="MainWindow_updateCheckNotNecessary">La vérification de mises à jour n'est pas nécessaire</system:String>
+    <system:String x:Key="MainWindow_updatesDisabled">Mises à jour désactivées</system:String>
+    <!-- | W -->
+    <system:String x:Key="MainWindow_welcomeToOsuSync">Bienvenue sur osu!Sync.</system:String>
+    <!-- | Y -->
+    <system:String x:Key="MainWindow_youNeedToSyncFirst">Pour pouvoir utiliser cette fonction, vous devrez d'abord synchroniser.</system:String>
+    <system:String x:Key="MainWindow_youveGotAboutBeatmaps">Vous avez %0 beatmaps sets.&#x0a;Cela prendra quelque temps (probablement quelques minutes) pour tout importer, voulez-vous poursuivre ?</system:String>
+    <!-- |> Tooltip (tt) -->
+    <!-- || A -->
+    <system:String x:Key="MainWindow_tt_openAboutWindow">Ouvrir la fenêtre À propos de.</system:String>
+    <!-- || E-->
+    <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">Exporter toutes les beatmaps détectées.</system:String>
+    <!-- || O -->
+    <system:String x:Key="MainWindow_tt_openUpdater">Ouvrir l'outil de mise à jour.</system:String>
+
+    <!-- Window_About -->
+    <!-- | C -->
+    <system:String x:Key="WindowAbout_copyright">osu!Sync est un outil open source créé par naseweis520.</system:String>
+    <!-- | E -->
+    <system:String x:Key="WindowAbout_email">Contact e-mail</system:String>
+    <!-- | F -->
+    <system:String x:Key="WindowAbout_feedback">Commentaires</system:String>
+    <!-- | G -->
+    <system:String x:Key="WindowAbout_github">Code source sur GitHub</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowAbout_libraries">Bibliothèques</system:String>
+    <!-- | M -->
+    <system:String x:Key="WindowAbout_message">Merci d'utiliser osu!Sync.</system:String>
+    <!-- | O -->
+    <system:String x:Key="WindowAbout_osuForum">osu!Forum</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowAbout_thanks">Merci</system:String>
+    <system:String x:Key="WindowAbout_thanksAll">Merci à tous les traducteurs, testeurs et développeurs qui ont rendu osu!Sync possible.</system:String>
+    <!-- | V -->
+    <system:String x:Key="WindowAbout_version">osu!Sync Version %0 | %1</system:String>
+    <!-- |> Tooltip (tt) -->
+    <!-- |> E -->
+    <system:String x:Key="WindowAbout_tt_email">Des questions? Ecrivez-nous un e-mail et nous vous répondrons. :) (Anglais)</system:String>
+    <!-- |> F -->
+    <system:String x:Key="WindowAbout_tt_feedback">Ouvrir la fenêtre de commentaires.</system:String>
+    <!-- |> G -->
+    <system:String x:Key="WindowAbout_tt_github">Aidez-nous à améliorer osu!Sync.</system:String>
+    <!-- |> O -->
+    <system:String x:Key="WindowAbout_tt_osuForum">Visiter le topic du forum.</system:String>
+    
+    <!-- Window_Message -->
+    <system:String x:Key="WindowMessage_close">_Fermer</system:String>
+    <system:String x:Key="WindowMessage_message">Message </system:String>
+
+    <!-- Window_Settings -->
+    <!-- | A -->
+    <system:String x:Key="WindowSettings_apply">_Appliquer</system:String>
+    <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Etes-vous sûr de vouloir supprimer le fichier de configuration (impossible d'annuler)?</system:String>
+    <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Etes-vous sûr de vouloir réinitialiser le fichier de configuration (impossible d'annuler)?</system:String>
+    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Importer automatiquement les beatmaps téléchargées après x beatmaps (Numeric)</system:String>
+    <!-- | B -->
+    <system:String x:Key="WindowSettings_bug">Bug</system:String>
+    <!-- | C -->
+    <system:String x:Key="WindowSettings_category">Catégorie</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Vérifier les associations de fichier à chaque synchronisation</system:String>
+    <system:String x:Key="WindowSettings_checkForUpdates">Vérifier les mises à jour...</system:String>
+    <system:String x:Key="WindowSettings_createShortcutOnDesktop">Créer un raccourci sur le Bureau</system:String>
+    <!-- | D -->
+    <system:String x:Key="WindowSettings_default">Standard</system:String>
+    <system:String x:Key="WindowSettings_deleteConfiguration">Effacer la configuration</system:String>
+    <system:String x:Key="WindowSettings_deleteFileAssociation">Supprimer les associations de fichier</system:String>
+    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Supprimer les fichiers de mise à jour après installation (Seulement si l'update patcher est activé).</system:String>
+    <system:String x:Key="WindowSettings_disable">Désactiver</system:String>
+    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Télécharger les mises à jour dans...</system:String>
+    <!-- | E -->
+    <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Activer l'icone dans la zone de notification...</system:String>
+    <system:String x:Key="WindowSettings_everyLaunch">Chaque lancement.</system:String>
+    <system:String x:Key="WindowSettings_executableFiles">Fichiers exécutables</system:String>
+    <!-- | F -->
+    <system:String x:Key="WindowSettings_featureRequest">Demande de fonctionnalité</system:String>
+    <system:String x:Key="WindowSettings_feedback">Commentaires</system:String>
+    <system:String x:Key="WindowSettings_furtherInformation">Informations complémentaires </system:String>
+    <!-- | G -->
+    <system:String x:Key="WindowSettings_general">Général</system:String>
+    <system:String x:Key="WindowSettings_generalFeedback">Commentaires généraux</system:String>
+    <!-- | I -->
+    <system:String x:Key="WindowSettings_importDownload">Importation/Téléchargement</system:String>
+    <system:String x:Key="WindowSettings_interface">Interface</system:String>
+    <system:String x:Key="WindowSettings_invalidValue">Valeur incorrecte!</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowSettings_language">Langue</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">La langue a été changée. Cependant, certains éléments resteront dans la langue précédemment sélectionnée . Un redémarrage est nécessaire pour corriger cela.</system:String>
+    <system:String x:Key="WindowSettings_launchOsuSync">Démarrer osu!Sync.</system:String>
+    <!-- | M -->
+    <system:String x:Key="WindowSettings_maximumOnceADay">Au maximum une fois par jour (recommandé).</system:String>
+    <system:String x:Key="WindowSettings_maximumOnceAMonth">Au maximum une fois par semaine.</system:String>
+    <system:String x:Key="WindowSettings_maximumOnceAWeek">Au maximum une fois par mois (non recommandé).</system:String>
+    <system:String x:Key="WindowSettings_message">Message</system:String>
+    <!-- | N -->
+    <system:String x:Key="WindowSettings_never">JAMAIS ヽ(≧Д≦)ノ  (non recommandé).</system:String>
+    <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Non, ce répertoire n'existe pas... pas encore.</system:String>
+    <system:String x:Key="WindowSettings_nopeNoConfig">Non, il n'y a aucun fichier de configuration...</system:String>
+    <system:String x:Key="WindowSettings_notifications">Notifications</system:String>
+    <!-- | O -->
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, c'est fini.&#x0a;Voulez-vous redémarrer osu!Sync maintenant?</system:String>
+    <system:String x:Key="WindowSettings_openDataFolder">Ouvrir le dossier de données</system:String>
+    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Ouvrir le gestionnaire de mise à jour lorsqu'une nouvelle version est disponible</system:String>
+    <system:String x:Key="WindowSettings_other">Autre</system:String>
+    <!-- | P -->
+    <system:String x:Key="WindowSettings_pathToOsu">Emplacement d'osu!</system:String>
+    <system:String x:Key="WindowSettings_pathToSongsFolder">Emplacement du dossier Songs</system:String>
+    <system:String x:Key="WindowSettings_pleaseOpenOsu">Veuillez ouvrir osu!.exe</system:String>
+    <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Veuillez sélectionner le dossier où enregistrer les mises à jour</system:String>
+    <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Veuillez sélectionner votre dossier Songs</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Veuillez réessayer ultérieurement ou nous contacter directement: team@naseweis520.ml.</system:String>
+    <system:String x:Key="WindowSettings_prepareForm">Préparer un formulaire</system:String>
+    <!-- | Q -->
+    <system:String x:Key="WindowSettings_questionHelpRequest">Questions/Demande d'aide</system:String>
+    <!-- | R -->
+    <system:String x:Key="WindowSettings_resetOsuSync">Réinitialiser osu!Sync (supprime la configuration, les associations de fichiers, etc.)</system:String>
+    <!-- | S -->
+    <system:String x:Key="WindowSettings_save">_Sauvegarder</system:String>
+    <system:String x:Key="WindowSettings_serverSideAnswer">Réponse du serveur:</system:String>
+    <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Toujours montrer - Désactiver les bulles de notification</system:String>
+    <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Toujours montrer - Activer les bulles de notification</system:String>
+    <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Afficher un message lorsque la vérification de mise à jour échoue</system:String>
+    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Afficher uniquement lorsque la fenêtre est masquée - Désactiver les bulles de notification</system:String>
+    <system:String x:Key="WindowSettings_submit">Envoyer</system:String>
+    <system:String x:Key="WindowSettings_submitting">Envoi en cours...</system:String>
+    <system:String x:Key="WindowSettings_sync">Synchroniser</system:String>
+    <system:String x:Key="WindowSettings_syncOnStartup">Synchroniser au démarrage de l'application</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">Il semblerait qu'il y ai déjà un raccourci sur votre Bureau.</system:String>
+    <!-- | U -->
+    <system:String x:Key="WindowSettings_unableToCreateShortcut">Impossible de créer le raccourci!</system:String>
+    <system:String x:Key="WindowSettings_unableToSubmitFeedback">Impossible d'envoyer les commentaires!</system:String>
+    <system:String x:Key="WindowSettings_updater">Gestionnaire de mises à jour</system:String>
+    <system:String x:Key="WindowSettings_updateFileAssocations">Mettre à jour/Réenregistrer les associations de fichier</system:String>
+    <system:String x:Key="WindowSettings_useThisDownloadMirror">Utiliser ce miroir de téléchargement...</system:String>
+    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Automatiquement installer les mises à jour.</system:String>
+    <!-- | W -->
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Largeur du panneau d'infos beatmap. (Numérique, entre 5 et 95)</system:String>
+    <!-- | Y -->
+    <system:String x:Key="WindowSettings_yourEmail">Votre e-mail</system:String>
+    <system:String x:Key="WindowSettings_yourEmailInvalid">Votre e-mail semble invalide.</system:String>
+    <system:String x:Key="WindowSettings_youHaveToSelectACategory">Vous devez sélectionner une catégorie.</system:String>
+    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Votre message semble plutôt court. Veuillez essayer d'expliquer le plus précisément possible.</system:String>
+    <system:String x:Key="WindowSettings_yourName">Votre nom/pseudo osu!</system:String>
+    <system:String x:Key="WindowSettings_yourNameIsTooShort">Votre nom/pseudo osu! est trop court.</system:String>
+    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Vous avez sélectionné le mauvais fichier.&#x0a;Veuillez sélectionner "osu!.exe".</system:String>
+    <!-- |> Tooltip (tt) -->
+    <!-- | E -->
+    <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">Entrez "0" pour installer lorsque tous les téléchargements seront achevés.</system:String>
+    <!-- | U -->
+    <system:String x:Key="WindowSettings_tt_useDefaultPath">Utiliser l'emplacement par défaut.</system:String>
+    
+    <!-- Window_Updater -->
+    <!-- | A -->
+    <system:String x:Key="WindowUpdater_anUpdateIsAvailable">Une mise à jour est disponible</system:String>
+    <!-- | D -->
+    <system:String x:Key="WindowUpdater_dateOfPublication">Date de Publication: %0</system:String>
+    <system:String x:Key="WindowUpdater_done">_Terminé</system:String>
+    <system:String x:Key="WindowUpdater_download">Télécharger</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">_Télécharger et installer</system:String>
+    <system:String x:Key="WindowUpdater_downloadFinished">Téléchargement terminé. (%0 octets)</system:String>
+    <system:String x:Key="WindowUpdater_downloadingInstaller">Téléchargement de l'installateur | %0 sur %1 octets</system:String>
+    <system:String x:Key="WindowUpdater_downloadingUpdatePackage">Téléchargement de la mise à jour | %0 sur %1 octets</system:String>
+    <system:String x:Key="WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved">Voulez-vous ouvrir l'emplacement où les fichiers de mises à jour on été stockés?</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowUpdater_latestVersion">Dernière version: %0</system:String>
+    <!-- | N -->
+    <system:String x:Key="WindowUpdater_noChangelogAvailable">Pas de changelog disponible</system:String>
+    <!-- | P -->
+    <system:String x:Key="WindowUpdater_pleaseWait">Veuillez patiente...</system:String>
+    <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Veuillez patienter, vérification des mises à jour...</system:String>
+    <system:String x:Key="WindowUpdater_publishedBy">Publié par: %0</system:String>
+    <!-- | U -->
+    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Impossible de communiquer avec le serveur</system:String>
+    <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Impossible de télécharger le changelog!</system:String>
+    <system:String x:Key="WindowUpdater_unableToMoveUpdate">Impossible de déplacer la mise à jour vers le bon répertoire, car il existe déjà un fichier portant le même nom.</system:String>
+    <!-- | Y -->
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">Vous utilisez la dernière version</system:String>
+    <system:String x:Key="WindowUpdater_yourVersion">Votre version: %0</system:String>
+
+    <!-- Window_Welcome -->
+    <!-- | C -->
+    <system:String x:Key="WindowWelcome_continue">_Continuer</system:String>
+    <!-- | M -->
+    <system:String x:Key="WindowWelcome_message">osu!Sync est un outil gratuit qui vous permet d'exporter et d'importer des beatmaps dans osu!.&#x0a;Vous pouvez générer des listes facilement partageables pour partager vos beatmaps.</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowWelcome_subtitle">... dans osu!Sync par naseweis520</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowWelcome_title">Bienvenue</system:String>
+    <!-- | W -->
+    <system:String x:Key="WindowWelcome_warning">Merci de noter qu'il s'agit d'un outil non-officiel. Nous ne sommes affiliés ni à osu! ni à peppy.</system:String>
+</ResourceDictionary>

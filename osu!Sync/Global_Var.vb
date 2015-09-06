@@ -2,7 +2,12 @@
 Imports System.IO, System.IO.Compression
 Imports System.Security.Cryptography
 Imports System.Text
-
+Class DownloadMirror
+    Property DisplayName As String
+    Property DownloadURL As String
+    Property Index As Integer
+    Property WebURL As String
+End Class
 Class Language
     Property Code As String
     Property DisplayName As String
@@ -10,7 +15,6 @@ Class Language
 End Class
 
 Module Global_Var
-    Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareLanguages()
     Public Application_FileExtensions() As String = {".nw520-osbl",
                                          ".nw520-osblx"}
     Public Application_FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList",
@@ -19,6 +23,8 @@ Module Global_Var
                                                     _e("GlobalVar_extensionCompressedBeatmapList")}
     Public Application_FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
                                              """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
+    Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareData()
+    Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)
 
     Public I__StartUpArguments() As String
     Public Const I__Path_Web_Host As String = "http://naseweis520.ml/osuSync"
@@ -44,9 +50,10 @@ Module Global_Var
 
     Function _e(ByRef Text As String) As String
         Try
-            Return Application.Current.FindResource(Text).ToString
+            Return Windows.Application.Current.FindResource(Text).ToString
         Catch ex As ResourceReferenceKeyNotFoundException
-            MsgBox("osu!Sync just tried to load a string which isn't registered." & vbNewLine & "Normally, this shouldn't happen." & vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional informations:" & vbNewLine & Text, MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            MsgBox("The application just tried to load a text (= string) which isn't registered." & vbNewLine & "Normally, this shouldn't happen." &
+                   vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional informations:" & vbNewLine & Text, MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             Return "[Missing String: " + Text + "]"
         End Try
     End Function
@@ -193,6 +200,18 @@ Module Global_Var
         Return Res.ToLower
     End Function
 
+    Sub Action_CheckCompatibility(ConfigVersion As Version)
+        Dim AppVersion As Version = My.Application.Info.Version
+        ' Detect update
+        If ConfigVersion < AppVersion Then
+            If Setting_Tool_DownloadMirror = 1 Then
+                Setting_Tool_DownloadMirror = 0
+                MsgBox("The previously selected mirror 'Loli.al' has been shutdown by the owner and therefore caused crashes in previous versions." & vbNewLine & "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Update Compatibility Check | osu!Sync")
+                Action_SaveSettings()
+            End If
+        End If
+    End Sub
+
     Sub Action_SaveSettings()
         If Not Directory.Exists(I__Path_Programm & "\Settings") Then
             Directory.CreateDirectory(I__Path_Programm & "\Settings")
@@ -226,7 +245,9 @@ Module Global_Var
     Sub Action_LoadSettings()
         Try
             Dim ConfigFile As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(I__Path_Programm & "\Settings\Settings.config")), JObject)
+            Dim PreviousVersion As Version
 
+            PreviousVersion = Version.Parse(CStr(ConfigFile.SelectToken("_version")))
             If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then
                 Setting_osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
             End If
@@ -280,6 +301,8 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then
                 Setting_Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
             End If
+
+            Action_CheckCompatibility(PreviousVersion)
         Catch ex As Exception
             MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             File.Delete(I__Path_Programm & "\Settings\Settings.config")
@@ -289,7 +312,8 @@ Module Global_Var
         End Try
     End Sub
 
-    Sub Action_PrepareLanguages()
+    Sub Action_PrepareData()
+        ' Languages
         Dim LangDic As New Dictionary(Of String, Language)
         With LangDic        ' Please sort alphabetically
             .Add("de", New Language With {
@@ -304,10 +328,19 @@ Module Global_Var
                  .Code = "es_EM",
                  .DisplayName = "Español",
                  .DisplayName_English = "Spanish (Modern)"})
+            .Add("fr", New Language With {
+                 .Code = "fr_FR",
+                 .DisplayName = "Français",
+                 .DisplayName_English = "French"})
             .Add("id", New Language With {
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",
                 .DisplayName_English = "Indonesian"})
+            ' Currently too many strings incomplete
+            '.Add("jp", New Language With {
+            '    .Code = "ja_JP",
+            '    .DisplayName = "日本語",
+            '    .DisplayName_English = "Japanese"})
             .Add("no", New Language With {
                 .Code = "no_NO",
                 .DisplayName = "Norwegian",
@@ -316,6 +349,10 @@ Module Global_Var
                 .Code = "pl_PL",
                 .DisplayName = "Polski",
                 .DisplayName_English = "Polish"})
+            .Add("ru", New Language With {
+                .Code = "ru_RU",
+                .DisplayName = "Русский",
+                .DisplayName_English = "Russian"})
 
             Dim Lang_zh As New Language With {
                 .Code = "zh_CN",
@@ -328,8 +365,24 @@ Module Global_Var
                 .DisplayName = "中文 (繁體)",
                 .DisplayName_English = "Chinese Traditional"})
         End With
-
         Application_Languages = LangDic
+
+        ' Mirrors
+        With Application_Mirrors
+            .Add(0, New DownloadMirror With {
+                .DisplayName = "Bloodcat.com",
+                .DownloadURL = "http://bloodcat.com/osu/s/%0",
+                .Index = 0,
+                .WebURL = "http://bloodcat.com/osu"
+            })
+            .Add(2, New DownloadMirror With {
+                .DisplayName = "osu.uu.gl",
+                .DownloadURL = "http://osu.uu.gl/s/%0",
+                .Index = 0,
+                .WebURL = "http://osu.uu.gl/"
+            })
+        End With
+
     End Sub
 
     <System.Runtime.InteropServices.DllImport("shell32.dll")> Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)

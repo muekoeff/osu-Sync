@@ -21,10 +21,10 @@
             <Controls:Flyout x:Name="Flyout_BeatmapDetails" Background="#BF222222" Header="{DynamicResource MainWindow_detailsPanel_beatmapsDetails}" Position="Right">
                 <Grid Margin="10,0">
                     <StackPanel>
-                        <Image x:Name="BeatmapDetails_Thumbnail" Width="160" HorizontalAlignment="Left" />
-                        <TextBlock x:Name="BeatmapDetails_Title" Foreground="#FF50BD7E" FontSize="36" />
-                        <TextBlock x:Name="BeatmapDetails_Artist" Foreground="#FF3DB670" FontSize="20" />
-                        <Label Margin="0,15,0,0" FontFamily="Segoe UI Light">Creator</Label>
+                        <Image x:Name="BeatmapDetails_Thumbnail" HorizontalAlignment="Left" Width="160" />
+                        <TextBlock x:Name="BeatmapDetails_Title" FontSize="36" Foreground="#FF50BD7E" />
+                        <TextBlock x:Name="BeatmapDetails_Artist" FontSize="20" Foreground="#FF3DB670" />
+                        <Label Content="{DynamicResource MainWindow_creator}" FontFamily="Segoe UI Light" Margin="0,15,0,0" />
                         <TextBlock x:Name="BeatmapDetails_Creator" FontSize="16" Margin="10,0,0,0" />
                     </StackPanel>
                     <StackPanel VerticalAlignment="Bottom">
