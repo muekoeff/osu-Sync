@@ -1043,9 +1043,6 @@ Class MainWindow
         TextBlock_Programm_Version.Content = "osu!Sync Version " & My.Application.Info.Version.ToString
 #End If
 
-        ' Prepare languages
-        Action_PrepareData()
-
         ' Load Configuration
         If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
             Action_LoadSettings()

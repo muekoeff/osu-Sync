@@ -5,9 +5,10 @@
 #If Not DEBUG Then
     Private Sub Application_DispatcherUnhandledException(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs) Handles Me.DispatcherUnhandledException
         e.Handled = True
-        Clipboard.SetDataObject(e.Exception.ToString)
+        'Clipboard.SetDataObject(e.Exception.ToString)
         MsgBox("B-ba-baka     ｡･ﾟﾟ･(>д<)･ﾟﾟ･｡" & vbNewLine & vbNewLine & "Sorry, it looks like an exception occured." & vbNewLine & "osu!Sync is going to shutdown now.", MsgBoxStyle.Critical, "Debug | osu!Sync")
-        MsgBox("This message has been copied to your clipboard, if the problem persists please report it:" & vbNewLine & vbNewLine & e.Exception.ToString, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
+        Process.Start(Action_WriteCrashLog(e.Exception))
+        'MsgBox("This message has been copied to your clipboard, if the problem persists please report it:" & vbNewLine & vbNewLine & e.Exception.ToString, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
         Try
             Application.Current.Shutdown()
         Catch ex As Exception
@@ -32,7 +33,8 @@
         End If
 
         ' Load language library
-        If Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString()) = "" Then     ' Check if full language code exists (e.g. de_DE)
+        Action_PrepareData()
+        If Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")) = "" Then     ' Check if full language code exists (e.g. de_DE)
             LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString()), System.Globalization.CultureInfo.CurrentCulture.ToString())
         ElseIf Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then ' Check if main language code exists (e.g. de)
             LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)), System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))

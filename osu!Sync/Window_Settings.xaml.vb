@@ -1,5 +1,6 @@
 ﻿Imports System.IO, System.Net, System.Security.Principal
 Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
 Public Class Window_Settings
     Private WithEvents Client As New WebClient
@@ -123,19 +124,11 @@ Public Class Window_Settings
         Dim principal = New WindowsPrincipal(identity)
         Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
 
-        Dim Content As New Dictionary(Of String, String)
-        With Content
-            .Add("downloadMirror", Setting_Tool_DownloadMirror.ToString)
-            .Add("languageCode_long", GetTranslationName(Setting_Tool_Language))
-            .Add("lastCheckForUpdates", Setting_Tool_LastCheckForUpdates)
-            .Add("ipAddress", "%SERVER:ipAddress%")
-            .Add("isElevated", CStr(isElevated))
-            .Add("operatingSystem", Environment.OSVersion.Version.ToString)
-            .Add("programVersion", My.Application.Info.Version.ToString)
-            .Add("systemArchitecture_is64bit", CStr(Environment.Is64BitOperatingSystem))
-            .Add("updateInterval", Setting_Tool_CheckForUpdates.ToString)
-        End With
-        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Content)
+        Dim Content As JObject = Get_ProgramInfoJson()
+        Content.Add("request", New JObject From {
+                    "ipAddress", "%SERVER:ipAddress%"})
+
+        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Content, Formatting.None)
         With Button_Feedback_Prepare
             .IsEnabled = False
             .Visibility = Windows.Visibility.Collapsed

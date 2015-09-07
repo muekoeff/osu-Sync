@@ -1,5 +1,5 @@
 ﻿Imports Newtonsoft.Json, Newtonsoft.Json.Linq
-Imports System.IO, System.IO.Compression
+Imports System.IO, System.IO.Compression, System.Security.Principal
 Imports System.Security.Cryptography
 Imports System.Text
 Class DownloadMirror
@@ -39,7 +39,7 @@ Module Global_Var
     Public Setting_Tool_EnableNotifyIcon As Integer = 0
     Public Setting_Tool_Importer_AutoInstallCounter As Integer = 10
     Public Setting_Tool_Interface_BeatmapDetailPanelWidth As Integer = 40
-    Public Setting_Tool_Language As String = System.Globalization.CultureInfo.CurrentCulture.ToString()
+    Public Setting_Tool_Language As String = "en"
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_SyncOnStartup As Boolean = False
     Public Setting_Tool_Update_DeleteFileAfter As Boolean = True
@@ -177,10 +177,43 @@ Module Global_Var
         End If
     End Function
 
+    Function Get_ProgramInfoJson() As JObject
+        Dim identity = WindowsIdentity.GetCurrent()
+        Dim principal = New WindowsPrincipal(identity)
+        Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
+
+        Dim JContent As New JObject
+        With JContent
+            .Add("application", New JObject From {
+                 {"isElevated", CStr(isElevated)},
+                 {"lastUpdateCheck", Setting_Tool_LastCheckForUpdates},
+                 {"version", My.Application.Info.Version.ToString}})
+            .Add("config", New JObject From {
+                 {"downloadMirror", Setting_Tool_DownloadMirror.ToString},
+                 {"updateInterval", Setting_Tool_CheckForUpdates.ToString}})
+            .Add("language", New JObject From {
+                 {"code", New JObject From {
+                    {"long", GetTranslationName(Setting_Tool_Language)},
+                    {"short", Setting_Tool_Language}
+                 }}})
+            .Add("system", New JObject From {
+                 {"cultureInfo", System.Globalization.CultureInfo.CurrentCulture.ToString()},
+                 {"is64bit", CStr(Environment.Is64BitOperatingSystem)},
+                 {"operatingSystem", Environment.OSVersion.Version.ToString}
+            })
+        End With
+
+        Return JContent
+    End Function
+
     Sub LoadLanguage(ByVal LanguageCode_Long As String, ByVal LanguageCode_Short As String)
         Setting_Tool_Language = LanguageCode_Short
-        Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
+        Try
+            Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
                                                                      .Source = New Uri("Languages/" & LanguageCode_Long & ".xaml", UriKind.Relative)})
+        Catch ex As FileNotFoundException
+            MsgBox("Unable to load language package." & vbNewLine & vbNewLine & "// Details:" & vbNewLine & "System: " & System.Globalization.CultureInfo.CurrentCulture.ToString() & vbNewLine & "Short code: " & LanguageCode_Short & vbNewLine & "Long code: " & LanguageCode_Long)
+        End Try
     End Sub
 
     Function md5(ByVal Input As String) As String
@@ -382,8 +415,24 @@ Module Global_Var
                 .WebURL = "http://osu.uu.gl/"
             })
         End With
-
     End Sub
+
+    Function Action_WriteCrashLog(ex As Exception) As String
+        If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then
+            Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
+        End If
+        Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") & ".txt"
+        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
+            Dim Content As String = "=====   osu!Sync Crash | " & DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
+                "// Information" & vbNewLine & "An exception occured in osu!Sync. If this problem persists please report it using the Feedback-window, on GitHub or on the osu!Forum." & vbNewLine & "When reporting please try to describe as detailed as possible what you've done and how the applicationen reacted." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
+                "// Configuration" & vbNewLine & Newtonsoft.Json.JsonConvert.SerializeObject(Get_ProgramInfoJson, Formatting.None) & vbNewLine & vbNewLine &
+                "// Exception" & vbNewLine & ex.ToString
+            File.Write(Content)
+            File.Close()
+        End Using
+
+        Return CrashFile
+    End Function
 
     <System.Runtime.InteropServices.DllImport("shell32.dll")> Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
     End Sub
