@@ -120,15 +120,8 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
-        Dim identity = WindowsIdentity.GetCurrent()
-        Dim principal = New WindowsPrincipal(identity)
-        Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
+        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Get_ProgramInfoJson(), Formatting.None)
 
-        Dim Content As JObject = Get_ProgramInfoJson()
-        Content.Add("request", New JObject From {
-                    "ipAddress", "%SERVER:ipAddress%"})
-
-        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Content, Formatting.None)
         With Button_Feedback_Prepare
             .IsEnabled = False
             .Visibility = Windows.Visibility.Collapsed
