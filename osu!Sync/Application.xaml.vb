@@ -35,7 +35,7 @@
         ' Load language library
         Action_PrepareData()
         If Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")) = "" Then     ' Check if full language code exists (e.g. de_DE)
-            LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString()), System.Globalization.CultureInfo.CurrentCulture.ToString())
+            LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")), System.Globalization.CultureInfo.CurrentCulture.ToString())
         ElseIf Not GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then ' Check if main language code exists (e.g. de)
             LoadLanguage(GetTranslationName(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)), System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))
         End If
