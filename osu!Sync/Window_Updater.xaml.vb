@@ -22,7 +22,7 @@ Public Class Window_Updater
 
     Private Sub Action_DownloadUpdate()
         DownloadMode = DownloadModes.DownloadUpdate
-        Client.DownloadFileAsync(New Uri(Update_Path), Path.GetTempPath() & "naseweis520\osu!Sync\Update\osu!Sync Version " & Update_Version & Update_FileExtension & ".tmp")
+        Client.DownloadFileAsync(New Uri(Update_Path), RemoveIllegalCharactersFromPath(Path.GetTempPath() & "naseweis520\osu!Sync\Update\osu!Sync Version " & Update_Version & Update_FileExtension & ".tmp"))
     End Sub
 
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
@@ -45,7 +45,7 @@ Public Class Window_Updater
                     File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp")
                 End If
                 DownloadMode = DownloadModes.DownloadPatcher
-                Client.DownloadFileAsync(New Uri(Update_Path_UpdatePatcher), Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp")
+                Client.DownloadFileAsync(New Uri(Update_Path_UpdatePatcher), RemoveIllegalCharactersFromPath(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp"))
             Else
                 Action_DownloadUpdate()
             End If
@@ -103,7 +103,7 @@ Public Class Window_Updater
         End Select
     End Sub
 
-    Private Sub Client_DownloadStringCompleted(sender As Object, e As Net.DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
+    Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
         Select Case DownloadMode
             Case DownloadModes.Info
                 Dim Answer As JObject

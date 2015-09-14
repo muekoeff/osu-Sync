@@ -120,7 +120,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
-        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(Get_ProgramInfoJson(), Formatting.None)
+        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(GetProgramInfoJson(), Formatting.None)
 
         With Button_Feedback_Prepare
             .IsEnabled = False

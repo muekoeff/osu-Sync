@@ -2,6 +2,8 @@
 Imports System.IO, System.IO.Compression, System.Security.Principal
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Text.RegularExpressions
+
 Class DownloadMirror
     Property DisplayName As String
     Property DownloadURL As String
@@ -13,7 +15,6 @@ Class Language
     Property DisplayName As String
     Property DisplayName_English As String
 End Class
-
 Module Global_Var
     Public Application_FileExtensions() As String = {".nw520-osbl",
                                          ".nw520-osblx"}
@@ -177,7 +178,7 @@ Module Global_Var
         End If
     End Function
 
-    Function Get_ProgramInfoJson() As JObject
+    Function GetProgramInfoJson() As JObject
         Dim identity = WindowsIdentity.GetCurrent()
         Dim principal = New WindowsPrincipal(identity)
         Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
@@ -231,6 +232,13 @@ Module Global_Var
             Res += Tmp
         Next
         Return Res.ToLower
+    End Function
+
+    Function RemoveIllegalCharactersFromPath(Input As String) As String
+        Dim IllegalRegex As New Regex(@"[\\/:*?""<>|]")
+        Dim Result As String = IllegalRegex.Replace(Input, "")
+
+        Return Result
     End Function
 
     Sub Action_CheckCompatibility(ConfigVersion As Version)
@@ -425,7 +433,7 @@ Module Global_Var
         Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
             Dim Content As String = "=====   osu!Sync Crash | " & DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
                 "// Information" & vbNewLine & "An exception occured in osu!Sync. If this problem persists please report it using the Feedback-window, on GitHub or on the osu!Forum." & vbNewLine & "When reporting please try to describe as detailed as possible what you've done and how the applicationen reacted." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
-                "// Configuration" & vbNewLine & Newtonsoft.Json.JsonConvert.SerializeObject(Get_ProgramInfoJson, Formatting.None) & vbNewLine & vbNewLine &
+                "// Configuration" & vbNewLine & Newtonsoft.Json.JsonConvert.SerializeObject(GetProgramInfoJson, Formatting.None) & vbNewLine & vbNewLine &
                 "// Exception" & vbNewLine & ex.ToString
             File.Write(Content)
             File.Close()

@@ -1753,7 +1753,7 @@ Class MainWindow
         TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
         Importer_UpdateInfo(_e("MainWindow_downloading1"))
         Importer_Progress.IsIndeterminate = False
-        Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
+        Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), RemoveIllegalCharactersFromPath(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName))
     End Sub
 
     Private Sub Importer_Downloader_ToNextDownload()
