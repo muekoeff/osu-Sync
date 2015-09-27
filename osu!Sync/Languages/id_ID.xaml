@@ -10,14 +10,14 @@
     <!-- Meta & More -->
     <!-- | T -->
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
-    <system:String x:Key="Meta_translators">Diterjemahkan oleh: Kuuhaku722</system:String>
+    <system:String x:Key="Meta_translators">Diterjemahkan oleh: Kuuhaku722, -Troke-</system:String>
 
     <!-- GlobalVar -->
     <!-- | E -->
     <system:String x:Key="GlobalVar_extensionBeatmapList">Daftar Beatmap osu! di osu!Sync</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Daftar Beatmap osu! terkompres di osu!Sync</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated.&#x0a;It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">File Konfigurasi anda Invalid atau Outdated.&#x0a;akan segera di hapus dan aplikasi direstart ulang.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | M -->
@@ -29,7 +29,7 @@
     <system:String x:Key="MainWindow_about">_Tentang</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Semua format file yang di dukung</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Dan masih bekerja...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available.&#x0a;Current: %0 | Latest: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Versi baru telah tersedia.&#x0a;Sekarang: %0 | Terbaru: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmap</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 Beatmap ditemukan.</system:String>
@@ -78,7 +78,7 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">Tidak bisa menghapus file asosiasi.</system:String>
     <system:String x:Key="MainWindow_extensionDone">File asosiasi berhasil terdaftar, terima kasih. (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">Tidak bisa mendaftarkan file asosiasi.</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">It looks like some file extensions aren't associated with this application.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Sepertinya beberapa file extension tidak bisa dipakai disini.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Sepertinya beberapa file ekstensi sudah usang.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">ID yang di ambil bukan angka.</system:String>
@@ -249,7 +249,7 @@
     <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Bahasa</system:String>
-    <system:String x:Key="WindowSettings_languageUpdated">The language has been changed. However, some elements will remain in the previous selected language. In order to correct that a restart is required.</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">Bahasa telah diubah. Namun beberapa text akan tetap dalam bahasa default. silakan restart untuk memperbaiki</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Jalankan osu!Sync.</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maximum sekali sehari (Di sarankan).</system:String>
@@ -335,11 +335,11 @@
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Harap menunggu, mengecek pembaruan...</system:String>
     <system:String x:Key="WindowUpdater_publishedBy">Diterbitkan oleh: %0</system:String>
     <!-- | U -->
-    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Unable to communicate with server</system:String>
+    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Tidak bisa terkoneksi ke server</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Tidak bisa mendownload catatan perubahan(changelog)!</system:String>
     <system:String x:Key="WindowUpdater_unableToMoveUpdate">Tidak bisa memindahkan update ke direktori, Karena di sana telah ada file dengan nama yang sama.</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version</system:String>
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">Kamu Menggunakan Versi Baru</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">Versi sekarang: %0</system:String>
 
     <!-- Window_Welcome -->
