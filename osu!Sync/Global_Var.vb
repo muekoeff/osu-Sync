@@ -22,8 +22,8 @@ Module Global_Var
                                              "naseweis520.osuSync.compressedOsuBeatmapList"}
     Public Application_FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"),
                                                     _e("GlobalVar_extensionCompressedBeatmapList")}
-    Public Application_FileExtensionsIcon() As String = {"""" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
-                                             """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
+    Public Application_FileExtensionsIcon() As String = {"""" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
+                                             """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
     Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareData()
     Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)
 
@@ -61,7 +61,7 @@ Module Global_Var
 
     Function CompressString(ByVal text As String) As String
         Dim buffer() As Byte = Encoding.UTF8.GetBytes(text)
-        Dim memoryStream = New IO.MemoryStream()
+        Dim memoryStream = New MemoryStream()
         Using gZipStream = New GZipStream(memoryStream, CompressionMode.Compress, True)
             gZipStream.Write(buffer, 0, buffer.Length)
         End Using
@@ -157,13 +157,13 @@ Module Global_Var
     End Function
 
     Function GetDetectedOsuPath() As String
-        If IO.Directory.Exists(Setting_osu_Path) Then
+        If Directory.Exists(Setting_osu_Path) Then
             Return Setting_osu_Path
-        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!") Then
+        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!") Then
             Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!"
-        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
+        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
             Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!"
-        ElseIf IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
+        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
             Return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!"
         Else
             Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
@@ -210,10 +210,10 @@ Module Global_Var
     Sub LoadLanguage(ByVal LanguageCode_Long As String, ByVal LanguageCode_Short As String)
         Setting_Tool_Language = LanguageCode_Short
         Try
-            Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
+            Windows.Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
                                                                      .Source = New Uri("Languages/" & LanguageCode_Long & ".xaml", UriKind.Relative)})
         Catch ex As FileNotFoundException
-            MsgBox("Unable to load language package." & vbNewLine & vbNewLine & "// Details:" & vbNewLine & "System: " & System.Globalization.CultureInfo.CurrentCulture.ToString() & vbNewLine & "Short code: " & LanguageCode_Short & vbNewLine & "Long code: " & LanguageCode_Long)
+            MsgBox("Unable to load language package." & vbNewLine & vbNewLine & "// Details:" & vbNewLine & "System: " & Globalization.CultureInfo.CurrentCulture.ToString() & vbNewLine & "Short code: " & LanguageCode_Short & vbNewLine & "Long code: " & LanguageCode_Long)
         End Try
     End Sub
 
@@ -235,7 +235,7 @@ Module Global_Var
     End Function
 
     Function RemoveIllegalCharactersFromPath(Input As String) As String
-        Dim IllegalRegex As New Regex(@"[\\/:*?""<>|]")
+        Dim IllegalRegex As New Regex("[\\/:*?""<>|]")
         Dim Result As String = IllegalRegex.Replace(Input, "")
 
         Return Result
@@ -347,7 +347,7 @@ Module Global_Var
         Catch ex As Exception
             MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             File.Delete(I__Path_Programm & "\Settings\Settings.config")
-            System.Windows.Forms.Application.Restart()
+            Forms.Application.Restart()
             Application.Current.Shutdown()
             Exit Sub
         End Try
@@ -442,6 +442,6 @@ Module Global_Var
         Return CrashFile
     End Function
 
-    <System.Runtime.InteropServices.DllImport("shell32.dll")> Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+    <Runtime.InteropServices.DllImport("shell32.dll")> Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
     End Sub
 End Module

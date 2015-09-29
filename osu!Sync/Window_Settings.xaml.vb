@@ -1,17 +1,15 @@
-﻿Imports System.IO, System.Net, System.Security.Principal
+﻿Imports System.IO
+Imports System.Net
 Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Linq
 
 Public Class Window_Settings
     Private WithEvents Client As New WebClient
 
-    Private Function CreateShortcut(ByVal sLinkFile As String, _
-                                   ByVal sTargetFile As String, _
-                                   Optional ByVal sArguments As String = "", _
-                                   Optional ByVal sDescription As String = "", _
-                                   Optional ByVal sWorkingDir As String = "") As Boolean
-
-        'Quelle: http://www.vbarchiv.net/tipps/details.php?id=1601
+    Private Function CreateShortcut(ByVal sLinkFile As String,
+                                   ByVal sTargetFile As String,
+                                   Optional ByVal sArguments As String = "",
+                                   Optional ByVal sDescription As String = "",
+                                   Optional ByVal sWorkingDir As String = "") As Boolean    'Quelle: http://www.vbarchiv.net/tipps/details.php?id=1601
         Try
             Dim oShell As New Shell32.Shell
             Dim oFolder As Shell32.Folder
@@ -55,10 +53,8 @@ Public Class Window_Settings
     End Function
 
     Function ValidateEmail(ByVal email As String) As Boolean
-        Dim emailRegex As New System.Text.RegularExpressions.Regex(
-            "^(?<user>[^@]+)@(?<host>.+)$")
-        Dim emailMatch As System.Text.RegularExpressions.Match =
-           emailRegex.Match(email)
+        Dim emailRegex As New Text.RegularExpressions.Regex("^(?<user>[^@]+)@(?<host>.+)$")
+        Dim emailMatch As Text.RegularExpressions.Match = emailRegex.Match(email)
         Return emailMatch.Success
     End Function
 
@@ -98,7 +94,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Cancel_Click(sender As Object, e As RoutedEventArgs) Handles Button_Cancel.Click
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub Button_CreateShortcut_Click(sender As Object, e As RoutedEventArgs) Handles Button_CreateShortcut.Click
@@ -116,20 +112,20 @@ Public Class Window_Settings
 
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
         Action_ApplySettings()
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
-        Run_Feedback_FurtherInfo.Text = Newtonsoft.Json.JsonConvert.SerializeObject(GetProgramInfoJson(), Formatting.None)
+        Run_Feedback_FurtherInfo.Text = JsonConvert.SerializeObject(GetProgramInfoJson(), Formatting.None)
 
         With Button_Feedback_Prepare
             .IsEnabled = False
-            .Visibility = Windows.Visibility.Collapsed
+            .Visibility = Visibility.Collapsed
         End With
         With StackPanel_Feedback
             .IsEnabled = True
             .Margin = New Thickness(0, 0, 0, 0)
-            .Visibility = Windows.Visibility.Visible
+            .Visibility = Visibility.Visible
         End With
     End Sub
 
@@ -154,7 +150,7 @@ Public Class Window_Settings
                 .Add("username", TextBox_Feedback_Username.Text)
             End With
             StackPanel_Feedback.IsEnabled = False
-            Grid_Feedback_Overlay.Visibility = Windows.Visibility.Visible
+            Grid_Feedback_Overlay.Visibility = Visibility.Visible
             Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
         End If
     End Sub
@@ -169,9 +165,9 @@ Public Class Window_Settings
                 File.Delete(I__Path_Programm & "\Settings\Settings.config")
 
                 If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                    System.Windows.Forms.Application.Restart()
+                    Forms.Application.Restart()
                 End If
-                Application.Current.Shutdown()
+                Windows.Application.Current.Shutdown()
             Else
                 MsgBox(_e("WindowSettings_nopeNoConfig"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             End If
@@ -276,7 +272,7 @@ Public Class Window_Settings
                 End Try
             End If
             If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                System.Windows.Forms.Application.Restart()
+                Forms.Application.Restart()
             End If
             Application.Current.Shutdown()
         End If
@@ -290,7 +286,7 @@ Public Class Window_Settings
                                                      Application_FileExtensionsLong(RegisterCounter),
                                                      Application_FileExtensionsDescription(RegisterCounter),
                                                      Application_FileExtensionsIcon(RegisterCounter),
-                                                     System.Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
+                                                     Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
                 RegisterCounter += 1
             Else
                 RegisterError = True
@@ -312,11 +308,11 @@ Public Class Window_Settings
     Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
         Try
             MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
-        Catch ex As System.Reflection.TargetInvocationException
+        Catch ex As Reflection.TargetInvocationException
             MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             Exit Sub
         End Try
-        Grid_Feedback_Overlay.Visibility = Windows.Visibility.Collapsed
+        Grid_Feedback_Overlay.Visibility = Visibility.Collapsed
     End Sub
 
     Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus
@@ -331,8 +327,8 @@ Public Class Window_Settings
             .Title = _e("WindowSettings_pleaseOpenOsu")}
 
         If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
-            If IO.Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
-                TextBox_osu_Path.Text = IO.Path.GetDirectoryName(SelectFile.FileName)
+            If Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
+                TextBox_osu_Path.Text = Path.GetDirectoryName(SelectFile.FileName)
             Else
                 MsgBox(_e("WindowSettings_youSelectedTheWrongFile"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             End If
@@ -366,7 +362,7 @@ Public Class Window_Settings
         Dim SelectDirectory As New Forms.FolderBrowserDialog With {
             .Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
             .ShowNewFolderButton = False}
-        If IO.Directory.Exists(Setting_Tool_Update_SavePath) Then
+        If Directory.Exists(Setting_Tool_Update_SavePath) Then
             SelectDirectory.SelectedPath = Setting_Tool_Update_SavePath
         Else
             SelectDirectory.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)

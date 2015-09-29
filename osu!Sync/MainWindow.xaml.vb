@@ -1,9 +1,9 @@
 ﻿Imports Hardcodet.Wpf.TaskbarNotification
-Imports Newtonsoft.Json, Newtonsoft.Json.Linq
 Imports System.IO
 Imports System.Net
-Imports System.Runtime.InteropServices, System.Runtime.Serialization.Formatters.Binary
 Imports System.Windows.Media.Animation
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
 Public Enum BGWcallback_ActionSyncGetIDs_ArgMode
     Sync = 0
@@ -95,7 +95,7 @@ Class MainWindow
     Private Interface_LoaderText As New TextBlock
     Private Interface_LoaderProgressBar As New ProgressBar
 
-    Private WithEvents BGW__Action_Sync_GetIDs As New System.ComponentModel.BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
+    Private WithEvents BGW__Action_Sync_GetIDs As New ComponentModel.BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
 
     Private Class Importer_TagData
         Public Property Beatmap As Beatmap
@@ -160,13 +160,13 @@ Class MainWindow
                 Dim RegistryPath As String = CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension).OpenSubKey("DefaultIcon").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None))
                 RegistryPath = RegistryPath.Substring(1)
                 RegistryPath = RegistryPath.Substring(0, RegistryPath.Length - 3)
-                If Not RegistryPath = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString Then
+                If Not RegistryPath = Reflection.Assembly.GetExecutingAssembly().Location.ToString Then
                     FileExtension_Check = 2
                     Exit For
                 End If
 
                 RegistryPath = (CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension).OpenSubKey("shell").OpenSubKey("open").OpenSubKey("command").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None)))
-                If Not RegistryPath = """" & System.Reflection.Assembly.GetExecutingAssembly().Location.ToString & """ -openFile=""%1""" Then
+                If Not RegistryPath = """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """ -openFile=""%1""" Then
                     FileExtension_Check = 2
                     Exit For
                 End If
@@ -188,7 +188,7 @@ Class MainWindow
                                                              Application_FileExtensionsLong(RegisterCounter),
                                                              Application_FileExtensionsDescription(RegisterCounter),
                                                              Application_FileExtensionsIcon(RegisterCounter),
-                                                             System.Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
+                                                             Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
                         RegisterCounter += 1
                     Else
                         RegisterError = True
@@ -229,7 +229,7 @@ Class MainWindow
     Private Function Action_ConvertBeatmapListToHTML(ByVal Source As List(Of Beatmap)) As String()
         Dim Failed As String = ""
         Dim HTML_Source As String = "<!doctype html>" & vbNewLine &
-            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
+            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & Date.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
             "<html>" & vbNewLine &
             "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine &
             "<body>" & vbNewLine &
@@ -272,7 +272,7 @@ Class MainWindow
         Dim Content_ProgrammInfo As New Dictionary(Of String, String)
         Content_ProgrammInfo.Add("_author", "naseweis520")
         Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
-        Content_ProgrammInfo.Add("_file_generationdate", DateTime.Now.ToString("dd/MM/yyyy"))
+        Content_ProgrammInfo.Add("_file_generationdate", Date.Now.ToString("dd/MM/yyyy"))
         Content_ProgrammInfo.Add("_programm", "osu!Sync")
         Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
         Content.Add("_info", Content_ProgrammInfo)
@@ -312,7 +312,7 @@ Class MainWindow
     ''' <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
     ''' <remarks></remarks>
     Private Function Action_ConvertBeatmapListToTXT(ByVal Source As List(Of Beatmap)) As String
-        Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & DateTime.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
+        Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
         For Each SelectedBeatmap As Beatmap In Source
             Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine &
                 "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine &
@@ -345,7 +345,7 @@ Class MainWindow
         Select Case Dialog_SaveFile.FilterIndex
             Case 1      '.nw520-osblx
                 Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
-                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(CompressString(Content(0)))
                     File.Close()
                 End Using
@@ -361,7 +361,7 @@ Class MainWindow
                 Action_OverlayFadeOut()
             Case 2      '.nw520-osbl
                 Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
-                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Content(0))
                     File.Close()
                 End Using
@@ -377,7 +377,7 @@ Class MainWindow
                 Action_OverlayFadeOut()
             Case 3      '.html
                 Dim Content As String() = Action_ConvertBeatmapListToHTML(Source)
-                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Content(0))
                     File.Close()
                 End Using
@@ -393,14 +393,14 @@ Class MainWindow
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "HTML"))
                 Action_OverlayFadeOut()
             Case 4     '.txt
-                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Action_ConvertBeatmapListToTXT(Source))
                     File.Close()
                 End Using
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "TXT"))
                 Action_OverlayFadeOut()
             Case 5     '.csv
-                Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Action_ConvertBeatmapListToCSV(Source))
                     File.Close()
                 End Using
@@ -421,16 +421,16 @@ Class MainWindow
     End Sub
 
     Private Sub Action_OverlayFadeOut()
-        Me.Visibility = Windows.Visibility.Visible
+        Visibility = Visibility.Visible
 
-        Overlay.Visibility = Windows.Visibility.Visible
+        Overlay.Visibility = Visibility.Visible
         With FadeOut
             .From = 1
             .To = 0
             .Duration = New Duration(TimeSpan.FromSeconds(1))
         End With
         Storyboard.SetTargetName(FadeOut, "Overlay")
-        Storyboard.SetTargetProperty(FadeOut, New PropertyPath(Window.OpacityProperty))
+        Storyboard.SetTargetProperty(FadeOut, New PropertyPath(OpacityProperty))
 
         Dim MyStoryboard As New Storyboard()
         MyStoryboard.Children.Add(FadeOut)
@@ -447,7 +447,7 @@ Class MainWindow
         End If
         With Overlay
             .Opacity = 1
-            .Visibility = Windows.Visibility.Visible
+            .Visibility = Visibility.Visible
         End With
     End Sub
 
@@ -484,15 +484,15 @@ Class MainWindow
     Private Sub Action_Tool_UpdateSettings()
         Select Case Setting_Tool_EnableNotifyIcon
             Case 0, 2, 3
-                NotifyIcon.Visibility = Windows.Visibility.Visible
+                NotifyIcon.Visibility = Visibility.Visible
                 If Setting_Tool_EnableNotifyIcon = 3 Then
-                    NotifyIcon.Visibility = Windows.Visibility.Collapsed
+                    NotifyIcon.Visibility = Visibility.Collapsed
                 Else
-                    MenuItem_Program_MinimizeToTray.Visibility = Windows.Visibility.Visible
+                    MenuItem_Program_MinimizeToTray.Visibility = Visibility.Visible
                 End If
             Case 4
-                NotifyIcon.Visibility = Windows.Visibility.Collapsed
-                MenuItem_Program_MinimizeToTray.Visibility = Windows.Visibility.Collapsed
+                NotifyIcon.Visibility = Visibility.Collapsed
+                MenuItem_Program_MinimizeToTray.Visibility = Visibility.Collapsed
         End Select
     End Sub
 
@@ -508,8 +508,8 @@ Class MainWindow
             Case UpdateBeatmapDisplayDestinations.Installed
                 If LastUpdateTime = Nothing Then
                     With TextBlock_Sync_LastUpdate
-                        .Content = _e("MainWindow_lastSync").Replace("%0", DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
-                        .Tag = DateTime.Now.ToString("dd.MM.yyyy | HH:mm:ss")
+                        .Content = _e("MainWindow_lastSync").Replace("%0", Date.Now.ToString("dd.MM.yyyy | HH:mm:ss"))
+                        .Tag = Date.Now.ToString("dd.MM.yyyy | HH:mm:ss")
                     End With
                 Else
                     With TextBlock_Sync_LastUpdate
@@ -538,17 +538,17 @@ Class MainWindow
                     ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With {
                         .Fill = Color_27AE60,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
+                        .HorizontalAlignment = HorizontalAlignment.Stretch,
                         .Tag = SelectedBeatmap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+                        .VerticalAlignment = VerticalAlignment.Stretch}
 
                     Dim UI_Thumbnail = New Image With {
                         .Cursor = Cursors.Hand,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
+                        .HorizontalAlignment = HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
                         .Tag = SelectedBeatmap,
                         .ToolTip = _e("MainWindow_openBeatmapDetailPanel"),
-                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+                        .VerticalAlignment = VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
                     AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
@@ -563,12 +563,12 @@ Class MainWindow
                         .FontSize = 28,
                         .Foreground = Color_555555,
                         .Height = 36,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .Tag = SelectedBeatmap,
                         .TextWrapping = TextWrapping.Wrap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     ' Color_008136 = Dark Green
@@ -576,11 +576,11 @@ Class MainWindow
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
                         .Foreground = Color_008136,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .Tag = SelectedBeatmap,
                         .Margin = New Thickness(10, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 2)
 
                     If Not SelectedBeatmap.ID = -1 Then
@@ -594,11 +594,11 @@ Class MainWindow
 
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_isInstalled"),
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .IsChecked = True,
                         .IsEnabled = False,
                         .Margin = New Thickness(10, 62, 0, 0),
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_Checkbox_IsInstalled, 2)
 
                     With UI_Grid.Children
@@ -614,16 +614,16 @@ Class MainWindow
                     Dim UI_TextBlock As New TextBlock With {
                         .FontSize = 72,
                         .Foreground = Color_27AE60,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                        .HorizontalAlignment = HorizontalAlignment.Center,
                         .Margin = New Thickness(0, 86, 0, 0),
                         .Text = _e("MainWindow_beatmapsFound").Replace("%0", "0"),
-                        .VerticalAlignment = Windows.VerticalAlignment.Center}
+                        .VerticalAlignment = VerticalAlignment.Center}
                     Dim UI_TextBlock_SubTitle As New TextBlock With {
                         .FontSize = 24,
                         .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FF2ECC71"), Brush),
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                        .HorizontalAlignment = HorizontalAlignment.Center,
                         .Text = _e("MainWindow_thatsImpressiveIGuess"),
-                        .VerticalAlignment = Windows.VerticalAlignment.Center}
+                        .VerticalAlignment = VerticalAlignment.Center}
 
                     With BeatmapWrapper.Children
                         .Add(UI_TextBlock)
@@ -635,7 +635,7 @@ Class MainWindow
                 Button_SyncDo.IsEnabled = True
             Case UpdateBeatmapDisplayDestinations.Importer
                 Importer_BeatmapsTotal = 0
-                TabberItem_Import.Visibility = Windows.Visibility.Visible
+                TabberItem_Import.Visibility = Visibility.Visible
                 Tabber.SelectedIndex = 1
                 ImporterWrapper.Children.Clear()
                 Importer_Cancel.IsEnabled = False
@@ -645,18 +645,18 @@ Class MainWindow
                     Button_SyncDo.IsEnabled = False
                     Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With {
                        .Height = 150,
-                       .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                       .HorizontalAlignment = HorizontalAlignment.Center,
                        .IsActive = True,
                        .Margin = New Thickness(0, 100, 0, 0),
-                       .VerticalAlignment = Windows.VerticalAlignment.Center,
+                       .VerticalAlignment = VerticalAlignment.Center,
                        .Width = 150}
                     Dim UI_TextBlock_SubTitle As New TextBlock With {
                                .FontSize = 24,
                                .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                               .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                               .HorizontalAlignment = HorizontalAlignment.Center,
                                .Text = _e("MainWindow_pleaseWait") & vbNewLine & _e("MainWindow_syncing"),
                                .TextAlignment = TextAlignment.Center,
-                               .VerticalAlignment = Windows.VerticalAlignment.Center}
+                               .VerticalAlignment = VerticalAlignment.Center}
 
                     Interface_LoaderText = UI_TextBlock_SubTitle
                     ImporterWrapper.Children.Add(UI_ProgressRing)
@@ -676,11 +676,11 @@ Class MainWindow
                     End If
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_isInstalled"),
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .IsChecked = Check_IfInstalled,
                         .IsEnabled = False,
                         .Margin = New Thickness(10, 62, 0, 0),
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
 
                     Dim UI_Grid = New Grid() With {
                         .Height = 80,
@@ -690,8 +690,8 @@ Class MainWindow
                     ' Color_27AE60 = Light Green
                     ' Color_E74C3C = Red
                     Dim UI_DecoBorderLeft = New Rectangle With {
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top,
+                        .HorizontalAlignment = HorizontalAlignment.Stretch,
+                        .VerticalAlignment = VerticalAlignment.Top,
                         .Width = 10}
                     If Check_IfInstalled Then
                         UI_DecoBorderLeft.Fill = Color_27AE60
@@ -705,31 +705,31 @@ Class MainWindow
                         .FontSize = 28,
                         .Foreground = Color_555555,
                         .Height = 36,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .TextWrapping = TextWrapping.Wrap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
 
                     ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
                         .Foreground = Color_008136,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
                         .Margin = New Thickness(10, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     If Not SelectedBeatmap.Creator = "Unknown" Then
                         UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
                     End If
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_downloadAndInstall"),
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Right,
+                        .HorizontalAlignment = HorizontalAlignment.Right,
                         .Margin = New Thickness(10, 5, 0, 0),
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     If Check_IfInstalled Then
                         With UI_Checkbox_IsSelected
                             .IsChecked = False
@@ -803,13 +803,13 @@ Class MainWindow
                     ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With {
                         .Fill = Color_27AE60,
-                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+                        .VerticalAlignment = VerticalAlignment.Stretch}
 
                     Dim UI_Thumbnail = New Image With {
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
+                        .HorizontalAlignment = HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
                         .Tag = SelectedBeatmap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Stretch}
+                        .VerticalAlignment = VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
                     AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
@@ -824,11 +824,11 @@ Class MainWindow
                         .FontSize = 22,
                         .Foreground = Color_555555,
                         .Height = 30,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .TextWrapping = TextWrapping.Wrap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     ' Color_008136 = Dark Green
@@ -836,11 +836,11 @@ Class MainWindow
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 12,
                         .Foreground = Color_008136,
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Left,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
                         .Margin = New Thickness(10, 30, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 2)
 
                     If Not SelectedBeatmap.ID = -1 Then
@@ -854,10 +854,10 @@ Class MainWindow
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_selectToExport"),
-                        .HorizontalAlignment = Windows.HorizontalAlignment.Right,
+                        .HorizontalAlignment = HorizontalAlignment.Right,
                         .IsChecked = True,
                         .Margin = New Thickness(10, 5, 0, 0),
-                        .VerticalAlignment = Windows.VerticalAlignment.Top}
+                        .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_Checkbox_IsSelected, 2)
 
                     If SelectedBeatmap.ID = -1 Then
@@ -903,7 +903,7 @@ Class MainWindow
                     ExporterWrapper.Children.Add(UI_Grid)
                 Next
 
-                TabberItem_Export.Visibility = Windows.Visibility.Visible
+                TabberItem_Export.Visibility = Visibility.Visible
                 Tabber.SelectedIndex = 2
         End Select
     End Sub
@@ -925,7 +925,7 @@ Class MainWindow
         Dim Answer As JObject
         Try
             Answer = JObject.Parse(e.Result)
-        Catch ex As Newtonsoft.Json.JsonReaderException
+        Catch ex As JsonReaderException
             If Setting_Messages_Updater_UnableToCheckForUpdates Then
                 MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
                 MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
@@ -955,7 +955,7 @@ Class MainWindow
     End Sub
 
     Private Sub FadeOut_Completed(sender As Object, e As EventArgs) Handles FadeOut.Completed
-        Overlay.Visibility = Windows.Visibility.Hidden
+        Overlay.Visibility = Visibility.Hidden
     End Sub
 
     Private Sub Flyout_BeatmapDetails_RequestBringIntoView(sender As Object, e As RequestBringIntoViewEventArgs) Handles Flyout_BeatmapDetails.RequestBringIntoView
@@ -964,23 +964,23 @@ Class MainWindow
 
     Private Sub Interface_SetLoader(Optional Message As String = "Please wait")
         Dim UI_ProgressBar = New ProgressBar With {
-            .HorizontalAlignment = Windows.HorizontalAlignment.Stretch,
-            .Visibility = Windows.Visibility.Hidden,
+            .HorizontalAlignment = HorizontalAlignment.Stretch,
+            .Visibility = Visibility.Hidden,
             .Height = 25}
         Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With {
             .Height = 150,
-            .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+            .HorizontalAlignment = HorizontalAlignment.Center,
             .IsActive = True,
             .Margin = New Thickness(0, 100, 0, 0),
-            .VerticalAlignment = Windows.VerticalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center,
             .Width = 150}
         Dim UI_TextBlock_SubTitle As New TextBlock With {
                    .FontSize = 24,
                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                   .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                   .HorizontalAlignment = HorizontalAlignment.Center,
                    .Text = Message,
                    .TextAlignment = TextAlignment.Center,
-                   .VerticalAlignment = Windows.VerticalAlignment.Center}
+                   .VerticalAlignment = VerticalAlignment.Center}
 
         Interface_LoaderText = UI_TextBlock_SubTitle
         Interface_LoaderProgressBar = UI_ProgressBar
@@ -1139,7 +1139,7 @@ Class MainWindow
                         Action_OverlayShow(_e("MainWindow_conversionFailed"), "System.FormatException")
                         Action_OverlayFadeOut()
                         Exit Sub
-                    Catch ex As System.IO.InvalidDataException
+                    Catch ex As InvalidDataException
                         Action_OverlayShow(_e("MainWindow_conversionFailed"), "System.IO.InvalidDataException")
                         Action_OverlayFadeOut()
                         Exit Sub
@@ -1203,15 +1203,15 @@ Class MainWindow
     End Sub
 
     Private Sub MenuItem_Program_Exit_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Exit.Click
-        Application.Current.Shutdown()
+        Windows.Application.Current.Shutdown()
     End Sub
 
     Private Sub MenuItem_Program_MinimizeToTray_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_MinimizeToTray.Click
         Select Case Setting_Tool_EnableNotifyIcon
             Case 0, 2, 3
-                Me.Visibility = Windows.Visibility.Hidden
+                Visibility = Visibility.Hidden
                 If Setting_Tool_EnableNotifyIcon = 3 Then
-                    NotifyIcon.Visibility = Windows.Visibility.Visible
+                    NotifyIcon.Visibility = Visibility.Visible
                 End If
             Case Else
                 MenuItem_Program_MinimizeToTray.IsEnabled = False
@@ -1228,7 +1228,7 @@ Class MainWindow
     End Sub
 
     Private Sub NotifyIcon_Exit_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_Exit.Click
-        Application.Current.Shutdown()
+        Windows.Application.Current.Shutdown()
     End Sub
 
     Private Sub NotifyIcon_RunOsu_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_RunOsu.Click
@@ -1236,10 +1236,10 @@ Class MainWindow
     End Sub
 
     Private Sub NotifyIcon_ShowHide_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_ShowHide.Click
-        If Me.IsVisible Then
-            Me.Visibility = Windows.Visibility.Hidden
+        If IsVisible Then
+            Visibility = Visibility.Hidden
         Else
-            Me.Visibility = Windows.Visibility.Visible
+            Visibility = Visibility.Visible
         End If
     End Sub
 
@@ -1251,13 +1251,13 @@ Class MainWindow
     End Sub
 
     Private Sub NotifyIcon_TrayMouseDoubleClick(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayMouseDoubleClick
-        If Me.IsVisible Then
-            Me.Visibility = Windows.Visibility.Hidden
+        If IsVisible Then
+            Visibility = Visibility.Hidden
         Else
-            Me.Visibility = Windows.Visibility.Visible
-            Me.Focus()
+            Visibility = Visibility.Visible
+            Focus()
             If Setting_Tool_EnableNotifyIcon = 3 Then
-                NotifyIcon.Visibility = Windows.Visibility.Collapsed
+                NotifyIcon.Visibility = Visibility.Collapsed
             End If
         End If
     End Sub
@@ -1271,7 +1271,6 @@ Class MainWindow
         Window_About.ShowDialog()
     End Sub
 
-#Region "Background Worker"
 #Region "BGW__Action_Sync_GetIDs"
     Private Sub BGW__Action_Sync_GetIDs_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BGW__Action_Sync_GetIDs.DoWork
         Dim Arguments As New BGWcallback__Action_Sync_GetIDs
@@ -1359,7 +1358,7 @@ Class MainWindow
                                     FoundFile = True
 
                                     ' Read File
-                                    Dim FileReader As New System.IO.StreamReader(FileInDir)
+                                    Dim FileReader As New StreamReader(FileInDir)
                                     Dim TextLines As New List(Of String)
                                     Dim BeatmapDetails As New Beatmap
                                     Dim Found_ID As Boolean = False          ' Cause the older osu! file format doesn't include the set ID
@@ -1454,7 +1453,7 @@ Class MainWindow
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_andStillWorking")
                 With Interface_LoaderProgressBar
                     .Value = Answer.Progress__Current
-                    .Visibility = Windows.Visibility.Visible
+                    .Visibility = Visibility.Visible
                 End With
             Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_generatingInterface")
@@ -1496,16 +1495,16 @@ Class MainWindow
                 Dim UI_TextBlock As New TextBlock With {
                     .FontSize = 72,
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
                     .Margin = New Thickness(0, 100, 0, 0),
                     .Text = _e("MainWindow_lastSyncFailed"),
-                    .VerticalAlignment = Windows.VerticalAlignment.Center}
+                    .VerticalAlignment = VerticalAlignment.Center}
                 Dim UI_TextBlock_SubTitle As New TextBlock With {
                     .FontSize = 24,
                     .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
-                    .HorizontalAlignment = Windows.HorizontalAlignment.Center,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
                     .Text = _e("MainWindow_pleaseRetry"),
-                    .VerticalAlignment = Windows.VerticalAlignment.Center}
+                    .VerticalAlignment = VerticalAlignment.Center}
 
                 With BeatmapWrapper.Children
                     .Clear()
@@ -1515,7 +1514,6 @@ Class MainWindow
                 Button_SyncDo.IsEnabled = True
         End Select
     End Sub
-#End Region
 #End Region
 
 #Region "Exporter"
@@ -1623,7 +1621,7 @@ Class MainWindow
         Dim ListSelected As New List(Of Importer_TagData)
         ListSelected = Exporter_BeatmapList_Tag_Selected.ToList
 
-        ' --- Loop for selected elements
+        ' Loop for selected elements
         Dim LoopPreviousCount As Integer = 0
         Dim LoopCount As Integer = 0
         Do While LoopCount < ListSelected.Count
@@ -1631,7 +1629,7 @@ Class MainWindow
             LoopCount += 1
         Loop
 
-        ' --- Loop for unselected elements
+        ' Loop for unselected elements
         LoopPreviousCount = 0
         LoopCount = 0
         Do While LoopCount < ListUnselected.Count
@@ -1647,7 +1645,7 @@ Class MainWindow
             Result.Add(Item.Beatmap)
         Next
         Action_ExportBeatmapDialog(Result, "Export selected beatmaps")
-        TabberItem_Export.Visibility = Windows.Visibility.Collapsed
+        TabberItem_Export.Visibility = Visibility.Collapsed
         Tabber.SelectedIndex = 0
         ExporterWrapper.Children.Clear()
     End Sub
@@ -1721,7 +1719,7 @@ Class MainWindow
                 Next
                 With Importer_Progress
                     .IsIndeterminate = False
-                    .Visibility = Windows.Visibility.Hidden
+                    .Visibility = Visibility.Hidden
                 End With
 
                 TextBlock_Progress.Content = ""
@@ -1794,13 +1792,13 @@ Class MainWindow
             Next
             With Importer_Progress
                 .IsIndeterminate = False
-                .Visibility = Windows.Visibility.Hidden
+                .Visibility = Visibility.Hidden
             End With
 
             TextBlock_Progress.Content = ""
             Importer_UpdateInfo(_e("MainWindow_done"))
 
-            My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep)
+            My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Beep)
             If Setting_Tool_EnableNotifyIcon = 0 Then
                 NotifyIcon.ShowBalloonTip("osu!Sync", _e("MainWindow_installationFinished") & vbNewLine &
                         _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine &
@@ -1829,7 +1827,7 @@ Class MainWindow
         Button_SyncDo.IsEnabled = False
         Importer_Run.IsEnabled = False
         Importer_Cancel.IsEnabled = False
-        Importer_Progress.Visibility = Windows.Visibility.Visible
+        Importer_Progress.Visibility = Visibility.Visible
         If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\") Then
             Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\")
         End If
@@ -1885,7 +1883,7 @@ Class MainWindow
 #Region "Events « Importer "
     Private Sub Importer_Cancel_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Cancel.Click
         Tabber.SelectedIndex = 0
-        TabberItem_Import.Visibility = Windows.Visibility.Collapsed
+        TabberItem_Import.Visibility = Visibility.Collapsed
         ImporterWrapper.Children.Clear()
     End Sub
 

@@ -1,4 +1,5 @@
 ﻿Public Class Window_MessageWindow
+
     Public Sub SetMessage(ByRef Message As String, Optional ByRef Title As String = "", Optional ByRef SubTitle As String = "osu!Sync")
         If Title = "" Then
             Title = _e("WindowMessage_message")
@@ -13,6 +14,6 @@
     End Sub
 
     Private Sub Button_Close_Click(sender As Object, e As RoutedEventArgs) Handles Button_Close.Click
-        Me.Close()
+        Close()
     End Sub
 End Class

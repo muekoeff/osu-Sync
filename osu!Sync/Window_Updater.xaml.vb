@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
 Public Class Window_Updater
@@ -26,11 +27,11 @@ Public Class Window_Updater
     End Sub
 
     Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub Button_Update_Click(sender As Object, e As RoutedEventArgs) Handles Button_Update.Click
-        Me.Cursor = Cursors.AppStarting
+        Cursor = Cursors.AppStarting
         Button_Done.IsEnabled = False
         Button_Update.IsEnabled = False
 
@@ -54,14 +55,14 @@ Public Class Window_Updater
         End If
     End Sub
 
-    Private Sub Client_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles Client.DownloadFileCompleted
+    Private Sub Client_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles Client.DownloadFileCompleted
         Select Case DownloadMode
             Case DownloadModes.DownloadPatcher
                 Action_DownloadUpdate()
                 File.Move(Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe.tmp",
                               Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe")
             Case DownloadModes.DownloadUpdate
-                Me.Cursor = Cursors.Arrow
+                Cursor = Cursors.Arrow
                 TextBlock_Status.Text = _e("WindowUpdater_downloadFinished").Replace("%0", Update_TotalBytes)
                 Button_Done.IsEnabled = True
                 If Not Directory.Exists(Setting_Tool_Update_SavePath) Then
@@ -73,10 +74,10 @@ Public Class Window_Updater
                     If Setting_Tool_Update_UseDownloadPatcher Then
                         ' Run UpdatePatcher
                         Dim UpdatePatcher As New ProcessStartInfo()
-                        UpdatePatcher.Arguments = "-destinationVersion=""" & Update_Version & """ -sourceVersion=""" & My.Application.Info.Version.ToString & """ -pathToApp=""" & Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) & """ -pathToUpdate=""" & Update_DownloadToPath & """ -updateHash=""" & Update_md5Hash & """ -deletePackageAfter=""" & Setting_Tool_Update_DeleteFileAfter.ToString & """"
+                        UpdatePatcher.Arguments = "-destinationVersion=""" & Update_Version & """ -sourceVersion=""" & My.Application.Info.Version.ToString & """ -pathToApp=""" & Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location) & """ -pathToUpdate=""" & Update_DownloadToPath & """ -updateHash=""" & Update_md5Hash & """ -deletePackageAfter=""" & Setting_Tool_Update_DeleteFileAfter.ToString & """"
                         UpdatePatcher.FileName = Path.GetTempPath() & "naseweis520\osu!Sync\Update\UpdatePatcher.exe"
                         Process.Start(UpdatePatcher)
-                        Application.Current.Shutdown()
+                        Windows.Application.Current.Shutdown()
                         Exit Sub
                     Else
                         If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
@@ -109,13 +110,13 @@ Public Class Window_Updater
                 Dim Answer As JObject
                 Try
                     Answer = JObject.Parse(e.Result)
-                Catch ex As Newtonsoft.Json.JsonReaderException
+                Catch ex As JsonReaderException
                     MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                     TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
                     TextBlock_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
                     ProgressBar_Progress.IsIndeterminate = False
                     Exit Sub
-                Catch ex As System.Reflection.TargetInvocationException
+                Catch ex As Reflection.TargetInvocationException
                     Clipboard.SetText("https://osu.ppy.sh/forum/t/270446")
                     MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                     TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
@@ -138,7 +139,7 @@ Public Class Window_Updater
 
                 If CStr(Answer.SelectToken("latestVersion")) = My.Application.Info.Version.ToString Then
                     TextBlock_Status.Text = _e("WindowUpdater_yourUsingTheLatestVersion")
-                    Me.Cursor = Cursors.Arrow
+                    Cursor = Cursors.Arrow
                 Else
                     TextBlock_Status.Text = _e("WindowUpdater_anUpdateIsAvailable")
 
@@ -162,16 +163,16 @@ Public Class Window_Updater
                     End With
                     RichTextBox_Changelog.Document.Blocks.Add(Paragraph)
                     ProgressBar_Progress.IsIndeterminate = False
-                    Me.Cursor = Cursors.Arrow
+                    Cursor = Cursors.Arrow
                 End If
             Case DownloadModes.Changelog
                 Dim Results() As String
                 Try
                     Results = Split(e.Result, "\n")
-                Catch ex As System.Reflection.TargetInvocationException
+                Catch ex As Reflection.TargetInvocationException
                     MsgBox(_e("WindowUpdater_unableToDownloadChangelog") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                     ProgressBar_Progress.IsIndeterminate = False
-                    Me.Cursor = Cursors.Arrow
+                    Cursor = Cursors.Arrow
                     Exit Sub
                 End Try
 
@@ -184,7 +185,7 @@ Public Class Window_Updater
                 Next
                 RichTextBox_Changelog.Document.Blocks.Add(Paragraph)
                 ProgressBar_Progress.IsIndeterminate = False
-                Me.Cursor = Cursors.Arrow
+                Cursor = Cursors.Arrow
         End Select
     End Sub
 

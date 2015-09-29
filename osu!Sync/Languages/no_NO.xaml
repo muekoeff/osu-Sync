@@ -1,5 +1,4 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -17,7 +16,7 @@
     <system:String x:Key="GlobalVar_extensionBeatmapList">osu! beatmap-liste for osu!Sync</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Komprimert osu! beatmap-liste for osu!Sync</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated.&#x0a;It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Konfigurasjonsfilen din ser ut til å være ugyldig eller utdatert.&#x0a;Den vil bli slettet og programmet vil startes på nytt.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Beklager, noe gikk galt.</system:String>
     <!-- | M -->
@@ -29,7 +28,7 @@
     <system:String x:Key="MainWindow_about">_Om</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Alle støttede filformater</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Og jobber fremdeles...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available.&#x0a;Current: %0 | Latest: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">En ny versjon er tilgjengelig.&#x0a;Gjeldende: %0 | Nyeste: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 beatmaps funnet.</system:String>
@@ -45,7 +44,7 @@
     <system:String x:Key="MainWindow_conversionFailed">Konvertering mislyktes</system:String>
     <system:String x:Key="MainWindow_convertFile">_Konverter fil</system:String>
     <system:String x:Key="MainWindow_convertSelectedFile">Konverter valgt fil</system:String>
-    <system:String x:Key="MainWindow_creator">Creator</system:String>
+    <system:String x:Key="MainWindow_creator">Skaper</system:String>
     <!-- | D -->
     <system:String x:Key="MainWindow_done">Ferdig</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Last ned og installer</system:String>
@@ -58,13 +57,13 @@
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Vil du starte osu! nå?</system:String>
     <!-- | |> Beatmap Details Panel -->
     <!-- | |> B -->
-    <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Beatmap Details</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Beatmapdetaljer</system:String>
     <!-- | |> |> Beatmap Status -->
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pending</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Venter</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Rangert</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Urangert</system:String>
     <!-- | |> O -->
-    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Open Beatmap Listing</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Åpne oppføring for beatmap</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">Unntak</system:String>
     <system:String x:Key="MainWindow_exit">_Avslutt</system:String>
@@ -78,7 +77,7 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">Kan ikke slette filtilknytning.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Filtilknytning ble registrert, takk. (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">Kan ikke registrere filtilknytning.</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">It looks like some file extensions aren't associated with this application.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Det ser ut til at noen filtyper ikke er knyttet til dette programmet.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Det ser ut til at noen filtyper er utdaterte.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">Hentet ID er ikke et tall.</system:String>
@@ -117,12 +116,12 @@
     <!-- | N -->
     <system:String x:Key="MainWindow_notImportable">Kan ikke importeres</system:String>
     <!-- | O -->
-    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Open Beatmap detail panel</system:String>
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Åpne detaljpanelet for beatmap</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">Åpne beatmap-liste</system:String>
-    <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
+    <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Åpne oppføringsside for beatmap i nettleser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Åpne _oppdateringsprogram</system:String>
     <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync beatmap-liste</system:String>
-    <system:String x:Key="MainWindow_overview">Overview</system:String>
+    <system:String x:Key="MainWindow_overview">Oversikt</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Leser installerte beatmap-sett...</system:String>
     <system:String x:Key="MainWindow_pleaseRetry">Vennligst prøv på nytt.</system:String>
@@ -147,7 +146,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Beatmaps som ble hoppet over</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Noen beatmap-sett har ikke blitt eksportert.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Synkronisering fullført</system:String>
-    <system:String x:Key="MainWindow_synchronize">Synchronize</system:String>
+    <system:String x:Key="MainWindow_synchronize">Synkroniser</system:String>
     <system:String x:Key="MainWindow_syncing">Synkroniserer...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Det er... imponerende, tror jeg.</system:String>
@@ -156,7 +155,7 @@
     <system:String x:Key="MainWindow_unableToFindOsuExe">Kan ikke finne osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Kan ikke finne osu!-mappen.&#x0a;Vennligst spesifiser filstien til osu! i følgende vindu.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Kan ikke hente ID</system:String>
-    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed.&#x0a;They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">IDene til noen beatmaps kunne ikke leses.&#x0a;De vil bli behandlet som ikke innsendt (kan ikke eksporteres).</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Ukjent filetternavn</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Ikke innsendt</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Beatmap-sett som ikke er innsendt kan ikke eksporteres</system:String>
@@ -188,14 +187,14 @@
     <!-- | G -->
     <system:String x:Key="WindowAbout_github">Kildekode på GitHub</system:String>
     <!-- | L -->
-    <system:String x:Key="WindowAbout_libraries">Libraries</system:String>
+    <system:String x:Key="WindowAbout_libraries">Biblioteker</system:String>
     <!-- | M -->
     <system:String x:Key="WindowAbout_message">Takk for at du bruker osu!Sync.</system:String>
     <!-- | O -->
     <system:String x:Key="WindowAbout_osuForum">osu!-forum</system:String>
     <!-- | T -->
-    <system:String x:Key="WindowAbout_thanks">Thanks</system:String>
-    <system:String x:Key="WindowAbout_thanksAll">Thanks to all translators, bug reporters and developers who made osu!Sync possible.</system:String>
+    <system:String x:Key="WindowAbout_thanks">Takk</system:String>
+    <system:String x:Key="WindowAbout_thanksAll">Takk til alle oversettere, feilrapporter og utviklere som gjorde osu!Sync mulig.</system:String>
     <!-- | V -->
     <system:String x:Key="WindowAbout_version">osu!Sync versjon %0 | %1</system:String>
     <!-- |> Tooltip (tt) -->
@@ -216,13 +215,13 @@
     <!-- | A -->
     <system:String x:Key="WindowSettings_apply">_Bruk</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Er du virkelig sikker på at du vil slette konfigurasjonsfilen (dette kan ikke omgjøres)?</system:String>
-    <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
-    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps (Numeric)</system:String>
+    <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Er du virkelig sikker på at du vil tilbakestille konfigurasjonen (dette kan ikke omgjøres)?</system:String>
+    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Importer automatisk nedlastede beatmaps etter x beatmaps (numerisk)</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_bug">Feil</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">Kategori</system:String>
-    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Sjekk filtilknytninger ved hver synkronisering</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">Se etter oppdateringer...</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Opprett snarvei på skrivebord</system:String>
     <!-- | D -->
@@ -230,7 +229,7 @@
     <system:String x:Key="WindowSettings_deleteConfiguration">Slett konfigurasjon</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">Slett/Fjern registrering av filtilknytninger</system:String>
     <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Slett oppdateringspakke etter installasjon (virker kun hvis oppdateringspatcher er aktivert).</system:String>
-    <system:String x:Key="WindowSettings_disable">Disable</system:String>
+    <system:String x:Key="WindowSettings_disable">Deaktiver</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Last ned oppdateringspakke til...</system:String>
     <!-- | E -->
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Aktiver NotifyIcon i systemstatusfeltet...</system:String>
@@ -245,11 +244,11 @@
     <system:String x:Key="WindowSettings_generalFeedback">Generell tilbakemelding</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Importering/Nedlasting</system:String>
-    <system:String x:Key="WindowSettings_interface">Interface</system:String>
-    <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
+    <system:String x:Key="WindowSettings_interface">Grensesnitt</system:String>
+    <system:String x:Key="WindowSettings_invalidValue">Ugyldig verdi!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Språk</system:String>
-    <system:String x:Key="WindowSettings_languageUpdated">The language has been changed. However, some elements will remain in the previous selected language. In order to correct that a restart is required.</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">Språket har blitt endret. Visse elementer vil fortsatt være på det tidligere valgte språket. For å korrigere dette kreves en omstart av programmet.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Kjør osu!Sync.</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maksimum en gang per dag (anbefales).</system:String>
@@ -263,7 +262,7 @@
     <system:String x:Key="WindowSettings_notifications">Varsler</system:String>
     <!-- | O -->
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">OK, det er gjort.&#x0a;Vil du starte osu!Sync på nytt nå?</system:String>
-    <system:String x:Key="WindowSettings_openDataFolder">Open data folder</system:String>
+    <system:String x:Key="WindowSettings_openDataFolder">Åpne datamappe</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Åpne oppdateringsprogram når ny versjon er tilgjengelig</system:String>
     <system:String x:Key="WindowSettings_other">Annet</system:String>
     <!-- | P -->
@@ -281,14 +280,14 @@
     <!-- | S -->
     <system:String x:Key="WindowSettings_save">_Lagre</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Svar fra server:</system:String>
-    <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Show always - Disable NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons</system:String>
+    <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Vis alltid - Deaktiver NotifyBalloons</system:String>
+    <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Vis alltid - Aktiver NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Gi beskjed når sjekk etter oppdateringer mislykkes</system:String>
-    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Show only when window is hidden - Disable NotifyBalloons</system:String>
+    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Vis kun når vinduet er skjult - Deaktiver NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_submit">Send</system:String>
     <system:String x:Key="WindowSettings_submitting">Sender...</system:String>
     <system:String x:Key="WindowSettings_sync">Synkroniser</system:String>
-    <system:String x:Key="WindowSettings_syncOnStartup">Sync on application startup</system:String>
+    <system:String x:Key="WindowSettings_syncOnStartup">Synkroniser ved oppstart av programmet</system:String>
     <!-- | T -->
     <system:String x:Key="WindowSettings_theresAlreadyAShortcut">Det ser ut til at det allerede finnes en snarvei på skrivebordet ditt.</system:String>
     <!-- | U -->
@@ -299,7 +298,7 @@
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Bruk denne alternative osu!-nedlastningskilden...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Bruk oppdateringspatcher for å installere oppdateringene automatisk.</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel (Numeric, between 5 and 95)</system:String>
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Bredden på detaljpanelet til beatmaps (Numerisk, mellom 5 og 95)</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">Din e-postadresse</system:String>
     <system:String x:Key="WindowSettings_yourEmailInvalid">E-postadressen din ser ut til å være ugyldig.</system:String>
@@ -316,7 +315,7 @@
     
     <!-- Window_Updater -->
     <!-- | A -->
-    <system:String x:Key="WindowUpdater_anUpdateIsAvailable">An update is available</system:String>
+    <system:String x:Key="WindowUpdater_anUpdateIsAvailable">En oppdatering er tilgjengelig</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Publiseringsdato: %0</system:String>
     <system:String x:Key="WindowUpdater_done">_Ferdig</system:String>
@@ -335,11 +334,11 @@
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Vennligst vent, ser etter oppdateringer...</system:String>
     <system:String x:Key="WindowUpdater_publishedBy">Publisert av: %0</system:String>
     <!-- | U -->
-    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Unable to communicate with server</system:String>
+    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Kan ikke kommunisere med serveren</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Kan ikke laste ned endringslogg!</system:String>
     <system:String x:Key="WindowUpdater_unableToMoveUpdate">Kan ikke flytte oppdatering til korrekt mappe, fordi det allerede finnes en fil med samme navn.</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version</system:String>
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">Du bruker den nyeste versjonen</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">Din versjon: %0</system:String>
 
     <!-- Window_Welcome -->

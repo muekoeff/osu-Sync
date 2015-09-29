@@ -168,7 +168,6 @@
     <system:String x:Key="MainWindow_welcomeToOsuSync">Welcome to osu!Sync.</system:String>
     <!-- | Y -->
     <system:String x:Key="MainWindow_youNeedToSyncFirst">In order to use this function you need to sync first.</system:String>
-    <system:String x:Key="MainWindow_youveGotAboutBeatmaps">You've got about %0 beatmap sets.&#x0a;It will take some time (maybe some minutes) to read all sets, do you want to proceed?</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- || A -->
     <system:String x:Key="MainWindow_tt_openAboutWindow">Open about window.</system:String>
@@ -320,7 +319,7 @@
     <system:String x:Key="WindowUpdater_dateOfPublication">Date of Publication: %0</system:String>
     <system:String x:Key="WindowUpdater_done">_Done</system:String>
     <system:String x:Key="WindowUpdater_download">Download</system:String>
-    <system:String x:Key="WindowUpdater_downloadAndInstall">_Download &amp; Install</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">_Download and Install</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Download finished. (%0 Bytes)</system:String>
     <system:String x:Key="WindowUpdater_downloadingInstaller">Downloading Installer | %0 of %1 Bytes</system:String>
     <system:String x:Key="WindowUpdater_downloadingUpdatePackage">Downloading Update Package | %0 of %1 Bytes</system:String>

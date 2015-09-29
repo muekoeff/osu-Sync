@@ -1,5 +1,4 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -17,7 +16,7 @@
     <system:String x:Key="GlobalVar_extensionBeatmapList">Daftar Beatmap osu! di osu!Sync</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Daftar Beatmap osu! terkompres di osu!Sync</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">File Konfigurasi anda Invalid atau Outdated.&#x0a;akan segera di hapus dan aplikasi direstart ulang.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">File Konfigurasi anda Invalid atau Outdated.&#x0a;Akan segera di hapus dan aplikasi direstart ulang.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | M -->
@@ -249,7 +248,7 @@
     <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Bahasa</system:String>
-    <system:String x:Key="WindowSettings_languageUpdated">Bahasa telah diubah. Namun beberapa text akan tetap dalam bahasa default. silakan restart untuk memperbaiki</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">Bahasa telah diubah. Namun beberapa text akan tetap dalam bahasa default. silakan restart untuk memperbaiki.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Jalankan osu!Sync.</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Maximum sekali sehari (Di sarankan).</system:String>
