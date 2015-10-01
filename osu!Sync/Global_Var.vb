@@ -28,7 +28,7 @@ Module Global_Var
     Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)
 
     Public I__StartUpArguments() As String
-    Public Const I__Path_Web_Host As String = "http://naseweis520.ml/osuSync"
+    Public Const I__Path_Web_Host As String = "http://nw520.de/osuSync"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")

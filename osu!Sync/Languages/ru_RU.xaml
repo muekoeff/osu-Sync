@@ -271,7 +271,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Укажите, где находится osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Директория для сохранения обновлений:</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Укажите, где хранятся карты</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Повторите попытку поздней или свяжитесь с нами по адресу team@naseweis520.ml</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Повторите попытку поздней или свяжитесь с нами по адресу team@nw520.de</system:String>
     <system:String x:Key="WindowSettings_prepareForm">Показать форму</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Вопрос</system:String>

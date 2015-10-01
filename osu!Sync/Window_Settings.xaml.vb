@@ -151,7 +151,7 @@ Public Class Window_Settings
             End With
             StackPanel_Feedback.IsEnabled = False
             Grid_Feedback_Overlay.Visibility = Visibility.Visible
-            Client.DownloadStringAsync(New Uri("http://naseweis520.ml/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
+            Client.DownloadStringAsync(New Uri("http://nw520.de/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
         End If
     End Sub
 

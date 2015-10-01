@@ -271,7 +271,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Bitte öffne die osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Bitte wähle das Verzeichnis, indem Updates gespeichert werden sollen</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Bitte wähle deinen Songs-Ordner</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Bitte versuche es später erneut oder kontaktiere uns direkt: team@naseweis520.ml .</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Bitte versuche es später erneut oder kontaktiere uns direkt: team@nw520.de .</system:String>
     <system:String x:Key="WindowSettings_prepareForm">Formular vorbereiten</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Frage/Hilfsanfrage</system:String>

@@ -270,7 +270,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Please open the osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Please select the directory where to save updates</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Please select your songs folder</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@naseweis520.ml .</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@nw520.de .</system:String>
     <system:String x:Key="WindowSettings_prepareForm">Prepare Form</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Question/Help Request</system:String>

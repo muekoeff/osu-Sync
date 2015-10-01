@@ -1,7 +1,7 @@
 ﻿Public Class Window_About
 
     Private Sub Contact_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles Contact.MouseUp
-        Process.Start("mailto:me@naseweis520.ml?subject=Contact%20|%20osu!Sync")
+        Process.Start("mailto:team@nw520.de?subject=Contact%20|%20osu!Sync")
     End Sub
 
     Private Sub Feedback_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles Feedback.MouseUp

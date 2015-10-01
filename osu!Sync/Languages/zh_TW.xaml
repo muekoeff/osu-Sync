@@ -271,7 +271,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">請開啟 osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">請選擇把更新存放到哪裡</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">請選擇您的歌曲資料夾</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">請稍後再試或與我們聯繫： team@naseweis520.ml。</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">請稍後再試或與我們聯繫： team@nw520.de。</system:String>
     <system:String x:Key="WindowSettings_prepareForm">準備表單</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">提問/求助</system:String>

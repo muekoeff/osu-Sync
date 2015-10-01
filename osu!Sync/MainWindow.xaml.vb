@@ -229,7 +229,7 @@ Class MainWindow
     Private Function Action_ConvertBeatmapListToHTML(ByVal Source As List(Of Beatmap)) As String()
         Dim Failed As String = ""
         Dim HTML_Source As String = "<!doctype html>" & vbNewLine &
-            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & Date.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
+            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://nw520.de/) | " & Date.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
             "<html>" & vbNewLine &
             "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine &
             "<body>" & vbNewLine &
@@ -250,7 +250,7 @@ Class MainWindow
         Next
         HTML_Source += "</div>" & vbNewLine &
         "</div>" & vbNewLine &
-        "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://naseweis520.ml/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine &
+        "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://nw520.de/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine &
         "<script src=""http://code.jquery.com/jquery-latest.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js""></script>" & vbNewLine &
         "</body>" & vbNewLine &
         "</html>"
@@ -271,7 +271,7 @@ Class MainWindow
         Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
         Dim Content_ProgrammInfo As New Dictionary(Of String, String)
         Content_ProgrammInfo.Add("_author", "naseweis520")
-        Content_ProgrammInfo.Add("_author_uri", "http://naseweis520.ml/")
+        Content_ProgrammInfo.Add("_author_uri", "http://nw520.de/")
         Content_ProgrammInfo.Add("_file_generationdate", Date.Now.ToString("dd/MM/yyyy"))
         Content_ProgrammInfo.Add("_programm", "osu!Sync")
         Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
@@ -312,7 +312,7 @@ Class MainWindow
     ''' <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
     ''' <remarks></remarks>
     Private Function Action_ConvertBeatmapListToTXT(ByVal Source As List(Of Beatmap)) As String
-        Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://naseweis520.ml/) | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
+        Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://nw520.de/) | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
         For Each SelectedBeatmap As Beatmap In Source
             Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine &
                 "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine &

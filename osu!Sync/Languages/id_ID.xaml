@@ -271,7 +271,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Mohon buka osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Mohon pilih direktori untuk menyimpan pembaruan</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Mohon pilih folder songs Anda</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Harap coba lagi nanti atau hubungi kami: team@naseweis520.ml .</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Harap coba lagi nanti atau hubungi kami: team@nw520.de .</system:String>
     <system:String x:Key="WindowSettings_prepareForm">Siapkan formulir</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Permintaan Pertanyaan/Bantuan</system:String>
