@@ -1750,9 +1750,7 @@ Class MainWindow
         Else
             Importer_CurrentFileName = CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & ".osz"
         End If
-        MsgBox(Importer_CurrentFileName)
         Importer_CurrentFileName = RemoveIllegalPathCharacters(Importer_CurrentFileName)
-        MsgBox(Importer_CurrentFileName)
 
         TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
         Importer_UpdateInfo(_e("MainWindow_downloading1"))
@@ -1902,7 +1900,7 @@ Class MainWindow
             If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName) Then
                 File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
             End If
-            MsgBox("It seems that the beatmap with the ID " & Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID & " doesn't exist.", MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_beatmapsDoesNotExist").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
 
             Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)

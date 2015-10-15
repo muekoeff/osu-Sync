@@ -31,6 +31,7 @@
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available.&#x0a;Current: %0 | Latest: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
+    <system:String x:Key="MainWindow_beatmapsDoesNotExist">The beatmap with the ID %0 doesn't exist.</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 beatmaps found.</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap IDs can be assigned only once.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets in total parsed.</system:String>
@@ -103,8 +104,8 @@
     <system:String x:Key="MainWindow_invertSelection">Invert Selection</system:String>
     <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
     <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">It looks, like something is wrong with this download, do you want to skip this file (Yes) or to cancel the whole download (No)?</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">It seems like some of your beatmap sets differ from the normal format.</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">It seems that some folder(s) can't be parsed.&#x0a;They'll be ignored.</system:String>
+    <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">Some of your beatmap sets differ from the normal format.</system:String>
+    <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">Some folder(s) couldn't be parsed.&#x0a;They'll be ignored.</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Last sync: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Last sync failed.</system:String>
