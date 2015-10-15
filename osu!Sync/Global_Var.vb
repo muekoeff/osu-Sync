@@ -234,7 +234,7 @@ Module Global_Var
         Return Res.ToLower
     End Function
 
-    Function RemoveIllegalCharactersFromPath(Input As String) As String
+    Function RemoveIllegalPathCharacters(Input As String) As String
         Dim IllegalRegex As New Regex("[\\/:*?""<>|]")
         Dim Result As String = IllegalRegex.Replace(Input, "")
 
