@@ -78,13 +78,14 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">Unable to delete file association.</system:String>
     <system:String x:Key="MainWindow_extensionDone">File association successfully registered, thank you. (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">Unable to register file association.</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">It looks like some file extensions aren't associated with this application.</system:String>
-    <system:String x:Key="MainWindow_extensionWrong">It looks like some file extensions are outdated.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Some file extensions aren't associated with this application.</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">Some file extensions are outdated.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">Fetched ID is not a number.</system:String>
     <system:String x:Key="MainWindow_fetching">Fetching %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Fetching...</system:String>
     <system:String x:Key="MainWindow_file">_File</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed.&#x0a;It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">Folders</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Generating interface...</system:String>
@@ -103,9 +104,7 @@
     <system:String x:Key="MainWindow_invalidServerResponse">Invalid server response</system:String>
     <system:String x:Key="MainWindow_invertSelection">Invert Selection</system:String>
     <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
-    <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">It looks, like something is wrong with this download, do you want to skip this file (Yes) or to cancel the whole download (No)?</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">Some of your beatmap sets differ from the normal format.</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">Some folder(s) couldn't be parsed.&#x0a;They'll be ignored.</system:String>
+    <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">The downloaded beatmap is invalid, do you want to skip this file (Yes) or to cancel the whole download (No)?</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Last sync: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Last sync failed.</system:String>
@@ -145,6 +144,7 @@
     <system:String x:Key="MainWindow_settings">Settings</system:String>
     <system:String x:Key="MainWindow_showHideOsuSync">Show/Hide osu!Sync</system:String>
     <system:String x:Key="MainWindow_skippedBeatmaps">Skipped beatmaps</system:String>
+    <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Some beatmap sets hadn't been exported.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Sync completed</system:String>
     <system:String x:Key="MainWindow_synchronize">Synchronize</system:String>
@@ -157,6 +157,7 @@
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder.&#x0a;Please specify the path to osu! in the following window.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Unable to get ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed.&#x0a;They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Unknown file extension</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Unsubmitted beatmap sets can't be exported</system:String>
@@ -289,7 +290,7 @@
     <system:String x:Key="WindowSettings_sync">Sync</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sync on application startup</system:String>
     <!-- | T -->
-    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">It looks like there's already a shortcut on your desktop.</system:String>
+    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">There's already a shortcut on your desktop.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">Unable to create shortcut!</system:String>
     <system:String x:Key="WindowSettings_unableToSubmitFeedback">Unable to submit feedback!</system:String>
@@ -336,7 +337,6 @@
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Unable to communicate with server</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Unable to dowload changelog!</system:String>
-    <system:String x:Key="WindowUpdater_unableToMoveUpdate">Unable to move update to correct directory, because there's already a file with the same name.</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">Your version: %0</system:String>

@@ -1435,7 +1435,7 @@ Class MainWindow
 
                 If Not Beatmap_InvalidFolder = "" Or Not Beatmap_InvalidIDBeatmaps = "" Then
                     If Not Beatmap_InvalidFolder = "" Then
-                        Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
+                        Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
                     End If
                     If Not Beatmap_InvalidIDBeatmaps = "" Then
                         Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
@@ -1469,7 +1469,7 @@ Class MainWindow
             Case 0
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BeatmapList_ID_Installed.Count.ToString)
                 If Not Answer.Return__Sync_Warnings = "" Then
-                    If MessageBox.Show(_e("MainWindow_itSeemsThatSomeBeatmapsDiffer") & vbNewLine &
+                    If MessageBox.Show(_e("MainWindow_someBeatmapsDifferFromNormal") & vbNewLine &
                                        _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
                         Window_Message.SetMessage(Answer.Return__Sync_Warnings, _e("MainWindow_exceptions"), "Sync")
