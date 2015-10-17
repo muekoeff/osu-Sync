@@ -1,9 +1,9 @@
 ﻿Imports System.IO
 Imports System.Net
 Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
 Public Class Window_Settings
-    Private WithEvents Client As New WebClient
 
     Private Function CreateShortcut(ByVal sLinkFile As String,
                                    ByVal sTargetFile As String,
@@ -59,6 +59,8 @@ Public Class Window_Settings
     End Function
 
     Private Sub Action_ApplySettings()
+        Setting_Api_Enabled_BeatmapPanel = CBool(CheckBox_Api_EnableInBeatmapPanel.IsChecked)
+        Setting_Api_Key = TextBox_Api_ApiKey.Text
         Setting_osu_Path = TextBox_osu_Path.Text
         Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
         Setting_Tool_CheckFileAssociation = CBool(CheckBox_Tool_CheckFileAssociation.IsChecked)
@@ -87,6 +89,53 @@ Public Class Window_Settings
         Setting_Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
         Setting_Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
         Action_SaveSettings()
+    End Sub
+
+    Private Sub ApiClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
+        Dim JSON_Array As JArray
+        Try
+            Action_WriteToApiLog("/api/get_beatmaps", e.Result)
+            JSON_Array = CType(JsonConvert.DeserializeObject(e.Result), JArray)
+            If Not CType(JSON_Array.First, JObject).SelectToken("beatmapset_id") Is Nothing Then
+                With Button_Api_ApiKey_Validate
+                    .Content = _e("WindowSettings_valid")
+                    .IsEnabled = True
+                End With
+                TextBox_Api_ApiKey.IsEnabled = True
+            Else
+                Throw New ArgumentException("Unexpected value")
+            End If
+        Catch ex As Exception
+            Action_WriteToApiLog("/api/get_beatmaps")
+            With Button_Api_ApiKey_Validate
+                .Content = _e("WindowSettings_invalid")
+                .IsEnabled = True
+            End With
+            TextBox_Api_ApiKey.IsEnabled = True
+        End Try
+    End Sub
+
+    Private Sub Button_Api_ApiKey_Validate_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_ApiKey_Validate.Click
+        With Button_Api_ApiKey_Validate
+            .Content = "..."
+            .IsEnabled = False
+        End With
+        TextBox_Api_ApiKey.IsEnabled = False
+        Dim Client As New WebClient
+        AddHandler Client.DownloadStringCompleted, AddressOf ApiClient_DownloadStringCompleted
+        Client.DownloadStringAsync(New Uri("https://osu.ppy.sh/api/get_beatmaps?k=" & TextBox_Api_ApiKey.Text))
+    End Sub
+
+    Private Sub Button_Api_OpenLog_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_OpenLog.Click
+        If File.Exists(I__Path_Programm & "\Logs\ApiAccess.txt") Then
+            Process.Start(I__Path_Programm & "\Logs\ApiAccess.txt")
+        Else
+            MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        End If
+    End Sub
+
+    Private Sub Button_Api_Request_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_Request.Click
+        Process.Start("https://osu.ppy.sh/p/api")
     End Sub
 
     Private Sub Button_Apply_Click(sender As Object, e As RoutedEventArgs) Handles Button_Apply.Click
@@ -151,6 +200,8 @@ Public Class Window_Settings
             End With
             StackPanel_Feedback.IsEnabled = False
             Grid_Feedback_Overlay.Visibility = Visibility.Visible
+            Dim Client As New WebClient
+            AddHandler Client.DownloadStringCompleted, AddressOf FeedbackClient_DownloadStringCompleted
             Client.DownloadStringAsync(New Uri("http://nw520.de/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
         End If
     End Sub
@@ -305,7 +356,7 @@ Public Class Window_Settings
         TextBox_Tool_Update_Path.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     End Sub
 
-    Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
+    Private Sub FeedbackClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
         Try
             MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
         Catch ex As Reflection.TargetInvocationException
@@ -313,6 +364,10 @@ Public Class Window_Settings
             Exit Sub
         End Try
         Grid_Feedback_Overlay.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub TextBox_Api_ApiKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TextBox_Api_ApiKey.TextChanged
+        Button_Api_ApiKey_Validate.Content = _e("WindowSettings_validate")
     End Sub
 
     Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus
@@ -374,6 +429,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        CheckBox_Api_EnableInBeatmapPanel.IsChecked = Setting_Api_Enabled_BeatmapPanel
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
@@ -414,7 +470,7 @@ Public Class Window_Settings
         Else
             ComboBox_Tool_Languages.SelectedIndex = IndexEN
         End If
-
+        TextBox_Api_ApiKey.Text = Setting_Api_Key
         TextBox_osu_Path.Text = Setting_osu_Path
         TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
         Textbox_Tool_Importer_AutoInstallCounter.Text = Setting_Tool_Importer_AutoInstallCounter.ToString

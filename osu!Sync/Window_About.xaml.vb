@@ -5,7 +5,7 @@
     End Sub
 
     Private Sub Feedback_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles Feedback.MouseUp
-        MainWindow.Interface_ShowSettingsWindow(3)
+        MainWindow.Interface_ShowSettingsWindow(4)
     End Sub
 
     Private Sub GitHub_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles GitHub.MouseUp
@@ -21,6 +21,10 @@
     End Sub
 
     Private Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+#If DEBUG Then
+        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", GetTranslationName(Setting_Tool_Language))
+#Else
         TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", GetTranslationName(Setting_Tool_Language))
+#End If
     End Sub
 End Class

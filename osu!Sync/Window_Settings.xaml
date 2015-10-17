@@ -7,7 +7,7 @@
                       MinHeight="700"
                       ShowIconOnTitleBar="False"
                       Title="Settings | osu!Sync"
-                      Width="600"
+                      Width="800"
                       MaxWidth="1250"
                       MinWidth="600"
                       WindowStartupLocation="CenterScreen">
@@ -38,8 +38,8 @@
             <TabItem Header="{DynamicResource WindowSettings_general}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" TextWrapping="Wrap" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" />
+                        <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" />
                         <ComboBox x:Name="ComboBox_Tool_CheckForUpdates">
                             <ComboBoxItem Content="{DynamicResource WindowSettings_everyLaunch}" />
                             <ComboBoxItem Content="{DynamicResource WindowSettings_never}" />
@@ -48,7 +48,7 @@
                             <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAWeek}" />
                             <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAMonth}" />
                         </ComboBox>
-                        <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" TextWrapping="Wrap" Margin="0,5,0,0" />
+                        <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" Margin="0,5,0,0" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
@@ -59,10 +59,10 @@
                         </Grid>
                         <CheckBox x:Name="CheckBox_Tool_Update_UseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
                         <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_language}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_language}" Margin="0,15,0,0" />
                         <!-- [REF] Languages are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
                         <ComboBox x:Name="ComboBox_Tool_Languages" />
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" />
                         <CheckBox x:Name="CheckBox_Tool_SyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
                         <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
@@ -73,11 +73,11 @@
                             <ComboBoxItem Content="{DynamicResource WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons}" />
                             <ComboBoxItem Content="{DynamicResource WindowSettings_disable}" />
                         </ComboBox>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_importDownload}" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_useThisDownloadMirror}" TextWrapping="Wrap" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_importDownload}" />
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_useThisDownloadMirror}" />
                         <!-- [REF] Mirrors are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
                         <ComboBox x:Name="ComboBox_Tool_DownloadMirror" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" TextWrapping="Wrap" />
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
@@ -88,8 +88,8 @@
                             <Button x:Name="Button_Tool_Importer_AutoInstallCounter_Up" Content="˄" Margin="5,0,0,0" Grid.Column="1" />
                             <Button x:Name="Button_Tool_ImporterAuto_InstallCounter_Down" Content="˅" Margin="5,0,0,0" Grid.Column="2" />
                         </Grid>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_interface}" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_widthOfBeatmapDetailPanel}" TextWrapping="Wrap" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_interface}" />
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_widthOfBeatmapDetailPanel}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*"/>
@@ -114,15 +114,15 @@
             <TabItem Header="osu!">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock Text="{DynamicResource WindowSettings_pathToOsu}" TextWrapping="Wrap" />
-                        <TextBox x:Name="TextBox_osu_Path" Height="23" TextWrapping="Wrap" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_pathToSongsFolder}" TextWrapping="Wrap" />
+                        <TextBlock Text="{DynamicResource WindowSettings_pathToOsu}" />
+                        <TextBox x:Name="TextBox_osu_Path" Height="23" />
+                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_pathToSongsFolder}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TextBox_osu_SongsPath" TextWrapping="Wrap" />
+                            <TextBox x:Name="TextBox_osu_SongsPath" />
                             <Button x:Name="Button_osu_SongPathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Margin="5,0,0,0" ToolTip="Use the default path" Grid.Column="1" />
                         </Grid>
                     </StackPanel>
@@ -131,9 +131,32 @@
             <TabItem Header="{DynamicResource WindowSettings_notifications}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <!-- Not finished yet -->
+            <TabItem Header="{DynamicResource WindowSettings_api}" Visibility="Collapsed">
+                <ScrollViewer Background="#FFE5E5E5">
+                    <StackPanel Margin="5">
+                        <TextBlock Text="{DynamicResource WindowSettings_apiIntro}" TextWrapping="Wrap" />
+                        <Button x:Name="Button_Api_Request" Content="{DynamicResource WindowSettings_apiRequest}" FontSize="12" Margin="0,10,0,0" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_activation}" Margin="0,15,0,0" />
+                        <TextBlock Text="{DynamicResource WindowSettings_apiKey}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TextBox_Api_ApiKey" Height="23" />
+                            <Button x:Name="Button_Api_ApiKey_Validate" Content="{DynamicResource WindowSettings_validate}" FontSize="12" Margin="5,0,0,0" Grid.Column="1" />
+                        </Grid>
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_configuration}" Margin="0,15,0,0" />
+                        <CheckBox x:Name="CheckBox_Api_EnableInBeatmapPanel" Content="{DynamicResource WindowSettings_EnableApiInBeatmapPanel}" Margin="0,5,0,0" />
+                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_monitoring}" Margin="0,15,0,0" />
+                        <Button x:Name="Button_Api_OpenLog" Content="{DynamicResource WindowSettings_openApiLog}" FontSize="12" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -142,11 +165,11 @@
                     <Grid Margin="5">
                         <Button x:Name="Button_Feedback_Prepare" Content="{DynamicResource WindowSettings_prepareForm}" Height="40" />
                         <StackPanel x:Name="StackPanel_Feedback" IsEnabled="False" Margin="0,10,0,0" Visibility="Collapsed">
-                            <TextBlock Text="{DynamicResource WindowSettings_yourName}" TextWrapping="Wrap" />
+                            <TextBlock Text="{DynamicResource WindowSettings_yourName}" />
                             <TextBox x:Name="TextBox_Feedback_Username"/>
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_yourEmail}" TextWrapping="Wrap" />
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_yourEmail}" />
                             <TextBox x:Name="TextBox_Feedback_eMail"/>
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_category}" TextWrapping="Wrap" />
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_category}" />
                             <ComboBox x:Name="ComboBox_Feedback_Category">
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_bug}" />
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_featureRequest}" />
@@ -155,9 +178,9 @@
                                 <Separator/>
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_other}" />
                             </ComboBox>
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" TextWrapping="Wrap" />
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" />
                             <RichTextBox x:Name="RichTextBox_Feedback_Message" Height="75" />
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_furtherInformation}" TextWrapping="Wrap" />
+                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_furtherInformation}" />
                             <RichTextBox IsReadOnly="True">
                                 <FlowDocument>
                                     <Paragraph>

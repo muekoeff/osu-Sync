@@ -65,6 +65,9 @@
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Open Beatmap Listing</system:String>
+    <!-- | |> Played Status -->
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Played</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Unplayed</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
     <system:String x:Key="MainWindow_exit">E_xit</system:String>
@@ -104,7 +107,6 @@
     <system:String x:Key="MainWindow_invalidServerResponse">Invalid server response</system:String>
     <system:String x:Key="MainWindow_invertSelection">Invert Selection</system:String>
     <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
-    <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">The downloaded beatmap is invalid, do you want to skip this file (Yes) or to cancel the whole download (No)?</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Last sync: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Last sync failed.</system:String>
@@ -153,6 +155,7 @@
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">That's... impressive, I guess.</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates!.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Unable to find osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder.&#x0a;Please specify the path to osu! in the following window.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Unable to get ID</system:String>
@@ -214,16 +217,24 @@
 
     <!-- Window_Settings -->
     <!-- | A -->
+    <system:String x:Key="WindowSettings_activation">Activation</system:String>
+    <system:String x:Key="WindowSettings_api">API</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
+    <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
+    <system:String x:Key="WindowSettings_apiRequestPer">%0 API request(s) per %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_Apply</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Are you really sure that you want to delete the configuration file (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps (Numeric)</system:String>
     <!-- | B -->
+    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">Category</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">Check for updates...</system:String>
+    <system:String x:Key="WindowSettings_configuration">Configuration</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Create shortcut on desktop</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">Default</system:String>
@@ -233,6 +244,7 @@
     <system:String x:Key="WindowSettings_disable">Disable</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Download update package to...</system:String>
     <!-- | E -->
+    <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">Enable API access in Beatmap Panel</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Enable notify icon in tray area...</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">Every launch.</system:String>
     <system:String x:Key="WindowSettings_executableFiles">Executable Files</system:String>
@@ -246,6 +258,7 @@
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Import/Download</system:String>
     <system:String x:Key="WindowSettings_interface">Interface</system:String>
+    <system:String x:Key="WindowSettings_invalid">Invalid</system:String>
     <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Language</system:String>
@@ -256,13 +269,15 @@
     <system:String x:Key="WindowSettings_maximumOnceAMonth">Maximum once a week.</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAWeek">Maximum once a month (Not recommended).</system:String>
     <system:String x:Key="WindowSettings_message">Message</system:String>
+    <system:String x:Key="WindowSettings_monitoring">Monitoring</system:String>
     <!-- | N -->
     <system:String x:Key="WindowSettings_never">Nevoar ヽ(≧Д≦)ノ  (Not recommended).</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Nope, this directory doesn't exist... yet.</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">Nope, there's no configuration file...</system:String>
     <system:String x:Key="WindowSettings_notifications">Notifications</system:String>
-    <!-- | O -->
+    <!-- | O --> 
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, that's done.&#x0a;Do you want to restart osu!Sync now?</system:String>
+    <system:String x:Key="WindowSettings_openApiLog">Open API log file</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Open data folder</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Open updater when new version is available</system:String>
     <system:String x:Key="WindowSettings_other">Other</system:String>
@@ -298,6 +313,9 @@
     <system:String x:Key="WindowSettings_updateFileAssocations">Update/Reregister file associations</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Use this osu! Download Mirror...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Use update patcher to automatically install the updates.</system:String>
+    <!-- | V -->
+    <system:String x:Key="WindowSettings_valid">Valid</system:String>
+    <system:String x:Key="WindowSettings_validate">Validate</system:String>
     <!-- | W -->
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel (Numeric, between 5 and 95)</system:String>
     <!-- | Y -->

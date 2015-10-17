@@ -179,7 +179,11 @@ Public Class Window_Updater
         If Setting_Tool_Update_UseDownloadPatcher = False Then
             Button_Update.Content = _e("WindowUpdater_download")
         End If
+#If DEBUG Then
+        TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString & " (Dev)")
+#Else
         TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
+#End If
         Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/updater.versionHistory.json"))
     End Sub
 End Class

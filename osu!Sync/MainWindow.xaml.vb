@@ -33,15 +33,18 @@ Public Class Beatmap
     Public Property Artist As String = ""
     Public Property Creator As String = "Unknown"
     Public Property ID As Integer
+    Public Property IsUnplayed As Boolean
     Public Property MD5 As String
     Public Property RankedStatus As Byte = Convert.ToByte(1)
     Public Property SongSource As String = ""
+    Public Property SongTags As String = ""
     Public Property Title As String
 End Class
 
 Public Class BeatmapPanelDetails
     Public Property Artist As String = "Unknown"
     Public Property Creator As String = "Unknown"
+    Public Property IsUnplayed As Boolean = True
     Public Property RankedStatus As Byte = Convert.ToByte(0)
     Public Property SongSource As String = "Unknown"
     Public Property Title As String
@@ -416,6 +419,7 @@ Class MainWindow
         Interface_ShowBeatmapDetails(SelectedSender_Tag.ID, New BeatmapPanelDetails With {
                                      .Artist = SelectedSender_Tag.Artist,
                                      .Creator = SelectedSender_Tag.Creator,
+                                     .IsUnplayed = SelectedSender_Tag.IsUnplayed,
                                      .RankedStatus = SelectedSender_Tag.RankedStatus,
                                      .Title = SelectedSender_Tag.Title})
     End Sub
@@ -996,6 +1000,19 @@ Class MainWindow
         BeatmapDetails_Creator.Text = Details.Creator
         BeatmapDetails_Title.Text = Details.Title
 
+        ' IsUnplayed status
+        If Details.IsUnplayed Then
+            With BeatmapDetails_IsUnplayed
+                .Background = Color_E74C3C
+                .Text = _e("MainWindow_detailsPanel_playedStatus_unplayed")
+            End With
+        Else
+            With BeatmapDetails_IsUnplayed
+                .Background = Color_008136
+                .Text = _e("MainWindow_detailsPanel_playedStatus_played")
+            End With
+        End If
+
         ' Ranked status
         Select Case Details.RankedStatus
             Case Convert.ToByte(4), Convert.ToByte(5)   ' 4 = Ranked, 5 = Approved
@@ -1330,11 +1347,12 @@ Class MainWindow
                             BeatmapDetails.ID = Reader.ReadInt32()                  ' Beatmap set ID
                             Reader.ReadInt32()                                      '  Thread ID
                             Reader.ReadBytes(11)
-                            Reader.ReadString()                                     ' ´Song source
-                            Reader.ReadString()                                     '  Song tags
+                            Reader.ReadString()                                     '  Song source
+                            BeatmapDetails.SongTags = Reader.ReadString()           ' Song tags
                             Reader.ReadInt16()                                      '  Online offset 
                             Reader.ReadString()                                     '  Font used for the title of the song 
-                            Reader.ReadBytes(10)
+                            BeatmapDetails.IsUnplayed = Reader.ReadBoolean()        ' Is unplayed
+                            Reader.ReadBytes(9)
                             Reader.ReadString()                                     '  Folder name of the beatmap, relative to Songs folder 
                             Reader.ReadBytes(18)
 
@@ -1691,12 +1709,12 @@ Class MainWindow
 
         Importer_UpdateInfo(_e("MainWindow_fetching1"))
 
-        Dim req As HttpWebRequest = DirectCast(HttpWebRequest.Create(RequestURI), HttpWebRequest)
+        Dim req As HttpWebRequest = DirectCast(WebRequest.Create(RequestURI), HttpWebRequest)
         Dim Res As WebResponse
         Try
             Res = req.GetResponse()
         Catch ex As WebException
-            If MessageBox.Show(_e("MainWindow_itLooksLikeSomethingIsWrongWithThisDownload"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
+            If MessageBox.Show(_e("MainWindow_unableToFetchData"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
                 'Yes
                 Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
                 Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
@@ -1750,7 +1768,6 @@ Class MainWindow
         Else
             Importer_CurrentFileName = CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & ".osz"
         End If
-        Importer_CurrentFileName = RemoveIllegalPathCharacters(Importer_CurrentFileName)
 
         TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
         Importer_UpdateInfo(_e("MainWindow_downloading1"))
@@ -1892,7 +1909,6 @@ Class MainWindow
     End Sub
 
     Private Sub Importer_Downloader_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles Importer_Downloader.DownloadFileCompleted
-        Console.WriteLine(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
         Importer_Counter += 1
         If File.ReadAllBytes(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName).Length = 0 Then
             ' File Empty

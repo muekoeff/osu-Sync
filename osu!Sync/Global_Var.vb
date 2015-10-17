@@ -32,6 +32,8 @@ Module Global_Var
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
+    Public Setting_Api_Key As String = ""
+    Public Setting_Api_Enabled_BeatmapPanel As Boolean = False
     Public Setting_osu_Path As String = GetDetectedOsuPath()
     Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
     Public Setting_Tool_CheckForUpdates As Integer = 3
@@ -261,6 +263,8 @@ Module Global_Var
             Dim Content As New Dictionary(Of String, String)
             With Content
                 .Add("_version", My.Application.Info.Version.ToString)
+                .Add("Setting_Api_Enabled_BeatmapPanel", CStr(Setting_Api_Enabled_BeatmapPanel))
+                .Add("Setting_Api_Key", Setting_Api_Key)
                 .Add("Setting_osu_Path", Setting_osu_Path)
                 .Add("Setting_osu_SongsPath", Setting_osu_SongsPath)
                 .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
@@ -289,6 +293,12 @@ Module Global_Var
             Dim PreviousVersion As Version
 
             PreviousVersion = Version.Parse(CStr(ConfigFile.SelectToken("_version")))
+            If Not ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel") Is Nothing Then
+                Setting_Api_Enabled_BeatmapPanel = CBool(ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel"))
+            End If
+            If Not ConfigFile.SelectToken("Setting_Api_Key") Is Nothing Then
+                Setting_Api_Key = CStr(ConfigFile.SelectToken("Setting_Api_Key"))
+            End If
             If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then
                 Setting_osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
             End If
@@ -315,7 +325,6 @@ Module Global_Var
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
                 Setting_Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
-
                 ' Load language library
                 If Not GetTranslationName(Setting_Tool_Language) = "" Then
                     LoadLanguage(GetTranslationName(Setting_Tool_Language), Setting_Tool_Language)
@@ -425,15 +434,34 @@ Module Global_Var
         End With
     End Sub
 
+    Public Sub Action_WriteToApiLog(Method As String, Optional Result As String = "Failed")
+        If Not Directory.Exists(I__Path_Programm & "\Logs") Then
+            Directory.CreateDirectory(I__Path_Programm & "\Logs")
+        End If
+
+        Try
+            If Result.Length >= 150 Then
+                Result = Result.Substring(0, 147) & "..."
+            End If
+            Dim Stream As StreamWriter = File.AppendText(I__Path_Programm & "\Logs\ApiAccess.txt")
+            Dim Content As String = ""
+            Content += "[" & Now.ToString() & " / " & My.Application.Info.Version.ToString & "] "
+            Content += Method & " | " & Result
+            Stream.WriteLine(Content)
+            Stream.Close()
+        Catch ex As Exception
+        End Try
+    End Sub
+
     Function Action_WriteCrashLog(ex As Exception) As String
         If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then
             Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
         End If
-        Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") & ".txt"
-        Using File As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
-            Dim Content As String = "=====   osu!Sync Crash | " & DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
+        Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH-mm-ss") & ".txt"
+        Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
+            Dim Content As String = "=====   osu!Sync Crash | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
                 "// Information" & vbNewLine & "An exception occured in osu!Sync. If this problem persists please report it using the Feedback-window, on GitHub or on the osu!Forum." & vbNewLine & "When reporting please try to describe as detailed as possible what you've done and how the applicationen reacted." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
-                "// Configuration" & vbNewLine & Newtonsoft.Json.JsonConvert.SerializeObject(GetProgramInfoJson, Formatting.None) & vbNewLine & vbNewLine &
+                "// Configuration" & vbNewLine & JsonConvert.SerializeObject(GetProgramInfoJson, Formatting.None) & vbNewLine & vbNewLine &
                 "// Exception" & vbNewLine & ex.ToString
             File.Write(Content)
             File.Close()

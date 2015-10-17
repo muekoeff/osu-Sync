@@ -4,13 +4,13 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       Cursor="AppStarting"
                       EnableDWMDropShadow="True"
-                      MinHeight="700"
                       Height="700"
+                      MinHeight="700"
                       ShowIconOnTitleBar="False"
                       Title="Updater | osu!Sync"
-                      Width="600"
+                      Width="800"
+                      MaxWidth="1250"
                       MinWidth="600"
-                      MaxWidth="600"
                       WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
             <Button x:Name="Button_Done" Content="{DynamicResource WindowUpdater_done}" FontSize="14" IsDefault="True" />
             <Button x:Name="Button_Update" Content="{DynamicResource WindowUpdater_downloadAndInstall}" FontSize="14" IsEnabled="False" Grid.Column="1" Margin="5,0,0,0" />
         </Grid>
-        <ProgressBar x:Name="ProgressBar_Progress" HorizontalAlignment="Left" IsIndeterminate="True" Margin="0,240,0,0" VerticalAlignment="Top" Width="600" Grid.ColumnSpan="4" />
+        <ProgressBar x:Name="ProgressBar_Progress" IsIndeterminate="True" Margin="0,240,0,0" VerticalAlignment="Top" Grid.ColumnSpan="4" />
         <RichTextBox x:Name="RichTextBox_Changelog" FontFamily="Courier New" FontSize="18" IsReadOnly="True" Margin="0,127,0,5" Grid.Row="1" Grid.Column="1" ScrollViewer.CanContentScroll="True">
             <FlowDocument>
                 <Paragraph>

@@ -8,7 +8,7 @@
         MsgBox("B-ba-baka     ｡･ﾟﾟ･(>д<)･ﾟﾟ･｡" & vbNewLine & vbNewLine & "Sorry, it looks like an exception occured." & vbNewLine & "osu!Sync is going to shutdown now.", MsgBoxStyle.Critical, "Debug | osu!Sync")
         Process.Start(Action_WriteCrashLog(e.Exception))
         Try
-            Application.Current.Shutdown()
+            Current.Shutdown()
         Catch ex As Exception
         End Try
     End Sub

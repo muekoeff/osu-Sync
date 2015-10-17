@@ -29,7 +29,14 @@
                     </StackPanel>
                     <StackPanel VerticalAlignment="Bottom">
                         <Button x:Name="BeatmapDetails_BeatmapListing" Content="{DynamicResource MainWindow_detailsPanel_openBeatmapListing}" FontSize="14" Height="45" Margin="0,0,0,6" ToolTip="{DynamicResource MainWindow_openBeatmapListingPageInBrowser}"/>
-                        <TextBlock x:Name="BeatmapDetails_RankedStatus" Background="#BF00AEFF" Height="32" Margin="-10,0" Padding="0,6,0,0" TextAlignment="Center" />
+                        <Grid Margin="-10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="BeatmapDetails_RankedStatus" Background="#BF00AEFF" Height="32" Padding="0,6,0,0" TextAlignment="Center" />
+                            <TextBlock x:Name="BeatmapDetails_IsUnplayed" Background="#FFE74C3C" Height="32" Padding="0,6,0,0" TextAlignment="Center" Grid.Column="1" />
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </Controls:Flyout>

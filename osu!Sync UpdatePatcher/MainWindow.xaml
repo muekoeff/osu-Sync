@@ -18,10 +18,10 @@
         <TextBlock FontFamily="Fira Sans, Segoe UI, Arial" FontSize="105" Foreground="#FF26AD5F" Margin="0,10,0,0" Text="osu!Sync" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1"/>
         <Rectangle Fill="#88000000" Height="3" Margin="0,159,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="TextBlock_CurrentProcess" FontFamily="Fira Sans, Segoe UI, Arial" FontSize="45" Foreground="#FF26AD5F" Height="63" Margin="0,175,0,0" Text="Software Update Patcher" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" />
-        <ProgressBar x:Name="ProgressBar" Height="25" IsIndeterminate="True" VerticalAlignment="Bottom" Visibility="Hidden" Grid.ColumnSpan="2" />
         <Button x:Name="Button_startOsusync" Content="_Start osu!Sync" FontSize="20" HorizontalAlignment="Right" IsDefault="True" Margin="0,0,15,10" VerticalAlignment="Bottom" Visibility="Hidden" Width="150" Grid.Column="1" />
         <Button x:Name="Button_closeUpdater" Content="_Close Updater" FontSize="20" HorizontalAlignment="Right" IsCancel="True" Margin="0,0,170,10" VerticalAlignment="Bottom" Visibility="Hidden" Width="150" Grid.Column="1"  />
         <TextBlock x:Name="TextBlock_VersionInfo" Foreground="#FFBBBBBB" Margin="0,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" />
         <TextBlock x:Name="TextBlock_Paths" Foreground="#FFBBBBBB" Margin="0,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" />
+        <ProgressBar x:Name="ProgressBar" Height="25" IsIndeterminate="True" VerticalAlignment="Bottom" Visibility="Hidden" Grid.ColumnSpan="2" />
     </Grid>
 </Window>
