@@ -20,6 +20,7 @@ Public Enum BGWcallback_ActionSyncGetIDs_ReturnStatus
 End Enum
 
 Public Enum NotifyNextAction
+    None = 0
     OpenUpdater = 1
 End Enum
 
@@ -462,6 +463,18 @@ Class MainWindow
         End With
     End Sub
 
+    Private Function Action_ShowBalloon(Content As String, Optional Title As String = "osu!Sync", Optional Icon As BalloonIcon = BalloonIcon.Info, Optional BallonNextAction As NotifyNextAction = NotifyNextAction.None) As Boolean
+        If Setting_Tool_EnableNotifyIcon = 0 Then
+            With NotifyIcon
+                .Tag = BallonNextAction
+                .ShowBalloonTip(Title, Content, Icon)
+            End With
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     ''' <summary>
     ''' Determines wheter to start or (when it's running) to focus osu!.
     ''' </summary>
@@ -492,18 +505,35 @@ Class MainWindow
         BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
     End Sub
 
+    Public Sub Action_ToggleMinimizeToTray()
+        If Visibility = Visibility.Visible Then
+            Select Case Setting_Tool_EnableNotifyIcon
+                Case 0, 2, 3
+                    Visibility = Visibility.Hidden
+                    NotifyIcon.Visibility = Visibility.Visible
+                Case Else
+                    MenuItem_Program_MinimizeToTray.IsEnabled = False
+            End Select
+        Else
+            Visibility = Visibility.Visible
+            Select Case Setting_Tool_EnableNotifyIcon
+                Case 3, 4
+                    NotifyIcon.Visibility = Visibility.Collapsed
+            End Select
+        End If
+    End Sub
+
     Private Sub Action_Tool_UpdateSettings()
         Select Case Setting_Tool_EnableNotifyIcon
-            Case 0, 2, 3
+            Case 0, 2
+                MenuItem_Program_MinimizeToTray.Visibility = Visibility.Visible
                 NotifyIcon.Visibility = Visibility.Visible
-                If Setting_Tool_EnableNotifyIcon = 3 Then
-                    NotifyIcon.Visibility = Visibility.Collapsed
-                Else
-                    MenuItem_Program_MinimizeToTray.Visibility = Visibility.Visible
-                End If
-            Case 4
+            Case 3
+                MenuItem_Program_MinimizeToTray.Visibility = Visibility.Visible
                 NotifyIcon.Visibility = Visibility.Collapsed
+            Case 4
                 MenuItem_Program_MinimizeToTray.Visibility = Visibility.Collapsed
+                NotifyIcon.Visibility = Visibility.Collapsed
         End Select
     End Sub
 
@@ -1192,15 +1222,7 @@ Class MainWindow
     End Sub
 
     Private Sub MenuItem_Program_MinimizeToTray_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_MinimizeToTray.Click
-        Select Case Setting_Tool_EnableNotifyIcon
-            Case 0, 2, 3
-                Visibility = Visibility.Hidden
-                If Setting_Tool_EnableNotifyIcon = 3 Then
-                    NotifyIcon.Visibility = Visibility.Visible
-                End If
-            Case Else
-                MenuItem_Program_MinimizeToTray.IsEnabled = False
-        End Select
+        Action_ToggleMinimizeToTray()
     End Sub
 
     Private Sub MenuItem_Program_RunOsu_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_RunOsu.Click
@@ -1221,11 +1243,7 @@ Class MainWindow
     End Sub
 
     Private Sub NotifyIcon_ShowHide_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_ShowHide.Click
-        If IsVisible Then
-            Visibility = Visibility.Hidden
-        Else
-            Visibility = Visibility.Visible
-        End If
+        Action_ToggleMinimizeToTray()
     End Sub
 
     Private Sub NotifyIcon_TrayBalloonTipClicked(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayBalloonTipClicked
@@ -1236,15 +1254,7 @@ Class MainWindow
     End Sub
 
     Private Sub NotifyIcon_TrayMouseDoubleClick(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayMouseDoubleClick
-        If IsVisible Then
-            Visibility = Visibility.Hidden
-        Else
-            Visibility = Visibility.Visible
-            Focus()
-            If Setting_Tool_EnableNotifyIcon = 3 Then
-                NotifyIcon.Visibility = Visibility.Collapsed
-            End If
-        End If
+        Action_ToggleMinimizeToTray()
     End Sub
 
     Private Sub TextBlock_Programm_Updater_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Updater.MouseDown
@@ -1281,10 +1291,7 @@ Class MainWindow
             TextBlock_Programm_Updater.Content = _e("MainWindow_latestVersion")
         Else
             TextBlock_Programm_Updater.Content = _e("MainWindow_updateAvailable").Replace("%0", LatestVer)
-            If Setting_Tool_EnableNotifyIcon = 0 Then
-                NotifyIcon.Tag = NotifyNextAction.OpenUpdater
-                NotifyIcon.ShowBalloonTip("Updater | osu!Sync", _e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", LatestVer), BalloonIcon.Info)
-            End If
+            Action_ShowBalloon(_e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", LatestVer), , , NotifyNextAction.OpenUpdater)
             If Setting_Messages_Updater_OpenUpdater Then
                 Interface_ShowUpdaterWindow()
             End If
@@ -1823,13 +1830,11 @@ Class MainWindow
             Importer_UpdateInfo(_e("MainWindow_done"))
 
             My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Beep)
-            If Setting_Tool_EnableNotifyIcon = 0 Then
-                NotifyIcon.ShowBalloonTip("osu!Sync", _e("MainWindow_installationFinished") & vbNewLine &
+            Action_ShowBalloon(_e("MainWindow_installationFinished") & vbNewLine &
                         _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine &
                         _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine &
                          _e("MainWindow_setsLeftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString) & vbNewLine &
-                         _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString), BalloonIcon.None)
-            End If
+                         _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString))
             MsgBox(_e("MainWindow_installationFinished") & vbNewLine &
                         _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString) & vbNewLine &
                         _e("MainWindow_setsFailed").Replace("%0", Importer_BeatmapList_Tag_Failed.Count.ToString) & vbNewLine &
