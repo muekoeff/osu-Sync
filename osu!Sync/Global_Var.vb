@@ -1,8 +1,7 @@
 ﻿Imports Newtonsoft.Json, Newtonsoft.Json.Linq
-Imports System.IO, System.IO.Compression, System.Security.Principal
-Imports System.Security.Cryptography
-Imports System.Text
-Imports System.Text.RegularExpressions
+Imports System.IO, System.IO.Compression
+Imports System.Security.Cryptography, System.Security.Principal
+Imports System.Text, System.Text.RegularExpressions
 
 Class DownloadMirror
     Property DisplayName As String
@@ -28,7 +27,7 @@ Module Global_Var
     Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)
 
     Public I__StartUpArguments() As String
-    Public Const I__Path_Web_Host As String = "http://nw520.de/osuSync"
+    Public Const I__Path_Web_Host As String = "http://nw520.de/osuSync/"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
@@ -434,26 +433,7 @@ Module Global_Var
         End With
     End Sub
 
-    Public Sub Action_WriteToApiLog(Method As String, Optional Result As String = "Failed")
-        If Not Directory.Exists(I__Path_Programm & "\Logs") Then
-            Directory.CreateDirectory(I__Path_Programm & "\Logs")
-        End If
-
-        Try
-            If Result.Length >= 150 Then
-                Result = Result.Substring(0, 147) & "..."
-            End If
-            Dim Stream As StreamWriter = File.AppendText(I__Path_Programm & "\Logs\ApiAccess.txt")
-            Dim Content As String = ""
-            Content += "[" & Now.ToString() & " / " & My.Application.Info.Version.ToString & "] "
-            Content += Method & " | " & Result
-            Stream.WriteLine(Content)
-            Stream.Close()
-        Catch ex As Exception
-        End Try
-    End Sub
-
-    Function Action_WriteCrashLog(ex As Exception) As String
+    Function WriteCrashLog(ex As Exception) As String
         If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then
             Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
         End If
@@ -469,6 +449,25 @@ Module Global_Var
 
         Return CrashFile
     End Function
+
+    Sub WriteToApiLog(Method As String, Optional Result As String = "Failed")
+        If Not Directory.Exists(I__Path_Programm & "\Logs") Then
+            Directory.CreateDirectory(I__Path_Programm & "\Logs")
+        End If
+
+        Try
+            If Result.Length >= 150 Then
+                Result = Result.Substring(0, 147) & "..."
+            End If
+            Dim Stream As StreamWriter = File.AppendText(I__Path_Programm & "\Logs\ApiAccess.txt")
+            Dim Content As String = ""
+            Content += "[" & Now.ToString() & " / " & My.Application.Info.Version.ToString & "] "
+            Content += Method & ":" & vbNewLine & vbTab & Result
+            Stream.WriteLine(Content)
+            Stream.Close()
+        Catch ex As Exception
+        End Try
+    End Sub
 
     <Runtime.InteropServices.DllImport("shell32.dll")> Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
     End Sub

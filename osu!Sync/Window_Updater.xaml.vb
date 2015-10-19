@@ -3,12 +3,10 @@ Imports System.Net
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-' Check if package already downloaded
-
 Public Class Window_Updater
     Private WithEvents Client As New WebClient
     Private DownloadMode As DownloadModes = DownloadModes.Info
-    Private Update_DownloadPatcherToPath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater" & "\UpdatePatcher.exe"
+    Private Update_DownloadPatcherToPath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater\UpdatePatcher.exe"
     Private Update_DownloadToPath As String
     Private Update_FileName As String
     Private Update_Path As String
@@ -184,6 +182,6 @@ Public Class Window_Updater
 #Else
         TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
 #End If
-        Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/updater.versionHistory.json"))
+        Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "data/files/updater.versionHistory.json"))
     End Sub
 End Class

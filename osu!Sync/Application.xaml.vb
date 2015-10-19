@@ -6,7 +6,7 @@
     Private Sub Application_DispatcherUnhandledException(sender As Object, e As Windows.Threading.DispatcherUnhandledExceptionEventArgs) Handles Me.DispatcherUnhandledException
         e.Handled = True
         MsgBox("B-ba-baka     ｡･ﾟﾟ･(>д<)･ﾟﾟ･｡" & vbNewLine & vbNewLine & "Sorry, it looks like an exception occured." & vbNewLine & "osu!Sync is going to shutdown now.", MsgBoxStyle.Critical, "Debug | osu!Sync")
-        Process.Start(Action_WriteCrashLog(e.Exception))
+        Process.Start(WriteCrashLog(e.Exception))
         Try
             Current.Shutdown()
         Catch ex As Exception

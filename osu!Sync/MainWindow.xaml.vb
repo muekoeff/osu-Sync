@@ -63,9 +63,7 @@ Public Class BGWcallback__Action_Sync_GetIDs
 End Class
 
 Class MainWindow
-    Private WithEvents Client As New WebClient
     Private WithEvents FadeOut As New DoubleAnimation()
-    Private Notify_NextAction As NotifyNextAction
 
     Private Sync_BeatmapList_Installed As New List(Of Beatmap)
     Private Sync_BeatmapList_ID_Installed As New List(Of Integer)
@@ -208,6 +206,15 @@ Class MainWindow
         End If
     End Sub
 
+    Private Sub Action_CheckForUpdates()
+        TextBlock_Programm_Updater.Content = _e("MainWindow_checkingForUpdates")
+        Dim UpdateClient As New WebClient
+        UpdateClient.DownloadStringAsync(New Uri(I__Path_Web_Host + "data/files/updater.versionHistory.json"))
+        AddHandler UpdateClient.DownloadStringCompleted, AddressOf UpdateClient_DownloadStringCompleted
+        Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
+        Action_SaveSettings()
+    End Sub
+
     ''' <summary>
     ''' Converts the given <code>List(Of Beatmap)</code> to a CSV-String.
     ''' </summary>
@@ -232,9 +239,9 @@ Class MainWindow
     Private Function Action_ConvertBeatmapListToHTML(ByVal Source As List(Of Beatmap)) As String()
         Dim Failed As String = ""
         Dim HTML_Source As String = "<!doctype html>" & vbNewLine &
-            "<!-- Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://nw520.de/) | " & Date.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
+            "<!-- Information: This file has been generated with osu!Sync (" & My.Application.Info.Version.ToString & ") | " & Date.Now.ToString("dd.MM.yyyy") & " -->" & vbNewLine &
             "<html>" & vbNewLine &
-            "<head><meta charset=""utf-8""><meta name=""author"" content=""naseweis520, osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine &
+            "<head><meta charset=""utf-8""><meta name=""author"" content=""osu!Sync""/><meta name=""generator"" content=""osu!Sync " & My.Application.Info.Version.ToString & """/><meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes""/><title>Beatmap List | osu!Sync</title><link rel=""icon"" type=""image/png"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png""/><link href=""http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"" rel=""stylesheet"" type=""text/css"" /><link href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css"" rel=""stylesheet"" type=""text/css""/><link rel=""stylesheet"" type=""text/css"" href=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css""/></head>" & vbNewLine &
             "<body>" & vbNewLine &
             "<div id=""Wrapper"">" & vbNewLine &
             vbTab & "<header><p>Beatmap List | osu!Sync</p></header>" & vbNewLine &
@@ -253,7 +260,7 @@ Class MainWindow
         Next
         HTML_Source += "</div>" & vbNewLine &
         "</div>" & vbNewLine &
-        "<footer><p>Generated with osu!Sync, a free tool made by <a href=""http://nw520.de/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine &
+        "<footer><p>Generated with osu!Sync, an open-source tool made by <a href=""http://nw520.de/"" target=""_blank"">naseweis520</a>.</p></footer>" & vbNewLine &
         "<script src=""http://code.jquery.com/jquery-latest.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js""></script><script src=""https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js""></script>" & vbNewLine &
         "</body>" & vbNewLine &
         "</html>"
@@ -315,7 +322,7 @@ Class MainWindow
     ''' <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
     ''' <remarks></remarks>
     Private Function Action_ConvertBeatmapListToTXT(ByVal Source As List(Of Beatmap)) As String
-        Dim Content As String = "Information: This file was generated with osu!Sync " & My.Application.Info.Version.ToString & " by naseweis520 (http://nw520.de/) | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
+        Dim Content As String = "Information: This file has been generated with osu!Sync (" & My.Application.Info.Version.ToString & ") | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
         For Each SelectedBeatmap As Beatmap In Source
             Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine &
                 "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine &
@@ -925,39 +932,6 @@ Class MainWindow
         Action_Sync_GetIDs()
     End Sub
 
-    Private Sub Client_DownloadStringCompleted(sender As Object, e As Net.DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
-        Dim Answer As JObject
-        Try
-            Answer = JObject.Parse(e.Result)
-        Catch ex As JsonReaderException
-            If Setting_Messages_Updater_UnableToCheckForUpdates Then
-                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
-                MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
-            End If
-            TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
-            Exit Sub
-        Catch ex As System.Reflection.TargetInvocationException
-            If Setting_Messages_Updater_UnableToCheckForUpdates Then
-                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
-            End If
-            TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
-            Exit Sub
-        End Try
-
-        If CStr(Answer.SelectToken("latestVersion")) = My.Application.Info.Version.ToString Then
-            TextBlock_Programm_Updater.Content = _e("MainWindow_latestVersion")
-        Else
-            TextBlock_Programm_Updater.Content = _e("MainWindow_updateAvailable").Replace("%0", CStr(Answer.SelectToken("latestVersion")))
-            If Setting_Tool_EnableNotifyIcon = 0 Then
-                Notify_NextAction = NotifyNextAction.OpenUpdater
-                NotifyIcon.ShowBalloonTip("Updater | osu!Sync", _e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", CStr(Answer.SelectToken("latestVersion"))), Hardcodet.Wpf.TaskbarNotification.BalloonIcon.Info)
-            End If
-            If Setting_Messages_Updater_OpenUpdater Then
-                Interface_ShowUpdaterWindow()
-            End If
-        End If
-    End Sub
-
     Private Sub FadeOut_Completed(sender As Object, e As EventArgs) Handles FadeOut.Completed
         Overlay.Visibility = Visibility.Hidden
     End Sub
@@ -1081,10 +1055,7 @@ Class MainWindow
         ' Check For Updates
         Select Case Setting_Tool_CheckForUpdates
             Case 0
-                TextBlock_Programm_Updater.Content = _e("MainWindow_checkingForUpdates")
-                Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
-                Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
-                Action_SaveSettings()
+                Action_CheckForUpdates()
             Case 1
                 TextBlock_Programm_Updater.Content = _e("MainWindow_updatesDisabled")
             Case Else
@@ -1098,11 +1069,8 @@ Class MainWindow
                         Interval = 30
                 End Select
 
-                If DateDiff(DateInterval.Day, Date.ParseExact(Setting_Tool_LastCheckForUpdates, "dd-MM-yyyy hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= Interval Then
-                    TextBlock_Programm_Updater.Content = _e("MainWindow_checkingForUpdates")
-                    Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "/data/files/software/LatestVersion.php?version=" & My.Application.Info.Version.ToString & "&from=AutoCheck&updaterInterval=" & Setting_Tool_CheckForUpdates))
-                    Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
-                    Action_SaveSettings()
+                If DateDiff(DateInterval.Day, Date.ParseExact(Setting_Tool_LastCheckForUpdates, "dd-MM-yyyy hh:mm:ss", Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= Interval Then
+                    Action_CheckForUpdates()
                 Else
                     TextBlock_Programm_Updater.Content = _e("MainWindow_updateCheckNotNecessary")
                 End If
@@ -1261,7 +1229,7 @@ Class MainWindow
     End Sub
 
     Private Sub NotifyIcon_TrayBalloonTipClicked(sender As Object, e As RoutedEventArgs) Handles NotifyIcon.TrayBalloonTipClicked
-        Select Case Notify_NextAction
+        Select Case CType(NotifyIcon.Tag, NotifyNextAction)
             Case NotifyNextAction.OpenUpdater
                 Interface_ShowUpdaterWindow()
         End Select
@@ -1286,6 +1254,41 @@ Class MainWindow
     Private Sub TextBlock_Programm_Version_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Programm_Version.MouseDown
         Dim Window_About As New Window_About
         Window_About.ShowDialog()
+    End Sub
+
+    Private Sub UpdateClient_DownloadStringCompleted(sender As Object, e As Net.DownloadStringCompletedEventArgs)
+        Dim Answer As JObject
+        Try
+            Answer = JObject.Parse(e.Result)
+        Catch ex As JsonReaderException
+            If Setting_Messages_Updater_UnableToCheckForUpdates Then
+                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
+                MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
+            End If
+            TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
+            Exit Sub
+        Catch ex As Reflection.TargetInvocationException
+            If Setting_Messages_Updater_UnableToCheckForUpdates Then
+                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
+                MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
+            End If
+            TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
+            Exit Sub
+        End Try
+
+        Dim LatestVer As String = CStr(Answer.SelectToken("latestRepoRelease").SelectToken("tag_name"))
+        If LatestVer = My.Application.Info.Version.ToString Then
+            TextBlock_Programm_Updater.Content = _e("MainWindow_latestVersion")
+        Else
+            TextBlock_Programm_Updater.Content = _e("MainWindow_updateAvailable").Replace("%0", LatestVer)
+            If Setting_Tool_EnableNotifyIcon = 0 Then
+                NotifyIcon.Tag = NotifyNextAction.OpenUpdater
+                NotifyIcon.ShowBalloonTip("Updater | osu!Sync", _e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", LatestVer), BalloonIcon.Info)
+            End If
+            If Setting_Messages_Updater_OpenUpdater Then
+                Interface_ShowUpdaterWindow()
+            End If
+        End If
     End Sub
 
 #Region "BGW__Action_Sync_GetIDs"

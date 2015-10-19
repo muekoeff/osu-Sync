@@ -23,8 +23,8 @@
         </Grid.ColumnDefinitions>
         <TextBlock FontSize="48" Foreground="#FF27AE60" HorizontalAlignment="Left" Margin="0,15,0,0" Text="{DynamicResource WindowWelcome_title}" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2"/>
         <TextBlock FontSize="22" FontWeight="SemiBold" Foreground="#FF008136" HorizontalAlignment="Left" Margin="0,45,0,0" Text="{DynamicResource WindowWelcome_subtitle}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
-        <TextBlock FontSize="20" Foreground="#FF222222" Margin="0,85,0,0" Text="{DynamicResource WindowWelcome_message}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
+        <TextBlock FontSize="20" Foreground="#FF222222" Margin="0,85,0,0" Text="{DynamicResource WindowWelcome_message}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" />
         <Button x:Name="Button_SkipLogin" Content="{DynamicResource WindowWelcome_continue}" VerticalAlignment="Top" Height="50" FontSize="14" Grid.Column="1" Grid.Row="2" />
-        <TextBlock Foreground="#FFAAAAAA" Text="{DynamicResource WindowWelcome_warning}" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="2" />
+        <TextBlock Foreground="#FFAAAAAA" Text="{DynamicResource WindowWelcome_warning}" TextAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="2" />
     </Grid>
 </Controls:MetroWindow>

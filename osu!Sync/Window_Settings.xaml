@@ -137,8 +137,8 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <!-- Not finished yet -->
-            <TabItem Header="{DynamicResource WindowSettings_api}" Visibility="Collapsed">
+            <!-- Not finished yet  Visibility="Collapsed"-->
+            <TabItem Header="{DynamicResource WindowSettings_api}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
                         <TextBlock Text="{DynamicResource WindowSettings_apiIntro}" TextWrapping="Wrap" />

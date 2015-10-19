@@ -94,7 +94,7 @@ Public Class Window_Settings
     Private Sub ApiClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
         Dim JSON_Array As JArray
         Try
-            Action_WriteToApiLog("/api/get_beatmaps", e.Result)
+            WriteToApiLog("/api/get_beatmaps", e.Result)
             JSON_Array = CType(JsonConvert.DeserializeObject(e.Result), JArray)
             If Not CType(JSON_Array.First, JObject).SelectToken("beatmapset_id") Is Nothing Then
                 With Button_Api_ApiKey_Validate
@@ -106,7 +106,7 @@ Public Class Window_Settings
                 Throw New ArgumentException("Unexpected value")
             End If
         Catch ex As Exception
-            Action_WriteToApiLog("/api/get_beatmaps")
+            WriteToApiLog("/api/get_beatmaps")
             With Button_Api_ApiKey_Validate
                 .Content = _e("WindowSettings_invalid")
                 .IsEnabled = True
@@ -202,7 +202,7 @@ Public Class Window_Settings
             Grid_Feedback_Overlay.Visibility = Visibility.Visible
             Dim Client As New WebClient
             AddHandler Client.DownloadStringCompleted, AddressOf FeedbackClient_DownloadStringCompleted
-            Client.DownloadStringAsync(New Uri("http://nw520.de/osuSync/data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
+            Client.DownloadStringAsync(New Uri(I__Path_Web_Host & "data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
         End If
     End Sub
 
