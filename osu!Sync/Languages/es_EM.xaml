@@ -31,6 +31,7 @@
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">Una nueva versión esta disponible.&#x0a;Actual: %0 | Ultima: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
+    <system:String x:Key="MainWindow_beatmapsDoesNotExist">The beatmap with the ID %0 doesn't exist.</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 beatmaps encontrado.</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">IDs de Beatmap pueden asignarse una sola vez.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 conjunto de beatmap en total analizados.</system:String>
@@ -64,6 +65,9 @@
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">No Rankeado</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Abrir listado de Beatmap</system:String>
+    <!-- | |> Played Status -->
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Played</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Unplayed</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">Excepciones</system:String>
     <system:String x:Key="MainWindow_exit">_Salir</system:String>
@@ -77,13 +81,14 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">No se puede eliminar la Asociación de archivo.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Asociación de archivo registrado con éxito, gracias. (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">No se pudo registrar la Asociación de archivo.</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">Parece que algunas extensiones de archivo no están asociadas con esta aplicación.</system:String>
-    <system:String x:Key="MainWindow_extensionWrong">Algunas extensiones están obsoletas.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Some file extensions aren't associated with this application.</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">Some file extensions are outdated.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">El ID obtenido no es un número.</system:String>
     <system:String x:Key="MainWindow_fetching">Buscando %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Buscando...</system:String>
     <system:String x:Key="MainWindow_file">_Archivo</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed.&#x0a;It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">Carpetas</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Generando interfaz...</system:String>
@@ -102,9 +107,6 @@
     <system:String x:Key="MainWindow_invalidServerResponse">Respuesta del servidor no válido</system:String>
     <system:String x:Key="MainWindow_invertSelection">Invertir selección</system:String>
     <system:String x:Key="MainWindow_isInstalled">¿Instalado?</system:String>
-    <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">Pareciera que algo ha ido mal con esta descarga, ¿deseas omitir este archivo (Sí) o cancelar toda la descarga (No)?</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">Pareciera que algunas de las configuraciones de tu beatmap difieren del formato normal.</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">Pareciera que alguna(s) de las carpetas no pueden ser analizadas.&#x0a;Estas serán ignoradas.</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Última sincronización: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">La última sincronización falló.</system:String>
@@ -144,6 +146,7 @@
     <system:String x:Key="MainWindow_settings">Configuración</system:String>
     <system:String x:Key="MainWindow_showHideOsuSync">Mostrar/Esconder osu!Sync</system:String>
     <system:String x:Key="MainWindow_skippedBeatmaps">Beatmaps omitidos</system:String>
+    <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Algunas configuraciones de beatmap no han sido exportadas.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Sincronización completada</system:String>
     <system:String x:Key="MainWindow_synchronize">Sincronizar</system:String>
@@ -152,10 +155,12 @@
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Eso es... impresionante, supongo.</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">No se puede comprobar las actualizaciones!.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">No se puede encontrar osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">No se puede encontrar la carpeta de osu!. Por favor especifique la ruta a osu! en la siguiente ventana.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">No se puede obtener el ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Las IDs de algunos beatmaps no pueden ser analizadas.&#x0a;Se manejaran como no enviado (no se pueden exportar).</system:String>
+    <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Extensión de archivo desconocida</system:String>
     <system:String x:Key="MainWindow_unsubmitted">No enviado</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Las configuraciones de los beatmaps no enviados no se podrán exportar</system:String>
@@ -168,7 +173,6 @@
     <system:String x:Key="MainWindow_welcomeToOsuSync">Bienvenido a osu!Sync.</system:String>
     <!-- | Y -->
     <system:String x:Key="MainWindow_youNeedToSyncFirst">Para poder utilizar esta función necesita actualizar primero.</system:String>
-    <system:String x:Key="MainWindow_youveGotAboutBeatmaps">Tienes alrededor de %0 configuración de beatmaps.&#x0a;Tomará un tiempo (tal vez unos cuantos minutos) leer todas las configuraciones, ¿desea continuar?</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- || A -->
     <system:String x:Key="MainWindow_tt_openAboutWindow">Abrir sobre la ventana.</system:String>
@@ -213,16 +217,24 @@
 
     <!-- Window_Settings -->
     <!-- | A -->
+    <system:String x:Key="WindowSettings_activation">Activation</system:String>
+    <system:String x:Key="WindowSettings_api">API</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
+    <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
+    <system:String x:Key="WindowSettings_apiRequestPer">%0 API request(s) per %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_Aplicar</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">¿Está realmente seguro que deseas eliminar el archivo de configuración (esto no se puede deshacer)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">¿Está realmente seguro que desea reiniciar la configuración (esto no se puede deshacer)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimportación descargada de beatmaps después x beatmaps (numérico)</system:String>
     <!-- | B -->
+    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">Categoría</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Comprobar asociaciones de archivo de cada sincronización</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">Comprobar si hay actualizaciones...</system:String>
+    <system:String x:Key="WindowSettings_configuration">Configuration</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Crear un acceso directo en el escritorio</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">Predeterminado</system:String>
@@ -232,6 +244,7 @@
     <system:String x:Key="WindowSettings_disable">Desactivado</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Descargar el paquete de actualización a...</system:String>
     <!-- | E -->
+    <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">Enable API access in Beatmap Panel</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Habilitar el ícono de Notificaciones en la bandeja...</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">Todos los lanzamientos.</system:String>
     <system:String x:Key="WindowSettings_executableFiles">Archivos ejecutables</system:String>
@@ -245,6 +258,7 @@
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Importar/Descargar</system:String>
     <system:String x:Key="WindowSettings_interface">Interfaz</system:String>
+    <system:String x:Key="WindowSettings_invalid">Invalid</system:String>
     <system:String x:Key="WindowSettings_invalidValue">Valor inválido!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Idioma</system:String>
@@ -255,6 +269,7 @@
     <system:String x:Key="WindowSettings_maximumOnceAMonth">Máximo una vez por semana.</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAWeek">Máximo una vez al mes (no recomendado).</system:String>
     <system:String x:Key="WindowSettings_message">Mensaje</system:String>
+    <system:String x:Key="WindowSettings_monitoring">Monitoring</system:String>
     <!-- | N -->
     <system:String x:Key="WindowSettings_never">Nuuunnca ヽ(≧Д≦)ノ (No recomendado).</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">No, este directorio no existe... todavía.</system:String>
@@ -262,6 +277,7 @@
     <system:String x:Key="WindowSettings_notifications">Notificaciones</system:String>
     <!-- | O -->
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, está hecho.&#x0a;¿Deseas reiniciar osu!Sync ahora?</system:String>
+    <system:String x:Key="WindowSettings_openApiLog">Open API log file</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Abrir carpeta de datos</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Abrir el actualizador cuando una nueva versión este disponible</system:String>
     <system:String x:Key="WindowSettings_other">Otro</system:String>
@@ -271,7 +287,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Por favor abra el osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Por favor seleccione el directorio donde guardar las actualizaciones</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Por favor seleccione su carpeta de canciones</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Por favor Inténtalo más tarde o póngase en contacto con nosotros: team@nw520.de .</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@nw520.de .</system:String>
     <system:String x:Key="WindowSettings_prepareForm">Preparar Forma</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Pregunta/Solicitud de Ayuda</system:String>
@@ -289,7 +305,7 @@
     <system:String x:Key="WindowSettings_sync">Sincronizar</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sincronizar el inicio de la aplicación</system:String>
     <!-- | T -->
-    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">Parece que ya hay un acceso directo en tu escritorio.</system:String>
+    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">There's already a shortcut on your desktop.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">¡No se puede crear acceso directo!</system:String>
     <system:String x:Key="WindowSettings_unableToSubmitFeedback">No se puede enviar comentarios!</system:String>
@@ -297,6 +313,9 @@
     <system:String x:Key="WindowSettings_updateFileAssocations">Actualice/reinscriba asociaciones de archivo</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Descargar desde este osu! mirror...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Actualizar automáticamente mediante el parche de actualizaciones.</system:String>
+    <!-- | V -->
+    <system:String x:Key="WindowSettings_valid">Valid</system:String>
+    <system:String x:Key="WindowSettings_validate">Validate</system:String>
     <!-- | W -->
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Anchura del panel de detalles del beatmap (numérico, entre 5 y 95)</system:String>
     <!-- | Y -->
@@ -320,7 +339,7 @@
     <system:String x:Key="WindowUpdater_dateOfPublication">Fecha de publicación: %0</system:String>
     <system:String x:Key="WindowUpdater_done">_Hecho</system:String>
     <system:String x:Key="WindowUpdater_download">Descargar</system:String>
-    <system:String x:Key="WindowUpdater_downloadAndInstall">_Descargar e instalar</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">_Download and Install</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Descarga terminada. (%0 Bytes)</system:String>
     <system:String x:Key="WindowUpdater_downloadingInstaller">Descargando instalador | %0 de %1 Bytes</system:String>
     <system:String x:Key="WindowUpdater_downloadingUpdatePackage">Descargando paquete de actualización | %0 de %1 Bytes</system:String>
@@ -336,7 +355,6 @@
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Incapaz de comunicarse con el servidor</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">¡No se puede descargar el registro de cambios!</system:String>
-    <system:String x:Key="WindowUpdater_unableToMoveUpdate">No se puede mover la actualización al directorio correcto, porque ya existe un archivo con el mismo nombre.</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">Estás usando la última versión</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">Su versión: %0</system:String>

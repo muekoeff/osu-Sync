@@ -364,7 +364,7 @@
     <system:String x:Key="WindowWelcome_continue">_Continue</system:String>
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync is a free tool which allows you to export and import beatmaps to osu!. You can generate lists which can be easily shared to share your beatmaps.</system:String>
-    <!-- | T -->
+    <!-- | S -->
     <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync by naseweis520</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Welcome</system:String>

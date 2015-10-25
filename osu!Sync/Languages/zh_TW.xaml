@@ -31,6 +31,7 @@
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available.&#x0a;Current: %0 | Latest: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">圖組</system:String>
+    <system:String x:Key="MainWindow_beatmapsDoesNotExist">The beatmap with the ID %0 doesn't exist.</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">找到 %0 張圖</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap ID 只能設定一次。</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">總計解析了 %0 圖組。</system:String>
@@ -64,6 +65,9 @@
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">打開譜面列表</system:String>
+    <!-- | |> Played Status -->
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Played</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Unplayed</system:String>
     <!-- | E -->
     <system:String x:Key="MainWindow_exceptions">例外情況</system:String>
     <system:String x:Key="MainWindow_exit">離開</system:String>
@@ -77,13 +81,14 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">無法刪除檔關聯。</system:String>
     <system:String x:Key="MainWindow_extensionDone">檔案關聯註冊成功，謝謝。(⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">無法註冊檔關聯。</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">It looks like some file extensions aren't associated with this application.</system:String>
-    <system:String x:Key="MainWindow_extensionWrong">有一些副檔名好像已經過期了。</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Some file extensions aren't associated with this application.</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">Some file extensions are outdated.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">讀取的ID不是數字。</system:String>
     <system:String x:Key="MainWindow_fetching">讀取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">讀取中...</system:String>
     <system:String x:Key="MainWindow_file">_檔案</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed.&#x0a;It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">資料夾</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成介面......</system:String>
@@ -102,9 +107,6 @@
     <system:String x:Key="MainWindow_invalidServerResponse">伺服器回應無效</system:String>
     <system:String x:Key="MainWindow_invertSelection">反向選擇</system:String>
     <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
-    <system:String x:Key="MainWindow_itLooksLikeSomethingIsWrongWithThisDownload">下載好像不順利, 你要跳過這個檔案 (是) 或取消整個下載 (否)?</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeBeatmapsDiffer">有幾個圖組好像不屬於正常格式。</system:String>
-    <system:String x:Key="MainWindow_itSeemsThatSomeFoldersCantBeParsedTheyllBeIgnored">有些資料夾不能被解析。他們會被忽略。</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">上次同步： %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">上次同步失敗。</system:String>
@@ -144,6 +146,7 @@
     <system:String x:Key="MainWindow_settings">設定</system:String>
     <system:String x:Key="MainWindow_showHideOsuSync">顯示/隱藏 osu!Sync</system:String>
     <system:String x:Key="MainWindow_skippedBeatmaps">略過的圖組</system:String>
+    <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">有些圖組無法匯出</system:String>
     <system:String x:Key="MainWindow_syncCompleted">同步已完成</system:String>
     <system:String x:Key="MainWindow_synchronize">Synchronize</system:String>
@@ -152,10 +155,12 @@
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">這有點diao</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">無法檢查更新 ！</system:String>
+    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">找不到 osu! 資料夾。請在下面的視窗指定 osu! 的路徑。</system:String>
     <system:String x:Key="MainWindow_unableToGetId">無法獲取 ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed.&#x0a;They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的副檔名</system:String>
     <system:String x:Key="MainWindow_unsubmitted">未提交</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">未提交的圖組不能匯出</system:String>
@@ -168,7 +173,6 @@
     <system:String x:Key="MainWindow_welcomeToOsuSync">歡迎光臨 osu!Sync。</system:String>
     <!-- | Y -->
     <system:String x:Key="MainWindow_youNeedToSyncFirst">使用此功能之前需要先同步 (Sync)。</system:String>
-    <system:String x:Key="MainWindow_youveGotAboutBeatmaps">你大約有 %0 beatmap 組圖。讀取的所有圖組需要時間 (也許幾分鐘)，您要繼續嗎？</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- || A -->
     <system:String x:Key="MainWindow_tt_openAboutWindow">開啟"關於"視窗</system:String>
@@ -213,16 +217,24 @@
 
     <!-- Window_Settings -->
     <!-- | A -->
+    <system:String x:Key="WindowSettings_activation">Activation</system:String>
+    <system:String x:Key="WindowSettings_api">API</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
+    <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
+    <system:String x:Key="WindowSettings_apiRequestPer">%0 API request(s) per %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_套用</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">確定真的要刪除設定檔 (不能復原)？</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps (Numeric)</system:String>
     <!-- | B -->
+    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">類別</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">檢查更新檔......</system:String>
+    <system:String x:Key="WindowSettings_configuration">Configuration</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">建立桌面捷徑</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">預設</system:String>
@@ -232,6 +244,7 @@
     <system:String x:Key="WindowSettings_disable">Disable</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">更新檔下載到...</system:String>
     <!-- | E -->
+    <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">Enable API access in Beatmap Panel</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">在系統通知欄顯示圖示</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">每次啟動</system:String>
     <system:String x:Key="WindowSettings_executableFiles">可執行檔</system:String>
@@ -245,6 +258,7 @@
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">匯入/下載</system:String>
     <system:String x:Key="WindowSettings_interface">Interface</system:String>
+    <system:String x:Key="WindowSettings_invalid">Invalid</system:String>
     <system:String x:Key="WindowSettings_invalidValue">Invalid value!</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">語言</system:String>
@@ -255,6 +269,7 @@
     <system:String x:Key="WindowSettings_maximumOnceAMonth">最多每週一次。</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAWeek">最多每個月一次 (不推薦)。</system:String>
     <system:String x:Key="WindowSettings_message">訊息</system:String>
+    <system:String x:Key="WindowSettings_monitoring">Monitoring</system:String>
     <!-- | N -->
     <system:String x:Key="WindowSettings_never">永不 ヽ(≧Д≦)ノ  (不推薦)。</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">額，此資料夾還~不存在。</system:String>
@@ -262,6 +277,7 @@
     <system:String x:Key="WindowSettings_notifications">通知</system:String>
     <!-- | O -->
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok 完成。&#x0a;要重啟 osu!Sync 嗎?</system:String>
+    <system:String x:Key="WindowSettings_openApiLog">Open API log file</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Open data folder</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">有更新時啟動更新程式。</system:String>
     <system:String x:Key="WindowSettings_other">其他</system:String>
@@ -271,7 +287,7 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">請開啟 osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">請選擇把更新存放到哪裡</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">請選擇您的歌曲資料夾</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">請稍後再試或與我們聯繫： team@nw520.de。</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@nw520.de .</system:String>
     <system:String x:Key="WindowSettings_prepareForm">準備表單</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">提問/求助</system:String>
@@ -289,7 +305,7 @@
     <system:String x:Key="WindowSettings_sync">同步 (Sync)</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sync on application startup</system:String>
     <!-- | T -->
-    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">桌面上好像已經有捷徑了。</system:String>
+    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">There's already a shortcut on your desktop.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">無法製作捷徑！</system:String>
     <system:String x:Key="WindowSettings_unableToSubmitFeedback">無法提交回饋 ！</system:String>
@@ -297,6 +313,9 @@
     <system:String x:Key="WindowSettings_updateFileAssocations">更新/設置檔案關聯</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">用此 osu! 鏡像下載...</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">自動安裝更新。</system:String>
+    <!-- | V -->
+    <system:String x:Key="WindowSettings_valid">Valid</system:String>
+    <system:String x:Key="WindowSettings_validate">Validate</system:String>
     <!-- | W -->
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel (Numeric, between 5 and 95)</system:String>
     <!-- | Y -->
@@ -320,7 +339,7 @@
     <system:String x:Key="WindowUpdater_dateOfPublication">出版日期： %0</system:String>
     <system:String x:Key="WindowUpdater_done">_完成</system:String>
     <system:String x:Key="WindowUpdater_download">下載</system:String>
-    <system:String x:Key="WindowUpdater_downloadAndInstall">_下載并安裝</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">_Download and Install</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">下載完成。(%0 Bytes)</system:String>
     <system:String x:Key="WindowUpdater_downloadingInstaller">正在下載安裝程式 | %0 of %1 Bytes</system:String>
     <system:String x:Key="WindowUpdater_downloadingUpdatePackage">正在下載更新包 | %0 of %1 Bytes</system:String>
@@ -336,7 +355,6 @@
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Unable to communicate with server</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">無法下載更新日誌 ！</system:String>
-    <system:String x:Key="WindowUpdater_unableToMoveUpdate">無法將更新移動到正確的路徑，因為目的地已經有相同名稱的檔案。</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">您的版本： %0</system:String>
