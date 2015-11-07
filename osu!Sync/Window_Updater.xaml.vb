@@ -31,7 +31,7 @@ Public Class Window_Updater
         For Each a In Answer.SelectToken("latestRepoRelease").SelectToken("assets")
             If CStr(a.SelectToken("name")).StartsWith("osu.Sync.") And CStr(a.SelectToken("name")).EndsWith(".zip") Then
                 Update_FileName = CStr(a.SelectToken("name"))
-                Update_Path = CStr(a.SelectToken("url"))
+                Update_Path = CStr(a.SelectToken("browser_download_url"))
             End If
         Next
 
@@ -91,8 +91,14 @@ Public Class Window_Updater
                 If Setting_Tool_Update_UseDownloadPatcher Then
                     ' Run UpdatePatcher
                     Dim UpdatePatcher As New ProcessStartInfo()
-                    UpdatePatcher.Arguments = "-destinationVersion=""" & Update_Version & """ -sourceVersion=""" & My.Application.Info.Version.ToString & """ -pathToApp=""" & Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location) & """ -pathToUpdate=""" & Update_DownloadToPath & """ -deletePackageAfter=""" & Setting_Tool_Update_DeleteFileAfter.ToString & """"
-                    UpdatePatcher.FileName = Update_DownloadPatcherToPath
+                    With UpdatePatcher
+                        .Arguments = "-deletePackageAfter=""" & Setting_Tool_Update_DeleteFileAfter.ToString & """"
+                        .Arguments += " -destinationVersion=""" & Update_Version & """"
+                        .Arguments += " -pathToApp=""" & Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location) & """"
+                        .Arguments += " -pathToUpdate=""" & Update_DownloadToPath & """"
+                        .Arguments += " -sourceVersion=""" & My.Application.Info.Version.ToString & """"
+                        .FileName = Update_DownloadPatcherToPath
+                    End With
                     Process.Start(UpdatePatcher)
                     Windows.Application.Current.Shutdown()
                     Exit Sub

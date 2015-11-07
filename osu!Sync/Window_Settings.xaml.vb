@@ -149,7 +149,7 @@ Public Class Window_Settings
     Private Sub Button_CreateShortcut_Click(sender As Object, e As RoutedEventArgs) Handles Button_CreateShortcut.Click
         If Not File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk") Then
             If CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk",
-                              System.Reflection.Assembly.GetExecutingAssembly().Location.ToString, "",
+                              Reflection.Assembly.GetExecutingAssembly().Location.ToString, "",
                               _e("WindowSettings_launchOsuSync")) Then
             Else
                 MsgBox(_e("WindowSettings_unableToCreateShortcut"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
