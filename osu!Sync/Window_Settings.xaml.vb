@@ -325,7 +325,7 @@ Public Class Window_Settings
             If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                 Forms.Application.Restart()
             End If
-            Application.Current.Shutdown()
+            Windows.Application.Current.Shutdown()
         End If
     End Sub
 

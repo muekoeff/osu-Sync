@@ -65,6 +65,7 @@ End Class
 
 Class MainWindow
     Private WithEvents FadeOut As New DoubleAnimation()
+    Private HasWriteAccessToOsu As Boolean
 
     Private Sync_BeatmapList_Installed As New List(Of Beatmap)
     Private Sync_BeatmapList_ID_Installed As New List(Of Integer)
@@ -523,7 +524,13 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub Action_Tool_UpdateSettings()
+    Private Sub Action_Tool_ApplySettings()
+        With TextBlock_Warn
+            .Content = ""
+            .ToolTip = ""
+        End With
+
+        ' NotifyIcon
         Select Case Setting_Tool_EnableNotifyIcon
             Case 0, 2
                 MenuItem_Program_MinimizeToTray.Visibility = Visibility.Visible
@@ -535,6 +542,15 @@ Class MainWindow
                 MenuItem_Program_MinimizeToTray.Visibility = Visibility.Collapsed
                 NotifyIcon.Visibility = Visibility.Collapsed
         End Select
+
+        ' Check Write Access
+        HasWriteAccessToOsu = CheckDirAccess(Setting_osu_SongsPath)
+        If HasWriteAccessToOsu = False Then
+            With TextBlock_Warn
+                .Content = _e("MainWindow_noAccess")
+                .ToolTip = _e("MainWindow_tt_noAccess")
+            End With
+        End If
     End Sub
 
     ''' <summary>
@@ -1074,8 +1090,8 @@ Class MainWindow
             Action_SaveSettings()
         End If
 
-        ' Set settings like NotifyIcon
-        Action_Tool_UpdateSettings()
+        ' Apply settings (like NotifyIcon)
+        Action_Tool_ApplySettings()
 
         ' Delete old downloaded beatmaps
         If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
@@ -1231,7 +1247,7 @@ Class MainWindow
 
     Private Sub MenuItem_Program_Settings_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Settings.Click
         Interface_ShowSettingsWindow()
-        Action_Tool_UpdateSettings()
+        Action_Tool_ApplySettings()
     End Sub
 
     Private Sub NotifyIcon_Exit_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_Exit.Click
@@ -1682,7 +1698,7 @@ Class MainWindow
 
 #Region "Importer"
 #Region "Actions « Importer"
-    Private Sub Importer_AddBeatmapToSelection(sender As Object, e As EventArgs)
+    Sub Importer_AddBeatmapToSelection(sender As Object, e As EventArgs)
         Dim SelectedSender As CheckBox = CType(sender, CheckBox)
         Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
         Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
@@ -1700,7 +1716,7 @@ Class MainWindow
         SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_E74C3C            ' Color_E74C3C = Red
     End Sub
 
-    Private Sub Importer_DownloadBeatmap()
+    Sub Importer_DownloadBeatmap()
         Importer_Progress.Value = 0
         Importer_Progress.IsIndeterminate = True
         Dim RequestURI As String
@@ -1785,7 +1801,7 @@ Class MainWindow
         Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), (Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName))
     End Sub
 
-    Private Sub Importer_Downloader_ToNextDownload()
+    Sub Importer_Downloader_ToNextDownload()
         If Importer_BeatmapList_Tag_ToInstall.Count > 0 Then
             If Not Setting_Tool_Importer_AutoInstallCounter = 0 And Setting_Tool_Importer_AutoInstallCounter <= Importer_Counter Then
                 Importer_Counter = 0
@@ -1852,18 +1868,41 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub Importer_Init()
-        Button_SyncDo.IsEnabled = False
-        Importer_Run.IsEnabled = False
-        Importer_Cancel.IsEnabled = False
-        Importer_Progress.Visibility = Visibility.Visible
-        If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\") Then
-            Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\")
+    Sub Importer_Init()
+        If HasWriteAccessToOsu Then
+            Button_SyncDo.IsEnabled = False
+            Importer_Run.IsEnabled = False
+            Importer_Cancel.IsEnabled = False
+            Importer_Progress.Visibility = Visibility.Visible
+            If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
+                Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+            End If
+            Importer_DownloadBeatmap()
+        Else
+            If MessageBox.Show(_e("MainWindow_requestElevation"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                Try
+                    Dim ElevateProcess As New Process
+                    With ElevateProcess.StartInfo
+                        .Arguments = "-ignoreInstances -openFile=" + Importer_Info.ToolTip.ToString
+                        .FileName = Reflection.Assembly.GetExecutingAssembly().Location.ToString
+                        .UseShellExecute = True
+                        .Verb = "runas"
+                    End With
+                    ElevateProcess.Start()
+                    Windows.Application.Current.Shutdown()
+                Catch ex As ComponentModel.Win32Exception
+                    MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    Action_OverlayShow(_e("MainWindow_importAborted"), _e("MainWindow_insufficientPermissions"))
+                    Action_OverlayFadeOut()
+                End Try
+            Else
+                Action_OverlayShow(_e("MainWindow_importAborted"), _e("MainWindow_insufficientPermissions"))
+                Action_OverlayFadeOut()
+            End If
         End If
-        Importer_DownloadBeatmap()
     End Sub
 
-    Private Sub Importer_ReadListFile(ByRef FilePath As String)
+    Sub Importer_ReadListFile(FilePath As String)
         If Path.GetExtension(FilePath) = ".nw520-osblx" Then
             Dim File_Content_Compressed As String = File.ReadAllText(FilePath)
             Dim File_Content As String = DecompressString(File_Content_Compressed)
@@ -1879,7 +1918,7 @@ Class MainWindow
         End If
     End Sub
 
-    Private Sub Importer_RemoveBeatmapFromSelection(sender As Object, e As EventArgs)
+    Sub Importer_RemoveBeatmapFromSelection(sender As Object, e As EventArgs)
         Dim SelectedSender As CheckBox = CType(sender, CheckBox)
         Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
         Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
@@ -1894,7 +1933,7 @@ Class MainWindow
         SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
     End Sub
 
-    Private Sub Importer_UpdateInfo(ByRef Title As String)
+    Sub Importer_UpdateInfo(ByRef Title As String)
         Importer_Info.Text = Title
         If Title = _e("MainWindow_fetching1") Or Title = _e("MainWindow_downloading1") Or Title = _e("MainWindow_installing") Then
             Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", Importer_BeatmapList_Tag_ToInstall.Count.ToString)

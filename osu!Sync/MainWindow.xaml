@@ -14,7 +14,6 @@
                       Title="osu!Sync"
                       Width="1000"
                       MinWidth="800"
-                      WindowStartupLocation="CenterScreen"
                       Visibility="Visible">
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
@@ -211,6 +210,7 @@
                     <Label x:Name="TextBlock_Progress" Foreground="{Binding Foreground, ElementName=StatusBar}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Margin="0,0,8,0" Orientation="Horizontal">
+                    <Label x:Name="TextBlock_Warn" Foreground="{Binding Foreground, ElementName=StatusBar}"/>
                     <Label x:Name="TextBlock_Programm_Version" Cursor="Hand" Foreground="{Binding Foreground, ElementName=StatusBar}" HorizontalAlignment="Left" ToolTip="{DynamicResource MainWindow_tt_openAboutWindow}" />
                 </StackPanel>
             </Grid>

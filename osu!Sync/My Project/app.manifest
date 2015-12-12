@@ -17,7 +17,7 @@
             kompatibilität verwenden möchten, löschen Sie den requestedExecutionLevel-Knoten.
         -->
         <!-- <requestedExecutionLevel  level="asInvoker" uiAccess="false" />-->
-        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
     </security>
   </trustInfo>
@@ -34,10 +34,10 @@
       <supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>
 
       <!-- Wenn die Anwendung mit Windows 8 kompatibel ist, heben Sie die Auskommentierung des folgenden supportedOS-Knotens auf-->
-      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"></supportedOS>-->
+      <supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"></supportedOS>
 
       <!-- Wenn die Anwendung mit Windows 8.1 kompatibel ist, die Kommentierung des folgenden supportedOS-Knotens aufheben.-->
-      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>-->
+      <supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>
 
     </application>
   </compatibility>

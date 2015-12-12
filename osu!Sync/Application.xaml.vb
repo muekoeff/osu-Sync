@@ -22,12 +22,20 @@
         End If
 
         ' Check if already running
-        If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
-            Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
-            AppActivate(SelectedProcess.Id)
-            ShowWindow(SelectedProcess.MainWindowHandle, 1)
-            Application.Current.Shutdown()
-            Exit Sub
+        If Not (I__StartUpArguments IsNot Nothing AndAlso Array.Exists(I__StartUpArguments, Function(s)
+                                                                                                If s = "-ignoreInstances" Then
+                                                                                                    Return True
+                                                                                                Else
+                                                                                                    Return False
+                                                                                                End If
+                                                                                            End Function)) Then
+            If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
+                Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
+                AppActivate(SelectedProcess.Id)
+                ShowWindow(SelectedProcess.MainWindowHandle, 1)
+                Current.Shutdown()
+                Exit Sub
+            End If
         End If
 
         ' Load language library

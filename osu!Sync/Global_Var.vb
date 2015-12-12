@@ -13,6 +13,7 @@ Class Language
     Property Code As String
     Property DisplayName As String
     Property DisplayName_English As String
+    Property Status As Integer = 0
 End Class
 Module Global_Var
     Public Application_FileExtensions() As String = {".nw520-osbl",
@@ -55,8 +56,20 @@ Module Global_Var
             Return Windows.Application.Current.FindResource(Text).ToString
         Catch ex As ResourceReferenceKeyNotFoundException
             MsgBox("The application just tried to load a text (= string) which isn't registered." & vbNewLine & "Normally, this shouldn't happen." &
-                   vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional informations:" & vbNewLine & Text, MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                   vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional information:" & vbNewLine & Text, MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             Return "[Missing String: " + Text + "]"
+        End Try
+    End Function
+
+    Function CheckDirAccess(ByVal Directory As String) As Boolean
+        Try
+            Dim fs As New FileStream(Directory & "\Preparation.osuSync.tmp", FileMode.OpenOrCreate, FileAccess.ReadWrite)
+            Dim s As New StreamWriter(fs)
+            s.Dispose()
+            File.Delete(Directory & "\Preparation.osuSync.tmp")
+            Return True
+        Catch ex As Exception
+            Return False
         End Try
     End Function
 
