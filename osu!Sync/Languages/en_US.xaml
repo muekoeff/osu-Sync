@@ -302,7 +302,9 @@
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Question/Help Request</system:String>
     <!-- | R -->
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">If it might be required, request elevation on startup instead of when it's required.</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (delete configuration, file associations, etc.)</system:String>
+    <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
     <!-- | S -->
     <system:String x:Key="WindowSettings_save">_Save</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Server-side answer:</system:String>

@@ -1,9 +1,7 @@
 ﻿Public Class Window_MessageWindow
 
     Public Sub SetMessage(ByRef Message As String, Optional ByRef Title As String = "", Optional ByRef SubTitle As String = "osu!Sync")
-        If Title = "" Then
-            Title = _e("WindowMessage_message")
-        End If
+        If Title = "" Then Title = _e("WindowMessage_message")
         TextBlock_Title.Text = Title
         TextBlock_SubTitle.Text = SubTitle
 

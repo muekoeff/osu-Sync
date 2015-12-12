@@ -52,20 +52,12 @@ Public Class Window_Updater
         Button_Update.IsEnabled = False
 
         Update_DownloadToPath = Setting_Tool_Update_SavePath & "\" & Update_FileName
-        If File.Exists(Update_DownloadToPath) Then
-            File.Delete(Update_DownloadToPath)
-        End If
-        If Not Directory.Exists(Path.GetDirectoryName(Update_DownloadToPath)) Then
-            Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadToPath))
-        End If
+        If File.Exists(Update_DownloadToPath) Then File.Delete(Update_DownloadToPath)
+        If Not Directory.Exists(Path.GetDirectoryName(Update_DownloadToPath)) Then Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadToPath))
         If Setting_Tool_Update_UseDownloadPatcher Then
-            If Not Directory.Exists(Path.GetDirectoryName(Update_DownloadPatcherToPath)) Then
-                Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadPatcherToPath))
-            End If
+            If Not Directory.Exists(Path.GetDirectoryName(Update_DownloadPatcherToPath)) Then Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadPatcherToPath))
             If Not File.Exists(Update_DownloadPatcherToPath) Then
-                If File.Exists(Update_DownloadPatcherToPath & ".tmp") Then
-                    File.Delete(Update_DownloadPatcherToPath & ".tmp")
-                End If
+                If File.Exists(Update_DownloadPatcherToPath & ".tmp") Then File.Delete(Update_DownloadPatcherToPath & ".tmp")
                 DownloadMode = DownloadModes.DownloadPatcher
                 Client.DownloadFileAsync(New Uri(Update_Path_UpdatePatcher), Update_DownloadPatcherToPath & ".tmp")
             Else
@@ -103,9 +95,7 @@ Public Class Window_Updater
                     Windows.Application.Current.Shutdown()
                     Exit Sub
                 Else
-                    If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                        Process.Start(Setting_Tool_Update_SavePath)
-                    End If
+                    If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then Process.Start(Setting_Tool_Update_SavePath)
                 End If
         End Select
     End Sub
@@ -187,9 +177,7 @@ Public Class Window_Updater
     End Sub
 
     Private Sub Window_Updater_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        If Setting_Tool_Update_UseDownloadPatcher = False Then
-            Button_Update.Content = _e("WindowUpdater_download")
-        End If
+        If Setting_Tool_Update_UseDownloadPatcher = False Then Button_Update.Content = _e("WindowUpdater_download")
 #If DEBUG Then
         TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString & " (Dev)")
 #Else

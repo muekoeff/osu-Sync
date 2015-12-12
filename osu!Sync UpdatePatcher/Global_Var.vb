@@ -4,9 +4,7 @@ Module Global_Var
     Public I__StartUpArguments() As String
 
     Function WriteCrashLog(ex As Exception) As String
-        If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then
-            Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
-        End If
+        If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
         Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH-mm-ss") & ".txt"
         Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
             Dim Content As String = "=====   osu!Sync Crash | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &

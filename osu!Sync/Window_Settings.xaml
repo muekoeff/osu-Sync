@@ -38,71 +38,89 @@
             <TabItem Header="{DynamicResource WindowSettings_general}">
                 <ScrollViewer Background="#FFE5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" />
-                        <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" />
-                        <ComboBox x:Name="ComboBox_Tool_CheckForUpdates">
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_everyLaunch}" />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_never}" />
-                            <Separator />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceADay}" />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAWeek}" />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAMonth}" />
-                        </ComboBox>
-                        <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" Margin="0,5,0,0" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TextBox_Tool_Update_Path" Height="23" TextWrapping="Wrap" />
-                            <Button x:Name="Button_Tool_Update_PathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Margin="5,0,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Grid.Column="1" />
-                        </Grid>
-                        <CheckBox x:Name="CheckBox_Tool_Update_UseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
-                        <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_language}" Margin="0,15,0,0" />
-                        <!-- [REF] Languages are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
-                        <ComboBox x:Name="ComboBox_Tool_Languages" />
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_general}" Margin="0,15,0,0" />
-                        <CheckBox x:Name="CheckBox_Tool_SyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" Margin="0,5,0,0" />
-                        <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
-                        <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
-                        <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysEnableNotifyBalloons}" />
-                            <Separator />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysDisableNotifyBalloons}" />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons}" />
-                            <ComboBoxItem Content="{DynamicResource WindowSettings_disable}" />
-                        </ComboBox>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_importDownload}" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_useThisDownloadMirror}" />
-                        <!-- [REF] Mirrors are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
-                        <ComboBox x:Name="ComboBox_Tool_DownloadMirror" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="Textbox_Tool_Importer_AutoInstallCounter" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" />
-                            <Button x:Name="Button_Tool_Importer_AutoInstallCounter_Up" Content="˄" Margin="5,0,0,0" Grid.Column="1" />
-                            <Button x:Name="Button_Tool_ImporterAuto_InstallCounter_Down" Content="˅" Margin="5,0,0,0" Grid.Column="2" />
-                        </Grid>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_interface}" />
-                        <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_widthOfBeatmapDetailPanel}" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TextBox_Tool_Interface_BeatmapDetailPanelWidth" />
-                            <TextBlock Margin="0,5,0,0" TextAlignment="Right" Grid.Column="1">%</TextBlock>
-                            <Button x:Name="Button_Tool_Interface_BeatmapDetailPanelWidth_Up" Content="˄" Margin="5,0,0,0" Grid.Column="2" />
-                            <Button x:Name="Button_Tool_Interface_BeatmapDetailPanelWidth_Down" Content="˅" Margin="5,0,0,0" Grid.Column="3" />
-                        </Grid>
+                        <TextBlock x:Name="TextBlock_WarnNotElevated" Foreground="#FFAAAAAA" Margin="0,0,0,5" Text="Some options may be disabled because the application is currently not elevated." TextAlignment="Center" />
+                        <Expander Header="{DynamicResource WindowSettings_general}" Margin="0">
+                            <StackPanel>
+                                <CheckBox x:Name="CheckBox_Tool_SyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" Margin="0,5,0,0" />
+                                <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
+                                <CheckBox x:Name="CheckBox_Tool_RequestElevationOnStartup" Content="{DynamicResource WindowSettings_requestElevationOnStartup}" Margin="0,5,0,0" />
+                                <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysEnableNotifyBalloons}" />
+                                    <Separator />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysDisableNotifyBalloons}" />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons}" />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_disable}" />
+                                </ComboBox>
+                            </StackPanel>
+                        </Expander>
+                        <Expander Header="{DynamicResource WindowSettings_updater}" Margin="0">
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" />
+                                <ComboBox x:Name="ComboBox_Tool_CheckForUpdates">
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_everyLaunch}" />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_never}" />
+                                    <Separator />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceADay}" />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAWeek}" />
+                                    <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAMonth}" />
+                                </ComboBox>
+                                <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" Margin="0,5,0,0" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*" />
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="TextBox_Tool_Update_Path" Height="23" TextWrapping="Wrap" />
+                                    <Button x:Name="Button_Tool_Update_PathDefault" Content="{DynamicResource WindowSettings_default}" FontSize="12" Margin="5,0,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Grid.Column="1" />
+                                </Grid>
+                                <CheckBox x:Name="CheckBox_Tool_Update_UseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
+                                <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Expander>
+                        <Expander Header="{DynamicResource WindowSettings_language}" Margin="0">
+                            <StackPanel>
+                                <!-- [REF] Languages are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
+                                <ComboBox x:Name="ComboBox_Tool_Languages" />
+                            </StackPanel>
+                        </Expander>
+                        <Expander Header="{DynamicResource WindowSettings_importDownload}" Margin="0">
+                            <StackPanel>
+                                <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_useThisDownloadMirror}" />
+                                <!-- [REF] Mirrors are automatically inserted in Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
+                                <ComboBox x:Name="ComboBox_Tool_DownloadMirror" />
+                                <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*" />
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="Textbox_Tool_Importer_AutoInstallCounter" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" />
+                                    <Button x:Name="Button_Tool_Importer_AutoInstallCounter_Up" Content="˄" Margin="5,0,0,0" Grid.Column="1" />
+                                    <Button x:Name="Button_Tool_ImporterAuto_InstallCounter_Down" Content="˅" Margin="5,0,0,0" Grid.Column="2" />
+                                </Grid>
+                            </StackPanel>
+                        </Expander>
+                        <Expander Header="{DynamicResource WindowSettings_interface}" Margin="0">
+                            <StackPanel>
+                                <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_widthOfBeatmapDetailPanel}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="TextBox_Tool_Interface_BeatmapDetailPanelWidth" />
+                                    <TextBlock Margin="0,5,0,0" TextAlignment="Right" Grid.Column="1">%</TextBlock>
+                                    <Button x:Name="Button_Tool_Interface_BeatmapDetailPanelWidth_Up" Content="˄" Margin="5,0,0,0" Grid.Column="2" />
+                                    <Button x:Name="Button_Tool_Interface_BeatmapDetailPanelWidth_Down" Content="˅" Margin="5,0,0,0" Grid.Column="3" />
+                                </Grid>
+                            </StackPanel>
+                        </Expander>
                         <Button x:Name="Button_CreateShortcut" Content="{DynamicResource WindowSettings_createShortcutOnDesktop}" FontSize="12" Margin="0,15,0,0" />
+                        <Button x:Name="Button_Tool_RestartElevated" Content="{DynamicResource WindowSettings_restartElevated}" FontSize="12" Margin="0,5,0,0" />
                         <Button x:Name="Button_Tool_OpenDataFolder" Content="{DynamicResource WindowSettings_openDataFolder}" FontSize="12" Margin="0,5,0,0" />
                         <Button x:Name="Button_Tool_UpdateFileAssociation" Content="{DynamicResource WindowSettings_updateFileAssocations}" FontSize="12" Margin="0,5,0,0" />
                         <Button x:Name="Button_Tool_DeleteConfiguration" Content="{DynamicResource WindowSettings_deleteConfiguration}" FontSize="12" Margin="0,15,0,0" />

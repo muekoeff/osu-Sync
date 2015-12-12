@@ -68,12 +68,8 @@ Public Class Window_Settings
         Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
         Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
         Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
-            Setting_Tool_Importer_AutoInstallCounter = Val
-        End If
-        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) AndAlso Val >= 5 And Val <= 95 Then
-            Setting_Tool_Interface_BeatmapDetailPanelWidth = Val
-        End If
+        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then Setting_Tool_Importer_AutoInstallCounter = Val
+        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) AndAlso Val >= 5 And Val <= 95 Then Setting_Tool_Interface_BeatmapDetailPanelWidth = Val
         Setting_Tool_SyncOnStartup = CBool(CheckBox_Tool_SyncOnStartup.IsChecked)
         ' Load Language
         Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
@@ -83,6 +79,7 @@ Public Class Window_Settings
                 MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
             End If
         End If
+        Setting_Tool_RequestElevationOnStartup = CBool(CheckBox_Tool_RequestElevationOnStartup.IsChecked)
         Setting_Tool_Update_SavePath = TextBox_Tool_Update_Path.Text
         Setting_Tool_Update_DeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
         Setting_Tool_Update_UseDownloadPatcher = CBool(CheckBox_Tool_Update_UseDownloadPatcher.IsChecked)
@@ -247,9 +244,7 @@ Public Class Window_Settings
     Private Sub Button_Tool_ImporterAuto_InstallCounter_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAuto_InstallCounter_Down.Click
         Dim Val As Integer
         If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
-            If Val > 0 Then
-                Textbox_Tool_Importer_AutoInstallCounter.Text = CStr(Val - 1)
-            End If
+            If Val > 0 Then Textbox_Tool_Importer_AutoInstallCounter.Text = CStr(Val - 1)
         Else
             Textbox_Tool_Importer_AutoInstallCounter.Text = "10"
         End If
@@ -267,9 +262,7 @@ Public Class Window_Settings
     Private Sub Button_Tool_Interface_BeatmapDetailPanelWidth_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Interface_BeatmapDetailPanelWidth_Down.Click
         Dim Val As Integer
         If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Then
-            If Val > 5 Then
-                TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val - 1)
-            End If
+            If Val > 5 Then TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val - 1)
         Else
             TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = "40"
         End If
@@ -278,9 +271,7 @@ Public Class Window_Settings
     Private Sub Button_Tool_Interface_BeatmapDetailPanelWidth_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Interface_BeatmapDetailPanelWidth_Up.Click
         Dim Val As Integer
         If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Then
-            If Val < 95 Then
-                TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val + 1)
-            End If
+            If Val < 95 Then TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val + 1)
         Else
             TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = "40"
         End If
@@ -307,9 +298,7 @@ Public Class Window_Settings
                 End If
             Next
 
-            If RegisterError Then
-                MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-            End If
+            If RegisterError Then MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             If Directory.Exists(I__Path_Programm) Then
                 Try
                     Directory.Delete(I__Path_Programm, True)
@@ -322,10 +311,17 @@ Public Class Window_Settings
                 Catch ex As IOException
                 End Try
             End If
-            If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                Forms.Application.Restart()
-            End If
+            If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then Forms.Application.Restart()
             Windows.Application.Current.Shutdown()
+        End If
+    End Sub
+
+    Private Sub Button_Tool_RestartElevated_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_RestartElevated.Click
+        If Action_RequestElevation() Then
+            Windows.Application.Current.Shutdown()
+            Exit Sub
+        Else
+            MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
         End If
     End Sub
 
@@ -394,23 +390,17 @@ Public Class Window_Settings
         Dim SelectFile As New Forms.FolderBrowserDialog With {
             .Description = _e("WindowSettings_pleaseSelectSongsFolder")}
 
-        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
-            TextBox_osu_SongsPath.Text = SelectFile.SelectedPath
-        End If
+        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then TextBox_osu_SongsPath.Text = SelectFile.SelectedPath
     End Sub
 
     Private Sub Textbox_Tool_Importer_AutoInstallCounter_LostFocus(sender As Object, e As RoutedEventArgs) Handles Textbox_Tool_Importer_AutoInstallCounter.LostFocus
         Dim Val As Integer
-        If Not Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
-            Textbox_Tool_Importer_AutoInstallCounter.Text = _e("WindowSettings_invalidValue")
-        End If
+        If Not Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then Textbox_Tool_Importer_AutoInstallCounter.Text = _e("WindowSettings_invalidValue")
     End Sub
 
     Private Sub TextBox_Tool_Interface_BeatmapDetailPanelWidth_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_Interface_BeatmapDetailPanelWidth.LostFocus
         Dim Val As Integer
-        If Not Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Or Val < 5 Or Val > 95 Then
-            TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue")
-        End If
+        If Not Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Or Val < 5 Or Val > 95 Then TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue")
     End Sub
 
     Private Sub TextBox_Tool_Update_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_Update_Path.GotFocus
@@ -423,16 +413,25 @@ Public Class Window_Settings
             SelectDirectory.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
         End If
 
-        If Not SelectDirectory.ShowDialog() = Forms.DialogResult.Cancel Then
-            TextBox_Tool_Update_Path.Text = SelectDirectory.SelectedPath
-        End If
+        If Not SelectDirectory.ShowDialog() = Forms.DialogResult.Cancel Then TextBox_Tool_Update_Path.Text = SelectDirectory.SelectedPath
     End Sub
 
     Private Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If Tool_IsElevated Then
+            Button_Tool_RestartElevated.IsEnabled = False
+            TextBlock_WarnNotElevated.Visibility = Visibility.Collapsed
+        Else
+            Button_Tool_DeleteFileAssociation.IsEnabled = False
+            Button_Tool_Reset.IsEnabled = False
+            Button_Tool_UpdateFileAssociation.IsEnabled = False
+        End If
+
+
         CheckBox_Api_EnableInBeatmapPanel.IsChecked = Setting_Api_Enabled_BeatmapPanel
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
+        CheckBox_Tool_RequestElevationOnStartup.IsChecked = Setting_Tool_RequestElevationOnStartup
         CheckBox_Tool_SyncOnStartup.IsChecked = Setting_Tool_SyncOnStartup
         CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_Update_DeleteFileAfter
         CheckBox_Tool_Update_UseDownloadPatcher.IsChecked = Setting_Tool_Update_UseDownloadPatcher
@@ -440,12 +439,9 @@ Public Class Window_Settings
         ' Load mirrors and select current one
         For Each a In Application_Mirrors
             ComboBox_Tool_DownloadMirror.Items.Add(a.Value.DisplayName)
-            If a.Key = 0 Then
-                ComboBox_Tool_DownloadMirror.Items.Add(New Separator)
-            End If
+            If a.Key = 0 Then ComboBox_Tool_DownloadMirror.Items.Add(New Separator)
         Next
         ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
-
         ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
         ' Load languages and select current one
         Dim InsertedCodes As New List(Of String)
@@ -454,12 +450,8 @@ Public Class Window_Settings
         Dim IndexEN As Integer = 0
         For Each a In Application_Languages
             If Not InsertedCodes.Contains(a.Value.Code) Then
-                If a.Value.Code = "en_US" Then
-                    IndexEN = Counter
-                End If
-                If a.Key = Setting_Tool_Language Then
-                    IndexUserLanguage = Counter
-                End If
+                If a.Value.Code = "en_US" Then IndexEN = Counter
+                If a.Key = Setting_Tool_Language Then IndexUserLanguage = Counter
                 InsertedCodes.Add(a.Value.Code)
                 ComboBox_Tool_Languages.Items.Add(a.Key & " | " & a.Value.DisplayName_English & "/" & a.Value.DisplayName)
                 Counter += 1

@@ -17,9 +17,7 @@
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
         ' Save Startup Arguments
         Dim i As Integer = 0
-        If Not e.Args.Length = 0 Then
-            I__StartUpArguments = e.Args
-        End If
+        If Not e.Args.Length = 0 Then I__StartUpArguments = e.Args
 
         ' Check if already running
         If Not (I__StartUpArguments IsNot Nothing AndAlso Array.Exists(I__StartUpArguments, Function(s)
@@ -37,6 +35,10 @@
                 Exit Sub
             End If
         End If
+
+        ' Check if elevated
+        Dim principal = New Security.Principal.WindowsPrincipal(Security.Principal.WindowsIdentity.GetCurrent())
+        Tool_IsElevated = principal.IsInRole(Security.Principal.WindowsBuiltInRole.Administrator)
 
         ' Load language library
         Action_PrepareData()

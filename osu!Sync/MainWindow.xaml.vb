@@ -65,7 +65,6 @@ End Class
 
 Class MainWindow
     Private WithEvents FadeOut As New DoubleAnimation()
-    Private HasWriteAccessToOsu As Boolean
 
     Private Sync_BeatmapList_Installed As New List(Of Beatmap)
     Private Sync_BeatmapList_ID_Installed As New List(Of Integer)
@@ -120,9 +119,7 @@ Class MainWindow
                     .Title = CStr(SelectedToken.SelectToken("title")),
                     .Artist = CStr(SelectedToken.SelectToken("artist"))}
 
-                If Not SelectedToken.SelectToken("artist") Is Nothing Then
-                    CurrentBeatmap.Creator = CStr(SelectedToken.SelectToken("creator"))
-                End If
+                If Not SelectedToken.SelectToken("artist") Is Nothing Then CurrentBeatmap.Creator = CStr(SelectedToken.SelectToken("creator"))
                 BeatmapList.Add(CurrentBeatmap)
             End If
         Next
@@ -134,9 +131,7 @@ Class MainWindow
         Dim BeatmapList As New List(Of Integer)
 
         For Each SelectedToken As JToken In Source.Values
-            If Not SelectedToken.Path.StartsWith("_") Then
-                BeatmapList.Add(CInt(SelectedToken.SelectToken("id")))
-            End If
+            If Not SelectedToken.Path.StartsWith("_") Then BeatmapList.Add(CInt(SelectedToken.SelectToken("id")))
         Next
 
         Return BeatmapList
@@ -307,12 +302,8 @@ Class MainWindow
         Dim Content_Json As String = JsonConvert.SerializeObject(Content)
 
         Dim Failed As String = ""
-        If Not Failed_Unsubmitted = "" Then
-            Failed += "======   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Unsubmitted & vbNewLine & vbNewLine
-        End If
-        If Not Failed_Alread_Assigned = "" Then
-            Failed += "=====   " & _e("MainWindow_idAlreadyAssigned") & "   =====" & vbNewLine & _e("MainWindow_beatmapsIdsCanBeUsedOnlyOnce") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Alread_Assigned
-        End If
+        If Not Failed_Unsubmitted = "" Then Failed += "======   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Unsubmitted & vbNewLine & vbNewLine
+        If Not Failed_Alread_Assigned = "" Then Failed += "=====   " & _e("MainWindow_idAlreadyAssigned") & "   =====" & vbNewLine & _e("MainWindow_beatmapsIdsCanBeUsedOnlyOnce") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Alread_Assigned
         Dim Answer As String() = {Content_Json, Failed}
         Return Answer
     End Function
@@ -336,9 +327,7 @@ Class MainWindow
     End Function
 
     Public Sub Action_ExportBeatmapDialog(ByRef Source As List(Of Beatmap), Optional ByRef DialogTitle As String = "")
-        If DialogTitle = "" Then
-            DialogTitle = _e("MainWindow_exportInstalledBeatmaps1")
-        End If
+        If DialogTitle = "" Then DialogTitle = _e("MainWindow_exportInstalledBeatmaps1")
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
             .AddExtension = True
@@ -451,13 +440,9 @@ Class MainWindow
         MyStoryboard.Begin(Me)
     End Sub
 
-    Private Sub Action_OverlayShow(Optional ByRef title As String = Nothing, Optional ByRef caption As String = Nothing)
-        If Not title Is Nothing Then
-            Overlay_Title.Text = title
-        End If
-        If Not caption Is Nothing Then
-            Overlay_Caption.Text = caption
-        End If
+    Private Sub Action_OverlayShow(Optional Title As String = Nothing, Optional Caption As String = Nothing)
+        If Not Title Is Nothing Then Overlay_Title.Text = Title
+        If Not Caption Is Nothing Then Overlay_Caption.Text = Caption
         With Overlay
             .Opacity = 1
             .Visibility = Visibility.Visible
@@ -544,8 +529,16 @@ Class MainWindow
         End Select
 
         ' Check Write Access
-        HasWriteAccessToOsu = CheckDirAccess(Setting_osu_SongsPath)
-        If HasWriteAccessToOsu = False Then
+        Tool_HasWriteAccessToOsu = CheckDirAccess(Setting_osu_SongsPath)
+        If Tool_HasWriteAccessToOsu = False Then
+            If Setting_Tool_RequestElevationOnStartup Then
+                If Action_RequestElevation() Then
+                    Windows.Application.Current.Shutdown()
+                    Exit Sub
+                Else
+                    MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                End If
+            End If
             With TextBlock_Warn
                 .Content = _e("MainWindow_noAccess")
                 .ToolTip = _e("MainWindow_tt_noAccess")
@@ -645,9 +638,7 @@ Class MainWindow
                     Else
                         UI_TextBlock_Caption.Text = _e("MainWindow_unsubmitted") & " | " & SelectedBeatmap.Artist
                     End If
-                    If Not SelectedBeatmap.Creator = "Unknown" Then
-                        UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
-                    End If
+                    If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_isInstalled"),
@@ -778,9 +769,7 @@ Class MainWindow
                         .Margin = New Thickness(10, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
-                    If Not SelectedBeatmap.Creator = "Unknown" Then
-                        UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
-                    End If
+                    If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_downloadAndInstall"),
@@ -811,9 +800,7 @@ Class MainWindow
                         .UI_TextBlock_Caption = UI_TextBlock_Caption,
                         .UI_TextBlock_Title = UI_TextBlock_Title}
 
-                    If Check_IfInstalled = False Then
-                        Importer_BeatmapList_Tag_ToInstall.Add(TagData)
-                    End If
+                    If Check_IfInstalled = False Then Importer_BeatmapList_Tag_ToInstall.Add(TagData)
                     UI_Checkbox_IsInstalled.Tag = TagData
                     UI_Checkbox_IsSelected.Tag = TagData
                     UI_Checkbox_IsSelected.Tag = TagData
@@ -905,9 +892,7 @@ Class MainWindow
                     Else
                         UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelectedBeatmap.Artist
                     End If
-                    If Not SelectedBeatmap.Creator = "Unknown" Then
-                        UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
-                    End If
+                    If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_selectToExport"),
@@ -972,8 +957,8 @@ Class MainWindow
     End Sub
 
     Private Sub Button_SyncDo_Click(sender As Object, e As RoutedEventArgs) Handles Button_SyncDo.Click
-        If Setting_Tool_CheckFileAssociation Then
-            Action_CheckFileAssociation()
+        If Tool_IsElevated Then
+            If Setting_Tool_CheckFileAssociation Then Action_CheckFileAssociation()
         End If
         Action_Sync_GetIDs()
     End Sub
@@ -1094,9 +1079,7 @@ Class MainWindow
         Action_Tool_ApplySettings()
 
         ' Delete old downloaded beatmaps
-        If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
-            Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload", True)
-        End If
+        If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload", True)
 
         ' Check For Updates
         Select Case Setting_Tool_CheckForUpdates
@@ -1133,9 +1116,7 @@ Class MainWindow
                                                                                        End Function) Then
             Importer_ReadListFile(Importer_FilePath)
         Else
-            If Setting_Tool_SyncOnStartup Then
-                Action_Sync_GetIDs()
-            End If
+            If Setting_Tool_SyncOnStartup Then Action_Sync_GetIDs()
         End If
     End Sub
 
@@ -1415,9 +1396,7 @@ Class MainWindow
                                     Loop
 
                                     For Each Line As String In TextLines
-                                        If Found_ID And Found_Title And Found_Artist And Found_Creator Then
-                                            Exit For
-                                        End If
+                                        If Found_ID And Found_Title And Found_Artist And Found_Creator Then Exit For
 
                                         If Line.StartsWith("Title:") Then
                                             Found_Title = True
@@ -1478,12 +1457,8 @@ Class MainWindow
                 End If
 
                 If Not Beatmap_InvalidFolder = "" Or Not Beatmap_InvalidIDBeatmaps = "" Then
-                    If Not Beatmap_InvalidFolder = "" Then
-                        Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
-                    End If
-                    If Not Beatmap_InvalidIDBeatmaps = "" Then
-                        Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
-                    End If
+                    If Not Beatmap_InvalidFolder = "" Then Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
+                    If Not Beatmap_InvalidIDBeatmaps = "" Then Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
                 End If
                 e.Result = Answer
         End Select
@@ -1588,9 +1563,7 @@ Class MainWindow
             If SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked Then
                 Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
 
-                If Exporter_BeatmapList_Tag_Selected.Count = 0 Then
-                    Export_Run.IsEnabled = False
-                End If
+                If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
 
                 SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
                 SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
@@ -1615,9 +1588,7 @@ Class MainWindow
             If SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked Then
                 Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
 
-                If Exporter_BeatmapList_Tag_Selected.Count = 0 Then
-                    Export_Run.IsEnabled = False
-                End If
+                If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
 
                 SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
                 SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
@@ -1643,9 +1614,7 @@ Class MainWindow
         Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
         Exporter_BeatmapList_Tag_Unselected.Add(SelectedSender_Tag)
 
-        If Exporter_BeatmapList_Tag_Selected.Count = 0 Then
-            Export_Run.IsEnabled = False
-        End If
+        If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
 
         SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
     End Sub
@@ -1751,9 +1720,7 @@ Class MainWindow
                 Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
                 Importer_Info.Text = _e("MainWindow_installing")
                 Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
-                If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then
-                    Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
-                End If
+                If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
                 Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
 
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
@@ -1769,9 +1736,7 @@ Class MainWindow
                 TextBlock_Progress.Content = ""
                 Importer_Info.Text = _e("MainWindow_aborted")
                 Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
-                If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then
-                    Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
-                End If
+                If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
                 Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
                 Button_SyncDo.IsEnabled = True
                 Importer_Run.IsEnabled = True
@@ -1785,12 +1750,8 @@ Class MainWindow
 
         If response.Headers("Content-Disposition") <> Nothing Then
             Importer_CurrentFileName = response.Headers("Content-Disposition").Substring(response.Headers("Content-Disposition").IndexOf("filename=") + 10).Replace("""", "")
-            If Importer_CurrentFileName.Substring(Importer_CurrentFileName.Length - 1) = ";" Then
-                Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.Length - 1)
-            End If
-            If Importer_CurrentFileName.Contains("; filename*=UTF-8") Then
-                Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.IndexOf(".osz") + 4)
-            End If
+            If Importer_CurrentFileName.Substring(Importer_CurrentFileName.Length - 1) = ";" Then Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.Length - 1)
+            If Importer_CurrentFileName.Contains("; filename*=UTF-8") Then Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.IndexOf(".osz") + 4)
         Else
             Importer_CurrentFileName = CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & ".osz"
         End If
@@ -1859,9 +1820,7 @@ Class MainWindow
                     _e("MainWindow_pressF5"))
 
             If Not Process.GetProcessesByName("osu!").Count > 0 Then
-                If MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then
-                    Action_StartOrFocusOsu()
-                End If
+                If MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
             End If
             Button_SyncDo.IsEnabled = True
             Importer_Cancel.IsEnabled = True
@@ -1869,32 +1828,23 @@ Class MainWindow
     End Sub
 
     Sub Importer_Init()
-        If HasWriteAccessToOsu Then
+        If Tool_HasWriteAccessToOsu Then
             Button_SyncDo.IsEnabled = False
             Importer_Run.IsEnabled = False
             Importer_Cancel.IsEnabled = False
             Importer_Progress.Visibility = Visibility.Visible
-            If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then
-                Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
-            End If
+            If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
             Importer_DownloadBeatmap()
         Else
             If MessageBox.Show(_e("MainWindow_requestElevation"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                Try
-                    Dim ElevateProcess As New Process
-                    With ElevateProcess.StartInfo
-                        .Arguments = "-ignoreInstances -openFile=" + Importer_Info.ToolTip.ToString
-                        .FileName = Reflection.Assembly.GetExecutingAssembly().Location.ToString
-                        .UseShellExecute = True
-                        .Verb = "runas"
-                    End With
-                    ElevateProcess.Start()
+                If Action_RequestElevation("-openFile=" & Importer_Info.ToolTip.ToString) Then
                     Windows.Application.Current.Shutdown()
-                Catch ex As ComponentModel.Win32Exception
+                    Exit Sub
+                Else
                     MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                     Action_OverlayShow(_e("MainWindow_importAborted"), _e("MainWindow_insufficientPermissions"))
                     Action_OverlayFadeOut()
-                End Try
+                End If
             Else
                 Action_OverlayShow(_e("MainWindow_importAborted"), _e("MainWindow_insufficientPermissions"))
                 Action_OverlayFadeOut()
@@ -1960,9 +1910,7 @@ Class MainWindow
         If File.ReadAllBytes(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName).Length = 0 Then
             ' File Empty
             Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
-            If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName) Then
-                File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
-            End If
+            If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName) Then File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
             MsgBox(_e("MainWindow_beatmapsDoesNotExist").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
 
             Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)

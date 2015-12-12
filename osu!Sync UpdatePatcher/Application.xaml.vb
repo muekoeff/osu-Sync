@@ -15,9 +15,7 @@
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
         ' Save Startup Arguments
         Dim i As Integer = 0
-        If Not e.Args.Length = 0 Then
-            I__StartUpArguments = e.Args
-        End If
+        If Not e.Args.Length = 0 Then I__StartUpArguments = e.Args
 
         ' Check if already running
         If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then

@@ -9,8 +9,6 @@
     End Sub
 
     Private Sub Window_Welcome_Closing(sender As Object, e As ComponentModel.CancelEventArgs) Handles Me.Closing
-        If ShutdownAfterClose Then
-            Windows.Application.Current.Shutdown()
-        End If
+        If ShutdownAfterClose Then Windows.Application.Current.Shutdown()
     End Sub
 End Class

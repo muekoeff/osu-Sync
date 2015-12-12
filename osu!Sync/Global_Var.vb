@@ -32,6 +32,10 @@ Module Global_Var
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
+
+    Public Tool_HasWriteAccessToOsu As Boolean = False  ' Set in MainWindow.xaml.vb\MainWindow_Loaded()
+    Public Tool_IsElevated As Boolean = False   ' Set in Application.xaml.vb\Application_Startup()
+
     Public Setting_Api_Key As String = ""
     Public Setting_Api_Enabled_BeatmapPanel As Boolean = False
     Public Setting_osu_Path As String = GetDetectedOsuPath()
@@ -45,6 +49,7 @@ Module Global_Var
     Public Setting_Tool_Language As String = "en"
     Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
     Public Setting_Tool_SyncOnStartup As Boolean = False
+    Public Setting_Tool_RequestElevationOnStartup As Boolean = False
     Public Setting_Tool_Update_DeleteFileAfter As Boolean = True
     Public Setting_Tool_Update_SavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     Public Setting_Tool_Update_UseDownloadPatcher As Boolean = True
@@ -58,6 +63,23 @@ Module Global_Var
             MsgBox("The application just tried to load a text (= string) which isn't registered." & vbNewLine & "Normally, this shouldn't happen." &
                    vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional information:" & vbNewLine & Text, MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             Return "[Missing String: " + Text + "]"
+        End Try
+    End Function
+
+    Function Action_RequestElevation(Optional Parameters As String = "") As Boolean
+        If Not Parameters = "" Then Parameters = " " & Parameters
+        Try
+            Dim ElevateProcess As New Process
+            With ElevateProcess.StartInfo
+                .Arguments = "-ignoreInstances" & Parameters
+                .FileName = Reflection.Assembly.GetExecutingAssembly().Location.ToString
+                .UseShellExecute = True
+                .Verb = "runas"
+            End With
+            ElevateProcess.Start()
+            Return True
+        Catch ex As ComponentModel.Win32Exception
+            Return False
         End Try
     End Function
 
@@ -97,9 +119,7 @@ Module Global_Var
         Const SHCNE_ASSOCCHANGED = &H8000000
         Const SHCNF_IDLIST = 0
         ' ensure that there is a leading dot
-        If extension.Substring(0, 1) <> "." Then
-            extension = "." & extension
-        End If
+        If extension.Substring(0, 1) <> "." Then extension = "." & extension
 
         Dim key1, key2, key3, key4 As Microsoft.Win32.RegistryKey
         Try
@@ -149,17 +169,11 @@ Module Global_Var
     Function DeleteFileAssociation(ByVal extension As String, ByVal className As String) As Boolean
         Const SHCNE_ASSOCCHANGED = &H8000000
         Const SHCNF_IDLIST = 0
-        If extension.Substring(0, 1) <> "." Then
-            extension = "." & extension
-        End If
+        If extension.Substring(0, 1) <> "." Then extension = "." & extension
 
         Try
-            If Not Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(extension) Is Nothing Then
-                Microsoft.Win32.Registry.ClassesRoot.DeleteSubKeyTree(extension)
-            End If
-            If Not Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(className) Is Nothing Then
-                Microsoft.Win32.Registry.ClassesRoot.DeleteSubKeyTree(className)
-            End If
+            If Not Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(extension) Is Nothing Then Microsoft.Win32.Registry.ClassesRoot.DeleteSubKeyTree(extension)
+            If Not Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(className) Is Nothing Then Microsoft.Win32.Registry.ClassesRoot.DeleteSubKeyTree(className)
         Catch e As Exception
             MsgBox(_e("GlobalVar_sorrySomethingWentWrong"), MsgBoxStyle.OkOnly)
             MsgBox(e.Message, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
@@ -193,8 +207,7 @@ Module Global_Var
     End Function
 
     Function GetProgramInfoJson() As JObject
-        Dim identity = WindowsIdentity.GetCurrent()
-        Dim principal = New WindowsPrincipal(identity)
+        Dim principal = New WindowsPrincipal(WindowsIdentity.GetCurrent())
         Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
 
         Dim JContent As New JObject
@@ -268,9 +281,7 @@ Module Global_Var
     End Sub
 
     Sub Action_SaveSettings()
-        If Not Directory.Exists(I__Path_Programm & "\Settings") Then
-            Directory.CreateDirectory(I__Path_Programm & "\Settings")
-        End If
+        If Not Directory.Exists(I__Path_Programm & "\Settings") Then Directory.CreateDirectory(I__Path_Programm & "\Settings")
         Using ConfigFile = File.CreateText(I__Path_Programm & "\Settings\Settings.config")
             Dim Content As New Dictionary(Of String, String)
             With Content
@@ -287,6 +298,7 @@ Module Global_Var
                 .Add("Setting_Tool_Interface_BeatmapDetailPanelWidth", CStr(Setting_Tool_Interface_BeatmapDetailPanelWidth))
                 .Add("Setting_Tool_Language", Setting_Tool_Language)
                 .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
+                .Add("Setting_Tool_RequestElevationOnStartup", CStr(Setting_Tool_RequestElevationOnStartup))
                 .Add("Setting_Tool_SyncOnStartup", CStr(Setting_Tool_SyncOnStartup))
                 .Add("Setting_Tool_Update_DeleteFileAfter", CStr(Setting_Tool_Update_DeleteFileAfter))
                 .Add("Setting_Tool_Update_SavePath", CStr(Setting_Tool_Update_SavePath))
@@ -305,65 +317,29 @@ Module Global_Var
             Dim PreviousVersion As Version
 
             PreviousVersion = Version.Parse(CStr(ConfigFile.SelectToken("_version")))
-            If Not ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel") Is Nothing Then
-                Setting_Api_Enabled_BeatmapPanel = CBool(ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Api_Key") Is Nothing Then
-                Setting_Api_Key = CStr(ConfigFile.SelectToken("Setting_Api_Key"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then
-                Setting_osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then
-                Setting_osu_SongsPath = CStr(ConfigFile.SelectToken("Setting_osu_SongsPath"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then
-                Setting_Tool_CheckFileAssociation = CBool(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then
-                Setting_Tool_CheckForUpdates = CInt(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then
-                Setting_Tool_DownloadMirror = CInt(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then
-                Setting_Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter") Is Nothing Then
-                Setting_Tool_Importer_AutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth") Is Nothing Then
-                Setting_Tool_Interface_BeatmapDetailPanelWidth = CInt(ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth"))
-            End If
+            If Not ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel") Is Nothing Then Setting_Api_Enabled_BeatmapPanel = CBool(ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel"))
+            If Not ConfigFile.SelectToken("Setting_Api_Key") Is Nothing Then Setting_Api_Key = CStr(ConfigFile.SelectToken("Setting_Api_Key"))
+            If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then Setting_osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
+            If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then Setting_osu_SongsPath = CStr(ConfigFile.SelectToken("Setting_osu_SongsPath"))
+            If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then Setting_Tool_CheckFileAssociation = CBool(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"))
+            If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then Setting_Tool_CheckForUpdates = CInt(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"))
+            If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then Setting_Tool_DownloadMirror = CInt(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"))
+            If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then Setting_Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter") Is Nothing Then Setting_Tool_Importer_AutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth") Is Nothing Then Setting_Tool_Interface_BeatmapDetailPanelWidth = CInt(ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth"))
             If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
                 Setting_Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
                 ' Load language library
-                If Not GetTranslationName(Setting_Tool_Language) = "" Then
-                    LoadLanguage(GetTranslationName(Setting_Tool_Language), Setting_Tool_Language)
-                End If
+                If Not GetTranslationName(Setting_Tool_Language) = "" Then LoadLanguage(GetTranslationName(Setting_Tool_Language), Setting_Tool_Language)
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then
-                Setting_Tool_LastCheckForUpdates = CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then
-                Setting_Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then
-                Setting_Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then
-                Setting_Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then
-                Setting_Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then
-                Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
-            End If
-            If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then
-                Setting_Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
-            End If
-
+            If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then Setting_Tool_LastCheckForUpdates = CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"))
+            If Not ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup") Is Nothing Then Setting_Tool_RequestElevationOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup"))
+            If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then Setting_Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then Setting_Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then Setting_Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then Setting_Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
+            If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
+            If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then Setting_Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
             Action_CheckCompatibility(PreviousVersion)
         Catch ex As Exception
             MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
@@ -447,9 +423,7 @@ Module Global_Var
     End Sub
 
     Function WriteCrashLog(ex As Exception) As String
-        If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then
-            Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
-        End If
+        If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
         Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH-mm-ss") & ".txt"
         Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
             Dim Content As String = "=====   osu!Sync Crash | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
@@ -464,14 +438,10 @@ Module Global_Var
     End Function
 
     Sub WriteToApiLog(Method As String, Optional Result As String = "Failed")
-        If Not Directory.Exists(I__Path_Programm & "\Logs") Then
-            Directory.CreateDirectory(I__Path_Programm & "\Logs")
-        End If
-
+        If Not Directory.Exists(I__Path_Programm & "\Logs") Then Directory.CreateDirectory(I__Path_Programm & "\Logs")
         Try
-            If Result.Length >= 150 Then
-                Result = Result.Substring(0, 147) & "..."
-            End If
+            ' Trim
+            If Result.Length >= 150 Then Result = Result.Substring(0, 147) & "..."
             Dim Stream As StreamWriter = File.AppendText(I__Path_Programm & "\Logs\ApiAccess.txt")
             Dim Content As String = ""
             Content += "[" & Now.ToString() & " / " & My.Application.Info.Version.ToString & "] "
