@@ -64,6 +64,7 @@ Public Class BGWcallback__Action_Sync_GetIDs
 End Class
 
 Class MainWindow
+    Private WithEvents BeatmapDetailClient As New WebClient
     Private WithEvents FadeOut As New DoubleAnimation()
 
     Private Sync_BeatmapList_Installed As New List(Of Beatmap)
@@ -950,6 +951,31 @@ Class MainWindow
         End Select
     End Sub
 
+    Private Sub BeatmapDetailClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles BeatmapDetailClient.DownloadStringCompleted
+        BeatmapDetails_APIProgress.Visibility = Visibility.Collapsed
+
+        Dim JSON_Array As JArray
+        Try
+            JSON_Array = CType(JsonConvert.DeserializeObject(e.Result), JArray)
+            If Not JSON_Array.First Is Nothing Then
+                WriteToApiLog("/api/get_beatmaps", e.Result)
+                BeatmapDetails_APIFavouriteCount.Text = JSON_Array.First.SelectToken("favourite_count").ToString
+            Else
+                WriteToApiLog("/api/get_beatmaps", "{UnexpectedAnswer} " & e.Result)
+                With BeatmapDetails_APIWarn
+                    .Content = _e("MainWindow_detailsPanel_apiError")
+                    .Visibility = Visibility.Visible
+                End With
+            End If
+        Catch ex As Exception
+            WriteToApiLog("/api/get_beatmaps")
+            With BeatmapDetails_APIWarn
+                .Content = _e("MainWindow_detailsPanel_apiError")
+                .Visibility = Visibility.Visible
+            End With
+        End Try
+    End Sub
+
     Private Sub BeatmapDetails_BeatmapListing_Click(sender As Object, e As RoutedEventArgs) Handles BeatmapDetails_BeatmapListing.Click
         Dim SelectedSender As Button = CType(sender, Button)
         Dim SelectedSender_Tag As String = CStr(SelectedSender.Tag)
@@ -1044,6 +1070,23 @@ Class MainWindow
             BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
         End If
 
+        ' Api
+        If Setting_Api_Enabled_BeatmapPanel And Not ID = -1 Then
+            If BeatmapDetailClient.IsBusy Then
+                BeatmapDetailClient.CancelAsync()
+            End If
+
+            ' Reset
+            BeatmapDetails_APIFavouriteCount.Text = "..."
+            BeatmapDetails_APIFunctions.Visibility = Visibility.Visible
+            BeatmapDetails_APIProgress.Visibility = Visibility.Visible
+            BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
+
+            BeatmapDetailClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & Setting_Api_Key & "&s=" & ID))
+        Else
+            BeatmapDetails_APIFunctions.Visibility = Visibility.Collapsed
+        End If
+
         Flyout_BeatmapDetails.IsOpen = True
     End Sub
 
@@ -1114,7 +1157,12 @@ Class MainWindow
                                                                                                Return False
                                                                                            End If
                                                                                        End Function) Then
-            Importer_ReadListFile(Importer_FilePath)
+            If File.Exists(Importer_FilePath) Then
+                Importer_ReadListFile(Importer_FilePath)
+            Else
+                MsgBox(_e("MainWindow_file404"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                If Setting_Tool_SyncOnStartup Then Action_Sync_GetIDs()
+            End If
         Else
             If Setting_Tool_SyncOnStartup Then Action_Sync_GetIDs()
         End If
@@ -1228,7 +1276,11 @@ Class MainWindow
 
     Private Sub MenuItem_Program_Settings_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Settings.Click
         Interface_ShowSettingsWindow()
-        Action_Tool_ApplySettings()
+        If Not Tool_DontApplySettings Then
+            Action_Tool_ApplySettings()
+        Else
+            Tool_DontApplySettings = False
+        End If
     End Sub
 
     Private Sub NotifyIcon_Exit_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_Exit.Click

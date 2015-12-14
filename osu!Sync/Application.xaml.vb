@@ -20,19 +20,29 @@
         If Not e.Args.Length = 0 Then I__StartUpArguments = e.Args
 
         ' Check if already running
-        If Not (I__StartUpArguments IsNot Nothing AndAlso Array.Exists(I__StartUpArguments, Function(s)
-                                                                                                If s = "-ignoreInstances" Then
-                                                                                                    Return True
-                                                                                                Else
-                                                                                                    Return False
-                                                                                                End If
-                                                                                            End Function)) Then
+        If I__StartUpArguments Is Nothing Then
             If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
                 Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
                 AppActivate(SelectedProcess.Id)
                 ShowWindow(SelectedProcess.MainWindowHandle, 1)
                 Current.Shutdown()
                 Exit Sub
+            End If
+        Else    ' Please don't hurt me for that awful construction
+            If Not Array.Exists(I__StartUpArguments, Function(s)
+                                                         If s = "-ignoreInstances=" Then
+                                                             Return True
+                                                         Else
+                                                             Return False
+                                                         End If
+                                                     End Function) Then
+                If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
+                    Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
+                    AppActivate(SelectedProcess.Id)
+                    ShowWindow(SelectedProcess.MainWindowHandle, 1)
+                    Current.Shutdown()
+                    Exit Sub
+                End If
             End If
         End If
 

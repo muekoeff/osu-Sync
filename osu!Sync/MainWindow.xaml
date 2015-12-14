@@ -25,6 +25,21 @@
                         <TextBlock x:Name="BeatmapDetails_Artist" FontSize="20" Foreground="#FF3DB670" />
                         <Label Content="{DynamicResource MainWindow_creator}" FontFamily="Segoe UI Light" Margin="0,15,0,0" />
                         <TextBlock x:Name="BeatmapDetails_Creator" FontSize="16" Margin="10,0,0,0" />
+                        <StackPanel x:Name="BeatmapDetails_APIFunctions">
+                            <Grid Margin="0,15,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="{DynamicResource MainWindow_detailsPanel_onlineDetails}" FontFamily="Segoe UI Light" />
+                                <Controls:ProgressRing x:Name="BeatmapDetails_APIProgress" Foreground="#FFFFFFFF" Height="20" HorizontalAlignment="Left" IsActive="True" Margin="10,0,0,0" Width="20" Grid.Column="1" />
+                            </Grid>
+                            <StackPanel Margin="15,0,0,0">
+                                <Label x:Name="BeatmapDetails_APIWarn" FontFamily="Segoe UI Light" Foreground="#FFE74C3C" Visibility="Collapsed" />
+                                <Label x:Name="BeatmapDetails_Label_APIFavouriteCount" Content="{DynamicResource MainWindow_detailsPanel_favoriteCount}" FontFamily="Segoe UI Light" />
+                                <TextBlock x:Name="BeatmapDetails_APIFavouriteCount" FontSize="16" Margin="10,0,0,0" />
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel VerticalAlignment="Bottom">
                         <Button x:Name="BeatmapDetails_BeatmapListing" Content="{DynamicResource MainWindow_detailsPanel_openBeatmapListing}" FontSize="14" Height="45" Margin="0,0,0,6" ToolTip="{DynamicResource MainWindow_openBeatmapListingPageInBrowser}"/>

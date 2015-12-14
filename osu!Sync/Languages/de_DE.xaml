@@ -16,7 +16,7 @@
     <system:String x:Key="GlobalVar_extensionBeatmapList">osu! Beatmap-Liste für osu!Sync</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Komprimierte osu! Beatmap-Liste für osu!Sync</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei scheint ungültig oder veraltet sein.&#x0a;Sie wird gelöscht und die Anwendung neu gestartet.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei scheint ungültig oder veraltet sein. Sie wird gelöscht und die Anwendung neugestartet.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Entschuldigung, irgendetwas lief schief.</system:String>
     <!-- | M -->
@@ -28,7 +28,7 @@
     <system:String x:Key="MainWindow_about">_Über</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Alle unterstützten Dateiformate</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Und weiter am Arbeiten...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Eine neue Version ist verfügbar.&#x0a;Aktuell: %0 | Neueste: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Eine neue Version ist verfügbar. -- Aktuell: %0 | Neueste: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
     <system:String x:Key="MainWindow_beatmapsDoesNotExist">Die Beatmap mit der ID %0 existiert nicht.</system:String>
@@ -69,6 +69,7 @@
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Gespielt</system:String>
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Ungespielt</system:String>
     <!-- | E -->
+    <system:String x:Key="MainWindow_elevationFailed">Administratoranfrage fehlgeschlagen.</system:String>
     <system:String x:Key="MainWindow_exceptions">Ausnahmen</system:String>
     <system:String x:Key="MainWindow_exit">_Beenden</system:String>
     <system:String x:Key="MainWindow_export">Export</system:String>
@@ -88,7 +89,7 @@
     <system:String x:Key="MainWindow_fetching">Ruft %0 ab...</system:String>
     <system:String x:Key="MainWindow_fetching1">Ruft ab...</system:String>
     <system:String x:Key="MainWindow_file">_Datei</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">Mindestens ein Ordner konnte nicht eingelesen werden.&#x0a;Er/Sie werden ignoriert.</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">Mindestens ein Ordner konnte nicht eingelesen werden. Er/Sie werden ignoriert.</system:String>
     <system:String x:Key="MainWindow_folders">Ordner</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Generiert Interface...</system:String>
@@ -104,6 +105,7 @@
     <system:String x:Key="MainWindow_installationFinished">Installation fertiggestellt!</system:String>
     <system:String x:Key="MainWindow_installing">Installiert</system:String>
     <system:String x:Key="MainWindow_installingFiles">Installiert Dateien...</system:String>
+    <system:String x:Key="MainWindow_insufficientPermissions">Unzureichende Berechtigungen</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">Unültige Serverantwort</system:String>
     <system:String x:Key="MainWindow_invertSelection">Auswahl umkehren</system:String>
     <system:String x:Key="MainWindow_isInstalled">Installiert?</system:String>
@@ -116,6 +118,7 @@
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">In den Tray _minimieren</system:String>
     <!-- | N -->
+    <system:String x:Key="MainWindow_noAccess">Keine Zugriffsrechte</system:String>
     <system:String x:Key="MainWindow_notImportable">Nicht importierbar</system:String>
     <!-- | O -->
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">Beatmapdetail-Panel öffnen</system:String>
@@ -132,6 +135,7 @@
     <system:String x:Key="MainWindow_pressF5">Drück in osu! F5 um deine Beatmaps neuzuladen bzw. gehe ins Hauptmenü.</system:String>
     <system:String x:Key="MainWindow_program">_Programm</system:String>
     <!-- | R -->
+    <system:String x:Key="MainWindow_requestElevation">osu!Sync ist derzeit nicht berechtigt auf das osu! Song-Verzeichnis zuzugreifen. Um den Importvorgang zu starten, muss osu!Sync mit Adminrechten neugestartet werden. -- Möchtest du das machen?</system:String>
     <system:String x:Key="MainWindow_runOsu">osu! starten</system:String>
     <!-- | S -->
     <system:String x:Key="MainWindow_selectADestination">Wähle ein Ziel</system:String>
@@ -157,9 +161,9 @@
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Kann nicht auf Updates prüfen.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">Die Anwendung kann nicht die notwendigen Daten aus dem ausgewählten Mirror abrufen. Eine mögliche Ursache ist, dass dieser derzeit offline ist. Um dieses Problem zu beheben, versuche, einen anderen Mirror im Einstellungsfenster zu wählen. Wenn du diese Datei überspringen möchtest drücke 'Ja', zum Abbrechen des ganze Downloads drücke "Nein".</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Konnte osu!.exe nicht finden.</system:String>
-    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Konnte osu! Ordner nicht finden.&#x0a;Bitte wähle den Pfad zu osu! im folgenden Fenster.</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Konnte osu! Ordner nicht finden. Bitte wähle den Pfad zu osu! im folgenden Fenster.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">ID konnte nicht gelesen werden</system:String>
-    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Die IDs von einigen Beatmaps können nicht geparst werden.&#x0a;Sie werden als ungerankte gehandelt (können nicht exportiert werden).</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Die IDs von einigen Beatmaps können nicht eingelesen werden. Sie werden als ungerankte gehandelt (können nicht exportiert werden).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Kann nicht Download-Pfad des aktualisieren Pakets erhalten.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Unbekannte Dateisuffix</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
@@ -178,6 +182,8 @@
     <system:String x:Key="MainWindow_tt_openAboutWindow">Über-Fenster öffnen.</system:String>
     <!-- || E-->
     <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">Alle erkannten Beatmaps exportieren</system:String>
+    <!-- || E-->
+    <system:String x:Key="MainWindow_tt_noAccess">Du musst osu!Sync ggf. neustarten, damit es in das osu!-Verzeichnis schreiben kann</system:String>
     <!-- || O -->
     <system:String x:Key="MainWindow_tt_openUpdater">Updater öffnen.</system:String>
 
@@ -275,8 +281,8 @@
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Nö, das Verzeichnis existiert noch nicht..</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">Nö, es gibt keine Konfigurationsdatei...</system:String>
     <system:String x:Key="WindowSettings_notifications">Nachrichten</system:String>
-    <!-- | O -->
-    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, das ist erledigt.&#x0a;Möchtest du osu!Sync jetzt neustarten?</system:String>
+    <!-- | O --> 
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, das ist erledigt. -- Möchtest du osu!Sync jetzt neustarten?</system:String>
     <system:String x:Key="WindowSettings_openApiLog">API-Protokolldatei öffnen</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Datenordner öffnen</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Updater öffnen, wenn eine neue Version verfügbar ist</system:String>
@@ -292,7 +298,9 @@
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Frage/Hilfsanfrage</system:String>
     <!-- | R -->
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">Wenn möglicherweise erforderlich, erfrage Adminrechte bei Start statt bei Bedarf</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">osu!Sync zurücksetzen (Konfiguration löschen, Dateiassoziationen, etc.)</system:String>
+    <system:String x:Key="WindowSettings_restartElevated">osu!Sync mit Adminrechten neustarten</system:String>
     <!-- | S -->
     <system:String x:Key="WindowSettings_save">_Speichern</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Serverseitige Antwort:</system:String>
@@ -317,6 +325,7 @@
     <system:String x:Key="WindowSettings_valid">Gültig</system:String>
     <system:String x:Key="WindowSettings_validate">Validieren</system:String>
     <!-- | W -->
+    <system:String x:Key="WindowSettings_warnNotElevated">Einige Optionen könnten deaktiviert sein, da die Applikation derzeit nicht Adminrechte hat.</system:String>
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Breite des Beatmap Detail Panel (Numerisch, zwischen 5 und 95)</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">Deine eMail</system:String>
@@ -325,7 +334,7 @@
     <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Deine Nachricht wirkt sehr kurz. Bitte versuche, so detailliert wie möglich zu beschreiben.</system:String>
     <system:String x:Key="WindowSettings_yourName">Dein Name/osu!Nutername</system:String>
     <system:String x:Key="WindowSettings_yourNameIsTooShort">Dein Name/osu!Nutername ist zu kurz.</system:String>
-    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Du hast die falsche Datei gewählt.#x0a;Bitte wähle die "osu!.exe".</system:String>
+    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Du hast die falsche Datei gewählt. -- Bitte wähle die "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
     <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">Gib "0" ein, um nach abgeschlossenem Download zu importieren.</system:String>
@@ -364,7 +373,7 @@
     <system:String x:Key="WindowWelcome_continue">_Fortfahren</system:String>
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync ist ein kostenloses Tool, welches dir erlaubt osu! Beatmaps zu exportieren und importieren. Du kannst Listen generieren mit denen du deine Beatmaps teilen kannst.</system:String>
-    <!-- | T -->
+    <!-- | S -->
     <system:String x:Key="WindowWelcome_subtitle">... zu osu!Sync von naseweis520</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Willkommen</system:String>

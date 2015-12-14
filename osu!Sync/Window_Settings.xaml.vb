@@ -118,9 +118,9 @@ Public Class Window_Settings
             .IsEnabled = False
         End With
         TextBox_Api_ApiKey.IsEnabled = False
-        Dim Client As New WebClient
-        AddHandler Client.DownloadStringCompleted, AddressOf ApiClient_DownloadStringCompleted
-        Client.DownloadStringAsync(New Uri("https://osu.ppy.sh/api/get_beatmaps?k=" & TextBox_Api_ApiKey.Text))
+        Dim ApiClient As New WebClient
+        AddHandler ApiClient.DownloadStringCompleted, AddressOf ApiClient_DownloadStringCompleted
+        ApiClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & TextBox_Api_ApiKey.Text))
     End Sub
 
     Private Sub Button_Api_OpenLog_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_OpenLog.Click
@@ -318,6 +318,7 @@ Public Class Window_Settings
 
     Private Sub Button_Tool_RestartElevated_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_RestartElevated.Click
         If Action_RequestElevation() Then
+            Tool_DontApplySettings = True
             Windows.Application.Current.Shutdown()
             Exit Sub
         Else
@@ -425,7 +426,6 @@ Public Class Window_Settings
             Button_Tool_Reset.IsEnabled = False
             Button_Tool_UpdateFileAssociation.IsEnabled = False
         End If
-
 
         CheckBox_Api_EnableInBeatmapPanel.IsChecked = Setting_Api_Enabled_BeatmapPanel
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater

@@ -13,7 +13,6 @@ Class Language
     Property Code As String
     Property DisplayName As String
     Property DisplayName_English As String
-    Property Status As Integer = 0
 End Class
 Module Global_Var
     Public Application_FileExtensions() As String = {".nw520-osbl",
@@ -29,10 +28,12 @@ Module Global_Var
 
     Public I__StartUpArguments() As String
     Public Const I__Path_Web_Host As String = "http://nw520.de/osuSync/"
+    Public Const I__Path_Web_osuApi As String = "https://osu.ppy.sh/api/"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
-    Public Const I__MsgBox_DefaultTitle As String = "Dialog | osu!Sync"
+    Public Const I__MsgBox_DefaultTitle As String = "osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
 
+    Public Tool_DontApplySettings As Boolean = False
     Public Tool_HasWriteAccessToOsu As Boolean = False  ' Set in MainWindow.xaml.vb\MainWindow_Loaded()
     Public Tool_IsElevated As Boolean = False   ' Set in Application.xaml.vb\Application_Startup()
 
@@ -370,6 +371,11 @@ Module Global_Var
                  .Code = "fr_FR",
                  .DisplayName = "Français",
                  .DisplayName_English = "French"})
+            ' Currently too many strings incomplete
+            '.Add("eo", New Language With {
+            '    .Code = "eo_UY",
+            '    .DisplayName = "Esperanto",
+            '    .DisplayName_English = "Esperanto"})
             .Add("id", New Language With {
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",
@@ -424,7 +430,7 @@ Module Global_Var
 
     Function WriteCrashLog(ex As Exception) As String
         If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
-        Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH-mm-ss") & ".txt"
+        Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss") & ".txt"
         Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
             Dim Content As String = "=====   osu!Sync Crash | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
                 "// Information" & vbNewLine & "An exception occured in osu!Sync. If this problem persists please report it using the Feedback-window, on GitHub or on the osu!Forum." & vbNewLine & "When reporting please try to describe as detailed as possible what you've done and how the applicationen reacted." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
@@ -437,7 +443,7 @@ Module Global_Var
         Return CrashFile
     End Function
 
-    Sub WriteToApiLog(Method As String, Optional Result As String = "Failed")
+    Sub WriteToApiLog(Method As String, Optional Result As String = "{Failed}")
         If Not Directory.Exists(I__Path_Programm & "\Logs") Then Directory.CreateDirectory(I__Path_Programm & "\Logs")
         Try
             ' Trim
