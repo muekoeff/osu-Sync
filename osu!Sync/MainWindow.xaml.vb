@@ -63,6 +63,8 @@ Public Class BGWcallback__Action_Sync_GetIDs
     Public Property Progress__CurrentAction As BGWcallback_ActionSyncGetIDs_ProgressCurrentAction
 End Class
 
+' BmDP = Beatmap Detail Panel
+
 Class MainWindow
     Private WithEvents BeatmapDetailClient As New WebClient
     Private WithEvents FadeOut As New DoubleAnimation()
@@ -411,16 +413,30 @@ Class MainWindow
         End Select
     End Sub
 
-    Private Sub Action_OpenBeatmapDetails(sender As Object, e As MouseButtonEventArgs)
+    Private Sub Action_OpenBmDP(sender As Object, e As MouseButtonEventArgs)
+        Dim SelectedSender_Bm As Beatmap
+        If TypeOf sender Is Image Then
+            Dim SelectedSender As Image = CType(sender, Image)
+            If TypeOf SelectedSender.Tag Is Beatmap Then
+                SelectedSender_Bm = CType(SelectedSender.Tag, Beatmap)
+            Else
+                SelectedSender_Bm = CType(SelectedSender.Tag, Importer_TagData).Beatmap
+            End If
+        Else
+            Exit Sub
+        End If
+        Interface_ShowBmDP(SelectedSender_Bm.ID, New BeatmapPanelDetails With {
+                                     .Artist = SelectedSender_Bm.Artist,
+                                     .Creator = SelectedSender_Bm.Creator,
+                                     .IsUnplayed = SelectedSender_Bm.IsUnplayed,
+                                     .RankedStatus = SelectedSender_Bm.RankedStatus,
+                                     .Title = SelectedSender_Bm.Title})
+    End Sub
+
+    Private Sub Action_OpenBeatmapListing(sender As Object, e As MouseButtonEventArgs)
         Dim SelectedSender As Image = CType(sender, Image)
         Dim SelectedSender_Tag As Beatmap = CType(SelectedSender.Tag, Beatmap)
-
-        Interface_ShowBeatmapDetails(SelectedSender_Tag.ID, New BeatmapPanelDetails With {
-                                     .Artist = SelectedSender_Tag.Artist,
-                                     .Creator = SelectedSender_Tag.Creator,
-                                     .IsUnplayed = SelectedSender_Tag.IsUnplayed,
-                                     .RankedStatus = SelectedSender_Tag.RankedStatus,
-                                     .Title = SelectedSender_Tag.Title})
+        Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag.ID)
     End Sub
 
     Private Sub Action_OverlayFadeOut()
@@ -554,7 +570,7 @@ Class MainWindow
     ''' <param name="Destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
     ''' <param name="LastUpdateTime">Only required when <paramref name="Destination"/> = Installed</param>
     ''' <remarks></remarks>
-    Private Sub Action_UpdateBeatmapDisplay(ByVal BeatmapList As List(Of Beatmap), Optional ByVal Destination As UpdateBeatmapDisplayDestinations = UpdateBeatmapDisplayDestinations.Installed, Optional LastUpdateTime As String = Nothing)
+    Private Sub Action_UpdateBeatmapDisplay(BeatmapList As List(Of Beatmap), Optional Destination As UpdateBeatmapDisplayDestinations = UpdateBeatmapDisplayDestinations.Installed, Optional LastUpdateTime As String = Nothing)
         Select Case Destination
             Case UpdateBeatmapDisplayDestinations.Installed
                 If LastUpdateTime = Nothing Then
@@ -574,7 +590,7 @@ Class MainWindow
                 For Each SelectedBeatmap As Beatmap In BeatmapList
                     Dim UI_Grid = New Grid() With {
                         .Height = 80,
-                        .Margin = New Thickness(0, 0, 0, 10),
+                        .Margin = New Thickness(0, 0, 0, 5),
                         .Tag = SelectedBeatmap,
                         .Width = Double.NaN}
 
@@ -582,7 +598,11 @@ Class MainWindow
                         .Add(New ColumnDefinition With {
                             .Width = New GridLength(10)})
                         .Add(New ColumnDefinition With {
-                            .Width = New GridLength(125)})
+                            .Width = New GridLength(5)})
+                        .Add(New ColumnDefinition With {
+                            .Width = New GridLength(108)})
+                        .Add(New ColumnDefinition With {
+                            .Width = New GridLength(10)})
                         .Add(New ColumnDefinition)
                     End With
 
@@ -596,12 +616,16 @@ Class MainWindow
                     Dim UI_Thumbnail = New Image With {
                         .Cursor = Cursors.Hand,
                         .HorizontalAlignment = HorizontalAlignment.Stretch,
-                        .Margin = New Thickness(5, 0, 0, 0),
                         .Tag = SelectedBeatmap,
                         .ToolTip = _e("MainWindow_openBeatmapDetailPanel"),
                         .VerticalAlignment = VerticalAlignment.Stretch}
-                    Grid.SetColumn(UI_Thumbnail, 1)
-                    AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
+                    Grid.SetColumn(UI_Thumbnail, 2)
+                    If SelectedBeatmap.ID = -1 Then
+                        AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBmDP
+                    Else
+                        AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf Action_OpenBmDP
+                        AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBeatmapListing
+                    End If
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
@@ -615,12 +639,11 @@ Class MainWindow
                         .Foreground = Color_555555,
                         .Height = 36,
                         .HorizontalAlignment = HorizontalAlignment.Left,
-                        .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .Tag = SelectedBeatmap,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
-                    Grid.SetColumn(UI_TextBlock_Title, 2)
+                    Grid.SetColumn(UI_TextBlock_Title, 4)
 
                     ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With {
@@ -629,11 +652,10 @@ Class MainWindow
                         .Foreground = Color_008136,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Tag = SelectedBeatmap,
-                        .Margin = New Thickness(10, 38, 0, 0),
+                        .Margin = New Thickness(0, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
-                    Grid.SetColumn(UI_TextBlock_Caption, 2)
-
+                    Grid.SetColumn(UI_TextBlock_Caption, 4)
                     If Not SelectedBeatmap.ID = -1 Then
                         UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
                     Else
@@ -646,9 +668,9 @@ Class MainWindow
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .IsChecked = True,
                         .IsEnabled = False,
-                        .Margin = New Thickness(10, 62, 0, 0),
+                        .Margin = New Thickness(0, 62, 0, 0),
                         .VerticalAlignment = VerticalAlignment.Top}
-                    Grid.SetColumn(UI_Checkbox_IsInstalled, 2)
+                    Grid.SetColumn(UI_Checkbox_IsInstalled, 4)
 
                     With UI_Grid.Children
                         .Add(UI_DecoBorderLeft)
@@ -834,7 +856,7 @@ Class MainWindow
                 For Each SelectedBeatmap As Beatmap In BeatmapList
                     Dim UI_Grid = New Grid() With {
                         .Height = 51,
-                        .Margin = New Thickness(0, 0, 0, 10),
+                        .Margin = New Thickness(0, 0, 0, 5),
                         .Width = Double.NaN}
 
                     With UI_Grid.ColumnDefinitions
@@ -851,12 +873,12 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Stretch}
 
                     Dim UI_Thumbnail = New Image With {
+                        .Cursor = Cursors.Hand,
                         .HorizontalAlignment = HorizontalAlignment.Stretch,
                         .Margin = New Thickness(5, 0, 0, 0),
-                        .Tag = SelectedBeatmap,
                         .VerticalAlignment = VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
-                    AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBeatmapDetails
+                    AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                     Else
@@ -914,7 +936,7 @@ Class MainWindow
                         AddHandler(UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
                         AddHandler(UI_DecoBorderLeft.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
                         AddHandler(UI_TextBlock_Title.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
-                        AddHandler(UI_Thumbnail.MouseUp), AddressOf Exporter_DetermineWheterAddOrRemove
+                        AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf Exporter_DetermineWheterAddOrRemove
                     End If
 
                     Dim TagData As New Importer_TagData With {
@@ -968,11 +990,15 @@ Class MainWindow
                 End With
             End If
         Catch ex As Exception
-            WriteToApiLog("/api/get_beatmaps")
-            With BeatmapDetails_APIWarn
-                .Content = _e("MainWindow_detailsPanel_apiError")
-                .Visibility = Visibility.Visible
-            End With
+            If e.Cancelled Then
+                WriteToApiLog("/api/get_beatmaps", "{Cancelled}")
+            Else
+                WriteToApiLog("/api/get_beatmaps")
+                With BeatmapDetails_APIWarn
+                    .Content = _e("MainWindow_detailsPanel_apiError")
+                    .Visibility = Visibility.Visible
+                End With
+            End If
         End Try
     End Sub
 
@@ -1025,7 +1051,7 @@ Class MainWindow
         BeatmapWrapper.Children.Add(UI_TextBlock_SubTitle)
     End Sub
 
-    Private Sub Interface_ShowBeatmapDetails(ID As Integer, Details As BeatmapPanelDetails)
+    Private Sub Interface_ShowBmDP(ID As Integer, Details As BeatmapPanelDetails)
         BeatmapDetails_Artist.Text = Details.Artist
         BeatmapDetails_BeatmapListing.Tag = ID
         BeatmapDetails_Creator.Text = Details.Creator
@@ -1082,7 +1108,14 @@ Class MainWindow
             BeatmapDetails_APIProgress.Visibility = Visibility.Visible
             BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
 
-            BeatmapDetailClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & Setting_Api_Key & "&s=" & ID))
+            Try
+                BeatmapDetailClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & Setting_Api_Key & "&s=" & ID))
+            Catch ex As NotSupportedException
+                With BeatmapDetails_APIWarn
+                    .Content = _e("MainWindow_detailsPanel_generalError")
+                    .Visibility = Visibility.Visible
+                End With
+            End Try
         Else
             BeatmapDetails_APIFunctions.Visibility = Visibility.Collapsed
         End If
@@ -1606,56 +1639,40 @@ Class MainWindow
     End Sub
 
     Private Sub Exporter_DetermineWheterAddOrRemove(sender As Object, e As EventArgs)
-        If TypeOf sender Is TextBlock Then
-            Dim SelectedSender As TextBlock = CType(sender, TextBlock)
+        Dim SelectedSender_Tag As Importer_TagData
+        Dim SelectedSender_Beatmap As Beatmap
 
-            Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
-            Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
-
-            If SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked Then
-                Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
-
-                If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
-
-                SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
-                SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
-            Else
-                Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
-
-                If Exporter_BeatmapList_Tag_Selected.Count > 0 Then
-                    Export_Run.IsEnabled = True
-                Else
-                    Export_Run.IsEnabled = False
-                End If
-
-                SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = True
-                SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_27AE60        ' Color_27AE60 = Light Green
-            End If
+        If TypeOf sender Is Image Then
+            SelectedSender_Tag = CType(CType(sender, Image).Tag, Importer_TagData)
+            SelectedSender_Beatmap = SelectedSender_Tag.Beatmap
         ElseIf TypeOf sender Is Rectangle Then
-            Dim SelectedSender As Rectangle = CType(sender, Rectangle)
+            SelectedSender_Tag = CType(CType(sender, Rectangle).Tag, Importer_TagData)
+            SelectedSender_Beatmap = SelectedSender_Tag.Beatmap
+        ElseIf TypeOf sender Is TextBlock Then
+            SelectedSender_Tag = CType(CType(sender, TextBlock).Tag, Importer_TagData)
+            SelectedSender_Beatmap = SelectedSender_Tag.Beatmap
+        Else
+            Exit Sub
+        End If
 
-            Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
-            Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
+        If SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked Then
+            Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
 
-            If SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked Then
-                Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
+            If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
 
-                If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
+            SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
+            SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
+        Else
+            Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
 
-                SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
-                SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
+            If Exporter_BeatmapList_Tag_Selected.Count > 0 Then
+                Export_Run.IsEnabled = True
             Else
-                Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
-
-                If Exporter_BeatmapList_Tag_Selected.Count > 0 Then
-                    Export_Run.IsEnabled = True
-                Else
-                    Export_Run.IsEnabled = False
-                End If
-
-                SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = True
-                SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_27AE60        ' Color_27AE60 = Light Green
+                Export_Run.IsEnabled = False
             End If
+
+            SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = True
+            SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_27AE60        ' Color_27AE60 = Light Green
         End If
     End Sub
 

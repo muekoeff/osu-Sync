@@ -67,6 +67,8 @@
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
     <!-- | |> F -->
     <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favorite Count</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_generalError">A general error occured.</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Online Details</system:String>
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Open Beatmap Listing</system:String>
