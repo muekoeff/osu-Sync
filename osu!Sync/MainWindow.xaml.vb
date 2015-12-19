@@ -976,30 +976,63 @@ Class MainWindow
     Private Sub BeatmapDetailClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles BeatmapDetailClient.DownloadStringCompleted
         BeatmapDetails_APIProgress.Visibility = Visibility.Collapsed
 
-        Dim JSON_Array As JArray
-        Try
-            JSON_Array = CType(JsonConvert.DeserializeObject(e.Result), JArray)
-            If Not JSON_Array.First Is Nothing Then
-                WriteToApiLog("/api/get_beatmaps", e.Result)
-                BeatmapDetails_APIFavouriteCount.Text = JSON_Array.First.SelectToken("favourite_count").ToString
-            Else
-                WriteToApiLog("/api/get_beatmaps", "{UnexpectedAnswer} " & e.Result)
-                With BeatmapDetails_APIWarn
-                    .Content = _e("MainWindow_detailsPanel_apiError")
-                    .Visibility = Visibility.Visible
-                End With
-            End If
-        Catch ex As Exception
-            If e.Cancelled Then
-                WriteToApiLog("/api/get_beatmaps", "{Cancelled}")
-            Else
+        If e.Cancelled Then
+            WriteToApiLog("/api/get_beatmaps", "{Cancelled}")
+        Else
+            Dim JSON_Array As JArray
+            Try
+                JSON_Array = CType(JsonConvert.DeserializeObject(e.Result), JArray)
+                If Not JSON_Array.First Is Nothing Then
+                    Dim CI As Globalization.CultureInfo
+                    Try
+                        CI = New Globalization.CultureInfo(GetTranslationName(Setting_Tool_Language).Replace("_", "-"))
+                    Catch ex As Globalization.CultureNotFoundException
+                        CI = New Globalization.CultureInfo("en-US")
+                    End Try
+                    WriteToApiLog("/api/get_beatmaps", e.Result)
+                    BeatmapDetails_APIFavouriteCount.Text = CInt(JSON_Array.First.SelectToken("favourite_count")).ToString("n", CI).Substring(0, CInt(JSON_Array.First.SelectToken("favourite_count")).ToString("n", CI).Length - 3)    ' Isn't there a better way to do this?!
+
+                    Dim PassCount(JSON_Array.Count), PlayCount(JSON_Array.Count) As Integer
+                    Dim PassCount_TTText = "", PlayCount_TTText As String = ""
+                    Dim i As Integer
+                    For Each a As JObject In JSON_Array.Children
+                        Dim CurrentPassCount = CInt(a.SelectToken("passcount")), CurrentPlayCount As Integer = CInt(a.SelectToken("playcount"))
+                        PassCount(i) = CurrentPassCount
+                        PlayCount(i) = CurrentPlayCount
+                        If i = 0 Then
+                            PassCount_TTText = a.SelectToken("version").ToString & ":" & vbTab & CurrentPassCount.ToString("n", CI).Substring(0, CurrentPassCount.ToString("n", CI).Length - 3)
+                            PlayCount_TTText = a.SelectToken("version").ToString & ":" & vbTab & CurrentPlayCount.ToString("n", CI).Substring(0, CurrentPlayCount.ToString("n", CI).Length - 3)
+                        Else
+                            PassCount_TTText += vbNewLine & a.SelectToken("version").ToString & ":" & vbTab & CurrentPassCount.ToString("n", CI).Substring(0, CurrentPassCount.ToString("n", CI).Length - 3)
+                            PlayCount_TTText += vbNewLine & a.SelectToken("version").ToString & ":" & vbTab & CurrentPlayCount.ToString("n", CI).Substring(0, CurrentPlayCount.ToString("n", CI).Length - 3)
+                        End If
+                        i += 1
+                    Next
+
+                    With BeatmapDetails_APIPassCount
+                        .Text = Math.Round(PassCount.Sum / PassCount.Count, 2).ToString("n", CI)
+                        .ToolTip = PassCount_TTText
+                    End With
+                    With BeatmapDetails_APIPlayCount
+                        .Text = Math.Round(PlayCount.Sum / PlayCount.Count, 2).ToString("n", CI)
+                        .ToolTip = PlayCount_TTText
+                    End With
+                Else
+                    WriteToApiLog("/api/get_beatmaps", "{UnexpectedAnswer} " & e.Result)
+                    With BeatmapDetails_APIWarn
+                        .Content = _e("MainWindow_detailsPanel_apiError")
+                        .Visibility = Visibility.Visible
+                    End With
+                End If
+            Catch ex As Exception
                 WriteToApiLog("/api/get_beatmaps")
                 With BeatmapDetails_APIWarn
                     .Content = _e("MainWindow_detailsPanel_apiError")
                     .Visibility = Visibility.Visible
                 End With
-            End If
-        End Try
+
+            End Try
+        End If
     End Sub
 
     Private Sub BeatmapDetails_BeatmapListing_Click(sender As Object, e As RoutedEventArgs) Handles BeatmapDetails_BeatmapListing.Click
@@ -1105,6 +1138,8 @@ Class MainWindow
             ' Reset
             BeatmapDetails_APIFavouriteCount.Text = "..."
             BeatmapDetails_APIFunctions.Visibility = Visibility.Visible
+            BeatmapDetails_APIPassCount.Text = "..."
+            BeatmapDetails_APIPlayCount.Text = "..."
             BeatmapDetails_APIProgress.Visibility = Visibility.Visible
             BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
 

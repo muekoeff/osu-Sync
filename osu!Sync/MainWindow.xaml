@@ -38,6 +38,20 @@
                                 <Label x:Name="BeatmapDetails_APIWarn" FontFamily="Segoe UI Light" Foreground="#FFE74C3C" Visibility="Collapsed" />
                                 <Label x:Name="BeatmapDetails_Label_APIFavouriteCount" Content="{DynamicResource MainWindow_detailsPanel_favoriteCount}" FontFamily="Segoe UI Light" />
                                 <TextBlock x:Name="BeatmapDetails_APIFavouriteCount" FontSize="16" Margin="10,0,0,0" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <Label x:Name="BeatmapDetails_Label_APIPassCount" Content="{DynamicResource MainWindow_detailsPanel_passCount}" FontFamily="Segoe UI Light" />
+                                        <TextBlock x:Name="BeatmapDetails_APIPassCount" FontSize="16" Margin="10,0,0,0" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <Label x:Name="BeatmapDetails_Label_APIPlayCount" Content="{DynamicResource MainWindow_detailsPanel_playCount}" FontFamily="Segoe UI Light" />
+                                        <TextBlock x:Name="BeatmapDetails_APIPlayCount" FontSize="16" Margin="10,0,0,0" />
+                                    </StackPanel>
+                                </Grid>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

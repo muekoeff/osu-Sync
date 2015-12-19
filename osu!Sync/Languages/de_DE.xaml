@@ -57,13 +57,23 @@
     <system:String x:Key="MainWindow_doYouWantToFixThat">Möchtest du das beheben?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Möchtest du jetzt osu! starten?</system:String>
     <!-- | |> Beatmap Details Panel -->
+    <!-- | |> A -->
+    <system:String x:Key="MainWindow_detailsPanel_apiError">Keine Verbindung zur API. Log überprüfen.</system:String>
     <!-- | |> B -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Beatmapdetails</system:String>
     <!-- | |> |> Beatmap Status -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Schwebend</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Gerankt</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Ungerankt</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Anzahl der Favoriten</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_generalError">Ein allgemeiner Fehler trat auf.</system:String>
+    <!-- | |> P -->
+    <system:String x:Key="MainWindow_detailsPanel_passCount">Durchschnittliche Bestanden-Anzahl</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playCount">Durchschnittliche Spiel-Anzahl</system:String>
     <!-- | |> O -->
+    <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Online Details</system:String>
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Beatmaplisting aufrufen</system:String>
     <!-- | |> Played Status -->
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Gespielt</system:String>
@@ -89,6 +99,7 @@
     <system:String x:Key="MainWindow_fetching">Ruft %0 ab...</system:String>
     <system:String x:Key="MainWindow_fetching1">Ruft ab...</system:String>
     <system:String x:Key="MainWindow_file">_Datei</system:String>
+    <system:String x:Key="MainWindow_file404">Kann Datei nicht öffnen. Sie existiert nicht (mehr).</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">Mindestens ein Ordner konnte nicht eingelesen werden. Er/Sie werden ignoriert.</system:String>
     <system:String x:Key="MainWindow_folders">Ordner</system:String>
     <!-- | G -->
@@ -238,7 +249,7 @@
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">Kategorie</system:String>
-    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Dateiassoziationen bei jedem Sync überprüfen</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Überprüfe Dateiverweise bei jedem Sync (Nur wenn Adminrechte)</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">Auf Updates überprüfen....</system:String>
     <system:String x:Key="WindowSettings_configuration">Konfiguration</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Verknüpfung auf dem Desktop erstellen</system:String>
@@ -246,7 +257,7 @@
     <system:String x:Key="WindowSettings_default">Standard</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">Konfiguration löschen</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">Dateiassoziationen löschen/deregistrieren</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Updatepaket nach Installation löschen (Tritt nur ein, wenn Update-Patcher aktiviert ist).</system:String>
+    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Updatepaket nach Installation löschen (Tritt nur ein, wenn Update-Patcher aktiviert ist)</system:String>
     <system:String x:Key="WindowSettings_disable">Deaktivieren</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Updatepaket herunterladen zu...</system:String>
     <!-- | E -->
@@ -320,7 +331,7 @@
     <system:String x:Key="WindowSettings_updater">Updater</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">Dateiassoziationen aktualisieren/neuregistrieren</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Diesen osu! Download Mirror verwenden</system:String>
-    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Updatepatcher verwenden, um Updates automatisch zu installieren.</system:String>
+    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Updatepatcher verwenden, um Updates automatisch zu installieren</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">Gültig</system:String>
     <system:String x:Key="WindowSettings_validate">Validieren</system:String>

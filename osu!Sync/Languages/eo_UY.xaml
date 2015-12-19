@@ -2,14 +2,14 @@
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationInfo">This application is available in [b]English[/b].</system:String>
+    <system:String x:Key="Forum_translationInfo">Tiu apliko estas disponebla en [b]Esperanto[/b].</system:String>
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">English</system:String>
+    <system:String x:Key="Forum_translationLanguageName">Esperanto</system:String>
 
     <!-- Meta & More -->
     <!-- | T -->
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
-    <system:String x:Key="Meta_translators">Translation by: naseweis520</system:String>
+    <system:String x:Key="Meta_translators">Tradukado de: -</system:String>
 
     <!-- GlobalVar -->
     <!-- | E -->
@@ -24,8 +24,8 @@
     
     <!-- MainWindow -->
     <!-- | A -->
-    <system:String x:Key="MainWindow_aborted">Aborted</system:String>
-    <system:String x:Key="MainWindow_about">_About</system:String>
+    <system:String x:Key="MainWindow_aborted">Ĉesigis</system:String>
+    <system:String x:Key="MainWindow_about">_Chirkaŭ</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">All supported file formats</system:String>
     <system:String x:Key="MainWindow_andStillWorking">And still working...</system:String>
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available. -- Current: %0 | Latest: %1</system:String>
@@ -37,8 +37,8 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets in total parsed.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets parsed.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Cancel</system:String>
-    <system:String x:Key="MainWindow_cantConnectToServer">Can't connect to server</system:String>
+    <system:String x:Key="MainWindow_cancel">Aborti</system:String>
+    <system:String x:Key="MainWindow_cantConnectToServer">Fini</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Checking for updates...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Compressed osu!Sync Beatmap List</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Conversion aborted</system:String>
@@ -82,7 +82,7 @@
     <system:String x:Key="MainWindow_elevationFailed">Elevation failed.</system:String>
     <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
     <system:String x:Key="MainWindow_exit">E_xit</system:String>
-    <system:String x:Key="MainWindow_export">Export</system:String>
+    <system:String x:Key="MainWindow_export">Eksporti</system:String>
     <system:String x:Key="MainWindow_exportAborted">Export aborted</system:String>
     <system:String x:Key="MainWindow_exportCompleted">Export completed</system:String>
     <system:String x:Key="MainWindow_exportedAs">Exported as %0</system:String>
@@ -111,7 +111,7 @@
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">If this problem persists please leave us a message via the feedback tab in the settings.</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">If this problem persists you can visit the osu! forum: http://bit.ly/1Bbmn6E (in your clipboard).</system:String>
     <system:String x:Key="MainWindow_ignoredFolders">Ignored Folders</system:String>
-    <system:String x:Key="MainWindow_import">Import</system:String>
+    <system:String x:Key="MainWindow_import">Enporti</system:String>
     <system:String x:Key="MainWindow_importAborted">Import aborted</system:String>
     <system:String x:Key="MainWindow_installationFinished">Installation finished!</system:String>
     <system:String x:Key="MainWindow_installing">Installing</system:String>
@@ -169,7 +169,7 @@
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">That's... impressive, I guess.</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates!.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Unable to find osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder. Please specify the path to osu! in the following window.</system:String>

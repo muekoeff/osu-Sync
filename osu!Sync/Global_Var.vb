@@ -363,6 +363,10 @@ Module Global_Var
                  .Code = "en_US",
                  .DisplayName = "English",
                  .DisplayName_English = "English"})
+            .Add("en_ud", New Language With {
+                 .Code = "en_ud",
+                 .DisplayName = "(uʍop ǝpısdn) ɥsıןƃuǝ",
+                 .DisplayName_English = "English (Upside Down)"})
             .Add("es", New Language With {
                  .Code = "es_EM",
                  .DisplayName = "Español",
@@ -371,7 +375,7 @@ Module Global_Var
                  .Code = "fr_FR",
                  .DisplayName = "Français",
                  .DisplayName_English = "French"})
-            ' Currently too many strings incomplete
+            ' Not ready for release
             '.Add("eo", New Language With {
             '    .Code = "eo_UY",
             '    .DisplayName = "Esperanto",
@@ -380,7 +384,7 @@ Module Global_Var
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",
                 .DisplayName_English = "Indonesian"})
-            ' Currently too many strings incomplete
+            ' Not ready for release
             '.Add("jp", New Language With {
             '    .Code = "ja_JP",
             '    .DisplayName = "日本語",
@@ -397,7 +401,6 @@ Module Global_Var
                 .Code = "ru_RU",
                 .DisplayName = "Русский",
                 .DisplayName_English = "Russian"})
-
             Dim Lang_zh As New Language With {
                 .Code = "zh_CN",
                 .DisplayName = "中文 (简体)",

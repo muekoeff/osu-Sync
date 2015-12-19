@@ -16,7 +16,7 @@
     <system:String x:Key="GlobalVar_extensionBeatmapList">osu!Sync 專用的圖曲清單</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">osu!Sync 專用的壓縮圖曲清單</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated.&#x0a;It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">對不起，出現問題。</system:String>
     <!-- | M -->
@@ -28,7 +28,7 @@
     <system:String x:Key="MainWindow_about">_關於</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">所有支援的檔案格式</system:String>
     <system:String x:Key="MainWindow_andStillWorking">還在處理中...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available.&#x0a;Current: %0 | Latest: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available. -- Current: %0 | Latest: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">圖組</system:String>
     <system:String x:Key="MainWindow_beatmapsDoesNotExist">The beatmap with the ID %0 doesn't exist.</system:String>
@@ -57,18 +57,29 @@
     <system:String x:Key="MainWindow_doYouWantToFixThat">想要解決這個問題嗎？</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">現在要開始 osu! 嗎?</system:String>
     <!-- | |> Beatmap Details Panel -->
+    <!-- | |> A -->
+    <system:String x:Key="MainWindow_detailsPanel_apiError">Unable to connect to API. Check log.</system:String>
     <!-- | |> B -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">譜面詳細資料</system:String>
     <!-- | |> |> Beatmap Status -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pending</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favorite Count</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_generalError">A general error occured.</system:String>
+    <!-- | |> P -->
+    <system:String x:Key="MainWindow_detailsPanel_passCount">Average Pass Count</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playCount">Average Play Count</system:String>
     <!-- | |> O -->
+    <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Online Details</system:String>
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">打開譜面列表</system:String>
     <!-- | |> Played Status -->
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Played</system:String>
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Unplayed</system:String>
     <!-- | E -->
+    <system:String x:Key="MainWindow_elevationFailed">Elevation failed.</system:String>
     <system:String x:Key="MainWindow_exceptions">例外情況</system:String>
     <system:String x:Key="MainWindow_exit">離開</system:String>
     <system:String x:Key="MainWindow_export">匯出</system:String>
@@ -88,7 +99,8 @@
     <system:String x:Key="MainWindow_fetching">讀取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">讀取中...</system:String>
     <system:String x:Key="MainWindow_file">_檔案</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed.&#x0a;It/They will be ignored.</system:String>
+    <system:String x:Key="MainWindow_file404">Unable to open file. It doesn't exist (anymore).</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed. It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">資料夾</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成介面......</system:String>
@@ -104,6 +116,7 @@
     <system:String x:Key="MainWindow_installationFinished">安裝完成!</system:String>
     <system:String x:Key="MainWindow_installing">安裝中</system:String>
     <system:String x:Key="MainWindow_installingFiles">檔案安裝中...</system:String>
+    <system:String x:Key="MainWindow_insufficientPermissions">Insufficient permissions</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">伺服器回應無效</system:String>
     <system:String x:Key="MainWindow_invertSelection">反向選擇</system:String>
     <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
@@ -116,6 +129,7 @@
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">_最小化到通知區域(系統匣)</system:String>
     <!-- | N -->
+    <system:String x:Key="MainWindow_noAccess">No access</system:String>
     <system:String x:Key="MainWindow_notImportable">不能匯入</system:String>
     <!-- | O -->
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">開啟譜面資訊面板</system:String>
@@ -132,6 +146,7 @@
     <system:String x:Key="MainWindow_pressF5">在 osu! 裏面按 F5 重新載入圖組或退回主畫面。</system:String>
     <system:String x:Key="MainWindow_program">_程式</system:String>
     <!-- | R -->
+    <system:String x:Key="MainWindow_requestElevation">osu!Sync is currently not permitted to access the osu! songs directory. In order to start the Import progress you have to restart osu!Sync in elevated mode. -- Do you want to do so?</system:String>
     <system:String x:Key="MainWindow_runOsu">執行 osu!</system:String>
     <!-- | S -->
     <system:String x:Key="MainWindow_selectADestination">選擇目標</system:String>
@@ -157,9 +172,9 @@
     <system:String x:Key="MainWindow_unableToCheckForUpdates">無法檢查更新 ！</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
-    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">找不到 osu! 資料夾。請在下面的視窗指定 osu! 的路徑。</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder. Please specify the path to osu! in the following window.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">無法獲取 ID</system:String>
-    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed.&#x0a;They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed. They will be handled as unsubmitted (can't be exported).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的副檔名</system:String>
     <system:String x:Key="MainWindow_unsubmitted">未提交</system:String>
@@ -178,6 +193,8 @@
     <system:String x:Key="MainWindow_tt_openAboutWindow">開啟"關於"視窗</system:String>
     <!-- || E-->
     <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">匯出所有檢測到的圖組。</system:String>
+    <!-- || E-->
+    <system:String x:Key="MainWindow_tt_noAccess">You may have to restart osu!Sync in elevated mode in order to let it write to your osu! directory</system:String>
     <!-- || O -->
     <system:String x:Key="MainWindow_tt_openUpdater">打開更新程式。</system:String>
 
@@ -232,7 +249,7 @@
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">類別</system:String>
-    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync (Only if elevated)</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">檢查更新檔......</system:String>
     <system:String x:Key="WindowSettings_configuration">Configuration</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">建立桌面捷徑</system:String>
@@ -240,7 +257,7 @@
     <system:String x:Key="WindowSettings_default">預設</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">刪除設定</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">刪除/解除檔案關聯</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">安裝後刪除更新檔 (選用了更新程式時)</system:String>
+    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Delete update package after installation (Only affects if update patcher enabled)</system:String>
     <system:String x:Key="WindowSettings_disable">Disable</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">更新檔下載到...</system:String>
     <!-- | E -->
@@ -275,8 +292,8 @@
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">額，此資料夾還~不存在。</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">額，沒有設定檔...</system:String>
     <system:String x:Key="WindowSettings_notifications">通知</system:String>
-    <!-- | O -->
-    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok 完成。&#x0a;要重啟 osu!Sync 嗎?</system:String>
+    <!-- | O --> 
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, that's done. -- Do you want to restart osu!Sync now?</system:String>
     <system:String x:Key="WindowSettings_openApiLog">Open API log file</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Open data folder</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">有更新時啟動更新程式。</system:String>
@@ -292,7 +309,9 @@
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">提問/求助</system:String>
     <!-- | R -->
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">If it might be required, request elevation on startup instead of demand</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">重設 osu!Sync (刪除設定檔, 檔案關聯等等)</system:String>
+    <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
     <!-- | S -->
     <system:String x:Key="WindowSettings_save">_保存</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">伺服器端的回應：</system:String>
@@ -312,11 +331,12 @@
     <system:String x:Key="WindowSettings_updater">更新程式</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">更新/設置檔案關聯</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">用此 osu! 鏡像下載...</system:String>
-    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">自動安裝更新。</system:String>
+    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Use update patcher to automatically install the updates</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">Valid</system:String>
     <system:String x:Key="WindowSettings_validate">Validate</system:String>
     <!-- | W -->
+    <system:String x:Key="WindowSettings_warnNotElevated">Some options may be disabled because the application is currently not elevated.</system:String>
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel (Numeric, between 5 and 95)</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">您的 eMail 地址</system:String>
@@ -325,7 +345,7 @@
     <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">您的信息內容太短，請盡可能詳細的解釋。</system:String>
     <system:String x:Key="WindowSettings_yourName">你的名字/osu!用戶名</system:String>
     <system:String x:Key="WindowSettings_yourNameIsTooShort">你的名字/osu!用戶名太短</system:String>
-    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">您選擇錯檔案了。&#x0a;請選擇"osu!.exe"。</system:String>
+    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">You selected the wrong file. -- Please select the "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
     <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">全部下載完成時輸入 "0" 安裝。</system:String>
@@ -364,7 +384,7 @@
     <system:String x:Key="WindowWelcome_continue">_繼續</system:String>
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync 是用來匯出/匯入 osu! 圖組的免費工具。您可以製作方便分享的圖組清單。</system:String>
-    <!-- | T -->
+    <!-- | S -->
     <system:String x:Key="WindowWelcome_subtitle">... 光臨 naseweis520 寫的 osu!Sync</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">歡迎</system:String>

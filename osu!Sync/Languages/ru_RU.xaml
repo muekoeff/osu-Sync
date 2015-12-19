@@ -2,49 +2,49 @@
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationInfo">Это приложение переведено на [b]русский[/b] язык.</system:String>
+    <system:String x:Key="Forum_translationInfo">Приложение переведено на [b]русский язык[/b].</system:String>
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationLanguageName">Русский</system:String>
 
     <!-- Meta & More -->
     <!-- | T -->
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
-    <system:String x:Key="Meta_translators">Перевод: TicClick</system:String>
+    <system:String x:Key="Meta_translators">Перевод: TicClick, Endil</system:String>
 
     <!-- GlobalVar -->
     <!-- | E -->
     <system:String x:Key="GlobalVar_extensionBeatmapList">Список карт для osu!Sync</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Сжатый список карт для osu!Sync</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Файл настроек испорчен или устарел, osu!Sync удалит его и перезапустится.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Файл настроек поврежден или устарел. Osu!Sync восстановит стандартные настройки и выполнит перезапуск.</system:String>
     <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Что-то сломалось.</system:String>
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Что-то пошло не так.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Это сообщение можно отключить в настройках</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
-    <system:String x:Key="MainWindow_aborted">Операция прервана</system:String>
+    <system:String x:Key="MainWindow_aborted">Отменено</system:String>
     <system:String x:Key="MainWindow_about">_О программе</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Поддерживаемые типы файлов</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Идёт обработка...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Доступно обновление.&#x0a;Текущая версия: %0 | Последняя: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Доступна новая версия. -- Версия у Вас: %0 | Актуальная: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Карты</system:String>
-    <system:String x:Key="MainWindow_beatmapsDoesNotExist">The beatmap with the ID %0 doesn't exist.</system:String>
-    <system:String x:Key="MainWindow_beatmapsFound">У Вас %0 карт</system:String>
-    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Присвоить карте номер можно только однажды</system:String>
+    <system:String x:Key="MainWindow_beatmapsDoesNotExist">Карты с номером %0 не существует.</system:String>
+    <system:String x:Key="MainWindow_beatmapsFound">У Вас %0 карт.</system:String>
+    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Номер карты обязательно должен быть уникальным.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">Обработаны все карты (%0)</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">Обработано %0 карт</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">От_мена</system:String>
-    <system:String x:Key="MainWindow_cantConnectToServer">Не удалось соединиться с сервером</system:String>
-    <system:String x:Key="MainWindow_checkingForUpdates">Проверка обновлений...</system:String>
+    <system:String x:Key="MainWindow_cancel">_Прервать</system:String>
+    <system:String x:Key="MainWindow_cantConnectToServer">Не удаётся подключиться к серверу</system:String>
+    <system:String x:Key="MainWindow_checkingForUpdates">Проверяем обновления...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Сжатый список карт osu!Sync</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Преобразование прервано</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Преобразование не удалось</system:String>
-    <system:String x:Key="MainWindow_convertFile">П_реобразовать файл</system:String>
-    <system:String x:Key="MainWindow_convertSelectedFile">Сохранение результата</system:String>
+    <system:String x:Key="MainWindow_convertFile">_Преобразовать файл</system:String>
+    <system:String x:Key="MainWindow_convertSelectedFile">Конвертировать текущий файл</system:String>
     <system:String x:Key="MainWindow_creator">Автор</system:String>
     <!-- | D -->
     <system:String x:Key="MainWindow_done">Готово</system:String>
@@ -57,23 +57,34 @@
     <system:String x:Key="MainWindow_doYouWantToFixThat">Хотите это исправить?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Запустить osu!?</system:String>
     <!-- | |> Beatmap Details Panel -->
+    <!-- | |> A -->
+    <system:String x:Key="MainWindow_detailsPanel_apiError">Не удаётся подключится к серверу приложения. Подробности в логе.</system:String>
     <!-- | |> B -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Подробности</system:String>
     <!-- | |> |> Beatmap Status -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Опубликована</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ранкнута</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Не ранкнута</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favorite Count</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_generalError">A general error occured.</system:String>
+    <!-- | |> P -->
+    <system:String x:Key="MainWindow_detailsPanel_passCount">Average Pass Count</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playCount">Average Play Count</system:String>
     <!-- | |> O -->
-    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Открыть список карт</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Online Details</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Открыть страницу карты</system:String>
     <!-- | |> Played Status -->
-    <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Played</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Unplayed</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Игралась</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Не игралась</system:String>
     <!-- | E -->
+    <system:String x:Key="MainWindow_elevationFailed">Elevation failed.</system:String>
     <system:String x:Key="MainWindow_exceptions">Необработанные карты</system:String>
     <system:String x:Key="MainWindow_exit">В_ыход</system:String>
     <system:String x:Key="MainWindow_export">Экспорт</system:String>
     <system:String x:Key="MainWindow_exportAborted">Экспорт прерван</system:String>
-    <system:String x:Key="MainWindow_exportCompleted">Экспорт завершён</system:String>
+    <system:String x:Key="MainWindow_exportCompleted">Экспорт завершен</system:String>
     <system:String x:Key="MainWindow_exportedAs">Тип файла: %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Экспортировать установленные карты</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Выберите, куда сохранить список</system:String>
@@ -81,32 +92,34 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">Не удалось удалить файловые ассоциации.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Файловые ассоциации зарегистрированы, спасибо! (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">Не удалось зарегистрировать файловые ассоциации.</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">Some file extensions aren't associated with this application.</system:String>
-    <system:String x:Key="MainWindow_extensionWrong">Some file extensions are outdated.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">Некоторые расширения не ассоциированы с этим приложением.</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">Некоторые файлы имеют устаревшие расширения.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">Номер карты не является числом.</system:String>
     <system:String x:Key="MainWindow_fetching">Обработка карты %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Обработка...</system:String>
     <system:String x:Key="MainWindow_file">_Файл</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed.&#x0a;It/They will be ignored.</system:String>
-    <system:String x:Key="MainWindow_folders">Директории</system:String>
+    <system:String x:Key="MainWindow_file404">Не удалось открыть файл. Его не существует (больше).</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">Как минимум одна папка не может быть обработана. Она(и) будет(ут) пропущены.</system:String>
+    <system:String x:Key="MainWindow_folders">Папки</system:String>
     <!-- | G -->
-    <system:String x:Key="MainWindow_generatingInterface">Идёт создание интерфейса...</system:String>
+    <system:String x:Key="MainWindow_generatingInterface">Создание интерфейса...</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">_Справка</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">Номер уже присвоен</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Если эта ошибка повторяется, сообщите об этом через форму обратной связи в настройках.</system:String>
-    <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">Если эта ошибка повторяется, сообщите в тред: http://bit.ly/1Bbmn6E (ссылка скопирована в буфер обмена).</system:String>
-    <system:String x:Key="MainWindow_ignoredFolders">Пропущенные директории</system:String>
+    <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">Если эта ошибка повторяется, напишите об этом на форуме: http://bit.ly/1Bbmn6E (ссылка скопирована в буфер обмена).</system:String>
+    <system:String x:Key="MainWindow_ignoredFolders">Пропущенные папки</system:String>
     <system:String x:Key="MainWindow_import">Импорт</system:String>
     <system:String x:Key="MainWindow_importAborted">Импорт прерван</system:String>
     <system:String x:Key="MainWindow_installationFinished">Установка завершена!</system:String>
     <system:String x:Key="MainWindow_installing">Установка</system:String>
     <system:String x:Key="MainWindow_installingFiles">Установка карт...</system:String>
+    <system:String x:Key="MainWindow_insufficientPermissions">Insufficient permissions</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">Некорректный ответ сервера</system:String>
     <system:String x:Key="MainWindow_invertSelection">Инвертировать выбор</system:String>
-    <system:String x:Key="MainWindow_isInstalled">В наличии?</system:String>
+    <system:String x:Key="MainWindow_isInstalled">В наличии</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Прошлая синхронизация: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Синхронизация не удалась</system:String>
@@ -116,9 +129,10 @@
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">_Свернуть в трей</system:String>
     <!-- | N -->
+    <system:String x:Key="MainWindow_noAccess">Нет доступа</system:String>
     <system:String x:Key="MainWindow_notImportable">нельзя импортировать</system:String>
     <!-- | O -->
-    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Показать сведения о карте</system:String>
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Показать информацию о карте</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">Открыть список карт</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Открыть страницу карты в браузере</system:String>
     <system:String x:Key="MainWindow_openUpdater">_Проверить обновления</system:String>
@@ -126,15 +140,16 @@
     <system:String x:Key="MainWindow_overview">Описание</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Обработка установленных карт...</system:String>
-    <system:String x:Key="MainWindow_pleaseRetry">Пожалуйста, повторите операцию</system:String>
+    <system:String x:Key="MainWindow_pleaseRetry">Пожалуйста, попробуйте еще раз.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Синхронизируйтесь</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Подождите...</system:String>
     <system:String x:Key="MainWindow_pressF5">Нажмите F5 в osu!, чтобы обновить список карт, или вернитесь в меню.</system:String>
     <system:String x:Key="MainWindow_program">_Приложение</system:String>
     <!-- | R -->
+    <system:String x:Key="MainWindow_requestElevation">osu!Sync is currently not permitted to access the osu! songs directory. In order to start the Import progress you have to restart osu!Sync in elevated mode. -- Do you want to do so?</system:String>
     <system:String x:Key="MainWindow_runOsu">Запустить osu!</system:String>
     <!-- | S -->
-    <system:String x:Key="MainWindow_selectADestination">Выберите директорию</system:String>
+    <system:String x:Key="MainWindow_selectADestination">Выберите папку</system:String>
     <system:String x:Key="MainWindow_selectASupportedFileToConvert">Выберите файл для преобразования</system:String>
     <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">В_ыбрать карты для экспорта</system:String>
     <system:String x:Key="MainWindow_selectToExport">Выбрать</system:String>
@@ -150,17 +165,17 @@
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Некоторые карты не были экспортированы.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Синхронизация завершена</system:String>
     <system:String x:Key="MainWindow_synchronize">Синхронизировать</system:String>
-    <system:String x:Key="MainWindow_syncing">Идёт синхронизация...</system:String>
+    <system:String x:Key="MainWindow_syncing">Синхронизация...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">...надо же.</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Не удалось проверить обновления.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchData">Приложение не смогло получить запрошенные данные с выбранного сервера. Возможно, сейчас он недоступен. Вы можете сменить сервер в настройках. Нажмите "да", если хотите пропустить этот файл, или "нет", чтобы остановить скачивание.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Не удалось найти osu!.exe.</system:String>
-    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Не удалось найти директорию osu!.&#x0a;Пожалуйста, укажите путь к ней вручную.</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Не удалось найти папку osu!. Пожалуйста, укажите путь к ней вручную.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Карты без номера</system:String>
-    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Номера некоторых карт остались неизвестными. Эти карты нельзя экспортировать, они считаются неопубликованными.</system:String>
-    <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed. They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetUpdatePath">Невозможно получить ссылку на обновление.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Неизвестное расширение файла</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Неопубликованная</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Не опубликована, нельзя экспортировать</system:String>
@@ -178,6 +193,8 @@
     <system:String x:Key="MainWindow_tt_openAboutWindow">Показать информацию о программе</system:String>
     <!-- || E-->
     <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">Экспортировать все карты</system:String>
+    <!-- || E-->
+    <system:String x:Key="MainWindow_tt_noAccess">You may have to restart osu!Sync in elevated mode in order to let it write to your osu! directory</system:String>
     <!-- || O -->
     <system:String x:Key="MainWindow_tt_openUpdater">Проверить обновления</system:String>
 
@@ -207,9 +224,9 @@
     <!-- |> F -->
     <system:String x:Key="WindowAbout_tt_feedback">Открыть окно для обратной связи</system:String>
     <!-- |> G -->
-    <system:String x:Key="WindowAbout_tt_github">Принять участие в развитии osu!Sync</system:String>
+    <system:String x:Key="WindowAbout_tt_github">Принять участие в развитии osu!Sync.</system:String>
     <!-- |> O -->
-    <system:String x:Key="WindowAbout_tt_osuForum">Перейти к треду, посвящённому osu!Sync</system:String>
+    <system:String x:Key="WindowAbout_tt_osuForum">Перейти к теме форума, посвященной osu!Sync.</system:String>
     
     <!-- Window_Message -->
     <system:String x:Key="WindowMessage_close">_Закрыть</system:String>
@@ -217,34 +234,34 @@
 
     <!-- Window_Settings -->
     <!-- | A -->
-    <system:String x:Key="WindowSettings_activation">Activation</system:String>
+    <system:String x:Key="WindowSettings_activation">Активация</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
     <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
-    <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
-    <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
-    <system:String x:Key="WindowSettings_apiRequestPer">%0 API request(s) per %1: %2</system:String>
+    <system:String x:Key="WindowSettings_apiKey">Ключ API</system:String>
+    <system:String x:Key="WindowSettings_apiRequest">Если у вас нет ключа API, вы можете запросить его на сайте osu!</system:String>
+    <system:String x:Key="WindowSettings_apiRequestPer">%0 запросов API в %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_Применить</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Вы действительно хотите удалить файл настроек? Это действие нельзя отменить.</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Вы действительно хотите удалить файл настроек? Это действие нельзя отменить.</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Импортировать скачанные карты по X штук</system:String>
     <!-- | B -->
-    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
+    <system:String x:Key="WindowSettings_beatmapPanelCall">Панель карты</system:String>
     <system:String x:Key="WindowSettings_bug">Проблема</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">Категория</system:String>
-    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Проверять файловые ассоциации при каждой синхронизации</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync (Only if elevated)</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">Частота проверки обновлений:</system:String>
-    <system:String x:Key="WindowSettings_configuration">Configuration</system:String>
+    <system:String x:Key="WindowSettings_configuration">Настройки</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Добавить ярлык на рабочий стол</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">Сброс</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">Удалить файл настроек</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">Удалить файловые ассоциации</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Удалять обновления после установки (если включено автообновление)</system:String>
+    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Delete update package after installation (Only affects if update patcher enabled)</system:String>
     <system:String x:Key="WindowSettings_disable">Не показывать</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Путь для сохранения обновлений:</system:String>
     <!-- | E -->
-    <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">Enable API access in Beatmap Panel</system:String>
+    <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">Открыть доступ к API для панели карты</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Значок osu!Sync в трее:</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">При каждом запуске</system:String>
     <system:String x:Key="WindowSettings_executableFiles">Исполняемые файлы</system:String>
@@ -258,28 +275,28 @@
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Импорт и скачивание</system:String>
     <system:String x:Key="WindowSettings_interface">Интерфейс</system:String>
-    <system:String x:Key="WindowSettings_invalid">Invalid</system:String>
+    <system:String x:Key="WindowSettings_invalid">Некорректно</system:String>
     <system:String x:Key="WindowSettings_invalidValue">Неверное значение.</system:String>
     <!-- | L -->
     <system:String x:Key="WindowSettings_language">Язык</system:String>
-    <system:String x:Key="WindowSettings_languageUpdated">Язык изменён, но для полного перевода может потребоваться перезапуск.</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">Язык изменен, но для полного перевода может потребоваться перезапуск.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Запустить osu!Sync</system:String>
     <!-- | M -->
     <system:String x:Key="WindowSettings_maximumOnceADay">Раз в день</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAMonth">Раз в неделю</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAWeek">Раз в месяц</system:String>
     <system:String x:Key="WindowSettings_message">Текст сообщения</system:String>
-    <system:String x:Key="WindowSettings_monitoring">Monitoring</system:String>
+    <system:String x:Key="WindowSettings_monitoring">Мониторинг</system:String>
     <!-- | N -->
-    <system:String x:Key="WindowSettings_never">Никогда! ヽ(≧Д≦)ノ</system:String>
-    <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Этой директории пока что не существует.</system:String>
-    <system:String x:Key="WindowSettings_nopeNoConfig">Файла с настройками не существует!</system:String>
+    <system:String x:Key="WindowSettings_never">Никогда! ヽ(≧Д≦)ノ (не рекомендуется)</system:String>
+    <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Этой папки не существует.</system:String>
+    <system:String x:Key="WindowSettings_nopeNoConfig">Файл с настройками не существует!</system:String>
     <system:String x:Key="WindowSettings_notifications">Уведомления</system:String>
-    <!-- | O -->
-    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Сделано.&#x0a;Перезапустить osu!Sync?</system:String>
-    <system:String x:Key="WindowSettings_openApiLog">Open API log file</system:String>
-    <system:String x:Key="WindowSettings_openDataFolder">Открыть директорию с настройками</system:String>
-    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Запускать обновление при выходе новой версии osu!Sync</system:String>
+    <!-- | O --> 
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Готово. Перезапустить osu!Sync?</system:String>
+    <system:String x:Key="WindowSettings_openApiLog">Открыть лог запросов API</system:String>
+    <system:String x:Key="WindowSettings_openDataFolder">Открыть папку с настройками</system:String>
+    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Запускать обновление при появлении новой версии osu!Sync</system:String>
     <system:String x:Key="WindowSettings_other">Другое</system:String>
     <!-- | P -->
     <system:String x:Key="WindowSettings_pathToOsu">Путь к osu!:</system:String>
@@ -287,25 +304,27 @@
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Укажите, где находится osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Директория для сохранения обновлений:</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Укажите, где хранятся карты</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@nw520.de .</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Показать форму</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Пожалуйста, повторите попытку или свяжитесь с нами: team@nw520.de.</system:String>
+    <system:String x:Key="WindowSettings_prepareForm">Открыть форму</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Вопрос</system:String>
     <!-- | R -->
-    <system:String x:Key="WindowSettings_resetOsuSync">Удалить всё, что только можно</system:String>
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">If it might be required, request elevation on startup instead of demand</system:String>
+    <system:String x:Key="WindowSettings_resetOsuSync">Удалить все, что только можно</system:String>
+    <system:String x:Key="WindowSettings_restartElevated">Перезапустить osu!Sync от имени Администратора</system:String>
     <!-- | S -->
     <system:String x:Key="WindowSettings_save">_Ок</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Ответ сервера:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Всегда показывать (без уведомлений)</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Всегда показывать (с уведомлениями)</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Сообщать о неудачной проверке обновлений</system:String>
-    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Только при свёрнутом окне (без уведомлений)</system:String>
+    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Только при свернутом окне (без уведомлений)</system:String>
     <system:String x:Key="WindowSettings_submit">Отправить</system:String>
     <system:String x:Key="WindowSettings_submitting">Отправка...</system:String>
     <system:String x:Key="WindowSettings_sync">Синхронизация</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Синхронизировать при запуске</system:String>
     <!-- | T -->
-    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">There's already a shortcut on your desktop.</system:String>
+    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">На рабочем столе уже есть ярлык.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">Не удалось создать ярлык.</system:String>
     <system:String x:Key="WindowSettings_unableToSubmitFeedback">Не удалось отправить отзыв.</system:String>
@@ -314,21 +333,22 @@
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Зеркало для карт:</system:String>
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Устанавливать обновления автоматически</system:String>
     <!-- | V -->
-    <system:String x:Key="WindowSettings_valid">Valid</system:String>
-    <system:String x:Key="WindowSettings_validate">Validate</system:String>
+    <system:String x:Key="WindowSettings_valid">Корректно</system:String>
+    <system:String x:Key="WindowSettings_validate">Проверить</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Ширина панели со сведениями о карте (от 5 до 95)</system:String>
+    <system:String x:Key="WindowSettings_warnNotElevated">Некоторые параметры могут быть отключены, потому что приложение запущено от имени пользователя.</system:String>
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Ширина панели с информацией о карте (от 5 до 95)</system:String>
     <!-- | Y -->
     <system:String x:Key="WindowSettings_yourEmail">Почта для обратной связи</system:String>
     <system:String x:Key="WindowSettings_yourEmailInvalid">Неверный почтовый адрес.</system:String>
     <system:String x:Key="WindowSettings_youHaveToSelectACategory">Пожалуйста, выберите категорию.</system:String>
-    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Сообщение слишком короткое. Пожалуйста, добавьте в него больше подробностей.</system:String>
+    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Сообщение слишком короткое. Пожалуйста, описывайте как можно подробнее.</system:String>
     <system:String x:Key="WindowSettings_yourName">Имя</system:String>
     <system:String x:Key="WindowSettings_yourNameIsTooShort">Имя слишком короткое.</system:String>
-    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Выбран не тот файл.&#x0a;Пожалуйста, выберите "osu!.exe".</system:String>
+    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Выбран не тот файл. -- Пожалуйста, выберите "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
-    <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">Введите 0, чтобы установить все карты сразу, когда они загрузятся</system:String>
+    <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">Введите 0, чтобы установить карты после того, как все скачается.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_tt_useDefaultPath">Использовать путь по умолчанию</system:String>
     
@@ -339,24 +359,24 @@
     <system:String x:Key="WindowUpdater_dateOfPublication">Дата выхода: %0</system:String>
     <system:String x:Key="WindowUpdater_done">_ОК</system:String>
     <system:String x:Key="WindowUpdater_download">Скачать</system:String>
-    <system:String x:Key="WindowUpdater_downloadAndInstall">_Download and Install</system:String>
-    <system:String x:Key="WindowUpdater_downloadFinished">Загрузка завершена (%0 байт)</system:String>
-    <system:String x:Key="WindowUpdater_downloadingInstaller">Загрузка установщика | %0 из %1 байт</system:String>
-    <system:String x:Key="WindowUpdater_downloadingUpdatePackage">Загрузка обновления | %0 из %1 байт</system:String>
-    <system:String x:Key="WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved">Открыть директорию с обновлениями?</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">_Скачать и установить</system:String>
+    <system:String x:Key="WindowUpdater_downloadFinished">Скачивание завершено (%0 байт)</system:String>
+    <system:String x:Key="WindowUpdater_downloadingInstaller">Скачиваем установщик | %0 из %1 байт</system:String>
+    <system:String x:Key="WindowUpdater_downloadingUpdatePackage">Скачиваем обновление | %0 из %1 байт</system:String>
+    <system:String x:Key="WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved">Открыть папку с обновлениями?</system:String>
     <!-- | L -->
     <system:String x:Key="WindowUpdater_latestVersion">Последняя версия: %0</system:String>
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">Список изменений недоступен</system:String>
     <!-- | P -->
     <system:String x:Key="WindowUpdater_pleaseWait">Загрузка...</system:String>
-    <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Идёт проверка обновлений...</system:String>
+    <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Проверка обновлений...</system:String>
     <system:String x:Key="WindowUpdater_publishedBy">Автор: %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Не удалось связаться с сервером</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Не удалось открыть список изменений.</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">У Вас последняя версия</system:String>
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">У вас последняя версия</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">Текущая версия: %0</system:String>
 
     <!-- Window_Welcome -->
@@ -364,10 +384,10 @@
     <system:String x:Key="WindowWelcome_continue">_Далее</system:String>
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync — удобная программа для экспорта и импорта карт, с помощью которой можно делиться установленными картами.</system:String>
-    <!-- | T -->
+    <!-- | S -->
     <system:String x:Key="WindowWelcome_subtitle">... в osu!Sync от naseweis520</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Добро пожаловать</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Это — неофициальное приложение, и мы никак не связаны ни с osu!, ни с peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Это неофициальное приложение, и мы никак не связаны ни с osu!, ни с peppy.</system:String>
 </ResourceDictionary>
