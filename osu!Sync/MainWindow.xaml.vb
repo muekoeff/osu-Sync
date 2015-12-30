@@ -1790,80 +1790,119 @@ Class MainWindow
     End Sub
 
     Sub Importer_DownloadBeatmap()
-        Importer_Progress.Value = 0
-        Importer_Progress.IsIndeterminate = True
         Dim RequestURI As String
-        TextBlock_Progress.Content = _e("MainWindow_fetching").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
-        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
-        RequestURI = Application_Mirrors(Setting_Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
 
-        With Importer_BeatmapList_Tag_ToInstall.First
-            .UI_DecoBorderLeft.Fill = Color_3498DB
-            .UI_Checkbox_IsSelected.IsEnabled = False
-            .UI_Checkbox_IsSelected.IsThreeState = False
-            .UI_Checkbox_IsSelected.IsChecked = Nothing
-            .UI_Checkbox_IsInstalled.IsThreeState = True
-            .UI_Checkbox_IsInstalled.IsChecked = Nothing
-        End With
-
-        Importer_UpdateInfo(_e("MainWindow_fetching1"))
-
-        Dim req As HttpWebRequest = DirectCast(WebRequest.Create(RequestURI), HttpWebRequest)
-        Dim Res As WebResponse
         Try
-            Res = req.GetResponse()
-        Catch ex As WebException
-            If MessageBox.Show(_e("MainWindow_unableToFetchData"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
-                'Yes
-                Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
-                Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
-                Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
-                Importer_Downloader_ToNextDownload()
+            Importer_Progress.Value = 0
+            Importer_Progress.IsIndeterminate = True
+            TextBlock_Progress.Content = _e("MainWindow_fetching").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
+            Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
+            RequestURI = Application_Mirrors(Setting_Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
+
+            With Importer_BeatmapList_Tag_ToInstall.First
+                .UI_DecoBorderLeft.Fill = Color_3498DB
+                .UI_Checkbox_IsSelected.IsEnabled = False
+                .UI_Checkbox_IsSelected.IsThreeState = False
+                .UI_Checkbox_IsSelected.IsChecked = Nothing
+                .UI_Checkbox_IsInstalled.IsThreeState = True
+                .UI_Checkbox_IsInstalled.IsChecked = Nothing
+            End With
+
+            Importer_UpdateInfo(_e("MainWindow_fetching1"))
+
+            Dim req As HttpWebRequest = DirectCast(WebRequest.Create(RequestURI), HttpWebRequest)
+            Dim Res As WebResponse
+            Try
+                Res = req.GetResponse()
+            Catch ex As WebException
+                If MessageBox.Show(_e("MainWindow_unableToFetchData"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
+                    'Yes
+                    Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
+                    Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
+                    Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
+                    Importer_Downloader_ToNextDownload()
+                Else
+                    'No
+                    Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
+                    Importer_Info.Text = _e("MainWindow_installing")
+                    Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
+                    If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
+                    Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
+
+                    TextBlock_Progress.Content = _e("MainWindow_installingFiles")
+
+                    For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+                        File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                    Next
+                    With Importer_Progress
+                        .IsIndeterminate = False
+                        .Visibility = Visibility.Hidden
+                    End With
+
+                    TextBlock_Progress.Content = ""
+                    Importer_Info.Text = _e("MainWindow_aborted")
+                    Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
+                    If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
+                    Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
+                    Button_SyncDo.IsEnabled = True
+                    Importer_Run.IsEnabled = True
+                    Importer_Cancel.IsEnabled = True
+                End If
+                Exit Sub
+            End Try
+            Dim response As WebResponse
+            response = req.GetResponse
+            response.Close()
+
+            If response.Headers("Content-Disposition") <> Nothing Then
+                Importer_CurrentFileName = response.Headers("Content-Disposition").Substring(response.Headers("Content-Disposition").IndexOf("filename=") + 10).Replace("""", "")
+                If Importer_CurrentFileName.Substring(Importer_CurrentFileName.Length - 1) = ";" Then Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.Length - 1)
+                If Importer_CurrentFileName.Contains("; filename*=UTF-8") Then Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.IndexOf(".osz") + 4)
             Else
-                'No
-                Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
-                Importer_Info.Text = _e("MainWindow_installing")
-                Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
-                If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
-                Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
-
-                TextBlock_Progress.Content = _e("MainWindow_installingFiles")
-
-                For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
-                    File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
-                Next
-                With Importer_Progress
-                    .IsIndeterminate = False
-                    .Visibility = Visibility.Hidden
-                End With
-
-                TextBlock_Progress.Content = ""
-                Importer_Info.Text = _e("MainWindow_aborted")
-                Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
-                If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
-                Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
-                Button_SyncDo.IsEnabled = True
-                Importer_Run.IsEnabled = True
-                Importer_Cancel.IsEnabled = True
+                Importer_CurrentFileName = CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & ".osz"
             End If
-            Exit Sub
+
+            TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
+            Importer_UpdateInfo(_e("MainWindow_downloading1"))
+            Importer_Progress.IsIndeterminate = False
+            Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), (Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName))
+        Catch ex As Exception       ' Hopefully just temporary
+            If MessageBox.Show("Whoop! Whoop!" & vbNewLine &
+                   "Heaven chose you to be the one, one of the very few, maybe even the only one to run into a bug (= exception) I - the great naseweis520 - haven't been able to track back respectively fix yet." & vbNewLine &
+                   "I'd be very glad if you could send me the log file which osu!Sync is about to genrate." & vbNewLine &
+                   "That would really help to improve osu!Sync." & vbNewLine &
+                   "Nye He He!" & vbNewLine & vbNewLine &
+                   "(Do you want to generate a log file?)", "Sorry, I was a little desperate", MessageBoxButton.YesNo, MessageBoxImage.Error) = MessageBoxResult.Yes Then
+                MsgBox("You're great! <3")
+
+                If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
+                Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss") & ".txt"
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
+                    Dim Content As String = "=====   osu!Sync Exception Tracking | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
+                        "// Information" & vbNewLine & "You chose to be awesome and to help me to improve osu!Sync. Please submit this file using the Feedback-window, GitHub or the osu!Forum." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
+                        "// Configuration" & vbNewLine & JsonConvert.SerializeObject(GetProgramInfoJson, Formatting.None) & vbNewLine & vbNewLine &
+                        "// Exception" & vbNewLine & ex.ToString & vbNewLine & vbNewLine &
+                        "// Additional" & vbNewLine
+                    If Not IsNothing(RequestURI) Then
+                        Content += "RequestURI= " & RequestURI
+                    End If
+                    If Not IsNothing(Importer_CurrentFileName) Then
+                        Content += "Importer_CurrentFileName= " & Importer_CurrentFileName
+                    End If
+                    Content += "Mirror: " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
+
+                    File.Write(Content)
+                    File.Close()
+                End Using
+                Process.Start(CrashFile)
+            Else
+
+            End If
+            Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
+            Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
+            Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
+            Importer_Downloader_ToNextDownload()
         End Try
-        Dim response As WebResponse
-        response = req.GetResponse
-        response.Close()
-
-        If response.Headers("Content-Disposition") <> Nothing Then
-            Importer_CurrentFileName = response.Headers("Content-Disposition").Substring(response.Headers("Content-Disposition").IndexOf("filename=") + 10).Replace("""", "")
-            If Importer_CurrentFileName.Substring(Importer_CurrentFileName.Length - 1) = ";" Then Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.Length - 1)
-            If Importer_CurrentFileName.Contains("; filename*=UTF-8") Then Importer_CurrentFileName = Importer_CurrentFileName.Substring(0, Importer_CurrentFileName.IndexOf(".osz") + 4)
-        Else
-            Importer_CurrentFileName = CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID) & ".osz"
-        End If
-
-        TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
-        Importer_UpdateInfo(_e("MainWindow_downloading1"))
-        Importer_Progress.IsIndeterminate = False
-        Importer_Downloader.DownloadFileAsync(New Uri(RequestURI), (Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName))
     End Sub
 
     Sub Importer_Downloader_ToNextDownload()
@@ -2001,6 +2040,7 @@ Class MainWindow
             Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString)
         End If
     End Sub
+
 #End Region
 #Region "Events « Importer "
     Private Sub Importer_Cancel_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Cancel.Click
@@ -2040,6 +2080,7 @@ Class MainWindow
     Private Sub Importer_Run_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Run.Click
         Importer_Init()
     End Sub
+
 #End Region
 #End Region
 End Class

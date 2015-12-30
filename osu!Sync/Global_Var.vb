@@ -375,8 +375,7 @@ Module Global_Var
                  .Code = "fr_FR",
                  .DisplayName = "Français",
                  .DisplayName_English = "French"})
-            ' Not ready for release
-            '.Add("eo", New Language With {
+            '.Add("eo", New Language With {     |   Not ready for release
             '    .Code = "eo_UY",
             '    .DisplayName = "Esperanto",
             '    .DisplayName_English = "Esperanto"})
@@ -384,8 +383,7 @@ Module Global_Var
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",
                 .DisplayName_English = "Indonesian"})
-            ' Not ready for release
-            '.Add("jp", New Language With {
+            '.Add("jp", New Language With {     |   Not ready for release
             '    .Code = "ja_JP",
             '    .DisplayName = "日本語",
             '    .DisplayName_English = "Japanese"})
