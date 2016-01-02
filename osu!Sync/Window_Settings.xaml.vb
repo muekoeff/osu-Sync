@@ -187,19 +187,30 @@ Public Class Window_Settings
         ElseIf RichTextBox_Feedback_Message_TextRange.Text.Length < 30 Then
             MsgBox(_e("WindowSettings_yourMessageSeemsToBeQuiteShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         Else
-            Dim Message As New Dictionary(Of String, String)
-            With Message
-                .Add("category", ComboBox_Feedback_Category.Text)
-                .Add("debugData", Run_Feedback_FurtherInfo.Text)
-                .Add("email", TextBox_Feedback_eMail.Text)
-                .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
-                .Add("username", TextBox_Feedback_Username.Text)
-            End With
             StackPanel_Feedback.IsEnabled = False
             Grid_Feedback_Overlay.Visibility = Visibility.Visible
-            Dim Client As New WebClient
-            AddHandler Client.DownloadStringCompleted, AddressOf FeedbackClient_DownloadStringCompleted
-            Client.DownloadStringAsync(New Uri(I__Path_Web_Host & "data/files/software/FeedbackReport.php?message=" & JsonConvert.SerializeObject(Message)))
+
+            Using SubmitClient As New WebClient
+                Dim ReqParam As New Specialized.NameValueCollection
+                With ReqParam
+                    .Add("category", ComboBox_Feedback_Category.Text)
+                    .Add("debugData", Run_Feedback_FurtherInfo.Text)
+                    .Add("email", TextBox_Feedback_eMail.Text)
+                    .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
+                    .Add("username", TextBox_Feedback_Username.Text)
+                    .Add("version", My.Application.Info.Version.ToString)
+                End With
+                Dim ResponseBytes = SubmitClient.UploadValues(I__Path_Web_nw520OsySyncApi & "app/feedback.submitReport.php", "POST", ReqParam)
+                Dim ResponseBody = (New Text.UTF8Encoding).GetString(ResponseBytes)
+
+                Try
+                    MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & ResponseBody, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+                Catch ex As Reflection.TargetInvocationException
+                    MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    Exit Sub
+                End Try
+                Grid_Feedback_Overlay.Visibility = Visibility.Collapsed
+            End Using
         End If
     End Sub
 
@@ -351,16 +362,6 @@ Public Class Window_Settings
 
     Private Sub Button_Tool_Update_PathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Update_PathDefault.Click
         TextBox_Tool_Update_Path.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
-    End Sub
-
-    Private Sub FeedbackClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
-        Try
-            MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & e.Result, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
-        Catch ex As Reflection.TargetInvocationException
-            MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-            Exit Sub
-        End Try
-        Grid_Feedback_Overlay.Visibility = Visibility.Collapsed
     End Sub
 
     Private Sub TextBox_Api_ApiKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TextBox_Api_ApiKey.TextChanged

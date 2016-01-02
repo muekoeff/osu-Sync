@@ -27,7 +27,7 @@ Module Global_Var
     Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)
 
     Public I__StartUpArguments() As String
-    Public Const I__Path_Web_Host As String = "http://nw520.de/osuSync/"
+    Public Const I__Path_Web_nw520OsySyncApi As String = "http://api.nw520.de/osuSync/"
     Public Const I__Path_Web_osuApi As String = "https://osu.ppy.sh/api/"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "osu!Sync"

@@ -183,6 +183,6 @@ Public Class Window_Updater
 #Else
         TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
 #End If
-        Client.DownloadStringAsync(New Uri(I__Path_Web_Host + "data/files/updater.versionHistory.json"))
+        Client.DownloadStringAsync(New Uri(I__Path_Web_nw520OsySyncApi & "app/updater.latestVersion.json"))
     End Sub
 End Class
