@@ -262,11 +262,8 @@ Module Global_Var
         Return Res.ToLower
     End Function
 
-    Function RemoveIllegalPathCharacters(Input As String) As String
-        Dim IllegalRegex As New Regex("[\\/:*?""<>|]")
-        Dim Result As String = IllegalRegex.Replace(Input, "")
-
-        Return Result
+    Function SanitizePath(Input As String) As String
+        Return String.Join("_", Input.Split(Path.GetInvalidFileNameChars()))
     End Function
 
     Sub Action_CheckCompatibility(ConfigVersion As Version)

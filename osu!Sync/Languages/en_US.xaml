@@ -143,7 +143,7 @@
     <system:String x:Key="MainWindow_pleaseRetry">Please retry.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Please sync.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Please wait...</system:String>
-    <system:String x:Key="MainWindow_pressF5">Press F5 in osu! to reload your beatmaps or go back to the main menu.</system:String>
+    <system:String x:Key="MainWindow_pressF5">Press F5 in osu! or go back to the main menu to reload your beatmaps.</system:String>
     <system:String x:Key="MainWindow_program">_Program</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync is currently not permitted to access the osu! songs directory. In order to start the Import progress you have to restart osu!Sync in elevated mode. -- Do you want to do so?</system:String>
