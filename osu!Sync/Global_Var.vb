@@ -364,6 +364,10 @@ Module Global_Var
                  .Code = "en_ud",
                  .DisplayName = "(uʍop ǝpısdn) ɥsıןƃuǝ",
                  .DisplayName_English = "English (Upside Down)"})
+            '.Add("eo", New Language With {     |   Not ready for release
+            '    .Code = "eo_UY",
+            '    .DisplayName = "Esperanto",
+            '    .DisplayName_English = "Esperanto"})
             .Add("es", New Language With {
                  .Code = "es_EM",
                  .DisplayName = "Español",
@@ -372,10 +376,10 @@ Module Global_Var
                  .Code = "fr_FR",
                  .DisplayName = "Français",
                  .DisplayName_English = "French"})
-            '.Add("eo", New Language With {     |   Not ready for release
-            '    .Code = "eo_UY",
-            '    .DisplayName = "Esperanto",
-            '    .DisplayName_English = "Esperanto"})
+            '.Add("hu", New Language With {     |   Not ready for release
+            '     .Code = "hu_HU",
+            '     .DisplayName = "Français",
+            '     .DisplayName_English = "French"})
             .Add("id", New Language With {
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",
@@ -396,6 +400,10 @@ Module Global_Var
                 .Code = "ru_RU",
                 .DisplayName = "Русский",
                 .DisplayName_English = "Russian"})
+            .Add("th", New Language With {
+                .Code = "th_TH",
+                .DisplayName = "ภาษาไทย",
+                .DisplayName_English = "Thai"})
             Dim Lang_zh As New Language With {
                 .Code = "zh_CN",
                 .DisplayName = "中文 (简体)",

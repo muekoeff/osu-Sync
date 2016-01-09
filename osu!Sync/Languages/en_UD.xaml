@@ -143,7 +143,7 @@
     <system:String x:Key="MainWindow_pleaseRetry">˙ʎɹʇǝɹ ǝsɐǝןd</system:String>
     <system:String x:Key="MainWindow_pleaseSync">˙ɔuʎs ǝsɐǝןd</system:String>
     <system:String x:Key="MainWindow_pleaseWait">˙˙˙ʇıɐʍ ǝsɐǝןd</system:String>
-    <system:String x:Key="MainWindow_pressF5">˙nuǝɯ uıɐɯ ǝɥʇ oʇ ʞɔɐq oƃ ɹo sdɐɯʇɐǝq ɹnoʎ pɐoןǝɹ oʇ ¡nso uı 5ɟ ssǝɹd</system:String>
+    <system:String x:Key="MainWindow_pressF5">˙sdɐɯʇɐǝq ɹnoʎ pɐoןǝɹ oʇ nuǝɯ uıɐɯ ǝɥʇ oʇ ʞɔɐq oƃ ɹo ¡nso uı 5ɟ ssǝɹd</system:String>
     <system:String x:Key="MainWindow_program">ɯɐɹƃoɹ_d</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">¿os op oʇ ʇuɐʍ noʎ op -- ˙ǝpoɯ pǝʇɐʌǝןǝ uı ɔuʎs¡nso ʇɹɐʇsǝɹ oʇ ǝʌɐɥ noʎ ssǝɹƃoɹd ʇɹodɯı ǝɥʇ ʇɹɐʇs oʇ ɹǝpɹo uı ˙ʎɹoʇɔǝɹıp sƃuos ¡nso ǝɥʇ ssǝɔɔɐ oʇ pǝʇʇıɯɹǝd ʇou ʎןʇuǝɹɹnɔ sı ɔuʎs¡nso</system:String>
@@ -169,7 +169,7 @@
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">˙ssǝnƃ ı 'ǝʌıssǝɹdɯı ˙˙˙s,ʇɐɥʇ</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">˙sǝʇɐpdn ɹoɟ ʞɔǝɥɔ oʇ ǝןqɐun</system:String>
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">˙sǝʇɐpdn ɹoɟ ʞɔǝɥɔ oʇ ǝןqɐun.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">˙,ou, ssǝɹd pɐoןuʍop ǝןoɥʍ ǝɥʇ ʇɹoqɐ oʇ ',sǝʎ, ssǝɹd ǝןıɟ sıɥʇ dıʞs oʇ ʇuɐʍ noʎ ɟı ˙ʍopuıʍ sƃuıʇʇǝs ǝɥʇ uı ɹoɹɹıɯ ɹǝɥʇouɐ ʇɔǝןǝs oʇ ʎɹʇ 'ǝnssı sıɥʇ xıɟ oʇ ɹǝpɹo uı ˙uʍop ʎןʇuǝɹɹnɔ s,ʇı ʇɐɥʇ sı ǝsnɐɔ ǝןqıssod ɐ ˙ɹoɹɹıɯ pǝʇɔǝןǝs ǝɥʇ ɯoɹɟ ɐʇɐp pǝɹınbǝɹ ɥɔʇǝɟ oʇ ǝןqɐun sı uoıʇɐɔıןddɐ ǝɥʇ</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">˙ǝxǝ˙¡nso puıɟ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">˙ʍopuıʍ ƃuıʍoןןoɟ ǝɥʇ uı ¡nso oʇ ɥʇɐd ǝɥʇ ʎɟıɔǝds ǝsɐǝןd ˙ɹǝpןoɟ ¡nso puıɟ oʇ ǝןqɐun</system:String>

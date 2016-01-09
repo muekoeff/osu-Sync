@@ -9,45 +9,31 @@ Public Class Window_Settings
                                    ByVal sTargetFile As String,
                                    Optional ByVal sArguments As String = "",
                                    Optional ByVal sDescription As String = "",
-                                   Optional ByVal sWorkingDir As String = "") As Boolean    'Quelle: http://www.vbarchiv.net/tipps/details.php?id=1601
+                                   Optional ByVal sWorkingDir As String = "") As Boolean    'Source: http://www.vbarchiv.net/tipps/details.php?id=1601
         Try
             Dim oShell As New Shell32.Shell
             Dim oFolder As Shell32.Folder
             Dim oLink As Shell32.ShellLinkObject
-
-            ' Ordner und Dateinamen extrahieren
             Dim sPath As String = sLinkFile.Substring(0, sLinkFile.LastIndexOf("\"))
             Dim sFile As String = sLinkFile.Substring(sLinkFile.LastIndexOf("\") + 1)
-
-            ' Wichtig! Link-Datei erstellen (0 Bytes)
             Dim F As Short = CShort(FreeFile())
             FileOpen(F, sLinkFile, OpenMode.Output)
             FileClose(F)
-
             oFolder = oShell.NameSpace(sPath)
             oLink = CType(oFolder.Items.Item(sFile).GetLink, Shell32.ShellLinkObject)
-
-            ' Eigenschaften der Verknüpfung
             With oLink
                 If sArguments.Length > 0 Then .Arguments = sArguments
                 If sDescription.Length > 0 Then .Description = sDescription
                 If sWorkingDir.Length > 0 Then .WorkingDirectory = sWorkingDir
                 .Path = sTargetFile
-
-                ' Verknüpfung speichern
                 .Save()
             End With
-
-            ' Objekte zerstören
             oLink = Nothing
             oFolder = Nothing
             oShell = Nothing
-
             Return True
-
         Catch ex As Exception
-            ' Fehler! ggf. Link-Datei löschen, falls bereit erstellt
-            If File.Exists(sLinkFile) Then Kill(sLinkFile)
+            If File.Exists(sLinkFile) Then File.Delete(sLinkFile)
             Return False
         End Try
     End Function

@@ -1,0 +1,393 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- Forum -->
+    <!-- | T -->
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Forum_translationInfo">โปรแกรมนี้มีรองรับ[b]ภาษาไทย[/b]</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Forum_translationLanguageName">ภาษาไทย</system:String>
+
+    <!-- Meta & More -->
+    <!-- | T -->
+    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
+    <system:String x:Key="Meta_translators">แปลโดย: BobbyL2k</system:String>
+
+    <!-- GlobalVar -->
+    <!-- | E -->
+    <system:String x:Key="GlobalVar_extensionBeatmapList">รายการ osu! Beatmap สำหรับ osu!Sync</system:String>
+    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">รายการ osu! Beatmap สำหรับ osu!Sync ที่ถูกบีบอัด</system:String>
+    <!-- | I -->
+    <system:String x:Key="GlobalVar_invalidConfiguration">การตั้งค่าของคุณกำลังจะถูกลบ เพราะว่าไม่ถูกต้อง หรือล้าสมัย โปรแกรมกำลังจะปิดและเปิดใหม่</system:String>
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">ขอโทษด้วย ระบบมีปัญหาบางอย่าง</system:String>
+    <!-- | M -->
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">ตั้งค่าไม่ให้แสดงข้อความนี้ได้ใน "การตั้งค่า"</system:String>
+    
+    <!-- MainWindow -->
+    <!-- | A -->
+    <system:String x:Key="MainWindow_aborted">ยกเลิกเรียบร้อยแล้ว</system:String>
+    <system:String x:Key="MainWindow_about">เ_กียวกับ</system:String>
+    <system:String x:Key="MainWindow_allSupportedFileFormats">Formats ที่รองรับทั้งหมด</system:String>
+    <system:String x:Key="MainWindow_andStillWorking">กำลังทำงานอยู่...</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">มีพบเวอร์ชั่นใหม่ -- ที่ใช้อยู่: %0 | ล่าสุด: %1</system:String>
+    <!-- | B -->
+    <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
+    <system:String x:Key="MainWindow_beatmapsDoesNotExist">ไม่พบ Beatmap ที่มี ID %0</system:String>
+    <system:String x:Key="MainWindow_beatmapsFound">พบ %0 beatmaps</system:String>
+    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap IDs สามารถถูกตั้งค่าได้ครั้งเดียวเท่านั้น</system:String>
+    <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">ทั้งหมด %0 ชุดของ beatmap ถูกอ่าน</system:String>
+    <system:String x:Key="MainWindow_beatmapSetsParsed">%0 ชุดของ beatmap ถูกอ่าน</system:String>
+    <!-- | C -->
+    <system:String x:Key="MainWindow_cancel">_ยกเลิก</system:String>
+    <system:String x:Key="MainWindow_cantConnectToServer">ไม่สามรถเชื่อมต่อ server ได้</system:String>
+    <system:String x:Key="MainWindow_checkingForUpdates">กำลังตรวจสอบหาอัปเดต...</system:String>
+    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">รายการ Beatmap osu!Sync ที่ถูกบีบอัด</system:String>
+    <system:String x:Key="MainWindow_conversionAborted">การแปลงถูกยกเลิก</system:String>
+    <system:String x:Key="MainWindow_conversionFailed">การแปลงล้มเหลว</system:String>
+    <system:String x:Key="MainWindow_convertFile">แ_ปลงไฟล์</system:String>
+    <system:String x:Key="MainWindow_convertSelectedFile">แปลงไฟล์ที่ถูกเลือก</system:String>
+    <system:String x:Key="MainWindow_creator">ผู้สร้าง</system:String>
+    <!-- | D -->
+    <system:String x:Key="MainWindow_done">เสร็จสิ้น</system:String>
+    <system:String x:Key="MainWindow_downloadAndInstall">ดาวโหลดและติดตั้ง</system:String>
+    <system:String x:Key="MainWindow_downloadBeatmaps">_ดาวโหลด Beatmaps</system:String>
+    <system:String x:Key="MainWindow_downloadMirror">ดาวน์โหลด mirror</system:String>
+    <system:String x:Key="MainWindow_downloading">กำลังดาวโหลด %0...</system:String>
+    <system:String x:Key="MainWindow_downloading1">กำลังดาวโหลด</system:String>
+    <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">คุณต้องการตรวจสอบชุดของ beatmap ที่ได้รับผลกระทบหรือไม่?</system:String>
+    <system:String x:Key="MainWindow_doYouWantToFixThat">คุณต้องการจะแก้ไขหรือไม่?</system:String>
+    <system:String x:Key="MainWindow_doYouWantToStartOsuNow">ต้องการจะเปิด osu! ตอนนี้?</system:String>
+    <!-- | |> Beatmap Details Panel -->
+    <!-- | |> A -->
+    <system:String x:Key="MainWindow_detailsPanel_apiError">ไม่สามารถเชื่อมต่อกับ API ได้ กรุณาตรวจสอบ ล็อก</system:String>
+    <!-- | |> B -->
+    <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">รายละเอียด Beatmap</system:String>
+    <!-- | |> |> Beatmap Status -->
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">กำลังรอจัดอันดับ</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">จัดอันดับแล้ว</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">ยังไม่จัดอันดับ</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_favoriteCount">จำนวน Favorite</system:String>
+    <!-- | |> F -->
+    <system:String x:Key="MainWindow_detailsPanel_generalError">มีข้อผิดพลาด (ทั่วไป) เกิดขึ้น</system:String>
+    <!-- | |> P -->
+    <system:String x:Key="MainWindow_detailsPanel_passCount">จำนวนเฉลี่ยการเล่นผ่าน</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playCount">จำนวนเฉลี่ยการเล่น</system:String>
+    <!-- | |> O -->
+    <system:String x:Key="MainWindow_detailsPanel_onlineDetails">รายละเอียดออนไลน์</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">เปิดรายการ Beatmap</system:String>
+    <!-- | |> Played Status -->
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">เคยเล่นแล้ว</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">ไม่เคยเล่น</system:String>
+    <!-- | E -->
+    <system:String x:Key="MainWindow_elevationFailed">การ "ยกระดับ" ล้มเหลว</system:String>
+    <system:String x:Key="MainWindow_exceptions">ที่ถูกยกเว้น</system:String>
+    <system:String x:Key="MainWindow_exit">_ออก</system:String>
+    <system:String x:Key="MainWindow_export">ส่งออก</system:String>
+    <system:String x:Key="MainWindow_exportAborted">การส่งออกถูกยกเลิก</system:String>
+    <system:String x:Key="MainWindow_exportCompleted">การส่งออกเสร็จสมบูรณ์</system:String>
+    <system:String x:Key="MainWindow_exportedAs">ส่งออกเป็น %0</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps">_ส่งออก beatmaps ที่ถูกติดตั้งแล้ว</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps1">ส่งออก beatmaps ที่ถูกติดตั้งแล้ว</system:String>
+    <system:String x:Key="MainWindow_extensionDeleteDone">ไฟล์ที่เกี่ยวข้องถูกลบเรียบร้อยแล้ว (ノД')・゜・。</system:String>
+    <system:String x:Key="MainWindow_extensionDeleteFailed">ไม่สามารถลบไฟล์ที่เกี่ยวข้องได้</system:String>
+    <system:String x:Key="MainWindow_extensionDone">ไฟล์ที่เกี่ยว register เรียบร้อยแล้ว ขอบคุณ (⌒▽⌒)☆</system:String>
+    <system:String x:Key="MainWindow_extensionFailed">ไม่สามารถ register ไฟล์ที่เกี่ยวข้องได้</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">นามสกุลไฟล์บางอันไม่ได้เกี่ยวข้องกับโปรแกรมนี้</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">นามสกุลไฟล์บางอัน ล้าสมัย</system:String>
+    <!-- | F -->
+    <system:String x:Key="MainWindow_fetchedIdIsNaN">ID ที่ถูกดึงมาไม่ใช่ตัวเลข</system:String>
+    <system:String x:Key="MainWindow_fetching">กำลังดึง %0...</system:String>
+    <system:String x:Key="MainWindow_fetching1">กำลังดึง...</system:String>
+    <system:String x:Key="MainWindow_file">ไ_ฟล์</system:String>
+    <system:String x:Key="MainWindow_file404">ไม่สามารถเปิดไฟล์ได้ มันไม่มีตัวตนอยู่ (อีกแล้ว)</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">มีอย่างน้องหนึ่งโฟลเดอร์ไม่สามารถถูกอ่านได้ โฟลเดอร์เหล่านี้จะถูกละเว้น</system:String>
+    <system:String x:Key="MainWindow_folders">โฟลเดอร์</system:String>
+    <!-- | G -->
+    <system:String x:Key="MainWindow_generatingInterface">กำลังสร้าง interface...</system:String>
+    <!-- | H -->
+    <system:String x:Key="MainWindow_help">_ช่วยเหลือ</system:String>
+    <!-- | I -->
+    <system:String x:Key="MainWindow_idAlreadyAssigned">ID ถูกกำหนดไปแล้ว</system:String>
+    <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">ถ้าปัญหานี้ยังคงอยู่ กรุณาฝากข้อความผ่านแท็บ ความคิดเห็น ใน การตั้งค่า</system:String>
+    <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">ถ้าปัญหานี้ยังคงอยู่ คุณสามารถเข้าฟอรั่ม osu!: http://bit.ly/1Bbmn6E (ในคลิปบอร์ดของคุณ)</system:String>
+    <system:String x:Key="MainWindow_ignoredFolders">โฟลเดอร์ที่ถูกละเว้น</system:String>
+    <system:String x:Key="MainWindow_import">นำเข้า</system:String>
+    <system:String x:Key="MainWindow_importAborted">การนำเข้าถูกยกเลิก</system:String>
+    <system:String x:Key="MainWindow_installationFinished">ติดตั้งเสร็จสมบูรณ์</system:String>
+    <system:String x:Key="MainWindow_installing">กำลังติดตั้ง</system:String>
+    <system:String x:Key="MainWindow_installingFiles">กำลังติดตั้งไฟล์...</system:String>
+    <system:String x:Key="MainWindow_insufficientPermissions">สิทธิ์ไม่เพียงพอ</system:String>
+    <system:String x:Key="MainWindow_invalidServerResponse">การตอบสนองจากเซิร์ฟเวอร์ไม่ถูกต้อง</system:String>
+    <system:String x:Key="MainWindow_invertSelection">Invert การเลือก</system:String>
+    <system:String x:Key="MainWindow_isInstalled">ติดตั้งแล้ว?</system:String>
+    <!-- | L -->
+    <system:String x:Key="MainWindow_lastSync">การ sync ครั้งล่าสุด: %0</system:String>
+    <system:String x:Key="MainWindow_lastSyncFailed">การ sync ครั้งล่าสุดล้มเหลว</system:String>
+    <system:String x:Key="MainWindow_lastSyncNever">การ sync ครั้งล่าสุด: ไม่เคย</system:String>
+    <system:String x:Key="MainWindow_latestVersion">รุ่นล่าสุด</system:String>
+    <system:String x:Key="MainWindow_leftOut">%0 ถูกละไว้</system:String>
+    <!-- | M -->
+    <system:String x:Key="MainWindow_minimizeToTray">_ซ่อนสู่ tray</system:String>
+    <!-- | N -->
+    <system:String x:Key="MainWindow_noAccess">ไม่สามารถเข้าถึงได้</system:String>
+    <system:String x:Key="MainWindow_notImportable">ไม่สามารถนำเข้าได้</system:String>
+    <!-- | O -->
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">เปิดแผงรายละเอียด Beatmap</system:String>
+    <system:String x:Key="MainWindow_openBeatmapList">เปิดรายการ Beatmap</system:String>
+    <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">เปิดรายการ Beatmap ในเบราว์เซอร์</system:String>
+    <system:String x:Key="MainWindow_openUpdater">เปิด ตัว_อัปเดต</system:String>
+    <system:String x:Key="MainWindow_osuSyncBeatmapList">รายการ Beatmap ของ osu!Sync</system:String>
+    <system:String x:Key="MainWindow_overview">ภาพรวม</system:String>
+    <!-- | P -->
+    <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">กำลังอ่าน ชุดของ beatmap ที่ติดตั้งแล้ว</system:String>
+    <system:String x:Key="MainWindow_pleaseRetry">กรุณาลองอีกครั้ง</system:String>
+    <system:String x:Key="MainWindow_pleaseSync">กรุณา sync</system:String>
+    <system:String x:Key="MainWindow_pleaseWait">กรุณารอซักครู่...</system:String>
+    <system:String x:Key="MainWindow_pressF5">Press F5 in osu! or go back to the main menu to reload your beatmaps.</system:String>
+    <system:String x:Key="MainWindow_program">โ_ปรแกรม</system:String>
+    <!-- | R -->
+    <system:String x:Key="MainWindow_requestElevation">osu!Sync ไม่สามารถเข้าถึงตำแหน่งเพลงของ osu! ได้  เพื่อเริ่มการนำเข้า  คุณต้องให้ อยู่ในโหมด "ยกระดับ" -- คุณต้องการหรือไม่</system:String>
+    <system:String x:Key="MainWindow_runOsu">เปิด osu!</system:String>
+    <!-- | S -->
+    <system:String x:Key="MainWindow_selectADestination">เลือกปลายทาง</system:String>
+    <system:String x:Key="MainWindow_selectASupportedFileToConvert">เลือกไฟล์ที่รองรับเพื่อ การแปลง</system:String>
+    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">เ_ลือก Beatmaps ที่จะส่งออก</system:String>
+    <system:String x:Key="MainWindow_selectToExport">เลือกที่จะส่งออก</system:String>
+    <system:String x:Key="MainWindow_setsDone">เสร็จ %0 ชุด</system:String>
+    <system:String x:Key="MainWindow_setsFailed">ล้มเหลว %0 ชุด</system:String>
+    <system:String x:Key="MainWindow_setsLeft">เหลือ %0 ชุด</system:String>
+    <system:String x:Key="MainWindow_setsLeftOut">%0 ชุด ถูกละไว้</system:String>
+    <system:String x:Key="MainWindow_setsTotal">ทั้งหมด %0 ชุด</system:String>
+    <system:String x:Key="MainWindow_settings">การตั้งค่า</system:String>
+    <system:String x:Key="MainWindow_showHideOsuSync">แสดง/ซ่อน osu!Sync</system:String>
+    <system:String x:Key="MainWindow_skippedBeatmaps">Beatmaps ที่ข้ามไป</system:String>
+    <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">บางชุดของ beatmap แตกต่างจากรูปแบบปกติ</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Beatmap บางชุดส่งออกไม่ได้</system:String>
+    <system:String x:Key="MainWindow_syncCompleted">Sync เสร็จสมบูรณ์</system:String>
+    <system:String x:Key="MainWindow_synchronize">Syncronize</system:String>
+    <system:String x:Key="MainWindow_syncing">กำลัง Sync...</system:String>
+    <!-- | T -->
+    <system:String x:Key="MainWindow_thatsImpressiveIGuess">นี้มัน... เจ๋งมาก</system:String>
+    <!-- | U -->
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchData">โปรแกรมไม่สามารถดึงข้อมูลที่จำเป็นจาก mirror ที่เลือกได้  ความเป็นไปได้คือ mirror ล้มกำลังอยู่  ลองแก้ไขปัญหาโดยการเลือก mirror อื่นในหน้าต่างการตั้งค่า  ถ้าคุณต้องการข้ามขั้นตอนนี้ให้ กดปุ่ม 'ใช่' ถ้าจะยกเลิกการดาวน์โหลดทั้งหมด ให้กด 'ไม่'</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuExe">หา osu!.exe ไม่เจอ</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">ไม่สามารถหาโฟลเดอร์ osu! ได้  กรุณากำหนดตำแหน่งของ osu! ในหน้าต่างนี้</system:String>
+    <system:String x:Key="MainWindow_unableToGetId">ไม่สามารถหา ID ได้</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">ID ของ beatmaps บางอันไม่สามารถถูกอ่านได้  beatmaps เหล่านี้จะถูกจัดรวมกับกลุ่ม unsubmitted (ไม่สามารถส่งออกได้)</system:String>
+    <system:String x:Key="MainWindow_unableToGetUpdatePath">ไม่สามารถหา ตำแหน่ง ดาวโหลดเพื่ออัปเดต แพคเกจ ได้</system:String>
+    <system:String x:Key="MainWindow_unknownFileExtension">นามสกุลไฟล์ที่ไม่รู้จัก</system:String>
+    <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">ชุดของ beatmap ที่ unsubmitted ไม่สามารถส่งออก</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">ชุดของ beatmap ที่ unsubmitted ไม่สามารถส่งออกในรูปแบบนี้ได้</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapSets">ชุดของ beatmap ที่ unsubmitted</system:String>
+    <system:String x:Key="MainWindow_updateAvailable">มีอัปเดต (%0)</system:String>
+    <system:String x:Key="MainWindow_updateCheckNotNecessary">ไม่จำเป็นต้องตรวจสอบหาอัปเดต</system:String>
+    <system:String x:Key="MainWindow_updatesDisabled">ปิดการอัปเดต</system:String>
+    <!-- | W -->
+    <system:String x:Key="MainWindow_welcomeToOsuSync">ยินดีต้อนรับสู่ osu!Sync</system:String>
+    <!-- | Y -->
+    <system:String x:Key="MainWindow_youNeedToSyncFirst">คุณต้อง sync ก่อน จึงจะใช้ฟังก์ชันนี้ได้</system:String>
+    <!-- |> Tooltip (tt) -->
+    <!-- || A -->
+    <system:String x:Key="MainWindow_tt_openAboutWindow">เปิด เกี่ยวกับ</system:String>
+    <!-- || E-->
+    <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">ส่งออก beatmaps ที่ตรวจพบทั้งหมด</system:String>
+    <!-- || E-->
+    <system:String x:Key="MainWindow_tt_noAccess">คุณอาจต้องปิดและเปิด osu!Sync ในโหมด "ยกระดับ" เพื่อที่จะเขียนในตำแหน่งของ osu! ได้</system:String>
+    <!-- || O -->
+    <system:String x:Key="MainWindow_tt_openUpdater">เปิดตัวอัพเดท</system:String>
+
+    <!-- Window_About -->
+    <!-- | C -->
+    <system:String x:Key="WindowAbout_copyright">osu!Sync เป็นอุปกรณ์ open-source สร้างโดย naseweis520</system:String>
+    <!-- | E -->
+    <system:String x:Key="WindowAbout_email">อีเมล์ติดต่อ</system:String>
+    <!-- | F -->
+    <system:String x:Key="WindowAbout_feedback">ความคิดเห็น</system:String>
+    <!-- | G -->
+    <system:String x:Key="WindowAbout_github">Source Code บน GitHub</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowAbout_libraries">คลังรายการ</system:String>
+    <!-- | M -->
+    <system:String x:Key="WindowAbout_message">ขอบคุณที่ใช่งาน osu!Sync</system:String>
+    <!-- | O -->
+    <system:String x:Key="WindowAbout_osuForum">ฟอรั่ม osu!</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowAbout_thanks">ขอบคุณ</system:String>
+    <system:String x:Key="WindowAbout_thanksAll">ขอบคุณผู้แปล ผู้รายงาน bug และนักพัฒนาที่ทำให้ osu!Sync เกิดขึ้นได้</system:String>
+    <!-- | V -->
+    <system:String x:Key="WindowAbout_version">osu!Sync รุ่น %0 | %1</system:String>
+    <!-- |> Tooltip (tt) -->
+    <!-- |> E -->
+    <system:String x:Key="WindowAbout_tt_email">มีคำถาม? เขียนจดหมายมา แล้วเราจะตอบ :)</system:String>
+    <!-- |> F -->
+    <system:String x:Key="WindowAbout_tt_feedback">เปิดหน้าต่างแสดงความคิดเห็น</system:String>
+    <!-- |> G -->
+    <system:String x:Key="WindowAbout_tt_github">ช่วยพวกเราทำให้ osu!Sync ดีขึ้น</system:String>
+    <!-- |> O -->
+    <system:String x:Key="WindowAbout_tt_osuForum">เข้าชมฟอรั่ม</system:String>
+    
+    <!-- Window_Message -->
+    <system:String x:Key="WindowMessage_close">_ปิด</system:String>
+    <system:String x:Key="WindowMessage_message">ข้อความ</system:String>
+
+    <!-- Window_Settings -->
+    <!-- | A -->
+    <system:String x:Key="WindowSettings_activation">เปิดใช้งาน</system:String>
+    <system:String x:Key="WindowSettings_api">API</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync สามารถโหลดรายละเอียดเพิ่มเติมของ beatmaps โดยการใช้ osu!api (Application Programming Interface / รุ่น 1.0)  ในการเข้าถึงข้อมูลนั้นจำเป็นต้องใช่ API key (ซึ่งมีไว้ป้องกันคนสแปมระบบ)</system:String>
+    <system:String x:Key="WindowSettings_apiKey">คีย์ API</system:String>
+    <system:String x:Key="WindowSettings_apiRequest">ถ้าคุณไม่มี API Key คุณสามารถไปรับได้ที่เวป osu!</system:String>
+    <system:String x:Key="WindowSettings_apiRequestPer">%0 API request(s) ต่อ %1: %2</system:String>
+    <system:String x:Key="WindowSettings_apply">ใ_ช้งาน</system:String>
+    <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">คุณแน่ใจจริง ๆ หรอว่าจะลบไฟล์การตั้งค่า (ไม่สามารถย้อนกลับได้)?</system:String>
+    <system:String x:Key="WindowSettings_areYouSureYouWantToReset">คุณแน่ใจจริง ๆ หรอว่าจะ reset การตั้งค่า (ไม่สามารถย้อนกลับได้)?</system:String>
+    <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">โหลด beatmaps เข้า osu! หลังดาวน์โหลดครบ x beatmaps (ตัวเลข)</system:String>
+    <!-- | B -->
+    <system:String x:Key="WindowSettings_beatmapPanelCall">เรียกแผง Beatmap</system:String>
+    <system:String x:Key="WindowSettings_bug">Bug</system:String>
+    <!-- | C -->
+    <system:String x:Key="WindowSettings_category">หมวดหมู่</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">ตรวจสอบไฟล์ที่เกี่ยวทุกๆการ sync (ก็ต่อเมือเปิด โหมด "ยกระดับ")</system:String>
+    <system:String x:Key="WindowSettings_checkForUpdates">ตรวจสอบหาอัพเดท...</system:String>
+    <system:String x:Key="WindowSettings_configuration">การตั้งค่า</system:String>
+    <system:String x:Key="WindowSettings_createShortcutOnDesktop">สร้างทางลัดบนเดสก์ท็อป</system:String>
+    <!-- | D -->
+    <system:String x:Key="WindowSettings_default">Default</system:String>
+    <system:String x:Key="WindowSettings_deleteConfiguration">ลบการตั้งค่า</system:String>
+    <system:String x:Key="WindowSettings_deleteFileAssociation">ลบ/ยกเลิก การ register ไฟล์ที่เกี่ยวข้อง</system:String>
+    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">ลบแพคเกจอัปเดตหลังการติดตั้ง (เมื่ออัปเดต patcher เปิดใช้งานอยู่)</system:String>
+    <system:String x:Key="WindowSettings_disable">ปิดการใช้งาน</system:String>
+    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">ดาวโหลดแพคเกจอัปเดตไปยัง...</system:String>
+    <!-- | E -->
+    <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">อนุญาติการเข้าถึง API ในแผง Beatmap</system:String>
+    <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">เปิดใช้งานการแจ้งเตือนไอคอนใน tray...</system:String>
+    <system:String x:Key="WindowSettings_everyLaunch">ทุกการเปิด</system:String>
+    <system:String x:Key="WindowSettings_executableFiles">ไฟล์กระทำการ (ไฟล์ที่ run ได้)</system:String>
+    <!-- | F -->
+    <system:String x:Key="WindowSettings_featureRequest">ขอ Feature เพิ่มเติม</system:String>
+    <system:String x:Key="WindowSettings_feedback">ความคิดเห็น</system:String>
+    <system:String x:Key="WindowSettings_furtherInformation">ข้อมูลเพิ่มเติม</system:String>
+    <!-- | G -->
+    <system:String x:Key="WindowSettings_general">ทั่ว​ไป</system:String>
+    <system:String x:Key="WindowSettings_generalFeedback">ความคิดเห็นทั่วไป</system:String>
+    <!-- | I -->
+    <system:String x:Key="WindowSettings_importDownload">นำเข้า/ดาวน์โหลด</system:String>
+    <system:String x:Key="WindowSettings_interface">Interface</system:String>
+    <system:String x:Key="WindowSettings_invalid">ไม่ถูกต้อง</system:String>
+    <system:String x:Key="WindowSettings_invalidValue">ค่าไม่ถูกต้อง!</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowSettings_language">ภาษา</system:String>
+    <system:String x:Key="WindowSettings_languageUpdated">ภาษาถูกเปลี่ยนแล้ว อย่างไรก็ตาม องค์ประกอบบางอย่างจะยังคงเป็นภาษาที่เลือกมาก่อนหน้านี้ สามารถแก้ไขได้โดยการปิดและเปิดโปรแกรมใหม่</system:String>
+    <system:String x:Key="WindowSettings_launchOsuSync">เปิด osu!Sync.</system:String>
+    <!-- | M -->
+    <system:String x:Key="WindowSettings_maximumOnceADay">สูงสุด หนึ่งครั้งต่อวัน (แนะนำ)</system:String>
+    <system:String x:Key="WindowSettings_maximumOnceAMonth">สูงสุด หนึ่งครั้งต่อสัปดาห์</system:String>
+    <system:String x:Key="WindowSettings_maximumOnceAWeek">สูงสุด หนึ่งครั้งต่อเดือน (ไม่แนะนำ)</system:String>
+    <system:String x:Key="WindowSettings_message">ข้อความ</system:String>
+    <system:String x:Key="WindowSettings_monitoring">กำลังตรวจสอบ</system:String>
+    <!-- | N -->
+    <system:String x:Key="WindowSettings_never">ม่าาาายอีกเลย ヽ(≧Д≦)ノ (ไม่แนะนำ)</system:String>
+    <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">ไม่อะ... ตำแหน่งที่ใหม่มาไม่มีตัวตน (ยังไม่มี)</system:String>
+    <system:String x:Key="WindowSettings_nopeNoConfig">ไม่อะ... ไม่พบไฟล์การตั้งค่า</system:String>
+    <system:String x:Key="WindowSettings_notifications">ระบบแจ้งเตือน</system:String>
+    <!-- | O --> 
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">โอเค เสร็จแล้ว -- ต้องการจะปิดและเปิด osu!Sync ใหม่ตอนนี้เลยหรือไม่?</system:String>
+    <system:String x:Key="WindowSettings_openApiLog">เปิด API ล็อกไฟล์</system:String>
+    <system:String x:Key="WindowSettings_openDataFolder">เปิดโฟลเดอร์ข้อมูล</system:String>
+    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">เปิดตัวอัปเดตเมื่อมีรุ่นใหม่</system:String>
+    <system:String x:Key="WindowSettings_other">อื่นๆ</system:String>
+    <!-- | P -->
+    <system:String x:Key="WindowSettings_pathToOsu">ตำแหน่งไป osu!</system:String>
+    <system:String x:Key="WindowSettings_pathToSongsFolder">ตำแหน่งโฟลเดอร์เพลง</system:String>
+    <system:String x:Key="WindowSettings_pleaseOpenOsu">กรุณาเปิด osu!.exe</system:String>
+    <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">โปรดเลือกตำแหน่งที่จะเก็บไฟล์อัปเดต</system:String>
+    <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">กรุณาเลือกโฟลเดอร์เพลงของคุณ</system:String>
+    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">กรุณาลองอีกครั้งภายหลัง หรือติดต่อเราโดยตรงทาง: team@nw520.de</system:String>
+    <system:String x:Key="WindowSettings_prepareForm">จัดเตรียมแบบฟอร์ม</system:String>
+    <!-- | Q -->
+    <system:String x:Key="WindowSettings_questionHelpRequest">คำถาม/ขอความช่วยเหลือ</system:String>
+    <!-- | R -->
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">ถ้าจำเป็น ขอเริ่มต้นโปรแกรมในโหมด "ยกระดับ" แทนการรอคำสั่ง</system:String>
+    <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (ลบ การตั้งค่า, ไฟล์ที่เกี่ยว, etc.)</system:String>
+    <system:String x:Key="WindowSettings_restartElevated">ปิดและเปิด osu!Sync ใหม่ในโหมด "ยกระดับ"</system:String>
+    <!-- | S -->
+    <system:String x:Key="WindowSettings_save">_บันทึก</system:String>
+    <system:String x:Key="WindowSettings_serverSideAnswer">คำตอบฝั่งเซิร์ฟเวอร์:</system:String>
+    <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">แสดงเสมอ - ไม่ใช้งาน NotifyBalloons</system:String>
+    <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">แสดงเสมอ - เปิดใช้งาน NotifyBalloons</system:String>
+    <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">แสดงข้อความเมื่อตรวจสอบอัปเดตล้มเหลว</system:String>
+    <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">แสดงเมื่อหน้าต่างถูกซ่อนเท่านั้น - ไม่ใช้งาน NotifyBalloons</system:String>
+    <system:String x:Key="WindowSettings_submit">ส่ง</system:String>
+    <system:String x:Key="WindowSettings_submitting">กำลังส่ง...</system:String>
+    <system:String x:Key="WindowSettings_sync">Sync</system:String>
+    <system:String x:Key="WindowSettings_syncOnStartup">Sync เมื่อเปิดโปรแกรม</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowSettings_theresAlreadyAShortcut">แล้วมีทางลัดบนเดสก์ท็อปของคุณอยู่แล้ว</system:String>
+    <!-- | U -->
+    <system:String x:Key="WindowSettings_unableToCreateShortcut">ไม่สามารถสร้างทางลัดได้</system:String>
+    <system:String x:Key="WindowSettings_unableToSubmitFeedback">ไม่สามารถส่งความคิดเห็นได้</system:String>
+    <system:String x:Key="WindowSettings_updater">ตัวอัปเดต</system:String>
+    <system:String x:Key="WindowSettings_updateFileAssocations">อัปเดต/register ไฟล์ที่เกี่ยวข้องใหม่</system:String>
+    <system:String x:Key="WindowSettings_useThisDownloadMirror">ใช้ดาวโหลด mirror นี้</system:String>
+    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">ใช้ อัปเดต patcher ในการติดตั้งอัปเดตโปรแกรมโดยอัตโนมัติ</system:String>
+    <!-- | V -->
+    <system:String x:Key="WindowSettings_valid">ใช้งานได้</system:String>
+    <system:String x:Key="WindowSettings_validate">ตรวจสอบความถูกต้อง</system:String>
+    <!-- | W -->
+    <system:String x:Key="WindowSettings_warnNotElevated">ตัวเลือกบางตัวอาจใช้งานไม่ได้เนื่องจากโปรแกรมไม่อยู่ในโหมด "ยกระดับ"</system:String>
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">ความกว้างของแผงรายละเอียด beatmap (ตัวเลข ระหว่าง 5 และ 95)</system:String>
+    <!-- | Y -->
+    <system:String x:Key="WindowSettings_yourEmail">อีเมลของคุณ</system:String>
+    <system:String x:Key="WindowSettings_yourEmailInvalid">อีเมล์ของคุณดูเหมือนจะไม่ถูกต้อง</system:String>
+    <system:String x:Key="WindowSettings_youHaveToSelectACategory">คุณต้องเลือกประเภท</system:String>
+    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">ข้อความของคุณค่อนข้างสั้น กรุณาอธิบายรายละเอียดให้มากกว่านี้</system:String>
+    <system:String x:Key="WindowSettings_yourName">ชื่อของคุณ/ชื่อผู้ใช้ osu!</system:String>
+    <system:String x:Key="WindowSettings_yourNameIsTooShort">ชื่อของคุณ/ชื่อผู้ใช้ osu! สั้นเกินไป</system:String>
+    <system:String x:Key="WindowSettings_youSelectedTheWrongFile">คุณเลือกผิดไฟล์ -- กรุณาเลือก "osu!.exe"</system:String>
+    <!-- |> Tooltip (tt) -->
+    <!-- | E -->
+    <system:String x:Key="WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished">ป้อน "0" เพื่อติดตั้งเมื่อการดาวน์โหลดทั้งหมดเสร็จสิ้น</system:String>
+    <!-- | U -->
+    <system:String x:Key="WindowSettings_tt_useDefaultPath">ใช้ตำแหน่งเริ่มต้น</system:String>
+    
+    <!-- Window_Updater -->
+    <!-- | A -->
+    <system:String x:Key="WindowUpdater_anUpdateIsAvailable">มีอัปเดตใหม่</system:String>
+    <!-- | D -->
+    <system:String x:Key="WindowUpdater_dateOfPublication">วันเผยแพร่: %0</system:String>
+    <system:String x:Key="WindowUpdater_done">เ_สร็จสิ้น</system:String>
+    <system:String x:Key="WindowUpdater_download">ดาวโหลด</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">_ดาวโหลดและติดตั้ง</system:String>
+    <system:String x:Key="WindowUpdater_downloadFinished">ดาวโหลดเสร็จสิ้น (%0 Bytes)</system:String>
+    <system:String x:Key="WindowUpdater_downloadingInstaller">กำลังดาวโหลดตัวติดตั้ง | %0 จาก %1 Bytes</system:String>
+    <system:String x:Key="WindowUpdater_downloadingUpdatePackage">กำลังดาวน์โหลดแพคเกจอัปเดต | %0 จาก %1 Bytes</system:String>
+    <system:String x:Key="WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved">คุณต้องการเปิดตำแหน่งที่เก็บ ไฟล์อัพเดท หรือไม่?</system:String>
+    <!-- | L -->
+    <system:String x:Key="WindowUpdater_latestVersion">รุ่นล่าสุด: %0</system:String>
+    <!-- | N -->
+    <system:String x:Key="WindowUpdater_noChangelogAvailable">ไม่พบล็อกการเปลี่ยนแปลง</system:String>
+    <!-- | P -->
+    <system:String x:Key="WindowUpdater_pleaseWait">กรุณารอซักครู่...</system:String>
+    <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">กรุณารอสักครู่ กำลังตรวจสอบหาอัพเดท...</system:String>
+    <system:String x:Key="WindowUpdater_publishedBy">เผยแพร่โดย: %0</system:String>
+    <!-- | U -->
+    <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">ไม่สามารถสื่อสารกับเซิร์ฟเวอร์ได้</system:String>
+    <system:String x:Key="WindowUpdater_unableToDownloadChangelog">ไม่สามารถดาวโหลดล็อกการเปลี่ยนแปลง!</system:String>
+    <!-- | Y -->
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">คุณกำลังใช้รุ่นล่าสุด</system:String>
+    <system:String x:Key="WindowUpdater_yourVersion">รุ่นที่คุณกำลังใช้: %0</system:String>
+
+    <!-- Window_Welcome -->
+    <!-- | C -->
+    <system:String x:Key="WindowWelcome_continue">ดำเนินการ_ต่อ</system:String>
+    <!-- | M -->
+    <system:String x:Key="WindowWelcome_message">osu!Sync เป็นเครื่องมือฟรีที่ช่วยให้คุณสามารถส่งออก และนำเข้า beatmaps osu! ได้ -- คุณสามารถสร้างไฟล์รายการของ beatmaps ที่มีอยู่ในเครื่องแล้วส่งให้เครื่องอื่นได้</system:String>
+    <!-- | S -->
+    <system:String x:Key="WindowWelcome_subtitle">... สู่ osu!Sync โดย naseweis520</system:String>
+    <!-- | T -->
+    <system:String x:Key="WindowWelcome_title">ยินดีต้อนรับ</system:String>
+    <!-- | W -->
+    <system:String x:Key="WindowWelcome_warning">โปรดจำไว้ว่า นี่คือเครื่องมือที่ไม่เป็นทางการ เราจะไม่สังกัดกับ osu! หรือ peppy</system:String>
+</ResourceDictionary>

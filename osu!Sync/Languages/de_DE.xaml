@@ -88,7 +88,7 @@
     <system:String x:Key="MainWindow_exportedAs">Exportiert als %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">Installierte Beatmaps _exportieren</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Installierte Beatmaps exportieren</system:String>
-    <system:String x:Key="MainWindow_extensionDeleteDone">Dateiassoziationen erfolgreich gelöscht. (ノД`)・゜・。</system:String>
+    <system:String x:Key="MainWindow_extensionDeleteDone">Dateizuweisung erfolgreich gelöscht. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Dateizuweisung konnte nicht gelöscht werden.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Dateizuweisung erfolgreich registriert, danke. (⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">Dateizuweisung konnte nicht registriert werden.</system:String>
@@ -143,7 +143,7 @@
     <system:String x:Key="MainWindow_pleaseRetry">Bitte erneut versuchen.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Bitte synchronisieren.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Bitte warten...</system:String>
-    <system:String x:Key="MainWindow_pressF5">Drück in osu! F5 um deine Beatmaps neuzuladen bzw. gehe ins Hauptmenü.</system:String>
+    <system:String x:Key="MainWindow_pressF5">Drück in osu! F5 oder gehe zurück ins Hauptmenü um deine Beatmaps neu zu laden.</system:String>
     <system:String x:Key="MainWindow_program">_Programm</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync ist derzeit nicht berechtigt auf das osu! Song-Verzeichnis zuzugreifen. Um den Importvorgang zu starten, muss osu!Sync mit Adminrechten neugestartet werden. -- Möchtest du das machen?</system:String>
@@ -169,14 +169,14 @@
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Das ist,.... denke ich mal, eindrucksvoll.</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Kann nicht auf Updates prüfen.</system:String>
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">Überprüfung auf Updates nicht möglich.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">Die Anwendung kann nicht die notwendigen Daten aus dem ausgewählten Mirror abrufen. Eine mögliche Ursache ist, dass dieser derzeit offline ist. Um dieses Problem zu beheben, versuche, einen anderen Mirror im Einstellungsfenster zu wählen. Wenn du diese Datei überspringen möchtest drücke 'Ja', zum Abbrechen des ganze Downloads drücke "Nein".</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Konnte osu!.exe nicht finden.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Konnte osu! Ordner nicht finden. Bitte wähle den Pfad zu osu! im folgenden Fenster.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">ID konnte nicht gelesen werden</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Die IDs von einigen Beatmaps können nicht eingelesen werden. Sie werden als ungerankte gehandelt (können nicht exportiert werden).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Kann nicht Download-Pfad des aktualisieren Pakets erhalten.</system:String>
-    <system:String x:Key="MainWindow_unknownFileExtension">Unbekannte Dateisuffix</system:String>
+    <system:String x:Key="MainWindow_unknownFileExtension">Unbekannte Dateinamenserweiterung</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Unsubmittete Beatmaps können nicht exportiert weden</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">Unsubmittete Beatmaps können nicht in dieses Format exportiert weden.</system:String>
@@ -343,8 +343,8 @@
     <system:String x:Key="WindowSettings_yourEmailInvalid">Deine eMail scheint ungültig zu sein.</system:String>
     <system:String x:Key="WindowSettings_youHaveToSelectACategory">Du musst eine Kategorie wählen.</system:String>
     <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Deine Nachricht wirkt sehr kurz. Bitte versuche, so detailliert wie möglich zu beschreiben.</system:String>
-    <system:String x:Key="WindowSettings_yourName">Dein Name/osu!Nutername</system:String>
-    <system:String x:Key="WindowSettings_yourNameIsTooShort">Dein Name/osu!Nutername ist zu kurz.</system:String>
+    <system:String x:Key="WindowSettings_yourName">Dein Name/osu!Nutzername</system:String>
+    <system:String x:Key="WindowSettings_yourNameIsTooShort">Dein Name/osu!Nutzername ist zu kurz.</system:String>
     <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Du hast die falsche Datei gewählt. -- Bitte wähle die "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->

@@ -143,7 +143,7 @@
     <system:String x:Key="MainWindow_pleaseRetry">Spróbuj ponownie.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Zsynchronizuj.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Proszę czekać...</system:String>
-    <system:String x:Key="MainWindow_pressF5">Naciśnij klawisz F5 w osu! by odświeżyć listę beatmap, lub wróć do głównego menu.</system:String>
+    <system:String x:Key="MainWindow_pressF5">Press F5 in osu! or go back to the main menu to reload your beatmaps.</system:String>
     <system:String x:Key="MainWindow_program">_Program</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync is currently not permitted to access the osu! songs directory. In order to start the Import progress you have to restart osu!Sync in elevated mode. -- Do you want to do so?</system:String>
@@ -169,7 +169,7 @@
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">To... imponujące.</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Nie udało się sprawdzić aktualizacji.</system:String>
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Nie udało się znaleźć osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder. Please specify the path to osu! in the following window.</system:String>

@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -100,7 +101,7 @@
     <system:String x:Key="MainWindow_fetching1">Обработка...</system:String>
     <system:String x:Key="MainWindow_file">_Файл</system:String>
     <system:String x:Key="MainWindow_file404">Не удалось открыть файл. Его не существует (больше).</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">Как минимум одна папка не может быть обработана. Она(и) будет(ут) пропущены.</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">Как минимум одна папка не может быть обработана. -- Она(и) будет(ут) пропущены.</system:String>
     <system:String x:Key="MainWindow_folders">Папки</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Создание интерфейса...</system:String>
@@ -143,7 +144,7 @@
     <system:String x:Key="MainWindow_pleaseRetry">Пожалуйста, попробуйте еще раз.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Синхронизируйтесь</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Подождите...</system:String>
-    <system:String x:Key="MainWindow_pressF5">Нажмите F5 в osu!, чтобы обновить список карт, или вернитесь в меню.</system:String>
+    <system:String x:Key="MainWindow_pressF5">Press F5 in osu! or go back to the main menu to reload your beatmaps.</system:String>
     <system:String x:Key="MainWindow_program">_Приложение</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync is currently not permitted to access the osu! songs directory. In order to start the Import progress you have to restart osu!Sync in elevated mode. -- Do you want to do so?</system:String>
@@ -169,7 +170,7 @@
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">...надо же.</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Не удалось проверить обновления.</system:String>
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">Приложение не смогло получить запрошенные данные с выбранного сервера. Возможно, сейчас он недоступен. Вы можете сменить сервер в настройках. Нажмите "да", если хотите пропустить этот файл, или "нет", чтобы остановить скачивание.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Не удалось найти osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Не удалось найти папку osu!. Пожалуйста, укажите путь к ней вручную.</system:String>
@@ -293,7 +294,7 @@
     <system:String x:Key="WindowSettings_nopeNoConfig">Файл с настройками не существует!</system:String>
     <system:String x:Key="WindowSettings_notifications">Уведомления</system:String>
     <!-- | O --> 
-    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Готово. Перезапустить osu!Sync?</system:String>
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Готово. -- Перезапустить osu!Sync?</system:String>
     <system:String x:Key="WindowSettings_openApiLog">Открыть лог запросов API</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Открыть папку с настройками</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Запускать обновление при появлении новой версии osu!Sync</system:String>
