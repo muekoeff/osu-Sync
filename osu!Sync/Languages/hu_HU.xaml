@@ -101,55 +101,55 @@
     <system:String x:Key="MainWindow_file">_Fájl</system:String>
     <system:String x:Key="MainWindow_file404">A fájl nem lehet megnyitni, mert (már) nem létezik.</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed. It/They will be ignored.</system:String>
-    <system:String x:Key="MainWindow_folders">Folders</system:String>
+    <system:String x:Key="MainWindow_folders">Mappák</system:String>
     <!-- | G -->
-    <system:String x:Key="MainWindow_generatingInterface">Generating interface...</system:String>
+    <system:String x:Key="MainWindow_generatingInterface">Felület lérehozása...</system:String>
     <!-- | H -->
-    <system:String x:Key="MainWindow_help">_Help</system:String>
+    <system:String x:Key="MainWindow_help">_Súgó</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID already assigned</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">If this problem persists please leave us a message via the feedback tab in the settings.</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">If this problem persists you can visit the osu! forum: http://bit.ly/1Bbmn6E (in your clipboard).</system:String>
     <system:String x:Key="MainWindow_ignoredFolders">Ignored Folders</system:String>
-    <system:String x:Key="MainWindow_import">Import</system:String>
-    <system:String x:Key="MainWindow_importAborted">Import aborted</system:String>
-    <system:String x:Key="MainWindow_installationFinished">Installation finished!</system:String>
-    <system:String x:Key="MainWindow_installing">Installing</system:String>
-    <system:String x:Key="MainWindow_installingFiles">Installing files...</system:String>
-    <system:String x:Key="MainWindow_insufficientPermissions">Insufficient permissions</system:String>
-    <system:String x:Key="MainWindow_invalidServerResponse">Invalid server response</system:String>
-    <system:String x:Key="MainWindow_invertSelection">Invert Selection</system:String>
-    <system:String x:Key="MainWindow_isInstalled">Installed?</system:String>
+    <system:String x:Key="MainWindow_import">Importálás</system:String>
+    <system:String x:Key="MainWindow_importAborted">Importálás megszakítva</system:String>
+    <system:String x:Key="MainWindow_installationFinished">Telepítés kész!</system:String>
+    <system:String x:Key="MainWindow_installing">Telepítés</system:String>
+    <system:String x:Key="MainWindow_installingFiles">Fájlok telepítése...</system:String>
+    <system:String x:Key="MainWindow_insufficientPermissions">Nincsenek megfelelő jogosultságok</system:String>
+    <system:String x:Key="MainWindow_invalidServerResponse">Érvénytelen válasz a szervertől</system:String>
+    <system:String x:Key="MainWindow_invertSelection">Kijelölés megfordítása</system:String>
+    <system:String x:Key="MainWindow_isInstalled">Telepített?</system:String>
     <!-- | L -->
-    <system:String x:Key="MainWindow_lastSync">Last sync: %0</system:String>
-    <system:String x:Key="MainWindow_lastSyncFailed">Last sync failed.</system:String>
-    <system:String x:Key="MainWindow_lastSyncNever">Last sync: Never</system:String>
-    <system:String x:Key="MainWindow_latestVersion">Latest version</system:String>
-    <system:String x:Key="MainWindow_leftOut">%0 left out</system:String>
+    <system:String x:Key="MainWindow_lastSync">Utolsó szinkronizálás: %0</system:String>
+    <system:String x:Key="MainWindow_lastSyncFailed">Az utolsó szinkronizálás sikertelen volt.</system:String>
+    <system:String x:Key="MainWindow_lastSyncNever">Utolsó szinkronizáció: soha</system:String>
+    <system:String x:Key="MainWindow_latestVersion">Legújabb verzió</system:String>
+    <system:String x:Key="MainWindow_leftOut">%0 kimaradt</system:String>
     <!-- | M -->
-    <system:String x:Key="MainWindow_minimizeToTray">_Minimize to tray</system:String>
+    <system:String x:Key="MainWindow_minimizeToTray">_Lecsukás tálcára</system:String>
     <!-- | N -->
-    <system:String x:Key="MainWindow_noAccess">No access</system:String>
-    <system:String x:Key="MainWindow_notImportable">Not importable</system:String>
+    <system:String x:Key="MainWindow_noAccess">Nincs hozzáférés</system:String>
+    <system:String x:Key="MainWindow_notImportable">Nem importálható</system:String>
     <!-- | O -->
-    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Open Beatmap detail panel</system:String>
-    <system:String x:Key="MainWindow_openBeatmapList">Open Beatmap List</system:String>
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Beatmap részleteinek megnyitása</system:String>
+    <system:String x:Key="MainWindow_openBeatmapList">Beatmap lista megnyitása</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Open _Updater</system:String>
     <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync Beatmap List</system:String>
     <system:String x:Key="MainWindow_overview">Overview</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Parsing installed beatmap sets...</system:String>
-    <system:String x:Key="MainWindow_pleaseRetry">Please retry.</system:String>
-    <system:String x:Key="MainWindow_pleaseSync">Please sync.</system:String>
-    <system:String x:Key="MainWindow_pleaseWait">Please wait...</system:String>
+    <system:String x:Key="MainWindow_pleaseRetry">Kérkük próbálja újra.</system:String>
+    <system:String x:Key="MainWindow_pleaseSync">Kérjük szinkronizáljon.</system:String>
+    <system:String x:Key="MainWindow_pleaseWait">Kérjük várjon...</system:String>
     <system:String x:Key="MainWindow_pressF5">Press F5 in osu! or go back to the main menu to reload your beatmaps.</system:String>
-    <system:String x:Key="MainWindow_program">_Program</system:String>
+    <system:String x:Key="MainWindow_program">_Alkalmazás</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync is currently not permitted to access the osu! songs directory. In order to start the Import progress you have to restart osu!Sync in elevated mode. -- Do you want to do so?</system:String>
-    <system:String x:Key="MainWindow_runOsu">Run osu!</system:String>
+    <system:String x:Key="MainWindow_runOsu">Osu! futtatása</system:String>
     <!-- | S -->
-    <system:String x:Key="MainWindow_selectADestination">Select a destination</system:String>
+    <system:String x:Key="MainWindow_selectADestination">Válaszd ki a célt</system:String>
     <system:String x:Key="MainWindow_selectASupportedFileToConvert">Select a supported file to convert</system:String>
     <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">_Select some Beatmaps to export</system:String>
     <system:String x:Key="MainWindow_selectToExport">Select to export</system:String>
