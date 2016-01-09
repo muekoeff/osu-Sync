@@ -1,4 +1,5 @@
 # osu!Sync
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/osusync/localized.svg)](https://crowdin.com/project/osusync)<br/>
 [Thread in osu!Forum](https://osu.ppy.sh/forum/t/270446) | [Translation on Crowdin](https://crowdin.com/project/osusync) | [ToDo List on Trello](https://trello.com/b/Ak1zhwTi/osu-sync)
 
 ## About
