@@ -70,7 +70,7 @@
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
-    <Grid x:Name="Grid" Margin="0,0,0,0">
+    <Grid x:Name="Grid" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="45" />
@@ -166,6 +166,19 @@
             <TabItem Header="{DynamicResource MainWindow_overview}">
                 <ScrollViewer Margin="-5,0,0,0">
                     <StackPanel x:Name="BeatmapWrapper">
+                        <StackPanel.Resources>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="#27AE60" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                            </Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="ToolTip" Value="{DynamicResource MainWindow_openBeatmapDetailPanel}" />
+                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                            </Style>
+                        </StackPanel.Resources>
                         <Grid Margin="0,100,0,0" >
                             <Path Data="M1.1212257,9.3630001L6.5977538,11.580556 4.2506914,12.856734C5.4929478,15.192778 7.9304001,16.795777 10.761055,16.795777 13.75407,16.795777 16.324983,15.014366 17.488389,12.45831L19.643999,12.45831C18.371294,16.144636 14.875176,18.804999 10.761055,18.804999 7.1745365,18.804999 4.0586705,16.782776 2.4753525,13.820294L0,15.164176z M10.760896,0C14.30653,1.3528629E-07,17.389073,1.977851,18.989344,4.8840143L21.333,3.5363943 20.353317,9.3630001 14.824021,7.2771222 17.239375,5.8891636C15.988099,3.5858327 13.567544,2.0091001 10.760896,2.0091001 7.7688711,2.0091001 5.1979985,3.7902967 4.0345705,6.3461806L1.879,6.3461806C3.1517664,2.6600806,6.6478317,1.3528629E-07,10.760896,0z" Fill="#FFDDDDDD" Height="150" Stretch="Uniform" Width="150" />
                         </Grid>
@@ -179,7 +192,7 @@
                                     <ColumnDefinition Width="10" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Fill="#FF27AE60" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <Rectangle />
                                 <Image HorizontalAlignment="Stretch" Source="Resources/NoThumbnail.png" VerticalAlignment="Stretch" Grid.Column="2" />
                                 <TextBlock FontFamily="Segoe UI" FontSize="28" Foreground="#FF555555" Height="36" HorizontalAlignment="Left" Text="Sample" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="4" />
                                 <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Margin="0,38,0,0" Text="Sample" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="4" />
@@ -203,6 +216,10 @@
                     <ScrollViewer Grid.Row="1" Grid.RowSpan="1" Margin="0,0,5,0">
                         <StackPanel x:Name="ImporterWrapper">
                             <StackPanel.Resources>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Height" Value="100" />
+                                    <Setter Property="Margin" Value="0,0,0,10" />
+                                </Style>
                                 <Style TargetType="Rectangle">
                                     <Setter Property="HorizontalAlignment" Value="Left" />
                                     <Setter Property="VerticalAlignment" Value="Top" />
@@ -210,12 +227,12 @@
                                 </Style>
                             </StackPanel.Resources>
                             <!-- [Example]                            
-                                 <Grid Height="100" Margin="0,0,0,10">
-                                 <Rectangle />
-                                 <TextBlock FontFamily="Segoe UI" FontSize="36" Foreground="#FF555555" Height="48" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" />
-                                 <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                                 <CheckBox HorizontalAlignment="Left" IsChecked="True" IsEnabled="False" Margin="25,72,0,0" VerticalAlignment="Top" Content="Installed?" />
-                                 <CheckBox Content="Download and install" HorizontalAlignment="Right" IsChecked="True" IsThreeState="True" Margin="0,10,5,0" VerticalAlignment="Top" />
+                                 <Grid>
+                                     <Rectangle />
+                                     <TextBlock FontFamily="Segoe UI" FontSize="36" Foreground="#FF555555" Height="48" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" />
+                                     <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+                                     <CheckBox HorizontalAlignment="Left" IsChecked="True" IsEnabled="False" Margin="25,72,0,0" VerticalAlignment="Top" Content="Installed?" />
+                                     <CheckBox Content="Download and install" HorizontalAlignment="Right" IsChecked="True" IsThreeState="True" Margin="0,10,5,0" VerticalAlignment="Top" />
                                  </Grid> -->
                         </StackPanel>
                     </ScrollViewer>

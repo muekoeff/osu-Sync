@@ -604,17 +604,10 @@ Class MainWindow
 
                     ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With {
-                        .Fill = Color_27AE60,
-                        .HorizontalAlignment = HorizontalAlignment.Stretch,
-                        .Tag = SelectedBeatmap,
-                        .VerticalAlignment = VerticalAlignment.Stretch}
+                        .Tag = SelectedBeatmap}
 
                     Dim UI_Thumbnail = New Image With {
-                        .Cursor = Cursors.Hand,
-                        .HorizontalAlignment = HorizontalAlignment.Stretch,
-                        .Tag = SelectedBeatmap,
-                        .ToolTip = _e("MainWindow_openBeatmapDetailPanel"),
-                        .VerticalAlignment = VerticalAlignment.Stretch}
+                        .Tag = SelectedBeatmap}
                     Grid.SetColumn(UI_Thumbnail, 2)
                     If SelectedBeatmap.ID = -1 Then
                         AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBmDP
@@ -749,18 +742,13 @@ Class MainWindow
                         .Margin = New Thickness(10, 62, 0, 0),
                         .VerticalAlignment = VerticalAlignment.Top}
 
-                    Dim UI_Grid = New Grid() With {
-                        .Height = 80,
-                        .Margin = New Thickness(0, 0, 0, 10),
-                        .Width = Double.NaN}
+                    Dim UI_Grid = New Grid()
 
-                    ' Color_27AE60 = Light Green
-                    ' Color_E74C3C = Red
                     Dim UI_DecoBorderLeft = New Rectangle
                     If Check_IfInstalled Then
-                        UI_DecoBorderLeft.Fill = Color_27AE60
+                        UI_DecoBorderLeft.Fill = Color_27AE60   'Light Green
                     Else
-                        UI_DecoBorderLeft.Fill = Color_E74C3C
+                        UI_DecoBorderLeft.Fill = Color_E74C3C   ' Red
                     End If
 
                     ' Color_555555 = Gray
@@ -803,7 +791,6 @@ Class MainWindow
                             .IsEnabled = True
                         End With
                     End If
-
                     AddHandler(UI_Checkbox_IsSelected.Checked), AddressOf Importer_AddBeatmapToSelection
                     AddHandler(UI_Checkbox_IsSelected.Unchecked), AddressOf Importer_RemoveBeatmapFromSelection
 
@@ -2007,7 +1994,7 @@ Class MainWindow
 
     Private Sub Importer_Downloader_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles Importer_Downloader.DownloadFileCompleted
         Importer_Counter += 1
-        If File.ReadAllBytes(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName).Length = 0 Then
+        If My.Computer.FileSystem.GetFileInfo(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName).Length <= 250 Then
             ' File Empty
             Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
             If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName) Then File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
