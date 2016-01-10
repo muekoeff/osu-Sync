@@ -1,7 +1,7 @@
 ﻿Imports Newtonsoft.Json, Newtonsoft.Json.Linq
 Imports System.IO, System.IO.Compression
 Imports System.Security.Cryptography, System.Security.Principal
-Imports System.Text, System.Text.RegularExpressions
+Imports System.Text
 
 Class DownloadMirror
     Property DisplayName As String
@@ -72,7 +72,7 @@ Module Global_Var
         Try
             Dim ElevateProcess As New Process
             With ElevateProcess.StartInfo
-                .Arguments = "-ignoreInstances" & Parameters
+                .Arguments = "--ignoreInstances" & Parameters
                 .FileName = Reflection.Assembly.GetExecutingAssembly().Location.ToString
                 .UseShellExecute = True
                 .Verb = "runas"

@@ -19,31 +19,14 @@
         Dim i As Integer = 0
         If Not e.Args.Length = 0 Then I__StartUpArguments = e.Args
 
-        ' Check if already running
         If I__StartUpArguments Is Nothing Then
-            If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
-                Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
-                AppActivate(SelectedProcess.Id)
-                ShowWindow(SelectedProcess.MainWindowHandle, 1)
-                Current.Shutdown()
-                Exit Sub
-            End If
-        Else    ' Please don't hurt me for that awful construction
-            If Not Array.Exists(I__StartUpArguments, Function(s)
-                                                         If s = "-ignoreInstances=" Then
-                                                             Return True
-                                                         Else
-                                                             Return False
-                                                         End If
-                                                     End Function) Then
-                If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
-                    Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
-                    AppActivate(SelectedProcess.Id)
-                    ShowWindow(SelectedProcess.MainWindowHandle, 1)
-                    Current.Shutdown()
-                    Exit Sub
+            FocusAndShutdown()
+        Else
+            With I__StartUpArguments
+                If Not .Contains("--ignoreInstances") Then
+                    FocusAndShutdown()
                 End If
-            End If
+            End With
         End If
 
         ' Check if elevated
@@ -56,6 +39,20 @@
             LoadLanguage(GetTranslationName(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")), Globalization.CultureInfo.CurrentCulture.ToString())
         ElseIf Not GetTranslationName(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then ' Check if main language code exists (e.g. de)
             LoadLanguage(GetTranslationName(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)), Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))
+        End If
+    End Sub
+
+    Private Sub FocusAndShutdown()
+        If Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).Count > 1 Then
+            Try
+                Dim SelectedProcess As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName).First
+                AppActivate(SelectedProcess.Id)
+                ShowWindow(SelectedProcess.MainWindowHandle, 1)
+            Catch ex As ArgumentException
+            End Try
+
+            Current.Shutdown()
+            Exit Sub
         End If
     End Sub
 End Class
