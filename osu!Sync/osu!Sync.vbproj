@@ -269,6 +269,7 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Development\osu!Sync Logo.psd" />
     <None Include="Development\osu!Sync NoThumbnail.psd" />
@@ -307,10 +308,6 @@
   <ItemGroup>
     <Resource Include="Icons\01 nw520-osblx.ico" />
     <Resource Include="Icons\02 nw520-osbl.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\WindowSettings_Header.png" />
-    <Resource Include="Resources\WindowWelcome_Header.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Shell32">
