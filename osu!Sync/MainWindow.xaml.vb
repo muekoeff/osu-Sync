@@ -182,11 +182,7 @@ Class MainWindow
 
         If Not FileExtension_Check = 0 Then
             Dim MessageBox_Content As String
-            If FileExtension_Check = 1 Then
-                MessageBox_Content = _e("MainWindow_extensionNotAssociated") & vbNewLine & _e("MainWindow_doYouWantToFixThat")
-            Else
-                MessageBox_Content = _e("MainWindow_extensionWrong") & vbNewLine & _e("MainWindow_doYouWantToFixThat")
-            End If
+            If FileExtension_Check = 1 Then MessageBox_Content = _e("MainWindow_extensionNotAssociated") & vbNewLine & _e("MainWindow_doYouWantToFixThat") Else MessageBox_Content = _e("MainWindow_extensionWrong") & vbNewLine & _e("MainWindow_doYouWantToFixThat")
             If MessageBox.Show(MessageBox_Content, I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                 Dim RegisterError As Boolean = False
                 Dim RegisterCounter As Integer = 0
@@ -203,11 +199,7 @@ Class MainWindow
                     End If
                 Next
 
-                If Not RegisterError Then
-                    MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
-                Else
-                    MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                End If
+                If Not RegisterError Then MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle) Else MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
             End If
         End If
     End Sub
@@ -416,34 +408,29 @@ Class MainWindow
     End Sub
 
     Private Sub Action_OpenBmDP(sender As Object, e As MouseButtonEventArgs)
-        Dim SelectedSender_Bm As Beatmap
+        Dim Csender_Bm As Beatmap
         If TypeOf sender Is Image Then
-            Dim SelectedSender As Image = CType(sender, Image)
-            If TypeOf SelectedSender.Tag Is Beatmap Then
-                SelectedSender_Bm = CType(SelectedSender.Tag, Beatmap)
-            Else
-                SelectedSender_Bm = CType(SelectedSender.Tag, Importer_TagData).Beatmap
-            End If
+            Dim Cparent As Grid = CType(CType(sender, Image).Parent, Grid)   ' Get Tag from parent Grid
+            If TypeOf Cparent.Tag Is Beatmap Then Csender_Bm = CType(Cparent.Tag, Beatmap) Else Csender_Bm = CType(Cparent.Tag, Importer_TagData).Beatmap
         Else
             Exit Sub
         End If
-        Interface_ShowBmDP(SelectedSender_Bm.ID, New BeatmapPanelDetails With {
-                                     .Artist = SelectedSender_Bm.Artist,
-                                     .Creator = SelectedSender_Bm.Creator,
-                                     .IsUnplayed = SelectedSender_Bm.IsUnplayed,
-                                     .RankedStatus = SelectedSender_Bm.RankedStatus,
-                                     .Title = SelectedSender_Bm.Title})
+        Interface_ShowBmDP(Csender_Bm.ID, New BeatmapPanelDetails With {
+                           .Artist = Csender_Bm.Artist,
+                           .Creator = Csender_Bm.Creator,
+                           .IsUnplayed = Csender_Bm.IsUnplayed,
+                           .RankedStatus = Csender_Bm.RankedStatus,
+                           .Title = Csender_Bm.Title})
     End Sub
 
     Private Sub Action_OpenBeatmapListing(sender As Object, e As MouseButtonEventArgs)
-        Dim SelectedSender As Image = CType(sender, Image)
-        Dim SelectedSender_Tag As Beatmap = CType(SelectedSender.Tag, Beatmap)
-        Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag.ID)
+        Dim Cparent As Grid = CType(CType(sender, Image).Parent, Grid)  ' Get Tag from parent grid
+        Dim Csender_Tag As Beatmap = CType(Cparent.Tag, Beatmap)
+        Process.Start("http://osu.ppy.sh/s/" & Csender_Tag.ID)
     End Sub
 
     Private Sub Action_OverlayFadeOut()
         Visibility = Visibility.Visible
-
         Overlay.Visibility = Visibility.Visible
         With FadeOut
             .From = 1
@@ -454,9 +441,10 @@ Class MainWindow
         Storyboard.SetTargetProperty(FadeOut, New PropertyPath(OpacityProperty))
 
         Dim MyStoryboard As New Storyboard()
-        MyStoryboard.Children.Add(FadeOut)
-
-        MyStoryboard.Begin(Me)
+        With MyStoryboard
+            .Children.Add(FadeOut)
+            .Begin(Me)
+        End With
     End Sub
 
     Private Sub Action_OverlayShow(Optional Title As String = Nothing, Optional Caption As String = Nothing)
@@ -486,11 +474,7 @@ Class MainWindow
     ''' <remarks></remarks>
     Private Sub Action_StartOrFocusOsu()
         If Not Process.GetProcessesByName("osu!").Count > 0 Then
-            If File.Exists(Setting_osu_Path & "\osu!.exe") Then
-                Process.Start(Setting_osu_Path & "\osu!.exe")
-            Else
-                MsgBox(_e("MainWindow_unableToFindOsuExe"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-            End If
+            If File.Exists(Setting_osu_Path & "\osu!.exe") Then Process.Start(Setting_osu_Path & "\osu!.exe") Else MsgBox(_e("MainWindow_unableToFindOsuExe"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
         Else
             For Each ObjProcess As Process In Process.GetProcessesByName("osu!")
                 AppActivate(ObjProcess.Id)
@@ -608,11 +592,9 @@ Class MainWindow
                         .Add(New ColumnDefinition)
                     End With
 
-                    Dim UI_DecoBorderLeft = New Rectangle With {
-                        .Tag = SelectedBeatmap}
+                    Dim UI_DecoBorderLeft = New Rectangle
 
-                    Dim UI_Thumbnail = New Image With {
-                        .Tag = SelectedBeatmap}
+                    Dim UI_Thumbnail = New Image
                     Grid.SetColumn(UI_Thumbnail, 2)
                     If SelectedBeatmap.ID = -1 Then
                         AddHandler(UI_Thumbnail.MouseUp), AddressOf Action_OpenBmDP
@@ -621,7 +603,11 @@ Class MainWindow
                         AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBeatmapListing
                     End If
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
-                        UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                        Try
+                            UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                        Catch ex As NotSupportedException
+                            UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+                        End Try
                     Else
                         UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                     End If
@@ -633,7 +619,6 @@ Class MainWindow
                         .Height = 36,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.Title,
-                        .Tag = SelectedBeatmap,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 4)
@@ -643,16 +628,11 @@ Class MainWindow
                         .FontSize = 14,
                         .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
-                        .Tag = SelectedBeatmap,
                         .Margin = New Thickness(0, 38, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 4)
-                    If Not SelectedBeatmap.ID = -1 Then
-                        UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
-                    Else
-                        UI_TextBlock_Caption.Text = _e("MainWindow_unsubmitted") & " | " & SelectedBeatmap.Artist
-                    End If
+                    If Not SelectedBeatmap.ID = -1 Then UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmitted") & " | " & SelectedBeatmap.Artist
                     If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
@@ -687,7 +667,6 @@ Class MainWindow
                         .HorizontalAlignment = HorizontalAlignment.Center,
                         .Text = _e("MainWindow_thatsImpressiveIGuess"),
                         .VerticalAlignment = VerticalAlignment.Center}
-
                     With BeatmapWrapper.Children
                         .Add(UI_TextBlock)
                         .Add(UI_TextBlock_SubTitle)
@@ -714,12 +693,12 @@ Class MainWindow
                        .VerticalAlignment = VerticalAlignment.Center,
                        .Width = 150}
                     Dim UI_TextBlock_SubTitle As New TextBlock With {
-                               .FontSize = 24,
-                               .Foreground = StandardColors.GrayLighter,
-                               .HorizontalAlignment = HorizontalAlignment.Center,
-                               .Text = _e("MainWindow_pleaseWait") & vbNewLine & _e("MainWindow_syncing"),
-                               .TextAlignment = TextAlignment.Center,
-                               .VerticalAlignment = VerticalAlignment.Center}
+                        .FontSize = 24,
+                        .Foreground = StandardColors.GrayLighter,
+                        .HorizontalAlignment = HorizontalAlignment.Center,
+                        .Text = _e("MainWindow_pleaseWait") & vbNewLine & _e("MainWindow_syncing"),
+                        .TextAlignment = TextAlignment.Center,
+                        .VerticalAlignment = VerticalAlignment.Center}
 
                     Interface_LoaderText = UI_TextBlock_SubTitle
                     ImporterWrapper.Children.Add(UI_ProgressRing)
@@ -732,11 +711,7 @@ Class MainWindow
                     Importer_Cancel.IsEnabled = True
 
                     Dim Check_IfInstalled As Boolean
-                    If Sync_BeatmapList_ID_Installed.Contains(SelectedBeatmap.ID) Then
-                        Check_IfInstalled = True
-                    Else
-                        Check_IfInstalled = False
-                    End If
+                    If Sync_BeatmapList_ID_Installed.Contains(SelectedBeatmap.ID) Then Check_IfInstalled = True Else Check_IfInstalled = False
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_isInstalled"),
                         .HorizontalAlignment = HorizontalAlignment.Left,
@@ -748,11 +723,7 @@ Class MainWindow
                     Dim UI_Grid = New Grid()
 
                     Dim UI_DecoBorderLeft = New Rectangle
-                    If Check_IfInstalled Then
-                        UI_DecoBorderLeft.Fill = StandardColors.GreenLight
-                    Else
-                        UI_DecoBorderLeft.Fill = StandardColors.RedLight
-                    End If
+                    If Check_IfInstalled Then UI_DecoBorderLeft.Fill = StandardColors.GreenLight Else UI_DecoBorderLeft.Fill = StandardColors.RedLight
 
                     Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
@@ -805,19 +776,15 @@ Class MainWindow
                         .UI_TextBlock_Title = UI_TextBlock_Title}
 
                     If Check_IfInstalled = False Then Importer_BeatmapList_Tag_ToInstall.Add(TagData)
-                    UI_Checkbox_IsInstalled.Tag = TagData
-                    UI_Checkbox_IsSelected.Tag = TagData
-                    UI_Checkbox_IsSelected.Tag = TagData
-                    UI_DecoBorderLeft.Tag = TagData
                     UI_Grid.Tag = TagData
-                    UI_TextBlock_Caption.Tag = TagData
-                    UI_TextBlock_Title.Tag = TagData
 
-                    UI_Grid.Children.Add(UI_DecoBorderLeft)
-                    UI_Grid.Children.Add(UI_TextBlock_Title)
-                    UI_Grid.Children.Add(UI_TextBlock_Caption)
-                    UI_Grid.Children.Add(UI_Checkbox_IsInstalled)
-                    UI_Grid.Children.Add(UI_Checkbox_IsSelected)
+                    With UI_Grid.Children
+                        .Add(UI_DecoBorderLeft)
+                        .Add(UI_TextBlock_Title)
+                        .Add(UI_TextBlock_Caption)
+                        .Add(UI_Checkbox_IsInstalled)
+                        .Add(UI_Checkbox_IsSelected)
+                    End With
                     ImporterWrapper.Children.Add(UI_Grid)
                     Importer_BeatmapsTotal += 1
                 Next
@@ -825,11 +792,7 @@ Class MainWindow
                 Importer_Cancel.IsEnabled = True
                 Importer_Info.ToolTip = Importer_Info.Text
 
-                If Importer_BeatmapList_Tag_ToInstall.Count = 0 Then
-                    Importer_Run.IsEnabled = False
-                Else
-                    Importer_Run.IsEnabled = True
-                End If
+                If Importer_BeatmapList_Tag_ToInstall.Count = 0 Then Importer_Run.IsEnabled = False Else Importer_Run.IsEnabled = True
                 Importer_UpdateInfo()
                 Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
             Case UpdateBeatmapDisplayDestinations.Exporter
@@ -892,11 +855,7 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 2)
 
-                    If Not SelectedBeatmap.ID = -1 Then
-                        UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist
-                    Else
-                        UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelectedBeatmap.Artist
-                    End If
+                    If Not SelectedBeatmap.ID = -1 Then UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelectedBeatmap.Artist
                     If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
@@ -931,13 +890,7 @@ Class MainWindow
 
                     Exporter_BeatmapList_Tag_Selected.Add(TagData)
 
-                    UI_Checkbox_IsSelected.Tag = TagData
-                    UI_Checkbox_IsSelected.Tag = TagData
-                    UI_DecoBorderLeft.Tag = TagData
                     UI_Grid.Tag = TagData
-                    UI_TextBlock_Caption.Tag = TagData
-                    UI_TextBlock_Title.Tag = TagData
-                    UI_Thumbnail.Tag = TagData
 
                     With UI_Grid.Children
                         .Add(UI_Checkbox_IsSelected)
@@ -1018,15 +971,13 @@ Class MainWindow
     End Sub
 
     Private Sub BeatmapDetails_BeatmapListing_Click(sender As Object, e As RoutedEventArgs) Handles BeatmapDetails_BeatmapListing.Click
-        Dim SelectedSender As Button = CType(sender, Button)
-        Dim SelectedSender_Tag As String = CStr(SelectedSender.Tag)
-        Process.Start("http://osu.ppy.sh/s/" & SelectedSender_Tag)
+        Dim Csender As Button = CType(sender, Button)
+        Dim Csender_Tag As String = CStr(Csender.Tag)
+        Process.Start("http://osu.ppy.sh/s/" & Csender_Tag)
     End Sub
 
     Private Sub Button_SyncDo_Click(sender As Object, e As RoutedEventArgs) Handles Button_SyncDo.Click
-        If Tool_IsElevated Then
-            If Setting_Tool_CheckFileAssociation Then Action_CheckFileAssociation()
-        End If
+        If Tool_IsElevated AndAlso Setting_Tool_CheckFileAssociation Then Action_CheckFileAssociation()
         Action_Sync_GetIDs()
     End Sub
 
@@ -1051,19 +1002,21 @@ Class MainWindow
             .VerticalAlignment = VerticalAlignment.Center,
             .Width = 150}
         Dim UI_TextBlock_SubTitle As New TextBlock With {
-                   .FontSize = 24,
-                   .Foreground = StandardColors.GrayLighter,
-                   .HorizontalAlignment = HorizontalAlignment.Center,
-                   .Text = Message,
-                   .TextAlignment = TextAlignment.Center,
-                   .VerticalAlignment = VerticalAlignment.Center}
+            .FontSize = 24,
+            .Foreground = StandardColors.GrayLighter,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .Text = Message,
+            .TextAlignment = TextAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center}
 
         Interface_LoaderText = UI_TextBlock_SubTitle
         Interface_LoaderProgressBar = UI_ProgressBar
-        BeatmapWrapper.Children.Clear()
-        BeatmapWrapper.Children.Add(UI_ProgressBar)
-        BeatmapWrapper.Children.Add(UI_ProgressRing)
-        BeatmapWrapper.Children.Add(UI_TextBlock_SubTitle)
+        With BeatmapWrapper.Children
+            .Clear()
+            .Add(UI_ProgressBar)
+            .Add(UI_ProgressRing)
+            .Add(UI_TextBlock_SubTitle)
+        End With
     End Sub
 
     Private Sub Interface_ShowBmDP(ID As Integer, Details As BeatmapPanelDetails)
@@ -1117,9 +1070,7 @@ Class MainWindow
 
         ' Api
         If Setting_Api_Enabled_BeatmapPanel And Not ID = -1 Then
-            If BeatmapDetailClient.IsBusy Then
-                BeatmapDetailClient.CancelAsync()
-            End If
+            If BeatmapDetailClient.IsBusy Then BeatmapDetailClient.CancelAsync()
 
             ' Reset
             BeatmapDetails_APIFavouriteCount.Text = "..."
@@ -1280,7 +1231,6 @@ Class MainWindow
             MsgBox(_e("MainWindow_youNeedToSyncFirst"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
             Exit Sub
         End If
-
         Action_UpdateBeatmapDisplay(Sync_BeatmapList_Installed, UpdateBeatmapDisplayDestinations.Exporter)
     End Sub
 
@@ -1330,11 +1280,7 @@ Class MainWindow
 
     Private Sub MenuItem_Program_Settings_Click(sender As Object, e As RoutedEventArgs) Handles MenuItem_Program_Settings.Click
         Interface_ShowSettingsWindow()
-        If Not Tool_DontApplySettings Then
-            Action_Tool_ApplySettings()
-        Else
-            Tool_DontApplySettings = False
-        End If
+        If Not Tool_DontApplySettings Then Action_Tool_ApplySettings() Else Tool_DontApplySettings = False
     End Sub
 
     Private Sub NotifyIcon_Exit_Click(sender As Object, e As RoutedEventArgs) Handles NotifyIcon_Exit.Click
@@ -1395,9 +1341,7 @@ Class MainWindow
         Else
             TextBlock_Programm_Updater.Content = _e("MainWindow_updateAvailable").Replace("%0", LatestVer)
             Action_ShowBalloon(_e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", LatestVer), , , NotifyNextAction.OpenUpdater)
-            If Setting_Messages_Updater_OpenUpdater Then
-                Interface_ShowUpdaterWindow()
-            End If
+            If Setting_Messages_Updater_OpenUpdater Then Interface_ShowUpdaterWindow()
         End If
     End Sub
 
@@ -1571,8 +1515,7 @@ Class MainWindow
     End Sub
 
     Private Sub BGW__Action_Sync_GetIDs_ProgressChanged(sender As Object, e As ComponentModel.ProgressChangedEventArgs) Handles BGW__Action_Sync_GetIDs.ProgressChanged
-        Dim Answer As New BGWcallback_SyncGetIDs
-        Answer = CType(e.UserState, BGWcallback_SyncGetIDs)
+        Dim Answer As BGWcallback_SyncGetIDs = CType(e.UserState, BGWcallback_SyncGetIDs)
         Select Case Answer.Progress__CurrentAction
             Case BGWcallback_SyncGetIDs.ProgressCurrentActions.Sync
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_andStillWorking")
@@ -1588,8 +1531,7 @@ Class MainWindow
     End Sub
 
     Private Sub BGW__Action_Sync_GetIDs_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BGW__Action_Sync_GetIDs.RunWorkerCompleted
-        Dim Answer As New BGWcallback_SyncGetIDs
-        Answer = TryCast(e.Result, BGWcallback_SyncGetIDs)
+        Dim Answer As BGWcallback_SyncGetIDs = TryCast(e.Result, BGWcallback_SyncGetIDs)
         Select Case Answer.Return__Status
             Case 0
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BeatmapList_ID_Installed.Count.ToString)
@@ -1597,8 +1539,10 @@ Class MainWindow
                     If MessageBox.Show(_e("MainWindow_someBeatmapsDifferFromNormal") & vbNewLine &
                                        _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
-                        Window_Message.SetMessage(Answer.Return__Sync_Warnings, _e("MainWindow_exceptions"), "Sync")
-                        Window_Message.ShowDialog()
+                        With Window_Message
+                            .SetMessage(Answer.Return__Sync_Warnings, _e("MainWindow_exceptions"), "Sync")
+                            .ShowDialog()
+                        End With
                     End If
                 End If
                 Sync_BeatmapList_Installed = Answer.Return__Sync_BeatmapList_Installed
@@ -1644,69 +1588,55 @@ Class MainWindow
 #Region "Exporter"
 #Region "Actions « Exporter"
     Private Sub Exporter_AddBeatmapToSelection(sender As Object, e As EventArgs)
-        Dim SelectedSender As CheckBox = CType(sender, CheckBox)
-        Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
-        Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
-        Exporter_BeatmapList_Tag_Unselected.Remove(SelectedSender_Tag)
-        Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
-
-        If Exporter_BeatmapList_Tag_Selected.Count > 0 Then
-            Export_Run.IsEnabled = True
-        Else
-            Export_Run.IsEnabled = False
-        End If
-
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight
+        Dim Cparent As Grid = CType(CType(sender, CheckBox).Parent, Grid)
+        Dim Csender_Tag As Importer_TagData = CType(Cparent.Tag, Importer_TagData)
+        Exporter_BeatmapList_Tag_Unselected.Remove(Csender_Tag)
+        Exporter_BeatmapList_Tag_Selected.Add(Csender_Tag)
+        If Exporter_BeatmapList_Tag_Selected.Count > 0 Then Export_Run.IsEnabled = True Else Export_Run.IsEnabled = False
+        Csender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight
     End Sub
 
     Private Sub Exporter_DetermineWheterAddOrRemove(sender As Object, e As EventArgs)
-        Dim SelectedSender_Tag As Importer_TagData
-        Dim SelectedSender_Beatmap As Beatmap
-
+        Dim Cparent As Grid
+        Dim Csender_Tag As Importer_TagData
         If TypeOf sender Is Image Then
-            SelectedSender_Tag = CType(CType(sender, Image).Tag, Importer_TagData)
-            SelectedSender_Beatmap = SelectedSender_Tag.Beatmap
+            Dim Csender As Image = CType(sender, Image)
+            Cparent = CType(Csender.Parent, Grid)
         ElseIf TypeOf sender Is Rectangle Then
-            SelectedSender_Tag = CType(CType(sender, Rectangle).Tag, Importer_TagData)
-            SelectedSender_Beatmap = SelectedSender_Tag.Beatmap
+            Dim Csender As Rectangle = CType(sender, Rectangle)
+            Cparent = CType(Csender.Parent, Grid)
         ElseIf TypeOf sender Is TextBlock Then
-            SelectedSender_Tag = CType(CType(sender, TextBlock).Tag, Importer_TagData)
-            SelectedSender_Beatmap = SelectedSender_Tag.Beatmap
+            Dim Csender As TextBlock = CType(sender, TextBlock)
+            Cparent = CType(Csender.Parent, Grid)
         Else
             Exit Sub
         End If
+        Csender_Tag = CType(Cparent.Tag, Importer_TagData)
 
-        If SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked Then
-            Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
-
+        If Csender_Tag.UI_Checkbox_IsSelected.IsChecked Then
+            Exporter_BeatmapList_Tag_Selected.Remove(Csender_Tag)
             If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
-
-            SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
-            SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
+            With Csender_Tag
+                .UI_Checkbox_IsSelected.IsChecked = False
+                .UI_DecoBorderLeft.Fill = StandardColors.GrayLight
+            End With
         Else
-            Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
-
-            If Exporter_BeatmapList_Tag_Selected.Count > 0 Then
-                Export_Run.IsEnabled = True
-            Else
-                Export_Run.IsEnabled = False
-            End If
-
-            SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = True
-            SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight
+            Exporter_BeatmapList_Tag_Selected.Add(Csender_Tag)
+            If Exporter_BeatmapList_Tag_Selected.Count > 0 Then Export_Run.IsEnabled = True Else Export_Run.IsEnabled = False
+            With Csender_Tag
+                .UI_Checkbox_IsSelected.IsChecked = True
+                .UI_DecoBorderLeft.Fill = StandardColors.GreenLight
+            End With
         End If
     End Sub
 
     Private Sub Exporter_RemoveBeatmapFromSelection(sender As Object, e As EventArgs)
-        Dim SelectedSender As CheckBox = CType(sender, CheckBox)
-        Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
-        Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
-        Exporter_BeatmapList_Tag_Selected.Remove(SelectedSender_Tag)
-        Exporter_BeatmapList_Tag_Unselected.Add(SelectedSender_Tag)
-
+        Dim Cparent As Grid = CType(CType(sender, CheckBox).Parent, Grid)
+        Dim Csender_Tag As Importer_TagData = CType(Cparent.Tag, Importer_TagData)
+        Exporter_BeatmapList_Tag_Selected.Remove(Csender_Tag)
+        Exporter_BeatmapList_Tag_Unselected.Add(Csender_Tag)
         If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
-
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
+        Csender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
     End Sub
 #End Region
 #Region "Controls « Exporter"
@@ -1718,11 +1648,9 @@ Class MainWindow
 
     Private Sub Export_InvertSelection_Click(sender As Object, e As RoutedEventArgs) Handles Export_InvertSelection.Click
         ' Save unselected elements
-        Dim ListUnselected As New List(Of Importer_TagData)
-        ListUnselected = Exporter_BeatmapList_Tag_Unselected.ToList
+        Dim ListUnselected As List(Of Importer_TagData) = Exporter_BeatmapList_Tag_Unselected.ToList
         ' Save selected elements
-        Dim ListSelected As New List(Of Importer_TagData)
-        ListSelected = Exporter_BeatmapList_Tag_Selected.ToList
+        Dim ListSelected As List(Of Importer_TagData) = Exporter_BeatmapList_Tag_Selected.ToList
 
         ' Loop for selected elements
         Dim LoopPreviousCount As Integer = 0
@@ -1743,7 +1671,6 @@ Class MainWindow
 
     Private Sub Export_Run_Click(sender As Object, e As RoutedEventArgs) Handles Export_Run.Click
         Dim Result As New List(Of Beatmap)
-
         For Each Item As Importer_TagData In Exporter_BeatmapList_Tag_Selected
             Result.Add(Item.Beatmap)
         Next
@@ -1758,11 +1685,10 @@ Class MainWindow
 #Region "Importer"
 #Region "Actions « Importer"
     Sub Importer_AddBeatmapToSelection(sender As Object, e As EventArgs)
-        Dim SelectedSender As CheckBox = CType(sender, CheckBox)
-        Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
-        Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
-        Importer_BeatmapList_Tag_ToInstall.Add(SelectedSender_Tag)
-        Importer_BeatmapList_Tag_LeftOut.Remove(SelectedSender_Tag)
+        Dim Cparent As Grid = CType(CType(sender, CheckBox).Parent, Grid)   ' Get Tag from parent Grid
+        Dim Csender_Tag As Importer_TagData = CType(Cparent.Tag, Importer_TagData)
+        Importer_BeatmapList_Tag_ToInstall.Add(Csender_Tag)
+        Importer_BeatmapList_Tag_LeftOut.Remove(Csender_Tag)
 
         If Importer_BeatmapList_Tag_ToInstall.Count > 0 Then
             Importer_Run.IsEnabled = True
@@ -1771,8 +1697,7 @@ Class MainWindow
             Importer_Run.IsEnabled = False
         End If
         Importer_UpdateInfo()
-
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.RedLight
+        Csender_Tag.UI_DecoBorderLeft.Fill = StandardColors.RedLight
     End Sub
 
     Sub Importer_DownloadBeatmap()
@@ -1882,11 +1807,7 @@ Class MainWindow
             TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
             For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
-                If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
-                    File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
-                Else
-                    File.Delete(FilePath)
-                End If
+                If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Else File.Delete(FilePath)
             Next
             With Importer_Progress
                 .IsIndeterminate = False
@@ -1909,9 +1830,7 @@ Class MainWindow
                          _e("MainWindow_setsTotal").Replace("%0", Importer_BeatmapsTotal.ToString) & vbNewLine & vbNewLine &
                     _e("MainWindow_pressF5"))
 
-            If Not Process.GetProcessesByName("osu!").Count > 0 Then
-                If MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
-            End If
+            If Not Process.GetProcessesByName("osu!").Count > 0 AndAlso MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
             Button_SyncDo.IsEnabled = True
             Importer_Cancel.IsEnabled = True
         End If
@@ -1959,18 +1878,16 @@ Class MainWindow
     End Sub
 
     Sub Importer_RemoveBeatmapFromSelection(sender As Object, e As EventArgs)
-        Dim SelectedSender As CheckBox = CType(sender, CheckBox)
-        Dim SelectedSender_Tag As Importer_TagData = CType(SelectedSender.Tag, Importer_TagData)
-        Dim SelectedSender_Beatmap As Beatmap = CType(SelectedSender_Tag.Beatmap, Beatmap)
-        Importer_BeatmapList_Tag_ToInstall.Remove(SelectedSender_Tag)
-        Importer_BeatmapList_Tag_LeftOut.Add(SelectedSender_Tag)
+        Dim Cparent As Grid = CType(CType(sender, CheckBox).Parent, Grid)   ' Get Tag from parent Grid
+        Dim Csender_Tag As Importer_TagData = CType(Cparent.Tag, Importer_TagData)
+        Importer_BeatmapList_Tag_ToInstall.Remove(Csender_Tag)
+        Importer_BeatmapList_Tag_LeftOut.Add(Csender_Tag)
         If Importer_BeatmapList_Tag_ToInstall.Count = 0 Then
             Importer_Run.IsEnabled = False
             Importer_Cancel.IsEnabled = True
         End If
         Importer_UpdateInfo()
-
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
+        Csender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
     End Sub
 
     Sub Importer_UpdateInfo(Optional Title As String = "osu!Sync")
@@ -2026,7 +1943,6 @@ Class MainWindow
     Private Sub Importer_Run_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Run.Click
         Importer_Init()
     End Sub
-
 #End Region
 #End Region
 End Class
