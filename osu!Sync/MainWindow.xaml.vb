@@ -5,20 +5,6 @@ Imports System.Windows.Media.Animation
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Public Enum BGWcallback_ActionSyncGetIDs_ArgMode
-    Sync = 0
-End Enum
-
-Public Enum BGWcallback_ActionSyncGetIDs_ProgressCurrentAction
-    Sync = 0
-    Done = 2
-    CountingTotalFolders = 4
-End Enum
-
-Public Enum BGWcallback_ActionSyncGetIDs_ReturnStatus
-    FolderDoesNotExist = 1
-End Enum
-
 Public Enum NotifyNextAction
     None = 0
     OpenUpdater = 1
@@ -51,22 +37,38 @@ Public Class BeatmapPanelDetails
     Public Property Title As String
 End Class
 
-Public Class BGWcallback__Action_Sync_GetIDs
-    Public Property Arg__Mode As BGWcallback_ActionSyncGetIDs_ArgMode
-    Public Property Arg__AutoSync As Boolean = False
-    Public Property Return__Status As BGWcallback_ActionSyncGetIDs_ReturnStatus
-    Public Property Return__Sync_BeatmapList_Installed As New List(Of Beatmap)
-    Public Property Return__Sync_BeatmapList_ID_Installed As New List(Of Integer)
-    Public Property Return__Sync_Cache_Time As String
-    Public Property Return__Sync_Warnings As String
-    Public Property Progress__Current As Integer
-    Public Property Progress__CurrentAction As BGWcallback_ActionSyncGetIDs_ProgressCurrentAction
+Public Class BGWcallback_SyncGetIDs
+
+    Enum ArgModes
+        Sync = 0
+    End Enum
+
+    Enum ProgressCurrentActions
+        Sync = 0
+        Done = 2
+        CountingTotalFolders = 4
+    End Enum
+
+    Enum ReturnStatuses
+        FolderDoesNotExist = 1
+    End Enum
+
+    Property Arg__Mode As ArgModes
+    Property Arg__AutoSync As Boolean = False
+    Property Return__Status As ReturnStatuses
+    Property Return__Sync_BeatmapList_Installed As New List(Of Beatmap)
+    Property Return__Sync_BeatmapList_ID_Installed As New List(Of Integer)
+    Property Return__Sync_Cache_Time As String
+    Property Return__Sync_Warnings As String
+    Property Progress__Current As Integer
+    Property Progress__CurrentAction As ProgressCurrentActions
 End Class
 
 Public Class StandardColors
     Public Shared BlueLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#3498DB"), Brush)
     Public Shared GrayDark As Brush = DirectCast(New BrushConverter().ConvertFrom("#555555"), Brush)
     Public Shared GrayLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#999999"), Brush)
+    Public Shared GrayLighter As Brush = DirectCast(New BrushConverter().ConvertFrom("#DDDDDD"), Brush)
     Public Shared GreenDark As Brush = DirectCast(New BrushConverter().ConvertFrom("#008136"), Brush)
     Public Shared GreenLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#27AE60"), Brush)
     Public Shared OrangeLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#E67E2E"), Brush)
@@ -505,7 +507,7 @@ Class MainWindow
         Button_SyncDo.IsEnabled = False
         Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
         TextBlock_Sync_LastUpdate.Content = _e("MainWindow_syncing")
-        BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback__Action_Sync_GetIDs)
+        BGW__Action_Sync_GetIDs.RunWorkerAsync(New BGWcallback_SyncGetIDs)
     End Sub
 
     Public Sub Action_ToggleMinimizeToTray()
@@ -606,7 +608,6 @@ Class MainWindow
                         .Add(New ColumnDefinition)
                     End With
 
-                    ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With {
                         .Tag = SelectedBeatmap}
 
@@ -637,7 +638,6 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 4)
 
-                    ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
@@ -683,7 +683,7 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Center}
                     Dim UI_TextBlock_SubTitle As New TextBlock With {
                         .FontSize = 24,
-                        .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FF2ECC71"), Brush),
+                        .Foreground = StandardColors.GreenLight,
                         .HorizontalAlignment = HorizontalAlignment.Center,
                         .Text = _e("MainWindow_thatsImpressiveIGuess"),
                         .VerticalAlignment = VerticalAlignment.Center}
@@ -715,7 +715,7 @@ Class MainWindow
                        .Width = 150}
                     Dim UI_TextBlock_SubTitle As New TextBlock With {
                                .FontSize = 24,
-                               .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                               .Foreground = StandardColors.GrayLighter,
                                .HorizontalAlignment = HorizontalAlignment.Center,
                                .Text = _e("MainWindow_pleaseWait") & vbNewLine & _e("MainWindow_syncing"),
                                .TextAlignment = TextAlignment.Center,
@@ -765,7 +765,6 @@ Class MainWindow
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
 
-                    ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
@@ -849,7 +848,6 @@ Class MainWindow
                         .Add(New ColumnDefinition)
                     End With
 
-                    ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With {
                         .Fill = StandardColors.GreenLight,
                         .VerticalAlignment = VerticalAlignment.Stretch}
@@ -862,7 +860,11 @@ Class MainWindow
                     Grid.SetColumn(UI_Thumbnail, 1)
                     AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
-                        UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                        Try
+                            UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                        Catch ex As NotSupportedException
+                            UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+                        End Try
                     Else
                         UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                     End If
@@ -1050,7 +1052,7 @@ Class MainWindow
             .Width = 150}
         Dim UI_TextBlock_SubTitle As New TextBlock With {
                    .FontSize = 24,
-                   .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                   .Foreground = StandardColors.GrayLighter,
                    .HorizontalAlignment = HorizontalAlignment.Center,
                    .Text = Message,
                    .TextAlignment = TextAlignment.Center,
@@ -1104,7 +1106,11 @@ Class MainWindow
 
         ' Thumbnail
         If File.Exists(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg") Then
-            BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg"))
+            Try
+                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg"))
+            Catch ex As NotSupportedException
+                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+            End Try
         Else
             BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
         End If
@@ -1397,20 +1403,20 @@ Class MainWindow
 
 #Region "BGW__Action_Sync_GetIDs"
     Private Sub BGW__Action_Sync_GetIDs_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BGW__Action_Sync_GetIDs.DoWork
-        Dim Arguments As New BGWcallback__Action_Sync_GetIDs
-        Arguments = TryCast(e.Argument, BGWcallback__Action_Sync_GetIDs)
-        Dim Answer As New BGWcallback__Action_Sync_GetIDs
+        Dim Arguments As New BGWcallback_SyncGetIDs
+        Arguments = TryCast(e.Argument, BGWcallback_SyncGetIDs)
+        Dim Answer As New BGWcallback_SyncGetIDs
 
         If Not Directory.Exists(Setting_osu_SongsPath) Then
-            Answer.Return__Status = BGWcallback_ActionSyncGetIDs_ReturnStatus.FolderDoesNotExist
+            Answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist
             e.Result = Answer
             Exit Sub
         End If
 
         Select Case Arguments.Arg__Mode
-            Case BGWcallback_ActionSyncGetIDs_ArgMode.Sync
-                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
-                                    .Progress__CurrentAction = BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders,
+            Case BGWcallback_SyncGetIDs.ArgModes.Sync
+                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
+                                    .Progress__CurrentAction = BGWcallback_SyncGetIDs.ProgressCurrentActions.CountingTotalFolders,
                                     .Progress__Current = Directory.GetDirectories(Setting_osu_SongsPath).Count})
 
                 Dim Beatmap_InvalidFolder As String = ""
@@ -1466,8 +1472,8 @@ Class MainWindow
                             If Not FoundIDs.Contains(BeatmapDetails.ID) Then
                                 FoundIDs.Add(BeatmapDetails.ID)
                                 Answer.Return__Sync_BeatmapList_Installed.Add(BeatmapDetails)
-                                Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(BeatmapDetails.ID))
-                                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
+                                Answer.Return__Sync_BeatmapList_ID_Installed.Add(BeatmapDetails.ID)
+                                BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
                                     .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count})
                             End If
                         Next
@@ -1529,8 +1535,8 @@ Class MainWindow
                                         End Try
                                     End If
                                     Answer.Return__Sync_BeatmapList_Installed.Add(BeatmapDetails)
-                                    Answer.Return__Sync_BeatmapList_ID_Installed.Add(CInt(BeatmapDetails.ID))
-                                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback__Action_Sync_GetIDs With {
+                                    Answer.Return__Sync_BeatmapList_ID_Installed.Add(BeatmapDetails.ID)
+                                    BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
                                         .Progress__Current = Answer.Return__Sync_BeatmapList_ID_Installed.Count})
                                     Exit For
                                 End If
@@ -1565,25 +1571,25 @@ Class MainWindow
     End Sub
 
     Private Sub BGW__Action_Sync_GetIDs_ProgressChanged(sender As Object, e As ComponentModel.ProgressChangedEventArgs) Handles BGW__Action_Sync_GetIDs.ProgressChanged
-        Dim Answer As New BGWcallback__Action_Sync_GetIDs
-        Answer = CType(e.UserState, BGWcallback__Action_Sync_GetIDs)
+        Dim Answer As New BGWcallback_SyncGetIDs
+        Answer = CType(e.UserState, BGWcallback_SyncGetIDs)
         Select Case Answer.Progress__CurrentAction
-            Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Sync
+            Case BGWcallback_SyncGetIDs.ProgressCurrentActions.Sync
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_andStillWorking")
                 With Interface_LoaderProgressBar
                     .Value = Answer.Progress__Current
                     .Visibility = Visibility.Visible
                 End With
-            Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.Done
+            Case BGWcallback_SyncGetIDs.ProgressCurrentActions.Done
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString) & vbNewLine & _e("MainWindow_generatingInterface")
-            Case BGWcallback_ActionSyncGetIDs_ProgressCurrentAction.CountingTotalFolders
+            Case BGWcallback_SyncGetIDs.ProgressCurrentActions.CountingTotalFolders
                 Interface_LoaderProgressBar.Maximum = Answer.Progress__Current
         End Select
     End Sub
 
     Private Sub BGW__Action_Sync_GetIDs_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BGW__Action_Sync_GetIDs.RunWorkerCompleted
-        Dim Answer As New BGWcallback__Action_Sync_GetIDs
-        Answer = TryCast(e.Result, BGWcallback__Action_Sync_GetIDs)
+        Dim Answer As New BGWcallback_SyncGetIDs
+        Answer = TryCast(e.Result, BGWcallback_SyncGetIDs)
         Select Case Answer.Return__Status
             Case 0
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BeatmapList_ID_Installed.Count.ToString)
@@ -1607,20 +1613,20 @@ Class MainWindow
                     Sync_Done_ImporterRequest = False
                     Action_UpdateBeatmapDisplay(Sync_Done_ImporterRequest_SaveValue, UpdateBeatmapDisplayDestinations.Importer)
                 End If
-            Case BGWcallback_ActionSyncGetIDs_ReturnStatus.FolderDoesNotExist
+            Case BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist
                 MsgBox(_e("MainWindow_unableToFindOsuFolderPleaseSpecify"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
                 Interface_ShowSettingsWindow(1)
 
                 Dim UI_TextBlock As New TextBlock With {
                     .FontSize = 72,
-                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                    .Foreground = StandardColors.GrayLighter,
                     .HorizontalAlignment = HorizontalAlignment.Center,
                     .Margin = New Thickness(0, 100, 0, 0),
                     .Text = _e("MainWindow_lastSyncFailed"),
                     .VerticalAlignment = VerticalAlignment.Center}
                 Dim UI_TextBlock_SubTitle As New TextBlock With {
                     .FontSize = 24,
-                    .Foreground = DirectCast(New BrushConverter().ConvertFrom("#FFDDDDDD"), Brush),
+                    .Foreground = StandardColors.GrayLighter,
                     .HorizontalAlignment = HorizontalAlignment.Center,
                     .Text = _e("MainWindow_pleaseRetry"),
                     .VerticalAlignment = VerticalAlignment.Center}
