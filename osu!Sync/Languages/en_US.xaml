@@ -384,9 +384,9 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync is a free tool which allows you to export and import beatmaps to osu!. You can generate lists which can be easily shared to share your beatmaps.</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync by naseweis520</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync.</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Welcome</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Please remember that this is an unofficial tool. We're not affiliated with osu! nor peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Please remember that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
 </ResourceDictionary>

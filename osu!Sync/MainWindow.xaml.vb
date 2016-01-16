@@ -63,6 +63,17 @@ Public Class BGWcallback__Action_Sync_GetIDs
     Public Property Progress__CurrentAction As BGWcallback_ActionSyncGetIDs_ProgressCurrentAction
 End Class
 
+Public Class StandardColors
+    Public Shared BlueLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#3498DB"), Brush)
+    Public Shared GrayDark As Brush = DirectCast(New BrushConverter().ConvertFrom("#555555"), Brush)
+    Public Shared GrayLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#999999"), Brush)
+    Public Shared GreenDark As Brush = DirectCast(New BrushConverter().ConvertFrom("#008136"), Brush)
+    Public Shared GreenLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#27AE60"), Brush)
+    Public Shared OrangeLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#E67E2E"), Brush)
+    Public Shared PurpleDark As Brush = DirectCast(New BrushConverter().ConvertFrom("#8E44AD"), Brush)
+    Public Shared RedLight As Brush = DirectCast(New BrushConverter().ConvertFrom("#E74C3C"), Brush)
+End Class
+
 ' BmDP = Beatmap Detail Panel
 
 Class MainWindow
@@ -79,7 +90,7 @@ Class MainWindow
     Private Exporter_BeatmapList_Tag_Unselected As New List(Of Importer_TagData)
 
     Private WithEvents Importer_CurrentFileName As String
-    Private WithEvents Importer_Downloader As New Net.WebClient
+    Private WithEvents Importer_Downloader As New WebClient
     Private Importer_BeatmapList_Tag_ToInstall As New List(Of Importer_TagData)
     Private Importer_BeatmapList_Tag_LeftOut As New List(Of Importer_TagData)
     Private Importer_BeatmapList_Tag_Done As New List(Of Importer_TagData)
@@ -88,19 +99,12 @@ Class MainWindow
     Private Importer_Counter As Integer
     Private Importer_FilePath As String
 
-    Private Color_999999 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF999999"), Brush)          ' Light Gray
-    Private Color_8E44AD As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF8E44AD"), Brush)          ' Dark Purple
-    Private Color_555555 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF555555"), Brush)          ' Gray
-    Private Color_3498DB As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF3498DB"), Brush)          ' Light Blue
-    Private Color_27AE60 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF27AE60"), Brush)          ' Light Green
-    Private Color_008136 As Brush = DirectCast(New BrushConverter().ConvertFrom("#FF008136"), Brush)          ' Dark Green
-    Private Color_E74C3C As Brush = DirectCast(New BrushConverter().ConvertFrom("#FFE74C3C"), Brush)          ' Red
-    Private Color_E67E2E As Brush = DirectCast(New BrushConverter().ConvertFrom("#FFE67E2E"), Brush)          ' Light Orange
-
     Private Interface_LoaderText As New TextBlock
     Private Interface_LoaderProgressBar As New ProgressBar
 
-    Private WithEvents BGW__Action_Sync_GetIDs As New ComponentModel.BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
+    Private WithEvents BGW__Action_Sync_GetIDs As New ComponentModel.BackgroundWorker With {
+        .WorkerReportsProgress = True,
+        .WorkerSupportsCancellation = True}
 
     Private Class Importer_TagData
         Public Property Beatmap As Beatmap
@@ -621,11 +625,10 @@ Class MainWindow
                         UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                     End If
 
-                    ' Color_555555 = Gray
                     Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
                         .FontSize = 28,
-                        .Foreground = Color_555555,
+                        .Foreground = StandardColors.GrayDark,
                         .Height = 36,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.Title,
@@ -638,7 +641,7 @@ Class MainWindow
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
-                        .Foreground = Color_008136,
+                        .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Tag = SelectedBeatmap,
                         .Margin = New Thickness(0, 38, 0, 0),
@@ -673,7 +676,7 @@ Class MainWindow
                 If BeatmapList.Count = 0 Then
                     Dim UI_TextBlock As New TextBlock With {
                         .FontSize = 72,
-                        .Foreground = Color_27AE60,
+                        .Foreground = StandardColors.GreenLight,
                         .HorizontalAlignment = HorizontalAlignment.Center,
                         .Margin = New Thickness(0, 86, 0, 0),
                         .Text = _e("MainWindow_beatmapsFound").Replace("%0", "0"),
@@ -746,16 +749,15 @@ Class MainWindow
 
                     Dim UI_DecoBorderLeft = New Rectangle
                     If Check_IfInstalled Then
-                        UI_DecoBorderLeft.Fill = Color_27AE60   'Light Green
+                        UI_DecoBorderLeft.Fill = StandardColors.GreenLight
                     Else
-                        UI_DecoBorderLeft.Fill = Color_E74C3C   ' Red
+                        UI_DecoBorderLeft.Fill = StandardColors.RedLight
                     End If
 
-                    ' Color_555555 = Gray
                     Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
                         .FontSize = 28,
-                        .Foreground = Color_555555,
+                        .Foreground = StandardColors.GrayDark,
                         .Height = 36,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
@@ -767,7 +769,7 @@ Class MainWindow
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 14,
-                        .Foreground = Color_008136,
+                        .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
                         .Margin = New Thickness(10, 38, 0, 0),
@@ -829,7 +831,7 @@ Class MainWindow
                 Else
                     Importer_Run.IsEnabled = True
                 End If
-                Importer_UpdateInfo("osu!Sync")
+                Importer_UpdateInfo()
                 Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
             Case UpdateBeatmapDisplayDestinations.Exporter
                 ExporterWrapper.Children.Clear()
@@ -849,7 +851,7 @@ Class MainWindow
 
                     ' Color_27AE60 = Light Green
                     Dim UI_DecoBorderLeft = New Rectangle With {
-                        .Fill = Color_27AE60,
+                        .Fill = StandardColors.GreenLight,
                         .VerticalAlignment = VerticalAlignment.Stretch}
 
                     Dim UI_Thumbnail = New Image With {
@@ -865,11 +867,10 @@ Class MainWindow
                         UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                     End If
 
-                    ' Color_555555 = Gray
                     Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
                         .FontSize = 22,
-                        .Foreground = Color_555555,
+                        .Foreground = StandardColors.GrayDark,
                         .Height = 30,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
@@ -878,11 +879,10 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 2)
 
-                    ' Color_008136 = Dark Green
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
                         .FontSize = 12,
-                        .Foreground = Color_008136,
+                        .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
                         .Margin = New Thickness(10, 30, 0, 0),
@@ -910,7 +910,7 @@ Class MainWindow
                             .IsChecked = False
                             .IsEnabled = False
                         End With
-                        UI_DecoBorderLeft.Fill = Color_999999
+                        UI_DecoBorderLeft.Fill = StandardColors.GrayLight
                     Else
                         AddHandler(UI_Checkbox_IsSelected.Checked), AddressOf Exporter_AddBeatmapToSelection
                         AddHandler(UI_Checkbox_IsSelected.Unchecked), AddressOf Exporter_RemoveBeatmapFromSelection
@@ -1073,12 +1073,12 @@ Class MainWindow
         ' IsUnplayed status
         If Details.IsUnplayed Then
             With BeatmapDetails_IsUnplayed
-                .Background = Color_E74C3C
+                .Background = StandardColors.RedLight
                 .Text = _e("MainWindow_detailsPanel_playedStatus_unplayed")
             End With
         Else
             With BeatmapDetails_IsUnplayed
-                .Background = Color_008136
+                .Background = StandardColors.GreenDark
                 .Text = _e("MainWindow_detailsPanel_playedStatus_played")
             End With
         End If
@@ -1087,17 +1087,17 @@ Class MainWindow
         Select Case Details.RankedStatus
             Case Convert.ToByte(4), Convert.ToByte(5)   ' 4 = Ranked, 5 = Approved
                 With BeatmapDetails_RankedStatus
-                    .Background = Color_008136
+                    .Background = StandardColors.GreenDark
                     .Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked")
                 End With
             Case Convert.ToByte(6)      ' Pending
                 With BeatmapDetails_RankedStatus
-                    .Background = Color_8E44AD
+                    .Background = StandardColors.PurpleDark
                     .Text = _e("MainWindow_detailsPanel_beatmapStatus_pending")
                 End With
             Case Else
                 With BeatmapDetails_RankedStatus
-                    .Background = Color_999999
+                    .Background = StandardColors.GrayLight
                     .Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked")
                 End With
         End Select
@@ -1650,7 +1650,7 @@ Class MainWindow
             Export_Run.IsEnabled = False
         End If
 
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_27AE60        ' Color_27AE60 = Light Green
+        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight
     End Sub
 
     Private Sub Exporter_DetermineWheterAddOrRemove(sender As Object, e As EventArgs)
@@ -1676,7 +1676,7 @@ Class MainWindow
             If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
 
             SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = False
-            SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
+            SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
         Else
             Exporter_BeatmapList_Tag_Selected.Add(SelectedSender_Tag)
 
@@ -1687,7 +1687,7 @@ Class MainWindow
             End If
 
             SelectedSender_Tag.UI_Checkbox_IsSelected.IsChecked = True
-            SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_27AE60        ' Color_27AE60 = Light Green
+            SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight
         End If
     End Sub
 
@@ -1700,7 +1700,7 @@ Class MainWindow
 
         If Exporter_BeatmapList_Tag_Selected.Count = 0 Then Export_Run.IsEnabled = False
 
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
+        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
     End Sub
 #End Region
 #Region "Controls « Exporter"
@@ -1764,9 +1764,9 @@ Class MainWindow
         Else
             Importer_Run.IsEnabled = False
         End If
-        Importer_UpdateInfo("osu!Sync")
+        Importer_UpdateInfo()
 
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_E74C3C            ' Color_E74C3C = Red
+        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.RedLight
     End Sub
 
     Sub Importer_DownloadBeatmap()
@@ -1779,7 +1779,7 @@ Class MainWindow
         RequestURI = Application_Mirrors(Setting_Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID))
 
         With Importer_BeatmapList_Tag_ToInstall.First
-            .UI_DecoBorderLeft.Fill = Color_3498DB
+            .UI_DecoBorderLeft.Fill = StandardColors.BlueLight
             .UI_Checkbox_IsSelected.IsEnabled = False
             .UI_Checkbox_IsSelected.IsThreeState = False
             .UI_Checkbox_IsSelected.IsChecked = Nothing
@@ -1795,14 +1795,12 @@ Class MainWindow
             Res = req.GetResponse()
         Catch ex As WebException
             If MessageBox.Show(_e("MainWindow_unableToFetchData"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
-                'Yes
-                Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
+                Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
                 Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
                 Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
                 Importer_Downloader_ToNextDownload()
-            Else
-                'No
-                Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
+            Else    ' No
+                Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
                 Importer_Info.Text = _e("MainWindow_installing")
                 Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", Importer_BeatmapList_Tag_Done.Count.ToString)
                 If Importer_BeatmapList_Tag_LeftOut.Count > 0 Then Importer_Info.Text += " | " & _e("MainWindow_leftOut").Replace("%0", Importer_BeatmapList_Tag_LeftOut.Count.ToString)
@@ -1964,12 +1962,12 @@ Class MainWindow
             Importer_Run.IsEnabled = False
             Importer_Cancel.IsEnabled = True
         End If
-        Importer_UpdateInfo("osu!Sync")
+        Importer_UpdateInfo()
 
-        SelectedSender_Tag.UI_DecoBorderLeft.Fill = Color_999999            ' Color_999999 = Light Gray
+        SelectedSender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight
     End Sub
 
-    Sub Importer_UpdateInfo(ByRef Title As String)
+    Sub Importer_UpdateInfo(Optional Title As String = "osu!Sync")
         Importer_Info.Text = Title
         If Title = _e("MainWindow_fetching1") Or Title = _e("MainWindow_downloading1") Or Title = _e("MainWindow_installing") Then
             Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", Importer_BeatmapList_Tag_ToInstall.Count.ToString)
@@ -1996,16 +1994,15 @@ Class MainWindow
         Importer_Counter += 1
         If My.Computer.FileSystem.GetFileInfo(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName).Length <= 250 Then
             ' File Empty
-            Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_E67E2E      ' Orange
+            Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
             If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName) Then File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
             MsgBox(_e("MainWindow_beatmapsDoesNotExist").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
 
             Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_Downloader_ToNextDownload()
-        Else
-            ' File Normal
-            Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = Color_8E44AD
+        Else    ' File Normal
+            Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.PurpleDark
             Importer_BeatmapList_Tag_Done.Add(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_Downloader_ToNextDownload()
