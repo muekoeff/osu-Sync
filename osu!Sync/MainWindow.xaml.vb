@@ -680,6 +680,7 @@ Class MainWindow
                 TabberItem_Import.Visibility = Visibility.Visible
                 Tabber.SelectedIndex = 1
                 ImporterWrapper.Children.Clear()
+                Importer_HideInstalled.IsChecked = False
                 Importer_Cancel.IsEnabled = False
                 Importer_Run.IsEnabled = False
                 If Sync_Done = False Then
@@ -1797,7 +1798,7 @@ Class MainWindow
                 Next
             End If
             Importer_DownloadBeatmap()
-        Else
+        Else    ' Finished
             With Importer_Progress
                 .IsIndeterminate = True
                 .Value = 0
@@ -1919,8 +1920,6 @@ Class MainWindow
             ' File Empty
             Importer_BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
             If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName) Then File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & Importer_CurrentFileName)
-            MsgBox(_e("MainWindow_beatmapsDoesNotExist").Replace("%0", CStr(Importer_BeatmapList_Tag_ToInstall.First.Beatmap.ID)), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-
             Importer_BeatmapList_Tag_Failed.Add(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_BeatmapList_Tag_ToInstall.Remove(Importer_BeatmapList_Tag_ToInstall.First)
             Importer_Downloader_ToNextDownload()
@@ -1938,6 +1937,20 @@ Class MainWindow
 
     Private Sub Importer_DownloadMirrorInfo_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles Importer_DownloadMirrorInfo.MouseDown
         Process.Start(Application_Mirrors(Setting_Tool_DownloadMirror).WebURL)
+    End Sub
+
+    Private Sub Importer_HideInstalled_Checked(sender As Object, e As RoutedEventArgs) Handles Importer_HideInstalled.Checked
+        For Each _Selection As Grid In ImporterWrapper.Children
+            If CType(_Selection.Tag, Importer_TagData).UI_Checkbox_IsInstalled.IsChecked Then
+                _Selection.Visibility = Visibility.Collapsed
+            End If
+        Next
+    End Sub
+
+    Private Sub Importer_HideInstalled_Unchecked(sender As Object, e As RoutedEventArgs) Handles Importer_HideInstalled.Unchecked
+        For Each _Selection As Grid In ImporterWrapper.Children
+            _Selection.Visibility = Visibility.Visible
+        Next
     End Sub
 
     Private Sub Importer_Run_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Run.Click
