@@ -38,6 +38,7 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_Cancel</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Can't connect to server</system:String>
+    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Checking for updates...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Compressed osu!Sync Beatmap List</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Conversion aborted</system:String>
@@ -46,9 +47,9 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Convert selected file</system:String>
     <system:String x:Key="MainWindow_creator">Creator</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_done">Done</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Download and install</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Download Beatmaps</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Download mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Downloading %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Downloading</system:String>
@@ -99,6 +100,7 @@
     <system:String x:Key="MainWindow_fetching1">Fetching...</system:String>
     <system:String x:Key="MainWindow_file">_File</system:String>
     <system:String x:Key="MainWindow_file404">Unable to open file. It doesn't exist (anymore).</system:String>
+    <system:String x:Key="MainWindow_finished">Finished</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed. It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">Folders</system:String>
     <!-- | G -->
@@ -163,6 +165,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Skipped beatmaps</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Some beatmap sets hadn't been exported.</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Some beatmap sets hadn't been imported.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Sync completed</system:String>
     <system:String x:Key="MainWindow_synchronize">Synchronize</system:String>
     <system:String x:Key="MainWindow_syncing">Syncing...</system:String>
@@ -388,5 +391,5 @@
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Welcome</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Please remember that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
 </ResourceDictionary>

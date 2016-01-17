@@ -21,8 +21,8 @@
                 <Grid Margin="10,0">
                     <StackPanel>
                         <Image x:Name="BeatmapDetails_Thumbnail" HorizontalAlignment="Left" Width="160" />
-                        <TextBlock x:Name="BeatmapDetails_Title" FontSize="36" Foreground="#FF50BD7E" />
-                        <TextBlock x:Name="BeatmapDetails_Artist" FontSize="20" Foreground="#FF3DB670" />
+                        <TextBlock x:Name="BeatmapDetails_Title" FontSize="36" Foreground="#50BD7E" />
+                        <TextBlock x:Name="BeatmapDetails_Artist" FontSize="20" Foreground="#3DB670" />
                         <Label Content="{DynamicResource MainWindow_creator}" FontFamily="Segoe UI Light" Margin="0,15,0,0" />
                         <TextBlock x:Name="BeatmapDetails_Creator" FontSize="16" Margin="10,0,0,0" />
                         <StackPanel x:Name="BeatmapDetails_APIFunctions">
@@ -32,10 +32,10 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Label Content="{DynamicResource MainWindow_detailsPanel_onlineDetails}" FontFamily="Segoe UI Light" />
-                                <Controls:ProgressRing x:Name="BeatmapDetails_APIProgress" Foreground="#FFFFFFFF" Height="20" HorizontalAlignment="Left" IsActive="True" Margin="10,0,0,0" Width="20" Grid.Column="1" />
+                                <Controls:ProgressRing x:Name="BeatmapDetails_APIProgress" Foreground="#FFFFFF" Height="20" HorizontalAlignment="Left" IsActive="True" Margin="10,0,0,0" Width="20" Grid.Column="1" />
                             </Grid>
                             <StackPanel Margin="15,0,0,0">
-                                <Label x:Name="BeatmapDetails_APIWarn" FontFamily="Segoe UI Light" Foreground="#FFE74C3C" Visibility="Collapsed" />
+                                <Label x:Name="BeatmapDetails_APIWarn" FontFamily="Segoe UI Light" Foreground="#E74C3C" Visibility="Collapsed" />
                                 <Label x:Name="BeatmapDetails_Label_APIFavouriteCount" Content="{DynamicResource MainWindow_detailsPanel_favoriteCount}" FontFamily="Segoe UI Light" />
                                 <TextBlock x:Name="BeatmapDetails_APIFavouriteCount" FontSize="16" Margin="10,0,0,0" />
                                 <Grid>
@@ -63,7 +63,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="BeatmapDetails_RankedStatus" Background="#BF00AEFF" Height="32" Padding="0,6,0,0" TextAlignment="Center" />
-                            <TextBlock x:Name="BeatmapDetails_IsUnplayed" Background="#FFE74C3C" Height="32" Padding="0,6,0,0" TextAlignment="Center" Grid.Column="1" />
+                            <TextBlock x:Name="BeatmapDetails_IsUnplayed" Background="#E74C3C" Height="32" Padding="0,6,0,0" TextAlignment="Center" Grid.Column="1" />
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -82,68 +82,68 @@
                 <ContextMenu>
                     <MenuItem x:Name="NotifyIcon_ShowHide" Header="{DynamicResource MainWindow_showHideOsuSync}">
                         <MenuItem.Icon>
-                            <Path Data="M5.2010002,14.812L5.2010002,43.573997 56.098,43.573997 56.098,14.812z M29.868601,3.8869994C28.026201,3.8869996 26.534,5.3791947 26.534,7.2190399 26.534,9.0588851 28.026201,10.553 29.868601,10.553 31.7085,10.553 33.202,9.0588851 33.202,7.2190399 33.202,5.3791947 31.7085,3.8869996 29.868601,3.8869994z M19.200649,3.8869994C17.359457,3.8869996 15.867001,5.3791947 15.867001,7.2190399 15.867001,9.0588851 17.359457,10.553 19.200649,10.553 21.042044,10.553 22.536999,9.0588851 22.536999,7.2190399 22.536999,5.3791947 21.042044,3.8869996 19.200649,3.8869994z M8.5339746,3.8869994C6.6931,3.8869996 5.2010002,5.3791947 5.2010002,7.2190399 5.2010002,9.0588851 6.6931,10.553 8.5339746,10.553 10.37495,10.553 11.867,9.0588851 11.867,7.2190399 11.867,5.3791947 10.37495,3.8869996 8.5339746,3.8869994z M0,0L63.999001,0 63.999001,48.792999 0,48.792999z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M5.2010002,14.812L5.2010002,43.573997 56.098,43.573997 56.098,14.812z M29.868601,3.8869994C28.026201,3.8869996 26.534,5.3791947 26.534,7.2190399 26.534,9.0588851 28.026201,10.553 29.868601,10.553 31.7085,10.553 33.202,9.0588851 33.202,7.2190399 33.202,5.3791947 31.7085,3.8869996 29.868601,3.8869994z M19.200649,3.8869994C17.359457,3.8869996 15.867001,5.3791947 15.867001,7.2190399 15.867001,9.0588851 17.359457,10.553 19.200649,10.553 21.042044,10.553 22.536999,9.0588851 22.536999,7.2190399 22.536999,5.3791947 21.042044,3.8869996 19.200649,3.8869994z M8.5339746,3.8869994C6.6931,3.8869996 5.2010002,5.3791947 5.2010002,7.2190399 5.2010002,9.0588851 6.6931,10.553 8.5339746,10.553 10.37495,10.553 11.867,9.0588851 11.867,7.2190399 11.867,5.3791947 10.37495,3.8869996 8.5339746,3.8869994z M0,0L63.999001,0 63.999001,48.792999 0,48.792999z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem x:Name="NotifyIcon_RunOsu" Header="{DynamicResource MainWindow_runOsu}" />
                     <Separator />
                     <MenuItem x:Name="NotifyIcon_Exit" Header="{DynamicResource MainWindow_exit}">
                         <MenuItem.Icon>
-                            <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
         <DockPanel VerticalAlignment="Top">
-            <Menu x:Name="MenuBar" Background="#FF2D2D30" Foreground="White" DockPanel.Dock="Top">
+            <Menu x:Name="MenuBar" Background="#2D2D30" Foreground="White" DockPanel.Dock="Top">
                 <MenuItem Background="{Binding Background, ElementName=MenuBar}" Header="{DynamicResource MainWindow_program}">
-                    <MenuItem x:Name="MenuItem_Program_RunOsu" Foreground="#FF333333" Header="{DynamicResource MainWindow_runOsu}" />
+                    <MenuItem x:Name="MenuItem_Program_RunOsu" Foreground="#333333" Header="{DynamicResource MainWindow_runOsu}" />
                     <Separator />
-                    <MenuItem x:Name="MenuItem_Program_Settings" Foreground="#FF333333" Header="{DynamicResource MainWindow_settings}">
+                    <MenuItem x:Name="MenuItem_Program_Settings" Foreground="#333333" Header="{DynamicResource MainWindow_settings}">
                         <MenuItem.Icon>
-                            <Path Data="M31.679651,15.723C22.841078,15.723 15.677,22.887022 15.677,31.724249 15.677,40.562878 22.841078,47.727002 31.679651,47.727002 40.518124,47.727002 47.682003,40.562878 47.682003,31.724249 47.682003,22.887022 40.518124,15.723 31.679651,15.723z M25.174641,0L30.947304,8.1649995 30.977009,8.163671C31.891628,8.1361193,32.811726,8.1617675,33.732849,8.2423577L34.116646,8.2807278 40.096367,0.5289996 49.181995,4.5158782 47.510448,14.236901 47.626137,14.339919C48.479649,15.11912,49.268909,15.955267,49.990528,16.839653L50.234638,17.14785 60.403648,15.836 64.007996,25.079203 55.322643,31.217757 55.324234,31.258986C55.34618,32.174153,55.314838,33.094563,55.22847,34.015755L55.226952,34.030385 63.345997,40.294331 59.359104,49.380002 49.249798,47.645153 49.143776,47.764214C48.695721,48.255009,48.228832,48.72456,47.744774,49.172226L47.324875,49.549786 48.723995,60.394425 39.48156,64 33.403603,55.403061 33.023663,55.43042C32.149929,55.481137,31.270197,55.483376,30.38839,55.435608L29.679308,55.383191 23.130268,63.875 14.041999,59.886834 15.844025,49.393521 15.71986,49.282948C15.207753,48.815411,14.718776,48.32737,14.253661,47.820706L13.803129,47.315312 3.612031,48.630002 0.0080004195,39.385499 8.0905037,33.673707 8.0481892,33.048829C7.9875851,31.908507,8.0095654,30.758269,8.1175261,29.606822L8.1191311,29.59272 0,23.328246 3.9867127,14.242 14.093521,15.978928 14.104487,15.966273C15.033746,14.935561,16.045525,13.997155,17.124784,13.156928L17.159048,13.131042 15.929999,3.6040602z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M31.679651,15.723C22.841078,15.723 15.677,22.887022 15.677,31.724249 15.677,40.562878 22.841078,47.727002 31.679651,47.727002 40.518124,47.727002 47.682003,40.562878 47.682003,31.724249 47.682003,22.887022 40.518124,15.723 31.679651,15.723z M25.174641,0L30.947304,8.1649995 30.977009,8.163671C31.891628,8.1361193,32.811726,8.1617675,33.732849,8.2423577L34.116646,8.2807278 40.096367,0.5289996 49.181995,4.5158782 47.510448,14.236901 47.626137,14.339919C48.479649,15.11912,49.268909,15.955267,49.990528,16.839653L50.234638,17.14785 60.403648,15.836 64.007996,25.079203 55.322643,31.217757 55.324234,31.258986C55.34618,32.174153,55.314838,33.094563,55.22847,34.015755L55.226952,34.030385 63.345997,40.294331 59.359104,49.380002 49.249798,47.645153 49.143776,47.764214C48.695721,48.255009,48.228832,48.72456,47.744774,49.172226L47.324875,49.549786 48.723995,60.394425 39.48156,64 33.403603,55.403061 33.023663,55.43042C32.149929,55.481137,31.270197,55.483376,30.38839,55.435608L29.679308,55.383191 23.130268,63.875 14.041999,59.886834 15.844025,49.393521 15.71986,49.282948C15.207753,48.815411,14.718776,48.32737,14.253661,47.820706L13.803129,47.315312 3.612031,48.630002 0.0080004195,39.385499 8.0905037,33.673707 8.0481892,33.048829C7.9875851,31.908507,8.0095654,30.758269,8.1175261,29.606822L8.1191311,29.59272 0,23.328246 3.9867127,14.242 14.093521,15.978928 14.104487,15.966273C15.033746,14.935561,16.045525,13.997155,17.124784,13.156928L17.159048,13.131042 15.929999,3.6040602z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="MenuItem_Program_MinimizeToTray" Foreground="#FF333333" Header="{DynamicResource MainWindow_minimizeToTray}">
+                    <MenuItem x:Name="MenuItem_Program_MinimizeToTray" Foreground="#333333" Header="{DynamicResource MainWindow_minimizeToTray}">
                         <MenuItem.Icon>
-                            <Path Data="M5.2010002,14.812L5.2010002,43.573997 56.098,43.573997 56.098,14.812z M29.868601,3.8869994C28.026201,3.8869996 26.534,5.3791947 26.534,7.2190399 26.534,9.0588851 28.026201,10.553 29.868601,10.553 31.7085,10.553 33.202,9.0588851 33.202,7.2190399 33.202,5.3791947 31.7085,3.8869996 29.868601,3.8869994z M19.200649,3.8869994C17.359457,3.8869996 15.867001,5.3791947 15.867001,7.2190399 15.867001,9.0588851 17.359457,10.553 19.200649,10.553 21.042044,10.553 22.536999,9.0588851 22.536999,7.2190399 22.536999,5.3791947 21.042044,3.8869996 19.200649,3.8869994z M8.5339746,3.8869994C6.6931,3.8869996 5.2010002,5.3791947 5.2010002,7.2190399 5.2010002,9.0588851 6.6931,10.553 8.5339746,10.553 10.37495,10.553 11.867,9.0588851 11.867,7.2190399 11.867,5.3791947 10.37495,3.8869996 8.5339746,3.8869994z M0,0L63.999001,0 63.999001,48.792999 0,48.792999z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M5.2010002,14.812L5.2010002,43.573997 56.098,43.573997 56.098,14.812z M29.868601,3.8869994C28.026201,3.8869996 26.534,5.3791947 26.534,7.2190399 26.534,9.0588851 28.026201,10.553 29.868601,10.553 31.7085,10.553 33.202,9.0588851 33.202,7.2190399 33.202,5.3791947 31.7085,3.8869996 29.868601,3.8869994z M19.200649,3.8869994C17.359457,3.8869996 15.867001,5.3791947 15.867001,7.2190399 15.867001,9.0588851 17.359457,10.553 19.200649,10.553 21.042044,10.553 22.536999,9.0588851 22.536999,7.2190399 22.536999,5.3791947 21.042044,3.8869996 19.200649,3.8869994z M8.5339746,3.8869994C6.6931,3.8869996 5.2010002,5.3791947 5.2010002,7.2190399 5.2010002,9.0588851 6.6931,10.553 8.5339746,10.553 10.37495,10.553 11.867,9.0588851 11.867,7.2190399 11.867,5.3791947 10.37495,3.8869996 8.5339746,3.8869994z M0,0L63.999001,0 63.999001,48.792999 0,48.792999z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="MenuItem_Program_Exit" Foreground="#FF333333" Header="{DynamicResource MainWindow_exit}">
+                    <MenuItem x:Name="MenuItem_Program_Exit" Foreground="#333333" Header="{DynamicResource MainWindow_exit}">
                         <MenuItem.Icon>
-                            <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M8.3332899,60.647999L42.257647,60.647999 50.000998,65.463997 0,65.463997z M15.4972,25.608999C14.320045,25.608999 13.372,26.557045 13.372,27.728899 13.372,28.903355 14.320045,29.854 15.4972,29.854 16.669155,29.854 17.616999,28.903355 17.616999,27.728899 17.616999,26.557045 16.669155,25.608999 15.4972,25.608999z M9.6489999,0L40.982,0 40.982,55.48 9.6489999,55.48z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Background="{Binding Background, ElementName=MenuBar}" Header="{DynamicResource MainWindow_file}">
-                    <MenuItem x:Name="MenuItem_File_OpenBeatmapList" Foreground="#FF333333" Header="{DynamicResource MainWindow_openBeatmapList}">
+                    <MenuItem x:Name="MenuItem_File_OpenBeatmapList" Foreground="#333333" Header="{DynamicResource MainWindow_openBeatmapList}">
                         <MenuItem.Icon>
-                            <Path Data="M0,21.940001L64,21.940001 58.81641,53.042002 5.4832716,53.042002z M5.4829998,0L26.983213,0 26.983213,6.5154943 58.805,6.5154943 58.805,14.362 5.5063095,14.362 5.5063095,7.1121521 5.4829998,7.1121521z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M0,21.940001L64,21.940001 58.81641,53.042002 5.4832716,53.042002z M5.4829998,0L26.983213,0 26.983213,6.5154943 58.805,6.5154943 58.805,14.362 5.5063095,14.362 5.5063095,7.1121521 5.4829998,7.1121521z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="MenuItem_File_Export_InstalledBeatmaps" Foreground="#FF333333" Header="{DynamicResource MainWindow_exportInstalledBeatmaps}" ToolTip="{DynamicResource MainWindow_tt_exportAllDetectedBeatmaps}">
+                    <MenuItem x:Name="MenuItem_File_Export_InstalledBeatmaps" Foreground="#333333" Header="{DynamicResource MainWindow_exportInstalledBeatmaps}" ToolTip="{DynamicResource MainWindow_tt_exportAllDetectedBeatmaps}">
                         <MenuItem.Icon>
-                            <Path Data="M45.963548,8.269645L62.665147,25.065546 45.963548,39.871244 45.963548,31.963644C45.963548,31.963644 17.120617,24.075571 9.909945,39.871244 9.9099454,35.922571 12.530199,16.167482 45.963548,16.167483z M0,0L41.778571,0 41.778571,4.1795139 41.778571,8.3590277 37.598714,8.3590277 37.598714,4.1795139 4.1798577,4.1795139 4.1798577,45.954649 37.598714,45.954649 37.598714,41.775137 41.778571,41.775137 41.778571,45.954649 41.778571,50.134165 37.598714,50.134165 0,50.134165 0,45.954649 0,4.1795139z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M45.963548,8.269645L62.665147,25.065546 45.963548,39.871244 45.963548,31.963644C45.963548,31.963644 17.120617,24.075571 9.909945,39.871244 9.9099454,35.922571 12.530199,16.167482 45.963548,16.167483z M0,0L41.778571,0 41.778571,4.1795139 41.778571,8.3590277 37.598714,8.3590277 37.598714,4.1795139 4.1798577,4.1795139 4.1798577,45.954649 37.598714,45.954649 37.598714,41.775137 41.778571,41.775137 41.778571,45.954649 41.778571,50.134165 37.598714,50.134165 0,50.134165 0,45.954649 0,4.1795139z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="MenuItem_File_Export_SelectedMaps" Foreground="#FF333333" Header="{DynamicResource MainWindow_selectSomeBeatmapsToExport}">
+                    <MenuItem x:Name="MenuItem_File_Export_SelectedMaps" Foreground="#333333" Header="{DynamicResource MainWindow_selectSomeBeatmapsToExport}">
                         <MenuItem.Icon>
-                            <Path Data="M56.850046,5.4969997L60.220999,10.69225 25.209057,33.397 21.838,28.200282 21.839826,28.199097 14.341,16.636033 19.537599,13.267 27.036416,24.829411z M0,0L45.399,0 45.399,9.6670117 38.571999,14.094078 38.571999,6.8280005 6.8280001,6.8280005 6.8280001,38.572001 38.571999,38.572001 38.571999,27.987296 45.399,23.560133 45.399,45.398001 0,45.398001z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M56.850046,5.4969997L60.220999,10.69225 25.209057,33.397 21.838,28.200282 21.839826,28.199097 14.341,16.636033 19.537599,13.267 27.036416,24.829411z M0,0L45.399,0 45.399,9.6670117 38.571999,14.094078 38.571999,6.8280005 6.8280001,6.8280005 6.8280001,38.572001 38.571999,38.572001 38.571999,27.987296 45.399,23.560133 45.399,45.398001 0,45.398001z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="MenuItem_File_Export_ConvertSelector" Foreground="#FF333333" Header="{DynamicResource MainWindow_convertFile}">
+                    <MenuItem x:Name="MenuItem_File_Export_ConvertSelector" Foreground="#333333" Header="{DynamicResource MainWindow_convertFile}">
                         <MenuItem.Icon>
-                            <Path Data="M321.708,286.23L321.708,458.152 195.855,458.152 388.901,678.738 581.909,458.152 454.197,458.152 454.197,286.23z M143.573,45.4108L57.5312,143.823 718.228,143.823 632.149,45.4108z M124.906,0L651.472,0 776.56,143.823 777.764,143.823 777.764,145.231 777.764,514 778,514 778,555 777.764,555 777.764,758 0,758 0,143.823 0,142.956z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M321.708,286.23L321.708,458.152 195.855,458.152 388.901,678.738 581.909,458.152 454.197,458.152 454.197,286.23z M143.573,45.4108L57.5312,143.823 718.228,143.823 632.149,45.4108z M124.906,0L651.472,0 776.56,143.823 777.764,143.823 777.764,145.231 777.764,514 778,514 778,555 777.764,555 777.764,758 0,758 0,143.823 0,142.956z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Background="{Binding Background, ElementName=MenuBar}" Header="{DynamicResource MainWindow_help}">
-                    <MenuItem x:Name="MenuItem_Help_Updater" Foreground="#FF333333" Header="{DynamicResource MainWindow_openUpdater}">
+                    <MenuItem x:Name="MenuItem_Help_Updater" Foreground="#333333" Header="{DynamicResource MainWindow_openUpdater}">
                         <MenuItem.Icon>
-                            <Path Data="F1M1332.17,1189.59L1349.06,1172.61 1349.06,1180.59C1382.85,1180.59 1385.5,1200.57 1385.5,1204.56 1378.21,1188.58 1349.06,1196.57 1349.06,1196.57L1349.06,1204.56 1332.17,1189.59z" Fill="#FF333333" Height="16" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Width="16">
+                            <Path Data="F1M1332.17,1189.59L1349.06,1172.61 1349.06,1180.59C1382.85,1180.59 1385.5,1200.57 1385.5,1204.56 1378.21,1188.58 1349.06,1196.57 1349.06,1196.57L1349.06,1204.56 1332.17,1189.59z" Fill="#333333" Height="16" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Width="16">
                                 <Path.RenderTransform>
                                     <TransformGroup>
                                         <RotateTransform Angle="90" />
@@ -152,15 +152,15 @@
                             </Path>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="MenuItem_Help_About" Foreground="#FF333333" Header="{DynamicResource MainWindow_about}">
+                    <MenuItem x:Name="MenuItem_Help_About" Foreground="#333333" Header="{DynamicResource MainWindow_about}">
                         <MenuItem.Icon>
-                            <Path Data="M0.083000104,16.5L9.4169997,16.5 9.4169997,53.834 0.083000104,53.834z M4.7499999,0C7.3722199,0 9.4999999,2.1269503 9.4999999,4.75 9.4999999,7.3740196 7.3722199,9.5 4.7499999,9.5 2.12756,9.5 4.4703484E-08,7.3740196 0,4.75 4.4703484E-08,2.1269503 2.12756,0 4.7499999,0z" Fill="#FF333333" Height="16" Stretch="Uniform" Width="16" />
+                            <Path Data="M0.083000104,16.5L9.4169997,16.5 9.4169997,53.834 0.083000104,53.834z M4.7499999,0C7.3722199,0 9.4999999,2.1269503 9.4999999,4.75 9.4999999,7.3740196 7.3722199,9.5 4.7499999,9.5 2.12756,9.5 4.4703484E-08,7.3740196 0,4.75 4.4703484E-08,2.1269503 2.12756,0 4.7499999,0z" Fill="#333333" Height="16" Stretch="Uniform" Width="16" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <TextBlock x:Name="TextBlock_BeatmapCounter" FontFamily="Segoe UI Light" FontSize="22" Foreground="#FFDDDDDD" HorizontalAlignment="Left" Margin="8,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" />
+        <TextBlock x:Name="TextBlock_BeatmapCounter" FontFamily="Segoe UI Light" FontSize="22" Foreground="#DDDDDD" HorizontalAlignment="Left" Margin="8,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" />
         <Button x:Name="Button_SyncDo" Content="{DynamicResource MainWindow_synchronize}" FontSize="16" HorizontalAlignment="Right" Margin="0,5,5,0" Padding="15,6" VerticalAlignment="Top" Grid.Row="1" />
         <TabControl x:Name="Tabber" Margin="0" Grid.Row="2">
             <TabItem Header="{DynamicResource MainWindow_overview}">
@@ -180,9 +180,9 @@
                             </Style>
                         </StackPanel.Resources>
                         <Grid Margin="0,100,0,0" >
-                            <Path Data="M1.1212257,9.3630001L6.5977538,11.580556 4.2506914,12.856734C5.4929478,15.192778 7.9304001,16.795777 10.761055,16.795777 13.75407,16.795777 16.324983,15.014366 17.488389,12.45831L19.643999,12.45831C18.371294,16.144636 14.875176,18.804999 10.761055,18.804999 7.1745365,18.804999 4.0586705,16.782776 2.4753525,13.820294L0,15.164176z M10.760896,0C14.30653,1.3528629E-07,17.389073,1.977851,18.989344,4.8840143L21.333,3.5363943 20.353317,9.3630001 14.824021,7.2771222 17.239375,5.8891636C15.988099,3.5858327 13.567544,2.0091001 10.760896,2.0091001 7.7688711,2.0091001 5.1979985,3.7902967 4.0345705,6.3461806L1.879,6.3461806C3.1517664,2.6600806,6.6478317,1.3528629E-07,10.760896,0z" Fill="#FFDDDDDD" Height="150" Stretch="Uniform" Width="150" />
+                            <Path Data="M1.1212257,9.3630001L6.5977538,11.580556 4.2506914,12.856734C5.4929478,15.192778 7.9304001,16.795777 10.761055,16.795777 13.75407,16.795777 16.324983,15.014366 17.488389,12.45831L19.643999,12.45831C18.371294,16.144636 14.875176,18.804999 10.761055,18.804999 7.1745365,18.804999 4.0586705,16.782776 2.4753525,13.820294L0,15.164176z M10.760896,0C14.30653,1.3528629E-07,17.389073,1.977851,18.989344,4.8840143L21.333,3.5363943 20.353317,9.3630001 14.824021,7.2771222 17.239375,5.8891636C15.988099,3.5858327 13.567544,2.0091001 10.760896,2.0091001 7.7688711,2.0091001 5.1979985,3.7902967 4.0345705,6.3461806L1.879,6.3461806C3.1517664,2.6600806,6.6478317,1.3528629E-07,10.760896,0z" Fill="#DDDDDD" Height="150" Stretch="Uniform" Width="150" />
                         </Grid>
-                        <TextBlock FontSize="72" Foreground="#FFDDDDDD" HorizontalAlignment="Center" Text="{DynamicResource MainWindow_pleaseSync}" VerticalAlignment="Center" />
+                        <TextBlock FontSize="72" Foreground="#DDDDDD" HorizontalAlignment="Center" Text="{DynamicResource MainWindow_pleaseSync}" VerticalAlignment="Center" />
                         <!-- [Example]
                             <Grid Height="80" Margin="0,0,0,5">
                                 <Grid.ColumnDefinitions>
@@ -194,8 +194,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle />
                                 <Image HorizontalAlignment="Stretch" Source="Resources/NoThumbnail.png" VerticalAlignment="Stretch" Grid.Column="2" />
-                                <TextBlock FontFamily="Segoe UI" FontSize="28" Foreground="#FF555555" Height="36" HorizontalAlignment="Left" Text="Sample" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="4" />
-                                <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Margin="0,38,0,0" Text="Sample" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="4" />
+                                <TextBlock FontFamily="Segoe UI" FontSize="28" Foreground="#555555" Height="36" HorizontalAlignment="Left" Text="Sample" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="4" />
+                                <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#008136" HorizontalAlignment="Left" Margin="0,38,0,0" Text="Sample" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="4" />
                                 <CheckBox Content="Sample" HorizontalAlignment="Left" IsChecked="True" IsEnabled="False" Margin="0,62,0,0" VerticalAlignment="Top" Grid.Column="4" />
                             </Grid>   -->
                     </StackPanel>
@@ -207,14 +207,14 @@
                         <RowDefinition Height="65" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border BorderBrush="#F6F6F6" BorderThickness="0,0,0,1" Margin="10,0,10,0" Grid.ColumnSpan="2">
+                    <Border BorderBrush="#F6F6F6" BorderThickness="0,0,0,1" Margin="10,0" Grid.ColumnSpan="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <ProgressBar x:Name="Importer_Progress" Height="39" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Visibility="Hidden" Width="{Binding ActualWidth, ElementName=TabberItem_Import_Grid, Mode=OneWay}" Grid.ColumnSpan="2" />
-                            <TextBlock x:Name="Importer_Info" FontSize="18" Foreground="#FFDDDDDD" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top">Exporter</TextBlock>
+                            <ProgressBar x:Name="Importer_Progress" Margin="-10,0" Grid.ColumnSpan="2" Height="Auto" Visibility="Hidden" />
+                            <TextBlock x:Name="Importer_Info" FontSize="18" Foreground="#DDDDDD" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Center">Exporter</TextBlock>
                             <StackPanel Grid.Column="1">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <Button x:Name="Importer_Cancel" Content="{DynamicResource MainWindow_cancel}" FontSize="16" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="15,6" VerticalAlignment="Top" />
@@ -242,14 +242,14 @@
                             <!-- [Example]                            
                                  <Grid>
                                      <Rectangle />
-                                     <TextBlock FontFamily="Segoe UI" FontSize="36" Foreground="#FF555555" Height="48" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" />
-                                     <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+                                     <TextBlock FontFamily="Segoe UI" FontSize="36" Foreground="#555555" Height="48" HorizontalAlignment="Left" Margin="25,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" />
+                                     <TextBlock FontFamily="Segoe UI Light" FontSize="14" Foreground="#008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="25,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
                                      <CheckBox HorizontalAlignment="Left" IsChecked="True" IsEnabled="False" Margin="25,72,0,0" VerticalAlignment="Top" Content="Installed?" />
                                      <CheckBox Content="Download and install" HorizontalAlignment="Right" IsChecked="True" IsThreeState="True" Margin="0,10,5,0" VerticalAlignment="Top" />
                                  </Grid> -->
                         </StackPanel>
                     </ScrollViewer>
-                    <TextBlock x:Name="Importer_DownloadMirrorInfo" Cursor="Hand" Foreground="#FFDDDDDD" HorizontalAlignment="Right" Margin="0,0,25,0" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" />
+                    <TextBlock x:Name="Importer_DownloadMirrorInfo" Cursor="Hand" Foreground="#DDDDDD" HorizontalAlignment="Right" Margin="0,0,25,0" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabberItem_Export" Header="{DynamicResource MainWindow_export}"  Visibility="Collapsed">
@@ -274,8 +274,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Fill="#3498db" VerticalAlignment="Stretch" />
                                 <Image Margin="5,0,0,0" Source="Resources/NoThumbnail.png" Grid.Column="1" />
-                                <TextBlock FontFamily="Segoe UI" FontSize="22" Foreground="#FF555555" Height="30" HorizontalAlignment="Left" Margin="15,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" />
-                                <TextBlock FontFamily="Segoe UI Light" FontSize="12" Foreground="#FF008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="15,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" />
+                                <TextBlock FontFamily="Segoe UI" FontSize="22" Foreground="#555555" Height="30" HorizontalAlignment="Left" Margin="15,0,0,0" Text="NAME" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" />
+                                <TextBlock FontFamily="Segoe UI Light" FontSize="12" Foreground="#008136" HorizontalAlignment="Left" Text="ID | Artist" Margin="15,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" />
                                 <CheckBox Content="Select to Export" HorizontalAlignment="Right" IsChecked="True" IsThreeState="True" Margin="0,10,5,0" VerticalAlignment="Top" Grid.Column="2" />
                             </Grid> -->
                         </StackPanel>
@@ -283,7 +283,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <StatusBar x:Name="StatusBar" Background="#FF27AE60" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="{Binding ActualWidth, ElementName=Grid, Mode=OneWay}" Grid.Row="3">
+        <StatusBar x:Name="StatusBar" Background="#27AE60" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="{Binding ActualWidth, ElementName=Grid, Mode=OneWay}" Grid.Row="3">
             <Grid Width="{Binding ActualWidth, ElementName=StatusBar, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
                     <Label x:Name="TextBlock_Sync_LastUpdate" Content="{DynamicResource MainWindow_lastSyncNever}" Foreground="{Binding Foreground, ElementName=StatusBar}" Tag="Never" />
@@ -296,7 +296,7 @@
                 </StackPanel>
             </Grid>
         </StatusBar>
-        <Grid x:Name="Overlay" Background="#FF27AE60" Visibility="Hidden" Grid.RowSpan="4">
+        <Grid x:Name="Overlay" Background="#27AE60" Visibility="Hidden" Grid.RowSpan="4">
             <TextBlock x:Name="Overlay_Title" FontSize="48" Foreground="White" HorizontalAlignment="Center" Text="{DynamicResource MainWindow_welcomeToOsuSync}" VerticalAlignment="Center" />
             <TextBlock x:Name="Overlay_Caption" FontSize="18" Foreground="White" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Center" />
         </Grid>

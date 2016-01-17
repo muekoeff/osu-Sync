@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <TextBlock FontSize="48" Foreground="#FF27AE60" Height="64" Text="{DynamicResource MainWindow_settings}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" />
+        <TextBlock FontSize="48" Foreground="#27AE60" Height="64" Text="{DynamicResource MainWindow_settings}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" />
         <Grid Margin="5,0,5,10" Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
@@ -33,9 +33,9 @@
         </Grid>
         <TabControl x:Name="Tabber" Margin="0,64,0,0" Grid.Column="1" Grid.Row="0">
             <TabItem Header="{DynamicResource WindowSettings_general}">
-                <ScrollViewer Background="#FFE5E5E5">
+                <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock x:Name="TextBlock_WarnNotElevated" Foreground="#FFAAAAAA" Margin="0,0,0,5" Text="{DynamicResource WindowSettings_warnNotElevated}" TextAlignment="Center" />
+                        <TextBlock x:Name="TextBlock_WarnNotElevated" Foreground="#AAAAAA" Margin="0,0,0,5" Text="{DynamicResource WindowSettings_warnNotElevated}" TextAlignment="Center" />
                         <Expander Header="{DynamicResource WindowSettings_general}" Margin="0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckBox_Tool_SyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" />
@@ -127,7 +127,7 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="osu!">
-                <ScrollViewer Background="#FFE5E5E5">
+                <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
                         <TextBlock Text="{DynamicResource WindowSettings_pathToOsu}" />
                         <TextBox x:Name="TextBox_osu_Path" Height="23" />
@@ -144,20 +144,20 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="{DynamicResource WindowSettings_notifications}">
-                <ScrollViewer Background="#FFE5E5E5">
+                <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_updater}" />
+                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_updater}" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="{DynamicResource WindowSettings_api}">
-                <ScrollViewer Background="#FFE5E5E5">
+                <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
                         <TextBlock Text="{DynamicResource WindowSettings_apiIntro}" TextWrapping="Wrap" />
                         <Button x:Name="Button_Api_Request" Content="{DynamicResource WindowSettings_apiRequest}" FontSize="12" Margin="0,10,0,0" />
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_activation}" Margin="0,15,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_activation}" Margin="0,15,0,0" />
                         <TextBlock Text="{DynamicResource WindowSettings_apiKey}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -167,15 +167,15 @@
                             <TextBox x:Name="TextBox_Api_ApiKey" Height="23" />
                             <Button x:Name="Button_Api_ApiKey_Validate" Content="{DynamicResource WindowSettings_validate}" FontSize="12" Margin="5,0,0,0" Grid.Column="1" />
                         </Grid>
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_configuration}" Margin="0,15,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_configuration}" Margin="0,15,0,0" />
                         <CheckBox x:Name="CheckBox_Api_EnableInBeatmapPanel" Content="{DynamicResource WindowSettings_EnableApiInBeatmapPanel}" Margin="0,5,0,0" />
-                        <TextBlock FontSize="24" Foreground="#FF555555" Text="{DynamicResource WindowSettings_monitoring}" Margin="0,15,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_monitoring}" Margin="0,15,0,0" />
                         <Button x:Name="Button_Api_OpenLog" Content="{DynamicResource WindowSettings_openApiLog}" FontSize="12" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="{DynamicResource WindowSettings_feedback}">
-                <ScrollViewer Background="#FFE5E5E5">
+                <ScrollViewer Background="#E5E5E5">
                     <Grid Margin="5">
                         <Button x:Name="Button_Feedback_Prepare" Content="{DynamicResource WindowSettings_prepareForm}" Height="40" />
                         <StackPanel x:Name="StackPanel_Feedback" IsEnabled="False" Margin="0,10,0,0" Visibility="Collapsed">

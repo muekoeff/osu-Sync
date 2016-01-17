@@ -22,9 +22,9 @@
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <ProgressBar x:Name="ProgressBar_Progress" IsIndeterminate="True" Margin="0,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Row="0" Height="10"/>
-        <TextBlock FontSize="48" Foreground="#FF27AE60" Height="64" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"/>
-        <TextBlock x:Name="TextBlock_Header_VersionInfo" Margin="0,55,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Foreground="#FF008136" FontSize="22" FontWeight="SemiBold" Grid.Column="1" HorizontalAlignment="Left" Height="29" Grid.Row="0" />
-        <TextBlock x:Name="TextBlock_Status" FontSize="20" FontWeight="SemiBold" Foreground="#FF222222" Margin="0,95,0,0" Text="{DynamicResource WindowUpdater_pleaseWaitCheckingForUpdates}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" />
+        <TextBlock FontSize="48" Foreground="#27AE60" Height="64" Text="{DynamicResource WindowSettings_updater}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"/>
+        <TextBlock x:Name="TextBlock_Header_VersionInfo" FontSize="22" FontWeight="SemiBold" Foreground="#008136" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Height="29" Grid.Row="0">...</TextBlock>
+        <TextBlock x:Name="TextBlock_Status" FontSize="20" FontWeight="SemiBold" Foreground="#222222" Margin="0,95,0,0" Text="{DynamicResource WindowUpdater_pleaseWaitCheckingForUpdates}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" />
         <Grid Margin="0,0,0,10" Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
