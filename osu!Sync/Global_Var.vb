@@ -54,6 +54,7 @@ Module Global_Var
     Public Setting_Tool_Update_DeleteFileAfter As Boolean = True
     Public Setting_Tool_Update_SavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
     Public Setting_Tool_Update_UseDownloadPatcher As Boolean = True
+    Public Setting_Messages_Importer_AskOsu As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
     Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
 
@@ -301,6 +302,7 @@ Module Global_Var
                 .Add("Setting_Tool_Update_DeleteFileAfter", CStr(Setting_Tool_Update_DeleteFileAfter))
                 .Add("Setting_Tool_Update_SavePath", CStr(Setting_Tool_Update_SavePath))
                 .Add("Setting_Tool_Update_UseDownloadPatcher", CStr(Setting_Tool_Update_UseDownloadPatcher))
+                .Add("Setting_Messages_Importer_AskOsu", CStr(Setting_Messages_Importer_AskOsu))
                 .Add("Setting_Messages_Updater_OpenUpdater", CStr(Setting_Messages_Updater_OpenUpdater))
                 .Add("Setting_Messages_Updater_UnableToCheckForUpdates", CStr(Setting_Messages_Updater_UnableToCheckForUpdates))
             End With
@@ -336,6 +338,7 @@ Module Global_Var
             If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then Setting_Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
             If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then Setting_Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
             If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then Setting_Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
+            If Not ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu") Is Nothing Then Setting_Messages_Importer_AskOsu = CBool(ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu"))
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
             If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then Setting_Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
             Action_CheckCompatibility(PreviousVersion)
@@ -376,10 +379,10 @@ Module Global_Var
                  .Code = "fr_FR",
                  .DisplayName = "Français",
                  .DisplayName_English = "French"})
-            '.Add("hu", New Language With {     |   Not ready for release
-            '     .Code = "hu_HU",
-            '     .DisplayName = "Français",
-            '     .DisplayName_English = "French"})
+            .Add("hu", New Language With {
+                .Code = "hu_HU",
+                .DisplayName = "Magyar",
+                .DisplayName_English = "Hungarian"})
             .Add("id", New Language With {
                 .Code = "id_ID",
                 .DisplayName = "Bahasa Indonesia",

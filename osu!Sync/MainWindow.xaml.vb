@@ -1856,7 +1856,7 @@ Class MainWindow
                      _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString) & vbNewLine & vbNewLine &
                 _e("MainWindow_pressF5"))
 
-        If Not Process.GetProcessesByName("osu!").Count > 0 AndAlso MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
+        If Setting_Messages_Importer_AskOsu AndAlso Not Process.GetProcessesByName("osu!").Count > 0 AndAlso MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
         Button_SyncDo.IsEnabled = True
         Importer_Cancel.IsEnabled = True
     End Sub

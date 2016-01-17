@@ -146,7 +146,9 @@
             <TabItem Header="{DynamicResource WindowSettings_notifications}">
                 <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_updater}" />
+                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_importDownload}" />
+                        <CheckBox x:Name="CheckBox_Messages_Importer_AskOsu" Content="{DynamicResource WindowSettings_importerAskOsu}" Margin="0,5,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_updater}" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
                         <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
                     </StackPanel>

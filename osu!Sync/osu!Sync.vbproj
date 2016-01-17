@@ -160,10 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <None Include="Languages\hu_HU.xaml">
+    <Page Include="Languages\hu_HU.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </None>
+    </Page>
     <Page Include="Languages\id_ID.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

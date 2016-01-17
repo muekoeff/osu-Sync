@@ -69,6 +69,7 @@ Public Class Window_Settings
         Setting_Tool_Update_SavePath = TextBox_Tool_Update_Path.Text
         Setting_Tool_Update_DeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
         Setting_Tool_Update_UseDownloadPatcher = CBool(CheckBox_Tool_Update_UseDownloadPatcher.IsChecked)
+        Setting_Messages_Importer_AskOsu = CBool(CheckBox_Messages_Importer_AskOsu.IsChecked)
         Setting_Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
         Setting_Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
         Action_SaveSettings()
@@ -415,6 +416,7 @@ Public Class Window_Settings
         End If
 
         CheckBox_Api_EnableInBeatmapPanel.IsChecked = Setting_Api_Enabled_BeatmapPanel
+        CheckBox_Messages_Importer_AskOsu.IsChecked = Setting_Messages_Importer_AskOsu
         CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
         CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
         CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
