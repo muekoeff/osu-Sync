@@ -332,6 +332,12 @@
   <ItemGroup>
     <Resource Include="Resources\NoThumbnail.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DownloadThumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ProgressThumbnail.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>"$(DevEnvDir)Tools\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)Icons</PostBuildEvent>

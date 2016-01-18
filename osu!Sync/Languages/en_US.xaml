@@ -53,6 +53,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Download mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Downloading %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Downloading</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Do you want to check which beatmap sets are affected?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Do you want to fix that?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Do you want to start osu! now?</system:String>

@@ -6,7 +6,7 @@ Imports Newtonsoft.Json.Linq
 Public Class Window_Updater
     Private WithEvents Client As New WebClient
     Private DownloadMode As DownloadModes = DownloadModes.Info
-    Private Update_DownloadPatcherToPath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater\UpdatePatcher.exe"
+    Private Update_DownloadPatcherToPath As String = I__Path_Temp & "\Updater\UpdatePatcher.exe"
     Private Update_DownloadToPath As String
     Private Update_FileName As String
     Private Update_Path As String

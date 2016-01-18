@@ -28,7 +28,7 @@ Public Class Beatmap
     Public Property Title As String
 End Class
 
-Public Class BeatmapPanelDetails
+Public Class BmDPDetails
     Public Property Artist As String = "Unknown"
     Public Property Creator As String = "Unknown"
     Public Property IsUnplayed As Boolean = True
@@ -67,12 +67,13 @@ End Class
 Public Class Importer
     Public Class TagData
         Property Beatmap As Beatmap
-        Property UI_Checkbox_IsInstalled As CheckBox
-        Property UI_Grid As Grid
+        Property IsInstalled As Boolean
+        Property UI_Checkbox_IsSelected As CheckBox
         Property UI_DecoBorderLeft As Rectangle
+        Property UI_Grid As Grid
         Property UI_TextBlock_Title As TextBlock
         Property UI_TextBlock_Caption As TextBlock
-        Property UI_Checkbox_IsSelected As CheckBox
+        Property UI_Thumbnail As Image
     End Class
 
     Public BeatmapList_Tag_ToInstall As New List(Of TagData)
@@ -419,7 +420,7 @@ Class MainWindow
         Else
             Exit Sub
         End If
-        Interface_ShowBmDP(Csender_Bm.ID, New BeatmapPanelDetails With {
+        Interface_ShowBmDP(Csender_Bm.ID, New BmDPDetails With {
                            .Artist = Csender_Bm.Artist,
                            .Creator = Csender_Bm.Creator,
                            .IsUnplayed = Csender_Bm.IsUnplayed,
@@ -649,11 +650,11 @@ Class MainWindow
                     Grid.SetColumn(UI_Checkbox_IsInstalled, 4)
 
                     With UI_Grid.Children
+                        .Add(UI_Checkbox_IsInstalled)
                         .Add(UI_DecoBorderLeft)
-                        .Add(UI_Thumbnail)
                         .Add(UI_TextBlock_Title)
                         .Add(UI_TextBlock_Caption)
-                        .Add(UI_Checkbox_IsInstalled)
+                        .Add(UI_Thumbnail)
                     End With
                     BeatmapWrapper.Children.Add(UI_Grid)
                 Next
@@ -718,46 +719,94 @@ Class MainWindow
 
                     Dim Check_IfInstalled As Boolean
                     If Sync_BeatmapList_ID_Installed.Contains(SelectedBeatmap.ID) Then Check_IfInstalled = True Else Check_IfInstalled = False
-                    Dim UI_Checkbox_IsInstalled = New CheckBox With {
-                        .Content = _e("MainWindow_isInstalled"),
-                        .HorizontalAlignment = HorizontalAlignment.Left,
-                        .IsChecked = Check_IfInstalled,
-                        .IsEnabled = False,
-                        .Margin = New Thickness(10, 62, 0, 0),
-                        .VerticalAlignment = VerticalAlignment.Top}
 
-                    Dim UI_Grid = New Grid()
+                    Dim UI_Grid = New Grid() With {
+                        .Height = 51,
+                        .Margin = New Thickness(0, 0, 0, 5),
+                        .Width = Double.NaN}
 
-                    Dim UI_DecoBorderLeft = New Rectangle
+                    With UI_Grid.ColumnDefinitions
+                        .Add(New ColumnDefinition With {
+                            .Width = New GridLength(10)})
+                        .Add(New ColumnDefinition With {
+                            .Width = New GridLength(73)})
+                        .Add(New ColumnDefinition)
+                    End With
+
+                    Dim UI_DecoBorderLeft = New Rectangle With {
+                        .Fill = StandardColors.GreenLight,
+                        .VerticalAlignment = VerticalAlignment.Stretch}
                     If Check_IfInstalled Then UI_DecoBorderLeft.Fill = StandardColors.GreenLight Else UI_DecoBorderLeft.Fill = StandardColors.RedLight
+
+                    Dim UI_Thumbnail = New Image With {
+                        .Cursor = Cursors.Hand,
+                        .HorizontalAlignment = HorizontalAlignment.Stretch,
+                        .Margin = New Thickness(5, 0, 0, 0),
+                        .VerticalAlignment = VerticalAlignment.Stretch}
+                    Grid.SetColumn(UI_Thumbnail, 1)
+
+                    Dim ThumbPath As String = ""
+                    If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                        ThumbPath = (Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg")
+                    ElseIf File.Exists(I__Path_Temp & "\ThumbCache\" & SelectedBeatmap.ID & ".jpg") Then
+                        ThumbPath = (I__Path_Temp & "\ThumbCache\" & SelectedBeatmap.ID & ".jpg")
+                    End If
+
+                    If Not ThumbPath = "" Then
+                        Try
+                            With UI_Thumbnail
+                                .Source = New BitmapImage(New Uri(ThumbPath))
+                                .ToolTip = _e("MainWindow_openBeatmapDetailPanel")
+                            End With
+                            AddHandler(UI_Thumbnail.MouseDown), AddressOf Action_OpenBmDP
+                        Catch ex As NotSupportedException
+                            With UI_Thumbnail
+                                .Source = New BitmapImage(New Uri("Resources/DownloadThumbnail.png", UriKind.Relative))
+                                .ToolTip = _e("MainWindow_downladThumbnail")
+                            End With
+                            AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf Importer_DownloadThumb
+                            AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
+                        End Try
+                    Else
+                        With UI_Thumbnail
+                            .Source = New BitmapImage(New Uri("Resources/DownloadThumbnail.png", UriKind.Relative))
+                            .ToolTip = _e("MainWindow_downladThumbnail")
+                        End With
+                        AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf Importer_DownloadThumb
+                        AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
+                    End If
 
                     Dim UI_TextBlock_Title = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI"),
-                        .FontSize = 28,
+                        .FontSize = 22,
                         .Foreground = StandardColors.GrayDark,
-                        .Height = 36,
+                        .Height = 30,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
                         .Text = SelectedBeatmap.Title,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
+                    Grid.SetColumn(UI_TextBlock_Title, 2)
 
                     Dim UI_TextBlock_Caption = New TextBlock With {
                         .FontFamily = New FontFamily("Segoe UI Light"),
-                        .FontSize = 14,
+                        .FontSize = 12,
                         .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
-                        .Margin = New Thickness(10, 38, 0, 0),
+                        .Margin = New Thickness(10, 30, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
+                    Grid.SetColumn(UI_TextBlock_Caption, 2)
                     If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_downloadAndInstall"),
                         .HorizontalAlignment = HorizontalAlignment.Right,
+                        .IsChecked = True,
                         .Margin = New Thickness(10, 5, 0, 0),
                         .VerticalAlignment = VerticalAlignment.Top}
+                    Grid.SetColumn(UI_Checkbox_IsSelected, 2)
                     If Check_IfInstalled Then
                         With UI_Checkbox_IsSelected
                             .IsChecked = False
@@ -774,22 +823,23 @@ Class MainWindow
 
                     Dim TagData As New Importer.TagData With {
                         .Beatmap = SelectedBeatmap,
-                        .UI_Checkbox_IsInstalled = UI_Checkbox_IsInstalled,
+                        .IsInstalled = Check_IfInstalled,
                         .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
                         .UI_DecoBorderLeft = UI_DecoBorderLeft,
                         .UI_Grid = UI_Grid,
                         .UI_TextBlock_Caption = UI_TextBlock_Caption,
-                        .UI_TextBlock_Title = UI_TextBlock_Title}
+                        .UI_TextBlock_Title = UI_TextBlock_Title,
+                        .UI_Thumbnail = UI_Thumbnail}
 
                     If Check_IfInstalled = False Then ImporterContainer.BeatmapList_Tag_ToInstall.Add(TagData)
                     UI_Grid.Tag = TagData
 
                     With UI_Grid.Children
+                        .Add(UI_Checkbox_IsSelected)
                         .Add(UI_DecoBorderLeft)
                         .Add(UI_TextBlock_Title)
                         .Add(UI_TextBlock_Caption)
-                        .Add(UI_Checkbox_IsInstalled)
-                        .Add(UI_Checkbox_IsSelected)
+                        .Add(UI_Thumbnail)
                     End With
                     ImporterWrapper.Children.Add(UI_Grid)
                     ImporterContainer.BeatmapsTotal += 1
@@ -860,7 +910,6 @@ Class MainWindow
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 2)
-
                     If Not SelectedBeatmap.ID = -1 Then UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelectedBeatmap.Artist
                     If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
 
@@ -892,7 +941,8 @@ Class MainWindow
                         .UI_DecoBorderLeft = UI_DecoBorderLeft,
                         .UI_Grid = UI_Grid,
                         .UI_TextBlock_Caption = UI_TextBlock_Caption,
-                        .UI_TextBlock_Title = UI_TextBlock_Title}
+                        .UI_TextBlock_Title = UI_TextBlock_Title,
+                        .UI_Thumbnail = UI_Thumbnail}
 
                     Exporter_BeatmapList_Tag_Selected.Add(TagData)
 
@@ -1025,7 +1075,7 @@ Class MainWindow
         End With
     End Sub
 
-    Sub Interface_ShowBmDP(ID As Integer, Details As BeatmapPanelDetails)
+    Sub Interface_ShowBmDP(ID As Integer, Details As BmDPDetails)
         BeatmapDetails_Artist.Text = Details.Artist
         BeatmapDetails_BeatmapListing.Tag = ID
         BeatmapDetails_Creator.Text = Details.Creator
@@ -1064,9 +1114,15 @@ Class MainWindow
         End Select
 
         ' Thumbnail
+        Dim ThumbPath As String = ""
         If File.Exists(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg") Then
+            ThumbPath = (Setting_osu_Path & "\Data\bt\" & ID & "l.jpg")
+        ElseIf File.Exists(I__Path_Temp & "\ThumbCache\" & ID & ".jpg") Then
+            ThumbPath = (I__Path_Temp & "\ThumbCache\" & ID & ".jpg")
+        End If
+        If Not ThumbPath = "" Then
             Try
-                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg"))
+                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(ThumbPath))
             Catch ex As NotSupportedException
                 BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
             End Try
@@ -1133,7 +1189,7 @@ Class MainWindow
         Action_Tool_ApplySettings()
 
         ' Delete old downloaded beatmaps
-        If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload", True)
+        If Directory.Exists(I__Path_Temp & "\BeatmapDownload") Then Directory.Delete(I__Path_Temp & "\BeatmapDownload", True)
 
         ' Check For Updates
         Select Case Setting_Tool_CheckForUpdates
@@ -1725,8 +1781,6 @@ Class MainWindow
             .UI_Checkbox_IsSelected.IsEnabled = False
             .UI_Checkbox_IsSelected.IsThreeState = False
             .UI_Checkbox_IsSelected.IsChecked = Nothing
-            .UI_Checkbox_IsInstalled.IsThreeState = True
-            .UI_Checkbox_IsInstalled.IsChecked = Nothing
         End With
 
         Importer_UpdateInfo(_e("MainWindow_fetching1"))
@@ -1741,6 +1795,7 @@ Class MainWindow
                 ImporterContainer.BeatmapList_Tag_Failed.Add(ImporterContainer.BeatmapList_Tag_ToInstall.First)
                 ImporterContainer.BeatmapList_Tag_ToInstall.Remove(ImporterContainer.BeatmapList_Tag_ToInstall.First)
                 Importer_Downloader_ToNextDownload()
+                Exit Sub
             Else    ' No
                 ImporterContainer.BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
                 Importer_Info.Text = _e("MainWindow_installing")
@@ -1750,7 +1805,7 @@ Class MainWindow
 
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
-                For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+                For Each FilePath In Directory.GetFiles(I__Path_Temp & "\BeatmapDownload")
                     File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
                 Next
                 With Importer_Progress
@@ -1785,27 +1840,70 @@ Class MainWindow
         TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(ImporterContainer.BeatmapList_Tag_ToInstall.First.Beatmap.ID))
         Importer_UpdateInfo(_e("MainWindow_downloading1"))
         Importer_Progress.IsIndeterminate = False
-        AddHandler ImporterContainer.Downloader.DownloadFileCompleted, AddressOf Importer_Downloader_DownloadFileCompleted
-        AddHandler ImporterContainer.Downloader.DownloadProgressChanged, AddressOf Importer_Downloader_DownloadProgressChanged
-        ImporterContainer.Downloader.DownloadFileAsync(New Uri(RequestURI), (Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & ImporterContainer.CurrentFileName))
+        ImporterContainer.Downloader.DownloadFileAsync(New Uri(RequestURI), (I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName))
     End Sub
 
     Sub Importer_DownloadMirrorInfo_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles Importer_DownloadMirrorInfo.MouseDown
         Process.Start(Application_Mirrors(Setting_Tool_DownloadMirror).WebURL)
     End Sub
 
+    Sub Importer_DownloadThumb(sender As Object, e As MouseButtonEventArgs)
+        Dim Csender As Image = CType(sender, Image)
+        Dim Cparent As Grid = CType(Csender.Parent, Grid)
+        Dim Csender_Bm As Importer.TagData = CType(Cparent.Tag, Importer.TagData)
+
+        Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/ProgressThumbnail.png", UriKind.Relative))
+        RemoveHandler(Csender_Bm.UI_Thumbnail.MouseLeftButtonUp), AddressOf Importer_DownloadThumb
+        RemoveHandler(Csender_Bm.UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
+        AddHandler(Csender_Bm.UI_Thumbnail.MouseDown), AddressOf Action_OpenBmDP
+        If Not Directory.Exists(I__Path_Temp & "\ThumbCache") Then Directory.CreateDirectory(I__Path_Temp & "\ThumbCache")
+        Dim ThumbClient As New WebClient
+        AddHandler ThumbClient.DownloadFileCompleted, AddressOf Importer_DownloadThumbCompleted
+        ThumbClient.DownloadFileAsync(New Uri("https://b.ppy.sh/thumb/" & Csender_Bm.Beatmap.ID & ".jpg"), I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg", Csender_Bm)
+    End Sub
+
+    Sub Importer_DownloadThumbCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs)
+        Dim Csender_Bm As Importer.TagData = CType(e.UserState, Importer.TagData)
+        If File.Exists(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg") AndAlso My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg").Length >= 10 Then
+            Try
+                With Csender_Bm.UI_Thumbnail
+                    .Source = New BitmapImage(New Uri(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg"))
+                    .ToolTip = _e("MainWindow_openBeatmapDetailPanel")
+                End With
+            Catch ex As NotSupportedException
+                Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+            End Try
+        ElseIf My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg").Length <= 10 Then
+            File.Delete(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg")
+            Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+        Else
+            Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+        End If
+    End Sub
+
     Sub Importer_Downloader_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs)
         ImporterContainer.Counter += 1
-        If My.Computer.FileSystem.GetFileInfo(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & ImporterContainer.CurrentFileName).Length <= 3000 Then     ' Detect "Beatmap Not Found" pages
+        If File.Exists(I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName) Then
+            If My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName).Length <= 3000 Then     ' Detect "Beatmap Not Found" pages
+                ' File Empty
+                ImporterContainer.BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
+                Try
+                    File.Delete(I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName)
+                Catch ex As IOException
+                End Try
+                ImporterContainer.BeatmapList_Tag_Failed.Add(ImporterContainer.BeatmapList_Tag_ToInstall.First)
+                ImporterContainer.BeatmapList_Tag_ToInstall.Remove(ImporterContainer.BeatmapList_Tag_ToInstall.First)
+                Importer_Downloader_ToNextDownload()
+            Else    ' File Normal
+                ImporterContainer.BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.PurpleDark
+                ImporterContainer.BeatmapList_Tag_Done.Add(ImporterContainer.BeatmapList_Tag_ToInstall.First)
+                ImporterContainer.BeatmapList_Tag_ToInstall.Remove(ImporterContainer.BeatmapList_Tag_ToInstall.First)
+                Importer_Downloader_ToNextDownload()
+            End If
+        Else
             ' File Empty
             ImporterContainer.BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
-            If File.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & ImporterContainer.CurrentFileName) Then File.Delete(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload\" & ImporterContainer.CurrentFileName)
             ImporterContainer.BeatmapList_Tag_Failed.Add(ImporterContainer.BeatmapList_Tag_ToInstall.First)
-            ImporterContainer.BeatmapList_Tag_ToInstall.Remove(ImporterContainer.BeatmapList_Tag_ToInstall.First)
-            Importer_Downloader_ToNextDownload()
-        Else    ' File Normal
-            ImporterContainer.BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.PurpleDark
-            ImporterContainer.BeatmapList_Tag_Done.Add(ImporterContainer.BeatmapList_Tag_ToInstall.First)
             ImporterContainer.BeatmapList_Tag_ToInstall.Remove(ImporterContainer.BeatmapList_Tag_ToInstall.First)
             Importer_Downloader_ToNextDownload()
         End If
@@ -1820,7 +1918,7 @@ Class MainWindow
         Importer_UpdateInfo(_e("MainWindow_installing"))
         TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
-        For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+        For Each FilePath In Directory.GetFiles(I__Path_Temp & "\BeatmapDownload")
             If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Else File.Delete(FilePath)
         Next
         With Importer_Progress
@@ -1832,7 +1930,7 @@ Class MainWindow
         Importer_UpdateInfo(_e("MainWindow_finished"))
 
         If ImporterContainer.BeatmapList_Tag_Failed.Count > 0 Then
-            Dim Failed As String = "======   " & _e("MainWindow_downloadFailed") & "   =====" & vbNewLine & _e("MainWindow_cantDownload") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":"
+            Dim Failed As String = "======   " & _e("MainWindow_downloadFailed") & "   =====" & vbNewLine & _e("MainWindow_cantDownload") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ": "
             For Each _Selection As Importer.TagData In ImporterContainer.BeatmapList_Tag_Failed
                 Failed += vbNewLine & "• " & _Selection.Beatmap.ID.ToString & " | " & _Selection.Beatmap.Artist & " | " & _Selection.Beatmap.Title
             Next
@@ -1867,7 +1965,7 @@ Class MainWindow
 
     Sub Importer_Downloader_ToNextDownload()
         If ImporterContainer.BeatmapList_Tag_ToInstall.Count > 0 Then
-            If Not Setting_Tool_Importer_AutoInstallCounter = 0 And Setting_Tool_Importer_AutoInstallCounter <= ImporterContainer.Counter Then
+            If Not Setting_Tool_Importer_AutoInstallCounter = 0 And Setting_Tool_Importer_AutoInstallCounter <= ImporterContainer.Counter Then  ' Install file if necessary
                 ImporterContainer.Counter = 0
                 With Importer_Progress
                     .IsIndeterminate = True
@@ -1876,9 +1974,13 @@ Class MainWindow
                 Importer_UpdateInfo(_e("MainWindow_installing"))
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
-                For Each FilePath In Directory.GetFiles(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+                For Each FilePath In Directory.GetFiles(I__Path_Temp & "\BeatmapDownload")
                     If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
-                        File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                        Try
+                            File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                        Catch ex As IOException
+                            MsgBox("Unable to install beatmap '" & Path.GetFileName(FilePath) & "'.", MsgBoxStyle.Critical, "Debug | osu!Sync")
+                        End Try
                     Else
                         File.Delete(FilePath)
                     End If
@@ -1892,7 +1994,8 @@ Class MainWindow
 
     Sub Importer_HideInstalled_Checked(sender As Object, e As RoutedEventArgs) Handles Importer_HideInstalled.Checked
         For Each _Selection As Grid In ImporterWrapper.Children
-            If CType(_Selection.Tag, Importer.TagData).UI_Checkbox_IsInstalled.IsChecked Then
+            Dim TEMP As Importer.TagData = CType(_Selection.Tag, Importer.TagData)
+            If CType(_Selection.Tag, Importer.TagData).IsInstalled Then
                 _Selection.Visibility = Visibility.Collapsed
             End If
         Next
@@ -1905,12 +2008,15 @@ Class MainWindow
     End Sub
 
     Sub Importer_Init()
+        AddHandler ImporterContainer.Downloader.DownloadFileCompleted, AddressOf Importer_Downloader_DownloadFileCompleted
+        AddHandler ImporterContainer.Downloader.DownloadProgressChanged, AddressOf Importer_Downloader_DownloadProgressChanged
+
         If Tool_HasWriteAccessToOsu Then
             Button_SyncDo.IsEnabled = False
             Importer_Run.IsEnabled = False
             Importer_Cancel.IsEnabled = False
             Importer_Progress.Visibility = Visibility.Visible
-            If Not Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload") Then Directory.CreateDirectory(Path.GetTempPath() & "naseweis520\osu!Sync\BeatmapDownload")
+            If Not Directory.Exists(I__Path_Temp & "\BeatmapDownload") Then Directory.CreateDirectory(I__Path_Temp & "\BeatmapDownload")
             Importer_DownloadBeatmap()
         Else
             If MessageBox.Show(_e("MainWindow_requestElevation"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
@@ -1965,16 +2071,20 @@ Class MainWindow
     Sub Importer_UpdateInfo(Optional Title As String = "osu!Sync")
         Importer_Info.Text = Title
         If Title = _e("MainWindow_fetching1") Or Title = _e("MainWindow_downloading1") Or Title = _e("MainWindow_installing") Then
-            Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", ImporterContainer.BeatmapList_Tag_ToInstall.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BeatmapList_Tag_Done.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsFailed").Replace("%0", ImporterContainer.BeatmapList_Tag_Failed.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsLeftOut").Replace("%0", ImporterContainer.BeatmapList_Tag_LeftOut.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", ImporterContainer.BeatmapList_Tag_ToInstall.Count.ToString) &
+                " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BeatmapList_Tag_Done.Count.ToString) &
+                " | " & _e("MainWindow_setsFailed").Replace("%0", ImporterContainer.BeatmapList_Tag_Failed.Count.ToString) &
+                " | " & _e("MainWindow_setsLeftOut").Replace("%0", ImporterContainer.BeatmapList_Tag_LeftOut.Count.ToString) &
+                " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString)
+        ElseIf Title = _e("MainWindow_finished") Then
+            Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BeatmapList_Tag_Done.Count.ToString) &
+                " | " & _e("MainWindow_setsFailed").Replace("%0", ImporterContainer.BeatmapList_Tag_Failed.Count.ToString) &
+                " | " & _e("MainWindow_setsLeftOut").Replace("%0", ImporterContainer.BeatmapList_Tag_LeftOut.Count.ToString) &
+                " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString)
         Else
-            Importer_Info.Text += " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BeatmapList_Tag_Done.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsFailed").Replace("%0", ImporterContainer.BeatmapList_Tag_Failed.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsLeftOut").Replace("%0", ImporterContainer.BeatmapList_Tag_LeftOut.Count.ToString)
-            Importer_Info.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString)
+            Importer_Info.Text += " | " & _e("MainWindow_setsLeft").Replace("%0", ImporterContainer.BeatmapList_Tag_ToInstall.Count.ToString) &
+                " | " & _e("MainWindow_setsLeftOut").Replace("%0", ImporterContainer.BeatmapList_Tag_LeftOut.Count.ToString) &
+                " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString)
         End If
     End Sub
 #End Region

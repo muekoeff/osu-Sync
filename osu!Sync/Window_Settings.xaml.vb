@@ -303,9 +303,9 @@ Public Class Window_Settings
                 Catch ex As IOException
                 End Try
             End If
-            If Directory.Exists(Path.GetTempPath() & "naseweis520\osu!Sync") Then
+            If Directory.Exists(I__Path_Temp) Then
                 Try
-                    Directory.Delete(Path.GetTempPath() & "naseweis520\osu!Sync", True)
+                    Directory.Delete(I__Path_Temp, True)
                 Catch ex As IOException
                 End Try
             End If
@@ -348,7 +348,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_Update_PathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Update_PathDefault.Click
-        TextBox_Tool_Update_Path.Text = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
+        TextBox_Tool_Update_Path.Text = I__Path_Temp & "\Updater"
     End Sub
 
     Private Sub TextBox_Api_ApiKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TextBox_Api_ApiKey.TextChanged

@@ -30,6 +30,7 @@ Module Global_Var
     Public Const I__Path_Web_nw520OsySyncApi As String = "http://api.nw520.de/osuSync/"
     Public Const I__Path_Web_osuApi As String = "https://osu.ppy.sh/api/"
     Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
+    Public I__Path_Temp As String = Path.GetTempPath() & "naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
 
@@ -52,7 +53,7 @@ Module Global_Var
     Public Setting_Tool_SyncOnStartup As Boolean = False
     Public Setting_Tool_RequestElevationOnStartup As Boolean = False
     Public Setting_Tool_Update_DeleteFileAfter As Boolean = True
-    Public Setting_Tool_Update_SavePath As String = Path.GetTempPath() & "naseweis520\osu!Sync\Updater"
+    Public Setting_Tool_Update_SavePath As String = I__Path_Temp & "\Updater"
     Public Setting_Tool_Update_UseDownloadPatcher As Boolean = True
     Public Setting_Messages_Importer_AskOsu As Boolean = True
     Public Setting_Messages_Updater_OpenUpdater As Boolean = True
