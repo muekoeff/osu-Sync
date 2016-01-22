@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -31,7 +32,6 @@
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">Eine neue Version ist verfügbar. -- Aktuell: %0 | Neueste: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmaps</system:String>
-    <system:String x:Key="MainWindow_beatmapsDoesNotExist">Die Beatmap mit der ID %0 existiert nicht.</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 Beatmaps gefunden.</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap-IDs können nur einmal verwendet werden.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 Beatmap-Sets insgesamt eingelesen.</system:String>
@@ -39,6 +39,7 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_Abbrechen</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Verbindung zum Server nicht möglich</system:String>
+    <system:String x:Key="MainWindow_cantDownload">Diese Beatmaps konnten nicht heruntergeladen werden. Mögliche Gründe können sein, dass die Beatmap nicht existiert oder sie nicht von diesem Mirror zur Verfügung gestellt wird.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Prüft auf Updates...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Komprimierte osu!Sync Beatmap-Liste</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Konversion abgebrochen</system:String>
@@ -47,9 +48,9 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Konvertiere gewählte Datei</system:String>
     <system:String x:Key="MainWindow_creator">Ersteller</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_done">Fertig</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Herunterladen and installieren</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Beatmaps herunterladen</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Download fehlgeschlagen</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Download-Mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Lädt %0 herunter...</system:String>
     <system:String x:Key="MainWindow_downloading1">Herunterladen</system:String>
@@ -100,12 +101,14 @@
     <system:String x:Key="MainWindow_fetching1">Ruft ab...</system:String>
     <system:String x:Key="MainWindow_file">_Datei</system:String>
     <system:String x:Key="MainWindow_file404">Kann Datei nicht öffnen. Sie existiert nicht (mehr).</system:String>
+    <system:String x:Key="MainWindow_finished">Fertiggestellt</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">Mindestens ein Ordner konnte nicht eingelesen werden. Er/Sie werden ignoriert.</system:String>
     <system:String x:Key="MainWindow_folders">Ordner</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Generiert Interface...</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">_Hilfe</system:String>
+    <system:String x:Key="MainWindow_hideInstalled">Bereits installierte Beatmaps ausblenden</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID bereits zugewiesen</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Falls dieses Problem weiterbesteht, schicke uns bitte eine Nachricht über den Feedback-Tab in den Einstellungen.</system:String>
@@ -163,6 +166,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Übersprungene Beatmaps</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Einige deiner Beatmap Sets unterscheiden sich vom normalen Format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Einige Beatmap-Sets wurden nicht exportiert.</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Einige Beatmap-Sets wurden nicht importiert.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Sync abgeschlossen</system:String>
     <system:String x:Key="MainWindow_synchronize">Synchronisieren</system:String>
     <system:String x:Key="MainWindow_syncing">Synct...</system:String>
@@ -239,7 +243,6 @@
     <system:String x:Key="WindowSettings_apiIntro">osu!Sync ist in der Lage, zusätzliche Informationen zu Beatmaps über die osu!api (Application Programming Interface / Version 1.0) zu laden. Um Zugang zu erhalten, ist ein API-Schlüssel erforderlich, dies ist ein Weg, um Leute davon abzuhalten, das System zu spammen.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API Schlüssel</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Wenn du keinen API Schlüssel hast, kannst du einen auf der osu! Website anfragen</system:String>
-    <system:String x:Key="WindowSettings_apiRequestPer">%0 API Anfrage(n) pro %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_Anwenden</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Bist du wirklich sicher, dass du die Konfigurationsdatei löschen willst (dies kann nicht rückgängig gemacht werden)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Bist du wirklich sicher, dass du die Konfiguration zurücksetzen möchtest (dies kann nicht rückgängig gemacht werden)?</system:String>
@@ -274,6 +277,7 @@
     <system:String x:Key="WindowSettings_generalFeedback">Generelle Rückmeldung</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Import/Download</system:String>
+    <system:String x:Key="WindowSettings_importerAskOsu">Nachfragen, ob osu! nach dem Import-Vorgang gestartet werden soll</system:String>
     <system:String x:Key="WindowSettings_interface">Benutzeroberfläche</system:String>
     <system:String x:Key="WindowSettings_invalid">Ungültig</system:String>
     <system:String x:Key="WindowSettings_invalidValue">Ungültiger Wert!</system:String>
@@ -385,9 +389,9 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync ist ein kostenloses Tool, welches dir erlaubt osu! Beatmaps zu exportieren und importieren. Du kannst Listen generieren mit denen du deine Beatmaps teilen kannst.</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowWelcome_subtitle">... zu osu!Sync von naseweis520</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... zu osu!Sync.</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Willkommen</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Bitte bedenke, dass dies ein inoffizielles Tool ist. Wir haben nicht mit osu! oder peppy zu tun.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Bitte beachte, dass dies ein inoffizielles, von der Community gemachtes Tool ist, welches von naseweis520 betreut wird. Es steht in keiner Verbindung mit osu! oder peppy.</system:String>
 </ResourceDictionary>

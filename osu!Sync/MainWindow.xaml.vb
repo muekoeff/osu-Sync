@@ -20,7 +20,7 @@ Public Class Beatmap
     Public Property Artist As String = ""
     Public Property Creator As String = "Unknown"
     Public Property ID As Integer
-    Public Property IsUnplayed As Boolean
+    Public Property IsUnplayed As Boolean = True
     Public Property MD5 As String
     Public Property RankedStatus As Byte = Convert.ToByte(1)
     Public Property SongSource As String = ""

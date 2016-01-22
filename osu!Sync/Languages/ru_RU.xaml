@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -31,7 +32,6 @@
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">Доступна новая версия. -- Версия у Вас: %0 | Актуальная: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Карты</system:String>
-    <system:String x:Key="MainWindow_beatmapsDoesNotExist">Карты с номером %0 не существует.</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">У Вас %0 карт.</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Номер карты обязательно должен быть уникальным.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">Обработаны все карты (%0)</system:String>
@@ -39,6 +39,7 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_Прервать</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Не удаётся подключиться к серверу</system:String>
+    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Проверяем обновления...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Сжатый список карт osu!Sync</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Преобразование прервано</system:String>
@@ -47,9 +48,9 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Конвертировать текущий файл</system:String>
     <system:String x:Key="MainWindow_creator">Автор</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_done">Готово</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Скачать и установить</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Скачать карты</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Зеркало</system:String>
     <system:String x:Key="MainWindow_downloading">Скачивание %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Скачивание</system:String>
@@ -100,12 +101,14 @@
     <system:String x:Key="MainWindow_fetching1">Обработка...</system:String>
     <system:String x:Key="MainWindow_file">_Файл</system:String>
     <system:String x:Key="MainWindow_file404">Не удалось открыть файл. Его не существует (больше).</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">Как минимум одна папка не может быть обработана. -- Она(и) будет(ут) пропущены.</system:String>
+    <system:String x:Key="MainWindow_finished">Finished</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">Как минимум одна папка не может быть обработана. Она(и) будет(ут) пропущены.</system:String>
     <system:String x:Key="MainWindow_folders">Папки</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Создание интерфейса...</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">_Справка</system:String>
+    <system:String x:Key="MainWindow_hideInstalled">Hide already installed Beatmaps</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">Номер уже присвоен</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Если эта ошибка повторяется, сообщите об этом через форму обратной связи в настройках.</system:String>
@@ -163,6 +166,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Пропущенные карты</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Некоторые карты не были экспортированы.</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Some beatmap sets hadn't been imported.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Синхронизация завершена</system:String>
     <system:String x:Key="MainWindow_synchronize">Синхронизировать</system:String>
     <system:String x:Key="MainWindow_syncing">Синхронизация...</system:String>
@@ -239,7 +243,6 @@
     <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
     <system:String x:Key="WindowSettings_apiKey">Ключ API</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Если у вас нет ключа API, вы можете запросить его на сайте osu!</system:String>
-    <system:String x:Key="WindowSettings_apiRequestPer">%0 запросов API в %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_Применить</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Вы действительно хотите удалить файл настроек? Это действие нельзя отменить.</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Вы действительно хотите удалить файл настроек? Это действие нельзя отменить.</system:String>
@@ -274,6 +277,7 @@
     <system:String x:Key="WindowSettings_generalFeedback">Отзыв</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Импорт и скачивание</system:String>
+    <system:String x:Key="WindowSettings_importerAskOsu">Ask whether to start osu! after import process</system:String>
     <system:String x:Key="WindowSettings_interface">Интерфейс</system:String>
     <system:String x:Key="WindowSettings_invalid">Некорректно</system:String>
     <system:String x:Key="WindowSettings_invalidValue">Неверное значение.</system:String>
@@ -385,9 +389,9 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync — удобная программа для экспорта и импорта карт, с помощью которой можно делиться установленными картами.</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowWelcome_subtitle">... в osu!Sync от naseweis520</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync.</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Добро пожаловать</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Это неофициальное приложение, и мы никак не связаны ни с osu!, ни с peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
 </ResourceDictionary>

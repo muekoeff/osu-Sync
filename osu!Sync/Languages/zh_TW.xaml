@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -31,7 +32,6 @@
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">有可用的新版本。-- 目前運行： %0 | 最新版本： %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">譜面</system:String>
-    <system:String x:Key="MainWindow_beatmapsDoesNotExist">ID %0 的譜面不存在。</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">找到 %0 張圖</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap ID 只能設定一次。</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">總計解析了 %0 圖組。</system:String>
@@ -39,6 +39,7 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_取消</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">無法連接到伺服器</system:String>
+    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">正在檢查更新...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">已壓縮的 osu!Sync 圖譜清單</system:String>
     <system:String x:Key="MainWindow_conversionAborted">轉換已中止</system:String>
@@ -47,9 +48,9 @@
     <system:String x:Key="MainWindow_convertSelectedFile">轉換選擇的檔案</system:String>
     <system:String x:Key="MainWindow_creator">譜面製作者</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_done">結束</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">下載和安裝</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">下載圖譜(_D)</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">鏡像下載</system:String>
     <system:String x:Key="MainWindow_downloading">下載中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下載中</system:String>
@@ -100,12 +101,14 @@
     <system:String x:Key="MainWindow_fetching1">讀取中...</system:String>
     <system:String x:Key="MainWindow_file">檔案(_F)</system:String>
     <system:String x:Key="MainWindow_file404">無法開啟檔案。它不 (再) 存在。</system:String>
+    <system:String x:Key="MainWindow_finished">Finished</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">無法解析一個或更多資料夾。它 (們) 將被忽略。</system:String>
     <system:String x:Key="MainWindow_folders">資料夾</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成介面......</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">幫助(_H)</system:String>
+    <system:String x:Key="MainWindow_hideInstalled">Hide already installed Beatmaps</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID已分配</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">如果還有問題的話, 請用設定裏面的回饋選項留言給我們。</system:String>
@@ -163,6 +166,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">略過的圖組</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">您的有些圖組不是一般格式。</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">有些圖組無法匯出</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Some beatmap sets hadn't been imported.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">同步已完成</system:String>
     <system:String x:Key="MainWindow_synchronize">同步</system:String>
     <system:String x:Key="MainWindow_syncing">同步中...</system:String>
@@ -239,7 +243,6 @@
     <system:String x:Key="WindowSettings_apiIntro">osu!Sync 能夠從osu!api (應用程式介面 / 版本 1.0) 載入額外的譜面資訊。osu!api需要一個API金鑰來存取，這是為了防止人們濫用該系統。</system:String>
     <system:String x:Key="WindowSettings_apiKey">API 金鑰</system:String>
     <system:String x:Key="WindowSettings_apiRequest">如果您沒有API金鑰，您可以在 osu! 官網上申請一個</system:String>
-    <system:String x:Key="WindowSettings_apiRequestPer">%0 API request(s) per %1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_套用</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">確定真的要刪除設定檔 (不能復原)？</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">您確定真的要重設設定檔 (這是不可復原的)？</system:String>
@@ -274,6 +277,7 @@
     <system:String x:Key="WindowSettings_generalFeedback">一般回饋</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">匯入/下載</system:String>
+    <system:String x:Key="WindowSettings_importerAskOsu">Ask whether to start osu! after import process</system:String>
     <system:String x:Key="WindowSettings_interface">介面</system:String>
     <system:String x:Key="WindowSettings_invalid">無效</system:String>
     <system:String x:Key="WindowSettings_invalidValue">數值無效！</system:String>
@@ -385,9 +389,9 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync 是用來匯出/匯入 osu! 譜面的免費工具。您可以製作方便分享的譜面清單。</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowWelcome_subtitle">... 來到 naseweis520 寫的 osu!Sync</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync.</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">歡迎</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">請記住這是一個非官方的工具。我們不屬於 osu! 或 peppy 的官方團隊。</system:String>
+    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
 </ResourceDictionary>

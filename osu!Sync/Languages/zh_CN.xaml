@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
     <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
@@ -16,7 +17,7 @@
     <system:String x:Key="GlobalVar_extensionBeatmapList">osu!Sync 专用的谱面清单</system:String>
     <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">osu!Sync 专用的谱面压缩清单</system:String>
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated. It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">你的配置文件似乎无效或已过时。配置文件会被删除，程序将重启。</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">抱歉，发生了一些问题。</system:String>
     <!-- | M -->
@@ -28,10 +29,9 @@
     <system:String x:Key="MainWindow_about">_关于</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">所有支持的数据格式</system:String>
     <system:String x:Key="MainWindow_andStillWorking">还在处理中...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available. -- Current: %0 | Latest: %1</system:String>
+    <system:String x:Key="MainWindow_aNewVersionIsAvailable">有新版本可用。 -- 当前：%0 | 最新：%1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">谱面</system:String>
-    <system:String x:Key="MainWindow_beatmapsDoesNotExist">ID为 %0 的谱面不存在。</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">找到 %0 张谱面</system:String>
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">谱面ID只能设定一次。</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">总计解析了 %0 谱面。</system:String>
@@ -39,6 +39,7 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_取消</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">无法连接到服务器</system:String>
+    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">正在检查更新...</system:String>
     <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">压缩的 osu!Sync 谱面清单</system:String>
     <system:String x:Key="MainWindow_conversionAborted">转换已中止</system:String>
@@ -47,9 +48,9 @@
     <system:String x:Key="MainWindow_convertSelectedFile">转换选择的文件</system:String>
     <system:String x:Key="MainWindow_creator">创建者</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_done">结束</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">下载和安装</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_下载谱面</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">镜像下载</system:String>
     <system:String x:Key="MainWindow_downloading">下载中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下载中</system:String>
@@ -58,7 +59,7 @@
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">现在要开始 osu! 吗?</system:String>
     <!-- | |> Beatmap Details Panel -->
     <!-- | |> A -->
-    <system:String x:Key="MainWindow_detailsPanel_apiError">Unable to connect to API. Check log.</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_apiError">无法连接到 API，请检查日志。</system:String>
     <!-- | |> B -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">谱面详细信息</system:String>
     <!-- | |> |> Beatmap Status -->
@@ -68,18 +69,18 @@
     <!-- | |> F -->
     <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favorite Count</system:String>
     <!-- | |> F -->
-    <system:String x:Key="MainWindow_detailsPanel_generalError">A general error occured.</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_generalError">发生错误。</system:String>
     <!-- | |> P -->
-    <system:String x:Key="MainWindow_detailsPanel_passCount">Average Pass Count</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_playCount">Average Play Count</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_passCount">平均通过次数</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playCount">平均游玩次数</system:String>
     <!-- | |> O -->
-    <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Online Details</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_onlineDetails">在线详情</system:String>
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">打开谱面列表</system:String>
     <!-- | |> Played Status -->
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">已经玩过的</system:String>
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">没有玩过的</system:String>
     <!-- | E -->
-    <system:String x:Key="MainWindow_elevationFailed">Elevation failed.</system:String>
+    <system:String x:Key="MainWindow_elevationFailed">获取管理员权限失败。</system:String>
     <system:String x:Key="MainWindow_exceptions">例外情况</system:String>
     <system:String x:Key="MainWindow_exit">离开</system:String>
     <system:String x:Key="MainWindow_export">导出</system:String>
@@ -99,13 +100,15 @@
     <system:String x:Key="MainWindow_fetching">读取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">读取中...</system:String>
     <system:String x:Key="MainWindow_file">_文件</system:String>
-    <system:String x:Key="MainWindow_file404">Unable to open file. It doesn't exist (anymore).</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">至少有一个文件夹不能被解析。 -- 它/它们将会被忽略。</system:String>
+    <system:String x:Key="MainWindow_file404">无法打开文件，是不是文件被移动了。</system:String>
+    <system:String x:Key="MainWindow_finished">Finished</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">至少有一个文件夹不能被解析。 它/它们将会被忽略。</system:String>
     <system:String x:Key="MainWindow_folders">文件夹</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成界面......</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">_帮助</system:String>
+    <system:String x:Key="MainWindow_hideInstalled">Hide already installed Beatmaps</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID已分配</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">如果还有问题的话, 请用设定里面的反馈选项留言给我们。</system:String>
@@ -116,7 +119,7 @@
     <system:String x:Key="MainWindow_installationFinished">安装完成!</system:String>
     <system:String x:Key="MainWindow_installing">安装中</system:String>
     <system:String x:Key="MainWindow_installingFiles">文件安装中...</system:String>
-    <system:String x:Key="MainWindow_insufficientPermissions">Insufficient permissions</system:String>
+    <system:String x:Key="MainWindow_insufficientPermissions">没有足够的权限</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">服务器响应无效</system:String>
     <system:String x:Key="MainWindow_invertSelection">反选</system:String>
     <system:String x:Key="MainWindow_isInstalled">已安装？</system:String>
@@ -129,7 +132,7 @@
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">_最小化至通知区域（系统任务栏）</system:String>
     <!-- | N -->
-    <system:String x:Key="MainWindow_noAccess">No access</system:String>
+    <system:String x:Key="MainWindow_noAccess">没有访问权限</system:String>
     <system:String x:Key="MainWindow_notImportable">无法导入</system:String>
     <!-- | O -->
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">打开谱面详细信息面板</system:String>
@@ -163,18 +166,19 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">略过的谱面</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">你的一些谱面集不属于正常格式。</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">有些谱面无法导出</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Some beatmap sets hadn't been imported.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">同步已完成</system:String>
     <system:String x:Key="MainWindow_synchronize">同步</system:String>
     <system:String x:Key="MainWindow_syncing">同步中...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">诶，册那。快去下两张图去。</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
+    <system:String x:Key="MainWindow_unableToCheckForUpdates">无法检查更新。</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">应用程序无法从指定的镜像中获取数据。可能是该镜像目前关闭中。请在设置窗口中选择其他镜像站点以便解决该问题。如果你想跳过这个文件请按“是”，跳过整个下载请按“否”</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder. Please specify the path to osu! in the following window.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">无法获取 ID</system:String>
-    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed. They will be handled as unsubmitted (can't be exported).</system:String>
+    <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">无法解析部分 beatmaps 的ID，他们将会无法提交（不能导出）。</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">无法获取更新包的下载路径。</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的文件扩展名</system:String>
     <system:String x:Key="MainWindow_unsubmitted">未提交</system:String>
@@ -239,7 +243,6 @@
     <system:String x:Key="WindowSettings_apiIntro">osu!Sync可以从osu!的API （API/1.0版）中获取谱面的额外信息。为了获得访问权，API密钥是必须的，它可以防止他人滥用系统。</system:String>
     <system:String x:Key="WindowSettings_apiKey">API密钥</system:String>
     <system:String x:Key="WindowSettings_apiRequest">如果你没有API密钥，你可以从osu!的网站中申请一个。</system:String>
-    <system:String x:Key="WindowSettings_apiRequestPer">%0 个API 请求每%1: %2</system:String>
     <system:String x:Key="WindowSettings_apply">_应用</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">确定真的要删除配置文件么 (不能复原)？</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">确定要删除程序配置么(操作无法撤销)？</system:String>
@@ -274,6 +277,7 @@
     <system:String x:Key="WindowSettings_generalFeedback">一般反馈</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">导入/下载</system:String>
+    <system:String x:Key="WindowSettings_importerAskOsu">Ask whether to start osu! after import process</system:String>
     <system:String x:Key="WindowSettings_interface">界面</system:String>
     <system:String x:Key="WindowSettings_invalid">无效</system:String>
     <system:String x:Key="WindowSettings_invalidValue">无效值！</system:String>
@@ -385,9 +389,9 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync 是用来导出/导入 osu! 谱面的免费工具。您可以制作方便分享的谱面清单。</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowWelcome_subtitle">... 光临 naseweis520 写的 osu!Sync</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync.</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">欢迎</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">请记住这是一个非官方的工具。我们不属于 osu! 或 peppy 的官方团队。</system:String>
+    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
 </ResourceDictionary>
