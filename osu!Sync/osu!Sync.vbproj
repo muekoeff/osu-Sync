@@ -88,6 +88,10 @@
     <Reference Include="Hardcodet.Wpf.TaskbarNotification">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net40\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.8.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net40\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -149,6 +153,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <None Include="Development\osu!Sync Icon.psd" />
     <None Include="Languages\eo_UY.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -274,7 +279,6 @@
     </EmbeddedResource>
     <None Include="Development\osu!Sync Logo.psd" />
     <None Include="Development\osu!Sync NoThumbnail.psd" />
-    <None Include="Development\osu!Sync SplashScreen.psd" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -323,9 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\WindowAbout_Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <SplashScreen Include="Resources\SplashScreen.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\NotifyIcon.ico" />

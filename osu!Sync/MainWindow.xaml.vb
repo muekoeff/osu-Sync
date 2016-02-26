@@ -1,4 +1,5 @@
 ﻿Imports Hardcodet.Wpf.TaskbarNotification
+Imports Ionic.Zip
 Imports System.IO
 Imports System.Net
 Imports System.Windows.Media.Animation
@@ -277,28 +278,24 @@ Class MainWindow
     ''' <param name="Source">List of beatmaps</param>
     ''' <returns><code>List(Of Beatmap)</code> as OSBL and possible warnings together in a String().</returns>
     ''' <remarks></remarks>
-    Function Action_ConvertBeatmapListToOSBL(ByVal Source As List(Of Beatmap)) As String()
+    Function Action_ConvertBeatmapListToJSON(Source As List(Of Beatmap)) As String()
         Dim Failed_Unsubmitted As String = ""
         Dim Failed_Alread_Assigned As String = ""
         Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
-        Dim Content_ProgrammInfo As New Dictionary(Of String, String)
-        Content_ProgrammInfo.Add("_file_generationdate", Date.Now.ToString("dd/MM/yyyy"))
-        Content_ProgrammInfo.Add("_version", My.Application.Info.Version.ToString)
-        Content.Add("_info", Content_ProgrammInfo)
+        Content.Add("_info", New Dictionary(Of String, String) From {
+                    {"_file_generationdate", Date.Now.ToString("dd/MM/yyyy")},
+                    {"_version", My.Application.Info.Version.ToString}})
         For Each SelectedBeatmap As Beatmap In Source
             If SelectedBeatmap.ID = -1 Then
                 Failed_Unsubmitted += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
             ElseIf Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
                 Failed_Alread_Assigned += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
             Else
-                Dim ContentDictionary As New Dictionary(Of String, String)
-                With ContentDictionary
-                    .Add("artist", SelectedBeatmap.Artist)
-                    .Add("creator", SelectedBeatmap.Creator)
-                    .Add("id", SelectedBeatmap.ID.ToString)
-                    .Add("title", SelectedBeatmap.Title)
-                End With
-                Content.Add(SelectedBeatmap.ID.ToString, ContentDictionary)
+                Content.Add(SelectedBeatmap.ID.ToString, New Dictionary(Of String, String) From {
+                            {"artist", SelectedBeatmap.Artist},
+                            {"creator", SelectedBeatmap.Creator},
+                            {"id", SelectedBeatmap.ID.ToString},
+                            {"title", SelectedBeatmap.Title}})
             End If
         Next
         Dim Content_Json As String = JsonConvert.SerializeObject(Content)
@@ -316,7 +313,7 @@ Class MainWindow
     ''' <param name="Source">List of beatmaps</param>
     ''' <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
     ''' <remarks></remarks>
-    Function Action_ConvertBeatmapListToTXT(ByVal Source As List(Of Beatmap)) As String
+    Function Action_ConvertBeatmapListToTXT(Source As List(Of Beatmap)) As String
         Dim Content As String = "// osu!Sync (" & My.Application.Info.Version.ToString & ") | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
         For Each SelectedBeatmap As Beatmap In Source
             Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine &
@@ -328,12 +325,18 @@ Class MainWindow
         Return Content
     End Function
 
-    Public Sub Action_ExportBeatmapDialog(ByRef Source As List(Of Beatmap), Optional ByRef DialogTitle As String = "")
+    Sub Action_ExportBeatmapDialog(Source As List(Of Beatmap), Optional DialogTitle As String = "")
         If DialogTitle = "" Then DialogTitle = _e("MainWindow_exportInstalledBeatmaps1")
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
             .AddExtension = True
-            .Filter = _e("MainWindow_compressedOsuSyncBeatmapList") & "|*.nw520-osblx|" & _e("MainWindow_osuSyncBeatmapList") & "|*.nw520-osbl|HTML page (" & _e("MainWindow_notImportable") & ")|*.html|Text file (" & _e("MainWindow_notImportable") & ")|*.txt|CSV file (" & _e("MainWindow_notImportable") & ")|*.csv"
+            .Filter = _e("MainWindow_fileext_osblx") & "     (*.nw520-osblx)|*.nw520-osblx|" &
+                _e("MainWindow_fileext_osbl") & "     (*.nw520-osbl)|*.nw520-osbl|" &
+                _e("MainWindow_fileext_zip") & "     (*.zip)|*.osblz.zip|" &
+                _e("MainWindow_fileext_html") & "     [" & _e("MainWindow_notImportable") & "] (*.html)|*.html|" &
+                _e("MainWindow_fileext_txt") & "     [" & _e("MainWindow_notImportable") & "] (*.txt)|*.txt|" &
+                _e("MainWindow_fileext_json") & "     (*.json)|*.json|" &
+                _e("MainWindow_fileext_csv") & "     [" & _e("MainWindow_notImportable") & "] (*.csv)|*.csv"
             .OverwritePrompt = True
             .Title = DialogTitle
             .ValidateNames = True
@@ -347,7 +350,7 @@ Class MainWindow
 
         Select Case Dialog_SaveFile.FilterIndex
             Case 1      '.nw520-osblx
-                Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
+                Dim Content As String() = Action_ConvertBeatmapListToJSON(Source)
                 Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(CompressString(Content(0)))
                     File.Close()
@@ -363,7 +366,7 @@ Class MainWindow
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBLX"))
                 Action_OverlayFadeOut()
             Case 2      '.nw520-osbl
-                Dim Content As String() = Action_ConvertBeatmapListToOSBL(Source)
+                Dim Content As String() = Action_ConvertBeatmapListToJSON(Source)
                 Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Content(0))
                     File.Close()
@@ -378,14 +381,35 @@ Class MainWindow
                 End If
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBL"))
                 Action_OverlayFadeOut()
-            Case 3      '.html
+            Case 3      '.osblz.zip
+                Dim DirectName As String = Path.GetTempPath & "naseweis520\osu!Sync\Exporter Zipper\" & Date.Now.ToString("yyyy-MM-dd HH-mm-ss")
+                Directory.CreateDirectory(DirectName)
+
+                Dim Content As String() = Action_ConvertBeatmapListToJSON(Source)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(DirectName & "\00.nw520-osblx", False)
+                    File.Write(CompressString(Content(0)))
+                    File.Close()
+                End Using
+                Action_PackageDirectoryAsZIP(DirectName, Dialog_SaveFile.FileName)
+                Directory.Delete(DirectName, True)
+                If Not Content(1) = "" Then
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                        Dim Window_Message As New Window_MessageWindow
+                        Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
+                        Window_Message.ShowDialog()
+                    End If
+                End If
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "Zipped OSBLX"))
+                Action_OverlayFadeOut()
+            Case 4      '.html
                 Dim Content As String() = Action_ConvertBeatmapListToHTML(Source)
                 Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Content(0))
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    Content(1) = Content(1).Insert(0, "=====   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":")
+                    Content(1) = Content(1).Insert(0, "=====   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ": ")
                     If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
                              _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
@@ -395,14 +419,30 @@ Class MainWindow
                 End If
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "HTML"))
                 Action_OverlayFadeOut()
-            Case 4     '.txt
+            Case 5     '.txt
                 Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Action_ConvertBeatmapListToTXT(Source))
                     File.Close()
                 End Using
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "TXT"))
                 Action_OverlayFadeOut()
-            Case 5     '.csv
+            Case 6     '.json
+                Dim Content As String() = Action_ConvertBeatmapListToJSON(Source)
+                Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
+                    File.Write(Content(0))
+                    File.Close()
+                End Using
+                If Not Content(1) = "" Then
+                    If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
+                             _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                        Dim Window_Message As New Window_MessageWindow
+                        Window_Message.SetMessage(Content(1), _e("MainWindow_skippedBeatmaps"), "Export")
+                        Window_Message.ShowDialog()
+                    End If
+                End If
+                Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "JSON"))
+                Action_OverlayFadeOut()
+            Case 7     '.csv
                 Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(Dialog_SaveFile.FileName, False)
                     File.Write(Action_ConvertBeatmapListToCSV(Source))
                     File.Close()
@@ -410,6 +450,15 @@ Class MainWindow
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "CSV"))
                 Action_OverlayFadeOut()
         End Select
+    End Sub
+
+    Sub Action_PackageDirectoryAsZIP(inputDirectory As String, outputPath As String)
+        Using Zipper As New ZipFile
+            With Zipper
+                .AddDirectory(inputDirectory)
+                .Save(outputPath)
+            End With
+        End Using
     End Sub
 
     Sub Action_OpenBmDP(sender As Object, e As MouseButtonEventArgs)
@@ -1242,7 +1291,10 @@ Class MainWindow
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.nw520-osbl;*.nw520-osblx|" & _e("MainWindow_osuSyncBeatmapList") & "|*.nw520-osbl|" & _e("MainWindow_compressedOsuSyncBeatmapList") & "|*.nw520-osbl"
+            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.json;*.nw520-osbl;*.nw520-osblx|" &
+                _e("MainWindow_fileext_osblx") & "|*.nw520-osbl" &
+                _e("MainWindow_fileext_osbl") & "|*.nw520-osbl|" &
+                _e("MainWindow_fileext_json") & "|*.json"
             .Title = _e("MainWindow_selectASupportedFileToConvert")
             .ShowDialog()
         End With
@@ -1307,7 +1359,10 @@ Class MainWindow
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.nw520-osbl;*.nw520-osblx|" & _e("MainWindow_compressedOsuSyncBeatmapList") & "|*.nw520-osblx|" & _e("MainWindow_osuSyncBeatmapList") & "|*.nw520-osbl"
+            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.json;*.nw520-osbl;*.nw520-osblx|" &
+                _e("MainWindow_fileext_osblx") & "|*.nw520-osblx|" &
+                _e("MainWindow_fileext_osbl") & "|*.nw520-osbl|" &
+                _e("MainWindow_fileext_json") & "|*.json"
             .Title = _e("MainWindow_openBeatmapList")
             .ShowDialog()
         End With
@@ -1378,7 +1433,7 @@ Class MainWindow
         Window_About.ShowDialog()
     End Sub
 
-    Sub UpdateClient_DownloadStringCompleted(sender As Object, e As Net.DownloadStringCompletedEventArgs)
+    Sub UpdateClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
         Dim Answer As JObject
         Try
             Answer = JObject.Parse(e.Result)
@@ -1392,7 +1447,6 @@ Class MainWindow
         Catch ex As Reflection.TargetInvocationException
             If Setting_Messages_Updater_UnableToCheckForUpdates Then
                 MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
-                MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
             End If
             TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
             Exit Sub
@@ -2036,19 +2090,20 @@ Class MainWindow
     End Sub
 
     Sub Importer_ReadListFile(FilePath As String)
-        If Path.GetExtension(FilePath) = ".nw520-osblx" Then
-            Dim File_Content_Compressed As String = File.ReadAllText(FilePath)
-            Dim File_Content As String = DecompressString(File_Content_Compressed)
-            Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
-            Importer_Info.Text = FilePath
-            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
-        ElseIf Path.GetExtension(FilePath) = ".nw520-osbl" Then
-            Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(FilePath)), JObject)
-            Importer_Info.Text = FilePath
-            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
-        Else
-            MsgBox(_e("MainWindow_unknownFileExtension") & ":" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-        End If
+        Select Case Path.GetExtension(FilePath)
+            Case ".nw520-osblx"
+                Dim File_Content_Compressed As String = File.ReadAllText(FilePath)
+                Dim File_Content As String = DecompressString(File_Content_Compressed)
+                Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
+                Importer_Info.Text = FilePath
+                Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
+            Case ".nw520-osbl", ".json"
+                Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(FilePath)), JObject)
+                Importer_Info.Text = FilePath
+                Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
+            Case Else
+                MsgBox(_e("MainWindow_unknownFileExtension") & ":" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        End Select
     End Sub
 
     Sub Importer_RemoveBeatmapFromSelection(sender As Object, e As EventArgs)

@@ -141,9 +141,10 @@ Public Class Window_Updater
                 Dim FlowDocument As New FlowDocument()
                 Try
                     With Paragraph.Inlines
-                        .Add(New Run(_e("WindowUpdater_dateOfPublication").Replace("%0", CStr(Answer.SelectToken("latestRepoRelease").SelectToken("published_at")).Substring(0, 10))))
+                        .Add(New Run("# " & _e("WindowUpdater_dateOfPublication").Replace("%0", CStr(Answer.SelectToken("latestRepoRelease").SelectToken("published_at")).Substring(0, 10))))
                         .Add(New LineBreak())
-                        .Add(New Run(_e("WindowUpdater_publishedBy").Replace("%0", CStr(Answer.SelectToken("latestRepoRelease").SelectToken("author").SelectToken("login")))))
+                        .Add(New LineBreak())
+                        .Add(New Run(CStr(Answer.SelectToken("latestRepoRelease").SelectToken("body")).Replace("```Indent" & vbNewLine, "").Replace(vbNewLine & "```", "")))
                     End With
                 Catch ex As Exception
                     MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
@@ -153,13 +154,6 @@ Public Class Window_Updater
                 End Try
                 FlowDocument.Blocks.Add(Paragraph)
                 RichTextBox_Changelog.Document = FlowDocument
-
-                Paragraph = New Paragraph()
-                With Paragraph.Inlines
-                    .Add(New LineBreak())
-                    .Add(New Run(CStr(Answer.SelectToken("latestRepoRelease").SelectToken("body")).Replace("```Indent" & vbNewLine, "").Replace(vbNewLine & "```", "")))
-                End With
-                RichTextBox_Changelog.Document.Blocks.Add(Paragraph)
                 Cursor = Cursors.Arrow
                 ProgressBar_Progress.IsIndeterminate = False
 

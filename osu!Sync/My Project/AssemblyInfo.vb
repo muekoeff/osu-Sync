@@ -15,7 +15,7 @@ Imports System.Windows
 <Assembly: AssemblyDescription("Share your beatmaps.")>
 <Assembly: AssemblyCompany("nw520 Technologies")> 
 <Assembly: AssemblyProduct("osu!Sync")>
-<Assembly: AssemblyCopyright("2015 | Open-Source")>
+<Assembly: AssemblyCopyright("2016 | Open-Source")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(false)>
 
@@ -55,5 +55,5 @@ Imports System.Windows
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.10")>
-<Assembly: AssemblyFileVersion("1.0.0.10")>
+<Assembly: AssemblyVersion("1.0.0.11")>
+<Assembly: AssemblyFileVersion("1.0.0.11")>
