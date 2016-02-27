@@ -382,7 +382,7 @@ Class MainWindow
                 Action_OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBL"))
                 Action_OverlayFadeOut()
             Case 3      '.osblz.zip
-                Dim DirectName As String = Path.GetTempPath & "naseweis520\osu!Sync\Exporter Zipper\" & Date.Now.ToString("yyyy-MM-dd HH-mm-ss")
+                Dim DirectName As String = I__Path_Temp & "\Zipper\Exporter-" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss")
                 Directory.CreateDirectory(DirectName)
 
                 Dim Content As String() = Action_ConvertBeatmapListToJSON(Source)
@@ -797,8 +797,8 @@ Class MainWindow
                     Dim ThumbPath As String = ""
                     If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         ThumbPath = (Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg")
-                    ElseIf File.Exists(I__Path_Temp & "\ThumbCache\" & SelectedBeatmap.ID & ".jpg") Then
-                        ThumbPath = (I__Path_Temp & "\ThumbCache\" & SelectedBeatmap.ID & ".jpg")
+                    ElseIf File.Exists(I__Path_Temp & "\Cache\Thumbnails\" & SelectedBeatmap.ID & ".jpg") Then
+                        ThumbPath = (I__Path_Temp & "\Cache\Thumbnails\" & SelectedBeatmap.ID & ".jpg")
                     End If
 
                     If Not ThumbPath = "" Then
@@ -1166,8 +1166,8 @@ Class MainWindow
         Dim ThumbPath As String = ""
         If File.Exists(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg") Then
             ThumbPath = (Setting_osu_Path & "\Data\bt\" & ID & "l.jpg")
-        ElseIf File.Exists(I__Path_Temp & "\ThumbCache\" & ID & ".jpg") Then
-            ThumbPath = (I__Path_Temp & "\ThumbCache\" & ID & ".jpg")
+        ElseIf File.Exists(I__Path_Temp & "\Cache\Thumbnails\" & ID & ".jpg") Then
+            ThumbPath = (I__Path_Temp & "\Cache\Thumbnails\" & ID & ".jpg")
         End If
         If Not ThumbPath = "" Then
             Try
@@ -1238,7 +1238,7 @@ Class MainWindow
         Action_Tool_ApplySettings()
 
         ' Delete old downloaded beatmaps
-        If Directory.Exists(I__Path_Temp & "\BeatmapDownload") Then Directory.Delete(I__Path_Temp & "\BeatmapDownload", True)
+        If Directory.Exists(I__Path_Temp & "\Downloads\Beatmaps") Then Directory.Delete(I__Path_Temp & "\Downloads\Beatmaps", True)
 
         ' Check For Updates
         Select Case Setting_Tool_CheckForUpdates
@@ -1359,10 +1359,11 @@ Class MainWindow
             .AddExtension = True
             .CheckFileExists = True
             .CheckPathExists = True
-            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.json;*.nw520-osbl;*.nw520-osblx|" &
+            .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.json;*.nw520-osbl;*.nw520-osblx;*.zip|" &
                 _e("MainWindow_fileext_osblx") & "|*.nw520-osblx|" &
                 _e("MainWindow_fileext_osbl") & "|*.nw520-osbl|" &
-                _e("MainWindow_fileext_json") & "|*.json"
+                _e("MainWindow_fileext_json") & "|*.json|" &
+                _e("MainWindow_fileext_zip") & "|*.zip"
             .Title = _e("MainWindow_openBeatmapList")
             .ShowDialog()
         End With
@@ -1859,7 +1860,7 @@ Class MainWindow
 
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
-                For Each FilePath In Directory.GetFiles(I__Path_Temp & "\BeatmapDownload")
+                For Each FilePath In Directory.GetFiles(I__Path_Temp & "\Downloads\Beatmaps")
                     File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
                 Next
                 With Importer_Progress
@@ -1894,7 +1895,7 @@ Class MainWindow
         TextBlock_Progress.Content = _e("MainWindow_downloading").Replace("%0", CStr(ImporterContainer.BeatmapList_Tag_ToInstall.First.Beatmap.ID))
         Importer_UpdateInfo(_e("MainWindow_downloading1"))
         Importer_Progress.IsIndeterminate = False
-        ImporterContainer.Downloader.DownloadFileAsync(New Uri(RequestURI), (I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName))
+        ImporterContainer.Downloader.DownloadFileAsync(New Uri(RequestURI), (I__Path_Temp & "\Downloads\Beatmaps\" & ImporterContainer.CurrentFileName))
     End Sub
 
     Sub Importer_DownloadMirrorInfo_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles Importer_DownloadMirrorInfo.MouseDown
@@ -1910,25 +1911,25 @@ Class MainWindow
         RemoveHandler(Csender_Bm.UI_Thumbnail.MouseLeftButtonUp), AddressOf Importer_DownloadThumb
         RemoveHandler(Csender_Bm.UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
         AddHandler(Csender_Bm.UI_Thumbnail.MouseDown), AddressOf Action_OpenBmDP
-        If Not Directory.Exists(I__Path_Temp & "\ThumbCache") Then Directory.CreateDirectory(I__Path_Temp & "\ThumbCache")
+        Directory.CreateDirectory(I__Path_Temp & "\Cache\Thumbnails")
         Dim ThumbClient As New WebClient
         AddHandler ThumbClient.DownloadFileCompleted, AddressOf Importer_DownloadThumbCompleted
-        ThumbClient.DownloadFileAsync(New Uri("https://b.ppy.sh/thumb/" & Csender_Bm.Beatmap.ID & ".jpg"), I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg", Csender_Bm)
+        ThumbClient.DownloadFileAsync(New Uri("https://b.ppy.sh/thumb/" & Csender_Bm.Beatmap.ID & ".jpg"), I__Path_Temp & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg", Csender_Bm)
     End Sub
 
     Sub Importer_DownloadThumbCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs)
         Dim Csender_Bm As Importer.TagData = CType(e.UserState, Importer.TagData)
-        If File.Exists(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg") AndAlso My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg").Length >= 10 Then
+        If File.Exists(I__Path_Temp & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg") AndAlso My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg").Length >= 10 Then
             Try
                 With Csender_Bm.UI_Thumbnail
-                    .Source = New BitmapImage(New Uri(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg"))
+                    .Source = New BitmapImage(New Uri(I__Path_Temp & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg"))
                     .ToolTip = _e("MainWindow_openBeatmapDetailPanel")
                 End With
             Catch ex As NotSupportedException
                 Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
             End Try
-        ElseIf My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg").Length <= 10 Then
-            File.Delete(I__Path_Temp & "\ThumbCache\" & Csender_Bm.Beatmap.ID & ".jpg")
+        ElseIf My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg").Length <= 10 Then
+            File.Delete(I__Path_Temp & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg")
             Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
         Else
             Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
@@ -1937,12 +1938,12 @@ Class MainWindow
 
     Sub Importer_Downloader_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs)
         ImporterContainer.Counter += 1
-        If File.Exists(I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName) Then
-            If My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName).Length <= 3000 Then     ' Detect "Beatmap Not Found" pages
+        If File.Exists(I__Path_Temp & "\Downloads\Beatmaps\" & ImporterContainer.CurrentFileName) Then
+            If My.Computer.FileSystem.GetFileInfo(I__Path_Temp & "\Downloads\Beatmaps\" & ImporterContainer.CurrentFileName).Length <= 3000 Then     ' Detect "Beatmap Not Found" pages
                 ' File Empty
                 ImporterContainer.BeatmapList_Tag_ToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
                 Try
-                    File.Delete(I__Path_Temp & "\BeatmapDownload\" & ImporterContainer.CurrentFileName)
+                    File.Delete(I__Path_Temp & "\Downloads\Beatmaps\" & ImporterContainer.CurrentFileName)
                 Catch ex As IOException
                 End Try
                 ImporterContainer.BeatmapList_Tag_Failed.Add(ImporterContainer.BeatmapList_Tag_ToInstall.First)
@@ -1972,7 +1973,7 @@ Class MainWindow
         Importer_UpdateInfo(_e("MainWindow_installing"))
         TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
-        For Each FilePath In Directory.GetFiles(I__Path_Temp & "\BeatmapDownload")
+        For Each FilePath In Directory.GetFiles(I__Path_Temp & "\Downloads\Beatmaps")
             If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Else File.Delete(FilePath)
         Next
         With Importer_Progress
@@ -2028,7 +2029,7 @@ Class MainWindow
                 Importer_UpdateInfo(_e("MainWindow_installing"))
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
-                For Each FilePath In Directory.GetFiles(I__Path_Temp & "\BeatmapDownload")
+                For Each FilePath In Directory.GetFiles(I__Path_Temp & "\Downloads\Beatmaps")
                     If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
                         Try
                             File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
@@ -2070,7 +2071,7 @@ Class MainWindow
             Importer_Run.IsEnabled = False
             Importer_Cancel.IsEnabled = False
             Importer_Progress.Visibility = Visibility.Visible
-            If Not Directory.Exists(I__Path_Temp & "\BeatmapDownload") Then Directory.CreateDirectory(I__Path_Temp & "\BeatmapDownload")
+            Directory.CreateDirectory(I__Path_Temp & "\Downloads\Beatmaps")
             Importer_DownloadBeatmap()
         Else
             If MessageBox.Show(_e("MainWindow_requestElevation"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
@@ -2101,6 +2102,19 @@ Class MainWindow
                 Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(FilePath)), JObject)
                 Importer_Info.Text = FilePath
                 Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
+            Case ".zip"     ' TODO: If contains multiple OSBLX-files read and process each one
+                Using Zipper As ZipFile = ZipFile.Read(FilePath)
+                    Dim DirectoryName As String = I__Path_Temp & "\Zipper\Importer-" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss")
+                    Directory.CreateDirectory(DirectoryName)
+                    For Each ZipperEntry As ZipEntry In Zipper
+                        If Path.GetExtension(ZipperEntry.FileName) = ".nw520-osblx" Then
+                            ZipperEntry.Extract(DirectoryName)
+                            MsgBox(DirectoryName & "\" & ZipperEntry.FileName)
+                            Importer_ReadListFile(DirectoryName & "\" & ZipperEntry.FileName)
+                            Exit For    ' TODO
+                        End If
+                    Next
+                End Using
             Case Else
                 MsgBox(_e("MainWindow_unknownFileExtension") & ":" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End Select

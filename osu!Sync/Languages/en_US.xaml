@@ -12,15 +12,12 @@
     <system:String x:Key="Meta_translators">Translation by: naseweis520</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">osu! Beatmap List for osu!Sync</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Compressed osu! Beatmap List for osu!Sync</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Sorry, something went wrong.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">This message can be disabled in the settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -108,7 +105,9 @@
     <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
     <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
     <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_extend_osbl">osu!Sync Beatmap list for osu!Sync</system:String>
     <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_extend_osblx">Compressed osu!Sync Beatmap list for osu!Sync</system:String>
     <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
     <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->

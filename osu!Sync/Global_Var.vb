@@ -19,13 +19,25 @@ Module Global_Var
                                          ".nw520-osblx"}
     Public Application_FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList",
                                              "naseweis520.osuSync.compressedOsuBeatmapList"}
-    Public Application_FileExtensionsDescription() As String = {_e("GlobalVar_extensionBeatmapList"),
-                                                    _e("GlobalVar_extensionCompressedBeatmapList")}
+    Public Application_FileExtensionsDescription() As String = {_e("MainWindow_fileext_extend_osbl"),
+                                                    _e("MainWindow_fileext_extend_osblx")}
     Public Application_FileExtensionsIcon() As String = {"""" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
                                              """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
     Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareData()
-    Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)
-
+    Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)(2) From {
+        {0, New DownloadMirror With {
+            .DisplayName = "Bloodcat.com",
+            .DownloadURL = "http://bloodcat.com/osu/s/%0",
+            .Index = 0,
+            .WebURL = "http://bloodcat.com/osu"
+        }},
+        {2, New DownloadMirror With {
+            .DisplayName = "osu.uu.gl",
+            .DownloadURL = "http://osu.uu.gl/s/%0",
+            .Index = 0,
+            .WebURL = "http://osu.uu.gl/"
+        }}
+    }
     Public I__StartUpArguments() As String
     Public Const I__Path_Web_nw520OsySyncApi As String = "http://api.nw520.de/osuSync/"
     Public Const I__Path_Web_osuApi As String = "https://osu.ppy.sh/api/"
@@ -269,9 +281,7 @@ Module Global_Var
     End Function
 
     Sub Action_CheckCompatibility(ConfigVersion As Version)
-        Dim AppVersion As Version = My.Application.Info.Version
-        ' Detect update
-        If ConfigVersion < AppVersion Then
+        If ConfigVersion < My.Application.Info.Version Then  ' Detect update
             If Setting_Tool_DownloadMirror = 1 Then
                 Setting_Tool_DownloadMirror = 0
                 MsgBox("The previously selected mirror 'Loli.al' has been shutdown by the owner and therefore caused crashes in previous versions." & vbNewLine & "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Update Compatibility Check | osu!Sync")
@@ -281,7 +291,7 @@ Module Global_Var
     End Sub
 
     Sub Action_SaveSettings()
-        If Not Directory.Exists(I__Path_Programm & "\Settings") Then Directory.CreateDirectory(I__Path_Programm & "\Settings")
+        Directory.CreateDirectory(I__Path_Programm & "\Settings")
         Using ConfigFile = File.CreateText(I__Path_Programm & "\Settings\Settings.config")
             Dim Content As New Dictionary(Of String, String)
             With Content
@@ -420,27 +430,11 @@ Module Global_Var
                 .DisplayName_English = "Chinese Traditional"})
         End With
         Application_Languages = LangDic
-
-        ' Mirrors
-        With Application_Mirrors
-            .Add(0, New DownloadMirror With {
-                .DisplayName = "Bloodcat.com",
-                .DownloadURL = "http://bloodcat.com/osu/s/%0",
-                .Index = 0,
-                .WebURL = "http://bloodcat.com/osu"
-            })
-            .Add(2, New DownloadMirror With {
-                .DisplayName = "osu.uu.gl",
-                .DownloadURL = "http://osu.uu.gl/s/%0",
-                .Index = 0,
-                .WebURL = "http://osu.uu.gl/"
-            })
-        End With
     End Sub
 
     Function WriteCrashLog(ex As Exception) As String
-        If Not Directory.Exists(Path.GetTempPath & "naseweis520\osu!Sync\Crashes") Then Directory.CreateDirectory(Path.GetTempPath & "naseweis520\osu!Sync\Crashes")
-        Dim CrashFile As String = Path.GetTempPath & "naseweis520\osu!Sync\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss") & ".txt"
+        Directory.CreateDirectory(I__Path_Temp & "\Crashes")
+        Dim CrashFile As String = I__Path_Temp & "\Crashes\" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss") & ".txt"
         Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
             Dim Content As String = "=====   osu!Sync Crash | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
                 "// Information" & vbNewLine & "An exception occured in osu!Sync. If this problem persists please report it using the Feedback-window, on GitHub or on the osu!Forum." & vbNewLine & "When reporting please try to describe as detailed as possible what you've done and how the applicationen reacted." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
@@ -454,10 +448,10 @@ Module Global_Var
     End Function
 
     Sub WriteToApiLog(Method As String, Optional Result As String = "{Failed}")
-        If Not Directory.Exists(I__Path_Programm & "\Logs") Then Directory.CreateDirectory(I__Path_Programm & "\Logs")
+        Directory.CreateDirectory(I__Path_Programm & "\Logs")
         Try
             ' Trim
-            If Result.Length >= 150 Then Result = Result.Substring(0, 147) & "..."
+            If Result.Length > 250 Then Result = Result.Substring(0, 247) & "..."
             Dim Stream As StreamWriter = File.AppendText(I__Path_Programm & "\Logs\ApiAccess.txt")
             Dim Content As String = ""
             Content += "[" & Now.ToString() & " / " & My.Application.Info.Version.ToString & "] "

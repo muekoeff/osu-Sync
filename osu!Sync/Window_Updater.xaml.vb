@@ -53,9 +53,9 @@ Public Class Window_Updater
 
         Update_DownloadToPath = Setting_Tool_Update_SavePath & "\" & Update_FileName
         If File.Exists(Update_DownloadToPath) Then File.Delete(Update_DownloadToPath)
-        If Not Directory.Exists(Path.GetDirectoryName(Update_DownloadToPath)) Then Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadToPath))
+        Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadToPath))
         If Setting_Tool_Update_UseDownloadPatcher Then
-            If Not Directory.Exists(Path.GetDirectoryName(Update_DownloadPatcherToPath)) Then Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadPatcherToPath))
+            Directory.CreateDirectory(Path.GetDirectoryName(Update_DownloadPatcherToPath))
             If Not File.Exists(Update_DownloadPatcherToPath) Then
                 If File.Exists(Update_DownloadPatcherToPath & ".tmp") Then File.Delete(Update_DownloadPatcherToPath & ".tmp")
                 DownloadMode = DownloadModes.DownloadPatcher
