@@ -18,6 +18,15 @@ Public Enum UpdateBeatmapDisplayDestinations
 End Enum
 
 Public Class Beatmap
+    Enum OnlineApprovedStatuses
+        Graveyard = -2
+        WIP = -1
+        Pending = 0
+        Ranked = 1
+        Approved = 2
+        Qualified = 3
+    End Enum
+
     Public Property Artist As String = ""
     Public Property Creator As String = "Unknown"
     Public Property ID As Integer
@@ -160,8 +169,8 @@ Class MainWindow
     ''' <remarks></remarks>
     Sub Action_CheckFileAssociation()
         Dim FileExtension_Check As Integer = 0        '0 = OK, 1 = Missing File Extension, 2 = Invalid/Outdated File Extension
-        For Each FileExtension As String In Application_FileExtensions
-            If My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension) Is Nothing Then
+        For Each Extension() As String In Application_FileExtensions
+            If My.Computer.Registry.ClassesRoot.OpenSubKey(Extension(0)) Is Nothing Then
                 If FileExtension_Check = 0 Then
                     FileExtension_Check = 1
                     Exit For
@@ -169,8 +178,8 @@ Class MainWindow
             End If
         Next
         If Not FileExtension_Check = 1 Then
-            For Each FileExtension As String In Application_FileExtensionsLong
-                Dim RegistryPath As String = CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension).OpenSubKey("DefaultIcon").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None))
+            For Each Extension() As String In Application_FileExtensions
+                Dim RegistryPath As String = CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(Extension(1)).OpenSubKey("DefaultIcon").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None))
                 RegistryPath = RegistryPath.Substring(1)
                 RegistryPath = RegistryPath.Substring(0, RegistryPath.Length - 3)
                 If Not RegistryPath = Reflection.Assembly.GetExecutingAssembly().Location.ToString Then
@@ -178,7 +187,7 @@ Class MainWindow
                     Exit For
                 End If
 
-                RegistryPath = (CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(FileExtension).OpenSubKey("shell").OpenSubKey("open").OpenSubKey("command").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None)))
+                RegistryPath = (CStr(My.Computer.Registry.ClassesRoot.OpenSubKey(Extension(1)).OpenSubKey("shell").OpenSubKey("open").OpenSubKey("command").GetValue(Nothing, "", Microsoft.Win32.RegistryValueOptions.None)))
                 If Not RegistryPath = """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """ -openFile=""%1""" Then
                     FileExtension_Check = 2
                     Exit For
@@ -189,24 +198,7 @@ Class MainWindow
         If Not FileExtension_Check = 0 Then
             Dim MessageBox_Content As String
             If FileExtension_Check = 1 Then MessageBox_Content = _e("MainWindow_extensionNotAssociated") & vbNewLine & _e("MainWindow_doYouWantToFixThat") Else MessageBox_Content = _e("MainWindow_extensionWrong") & vbNewLine & _e("MainWindow_doYouWantToFixThat")
-            If MessageBox.Show(MessageBox_Content, I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
-                Dim RegisterError As Boolean = False
-                Dim RegisterCounter As Integer = 0
-                For Each Extension As String In Application_FileExtensions
-                    If CreateFileAssociation(Extension,
-                                                             Application_FileExtensionsLong(RegisterCounter),
-                                                             Application_FileExtensionsDescription(RegisterCounter),
-                                                             Application_FileExtensionsIcon(RegisterCounter),
-                                                             Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
-                        RegisterCounter += 1
-                    Else
-                        RegisterError = True
-                        Exit For
-                    End If
-                Next
-
-                If Not RegisterError Then MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle) Else MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-            End If
+            If MessageBox.Show(MessageBox_Content, I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then CreateOsuSyncFileAssociations()
         End If
     End Sub
 
@@ -1013,6 +1005,22 @@ Class MainWindow
         End Select
     End Sub
 
+    Sub BmDP_SetRankedStatus(value As Beatmap.OnlineApprovedStatuses)
+        With BeatmapDetails_RankedStatus
+            Select Case value
+                Case Beatmap.OnlineApprovedStatuses.Ranked, Beatmap.OnlineApprovedStatuses.Approved
+                    .Background = StandardColors.GreenDark
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked")
+                Case Beatmap.OnlineApprovedStatuses.Pending
+                    .Background = StandardColors.PurpleDark
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_pending")
+                Case Else
+                    .Background = StandardColors.GrayLight
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked")
+            End Select
+        End With
+    End Sub
+
     Sub BeatmapDetailClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles BeatmapDetailClient.DownloadStringCompleted
         BeatmapDetails_APIProgress.Visibility = Visibility.Collapsed
 
@@ -1057,6 +1065,8 @@ Class MainWindow
                         .Text = Math.Round(PlayCount.Sum / PlayCount.Count, 2).ToString("n", CI)
                         .ToolTip = PlayCount_TTText
                     End With
+
+                    BmDP_SetRankedStatus(CType(JSON_Array.First.SelectToken("approved").ToString, Beatmap.OnlineApprovedStatuses))
                 Else
                     WriteToApiLog("/api/get_beatmaps", "{UnexpectedAnswer} " & e.Result)
                     With BeatmapDetails_APIWarn
@@ -1070,7 +1080,6 @@ Class MainWindow
                     .Content = _e("MainWindow_detailsPanel_apiError")
                     .Visibility = Visibility.Visible
                 End With
-
             End Try
         End If
     End Sub
@@ -1182,13 +1191,13 @@ Class MainWindow
         ' Api
         If Setting_Api_Enabled_BeatmapPanel And Not ID = -1 Then
             If BeatmapDetailClient.IsBusy Then BeatmapDetailClient.CancelAsync()
-
             ' Reset
             BeatmapDetails_APIFavouriteCount.Text = "..."
             BeatmapDetails_APIFunctions.Visibility = Visibility.Visible
             BeatmapDetails_APIPassCount.Text = "..."
             BeatmapDetails_APIPlayCount.Text = "..."
             BeatmapDetails_APIProgress.Visibility = Visibility.Visible
+            BeatmapDetails_RankedStatus.Text = "..."
             BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
 
             Try
@@ -1362,8 +1371,8 @@ Class MainWindow
             .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.json;*.nw520-osbl;*.nw520-osblx;*.zip|" &
                 _e("MainWindow_fileext_osblx") & "|*.nw520-osblx|" &
                 _e("MainWindow_fileext_osbl") & "|*.nw520-osbl|" &
-                _e("MainWindow_fileext_json") & "|*.json|" &
-                _e("MainWindow_fileext_zip") & "|*.zip"
+                _e("MainWindow_fileext_zip") & "|*.zip|" &
+                _e("MainWindow_fileext_json") & "|*.json"
             .Title = _e("MainWindow_openBeatmapList")
             .ShowDialog()
         End With
@@ -2093,28 +2102,30 @@ Class MainWindow
     Sub Importer_ReadListFile(FilePath As String)
         Select Case Path.GetExtension(FilePath)
             Case ".nw520-osblx"
-                Dim File_Content_Compressed As String = File.ReadAllText(FilePath)
-                Dim File_Content As String = DecompressString(File_Content_Compressed)
-                Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File_Content), JObject)
-                Importer_Info.Text = FilePath
-                Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
+                Try
+                    Dim File_Content As String = DecompressString(File.ReadAllText(FilePath))
+                    Importer_ShowRawOSBL(File_Content, FilePath)
+                Catch ex As FormatException
+                    MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine & "// " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, I__MsgBox_DefaultTitle, MessageBoxButton.OK, MessageBoxImage.Error)
+                End Try
             Case ".nw520-osbl", ".json"
-                Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(FilePath)), JObject)
-                Importer_Info.Text = FilePath
-                Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
+                Importer_ShowRawOSBL(File.ReadAllText(FilePath), FilePath)
             Case ".zip"     ' TODO: If contains multiple OSBLX-files read and process each one
-                Using Zipper As ZipFile = ZipFile.Read(FilePath)
-                    Dim DirectoryName As String = I__Path_Temp & "\Zipper\Importer-" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss")
-                    Directory.CreateDirectory(DirectoryName)
-                    For Each ZipperEntry As ZipEntry In Zipper
-                        If Path.GetExtension(ZipperEntry.FileName) = ".nw520-osblx" Then
-                            ZipperEntry.Extract(DirectoryName)
-                            MsgBox(DirectoryName & "\" & ZipperEntry.FileName)
-                            Importer_ReadListFile(DirectoryName & "\" & ZipperEntry.FileName)
-                            Exit For    ' TODO
-                        End If
-                    Next
-                End Using
+                Try
+                    Using Zipper As ZipFile = ZipFile.Read(FilePath)
+                        Dim DirectoryName As String = I__Path_Temp & "\Zipper\Importer-" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss")
+                        Directory.CreateDirectory(DirectoryName)
+                        For Each ZipperEntry As ZipEntry In Zipper
+                            If Path.GetExtension(ZipperEntry.FileName) = ".nw520-osblx" Then
+                                ZipperEntry.Extract(DirectoryName)
+                                Importer_ReadListFile(DirectoryName & "\" & ZipperEntry.FileName)
+                                Exit For    ' TODO
+                            End If
+                        Next
+                    End Using
+                Catch ex As ZipException
+                    MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine & "// " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, I__MsgBox_DefaultTitle, MessageBoxButton.OK, MessageBoxImage.Error)
+                End Try
             Case Else
                 MsgBox(_e("MainWindow_unknownFileExtension") & ":" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End Select
@@ -2135,6 +2146,16 @@ Class MainWindow
 
     Sub Importer_Run_Click(sender As Object, e As RoutedEventArgs) Handles Importer_Run.Click
         Importer_Init()
+    End Sub
+
+    Sub Importer_ShowRawOSBL(FileContent As String, FilePath As String)
+        Try
+            Dim File_Content_Json As JObject = CType(JsonConvert.DeserializeObject(FileContent), JObject)
+            Importer_Info.Text = FilePath
+            Action_UpdateBeatmapDisplay(Action_ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBeatmapDisplayDestinations.Importer)
+        Catch ex As JsonReaderException
+            MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine & "// " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, I__MsgBox_DefaultTitle, MessageBoxButton.OK, MessageBoxImage.Error)
+        End Try
     End Sub
 
     Sub Importer_UpdateInfo(Optional Title As String = "osu!Sync")

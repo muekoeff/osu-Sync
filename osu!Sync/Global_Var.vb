@@ -15,14 +15,10 @@ Class Language
     Property DisplayName_English As String
 End Class
 Module Global_Var
-    Public Application_FileExtensions() As String = {".nw520-osbl",
-                                         ".nw520-osblx"}
-    Public Application_FileExtensionsLong() As String = {"naseweis520.osuSync.osuBeatmapList",
-                                             "naseweis520.osuSync.compressedOsuBeatmapList"}
-    Public Application_FileExtensionsDescription() As String = {_e("MainWindow_fileext_extend_osbl"),
-                                                    _e("MainWindow_fileext_extend_osblx")}
-    Public Application_FileExtensionsIcon() As String = {"""" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2",
-                                             """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"}
+    Public Application_FileExtensions()() As String = {
+            ({".nw520-osbl", "naseweis520.osuSync.osuBeatmapList", "MainWindow_fileext_osbl", """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2"}),
+            ({".nw520-osblx", "naseweis520.osuSync.compressedOsuBeatmapList", "MainWindow_fileext_osblx", """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"})
+        }
     Public Application_Languages As New Dictionary(Of String, Language) ' See Action_PrepareData()
     Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)(2) From {
         {0, New DownloadMirror With {
@@ -282,11 +278,15 @@ Module Global_Var
 
     Sub Action_CheckCompatibility(ConfigVersion As Version)
         If ConfigVersion < My.Application.Info.Version Then  ' Detect update
-            If Setting_Tool_DownloadMirror = 1 Then
-                Setting_Tool_DownloadMirror = 0
-                MsgBox("The previously selected mirror 'Loli.al' has been shutdown by the owner and therefore caused crashes in previous versions." & vbNewLine & "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Update Compatibility Check | osu!Sync")
-                Action_SaveSettings()
-            End If
+            Select Case ConfigVersion
+                Case < New Version("1.0.0.1")
+                    If Setting_Tool_DownloadMirror = 1 Then
+                        Setting_Tool_DownloadMirror = 0
+                        MsgBox("The previously selected mirror 'Loli.al' has been shutdown by the owner and therefore caused crashes in previous versions." & vbNewLine &
+                               "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Compatibility Check | osu!Sync")
+                        Action_SaveSettings()
+                    End If
+            End Select
         End If
     End Sub
 
@@ -418,6 +418,10 @@ Module Global_Var
                 .Code = "th_TH",
                 .DisplayName = "ภาษาไทย",
                 .DisplayName_English = "Thai"})
+            '.Add("tr", New Language With {     |   Not ready for release
+            '    .Code = "tr_TR",
+            '    .DisplayName = "Türkçe",
+            '    .DisplayName_English = "Turkish"})
             Dim Lang_zh As New Language With {
                 .Code = "zh_CN",
                 .DisplayName = "中文 (简体)",
@@ -431,6 +435,37 @@ Module Global_Var
         End With
         Application_Languages = LangDic
     End Sub
+
+    Sub CreateOsuSyncFileAssociations()
+        Dim RegisterErrors As Boolean = False
+        For Each Extension() As String In Application_FileExtensions
+            If Not CreateFileAssociation(Extension(0),
+                                     Extension(1),
+                                     _e(Extension(2)),
+                                     Extension(3),
+                                     Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
+                RegisterErrors = True
+                Exit For
+            End If
+        Next
+        If Not RegisterErrors Then MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle) Else MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+    End Sub
+
+    Function DeleteOsuSyncFileAssociations() As Boolean
+        Dim RegisterError As Boolean = False
+        For Each Extension() As String In Application_FileExtensions
+            If Not DeleteFileAssociation(Extension(0), Extension(1)) Then
+                RegisterError = True
+                Exit For
+            End If
+        Next
+        If Not RegisterError Then
+            Return True
+        Else
+            MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            Return False
+        End If
+    End Function
 
     Function WriteCrashLog(ex As Exception) As String
         Directory.CreateDirectory(I__Path_Temp & "\Crashes")

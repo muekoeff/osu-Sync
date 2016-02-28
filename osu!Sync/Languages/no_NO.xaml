@@ -13,15 +13,12 @@
     <system:String x:Key="Meta_translators">Oversatt av: Mystia Lorelei</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">osu! beatmap-liste for osu!Sync</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Komprimert osu! beatmap-liste for osu!Sync</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Konfigurasjonsfilen din ser ut til å være ugyldig eller utdatert. Den vil bli slettet og programmet vil startes på nytt.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Beklager, noe gikk galt.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Denne meldingen kan deaktiveres i innstillingene</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -41,7 +38,6 @@
     <system:String x:Key="MainWindow_cantConnectToServer">Kan ikke koble til server</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Ser etter oppdateringer...</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Komprimert osu!Sync beatmap-liste</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Konvertering avbrutt</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Konvertering mislyktes</system:String>
     <system:String x:Key="MainWindow_convertFile">_Konverter fil</system:String>
@@ -50,10 +46,11 @@
     <!-- | D -->
     <system:String x:Key="MainWindow_downloadAndInstall">Last ned og installer</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Last ned beatmaps</system:String>
-    <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Nedlasting mislyktes</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Alternativ nedlastningskilde</system:String>
     <system:String x:Key="MainWindow_downloading">Laster ned %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Laster ned</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Vil du se hvilke beatmap-sett som er berørt?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Vil du få det fikset?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Vil du starte osu! nå?</system:String>
@@ -101,14 +98,22 @@
     <system:String x:Key="MainWindow_fetching1">Henter...</system:String>
     <system:String x:Key="MainWindow_file">_Fil</system:String>
     <system:String x:Key="MainWindow_file404">Kan ikke åpne filen. Den finnes ikke (lenger).</system:String>
-    <system:String x:Key="MainWindow_finished">Finished</system:String>
+    <system:String x:Key="MainWindow_finished">Fullført</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">Minst én mappe kunne ikke bli lest. Den/De vil bli ignorert.</system:String>
     <system:String x:Key="MainWindow_folders">Mapper</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML-fil</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Tekstfil</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Genererer grensesnitt...</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">_Hjelp</system:String>
-    <system:String x:Key="MainWindow_hideInstalled">Hide already installed Beatmaps</system:String>
+    <system:String x:Key="MainWindow_hideInstalled">Skjul allerede installerte beatmaps</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID allerede tildelt</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Hvis dette problemet vedvarer, vennligst gi oss en beskjed via "Tilbakemelding"-fanen under innstillinger.</system:String>
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">Åpne beatmap-liste</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Åpne oppføringsside for beatmap i nettleser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Åpne _oppdateringsprogram</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync beatmap-liste</system:String>
     <system:String x:Key="MainWindow_overview">Oversikt</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Leser installerte beatmap-sett...</system:String>
@@ -166,7 +170,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">Beatmaps som ble hoppet over</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">Some of your beatmap sets differ from the normal format.</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">Noen beatmap-sett har ikke blitt eksportert.</system:String>
-    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Some beatmap sets hadn't been imported.</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Noen beatmap-sett har ikke blitt eksportert.</system:String>
     <system:String x:Key="MainWindow_syncCompleted">Synkronisering fullført</system:String>
     <system:String x:Key="MainWindow_synchronize">Synkroniser</system:String>
     <system:String x:Key="MainWindow_syncing">Synkroniserer...</system:String>
@@ -373,9 +377,7 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">Ingen endringslogg tilgjengelig</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">Vennligst vent...</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Vennligst vent, ser etter oppdateringer...</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">Publisert av: %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Kan ikke kommunisere med serveren</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Kan ikke laste ned endringslogg!</system:String>

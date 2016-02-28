@@ -13,15 +13,12 @@
     <system:String x:Key="Meta_translators">翻译： Oinari-sama (稻荷) | Lycorisrda</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">osu!Sync 专用的谱面清单</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">osu!Sync 专用的谱面压缩清单</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">你的配置文件似乎无效或已过时。配置文件会被删除，程序将重启。</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">抱歉，发生了一些问题。</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">此信息可以在设置中停用</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -41,7 +38,6 @@
     <system:String x:Key="MainWindow_cantConnectToServer">无法连接到服务器</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">正在检查更新...</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">压缩的 osu!Sync 谱面清单</system:String>
     <system:String x:Key="MainWindow_conversionAborted">转换已中止</system:String>
     <system:String x:Key="MainWindow_conversionFailed">转换失败</system:String>
     <system:String x:Key="MainWindow_convertFile">_转换文件</system:String>
@@ -54,6 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">镜像下载</system:String>
     <system:String x:Key="MainWindow_downloading">下载中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下载中</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">需要检查哪些谱面受到影响吗？</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">想要解决这个问题吗？</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">现在要开始 osu! 吗?</system:String>
@@ -102,8 +99,16 @@
     <system:String x:Key="MainWindow_file">_文件</system:String>
     <system:String x:Key="MainWindow_file404">无法打开文件，是不是文件被移动了。</system:String>
     <system:String x:Key="MainWindow_finished">Finished</system:String>
-    <system:String x:Key="MainWindow_folderCouldntBeParsed">至少有一个文件夹不能被解析。 它/它们将会被忽略。</system:String>
+    <system:String x:Key="MainWindow_folderCouldntBeParsed">至少有一个文件夹不能被解析。它/它们将会被忽略。</system:String>
     <system:String x:Key="MainWindow_folders">文件夹</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成界面......</system:String>
     <!-- | H -->
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">开启谱面清单</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">在浏览器中浏览谱面列表</system:String>
     <system:String x:Key="MainWindow_openUpdater">开启更新程序</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync 谱面清单</system:String>
     <system:String x:Key="MainWindow_overview">概览</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">解析已安装的谱面...</system:String>
@@ -373,9 +377,7 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">没有可用的更新日志</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">请稍候...</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">请稍候，正在检查更新...</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">作者： %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">无法与服务器建立连接</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">无法下载更新日志 ！</system:String>

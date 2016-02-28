@@ -13,15 +13,12 @@
     <system:String x:Key="Meta_translators">Tradukado de: -</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">osu! Beatmap List for osu!Sync</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Compressed osu! Beatmap List for osu!Sync</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Sorry, something went wrong.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">This message can be disabled in the settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -41,7 +38,6 @@
     <system:String x:Key="MainWindow_cantConnectToServer">Fini</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Checking for updates...</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Compressed osu!Sync Beatmap List</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Conversion aborted</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Conversion failed</system:String>
     <system:String x:Key="MainWindow_convertFile">_Convert file</system:String>
@@ -54,6 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Download mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Downloading %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Downloading</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Do you want to check which beatmap sets are affected?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Do you want to fix that?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Do you want to start osu! now?</system:String>
@@ -104,6 +101,14 @@
     <system:String x:Key="MainWindow_finished">Finished</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed. It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">Folders</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Generating interface...</system:String>
     <!-- | H -->
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">Open Beatmap List</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Open _Updater</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync Beatmap List</system:String>
     <system:String x:Key="MainWindow_overview">Overview</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Parsing installed beatmap sets...</system:String>
@@ -373,9 +377,7 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">No changelog available</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">Please wait...</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Please wait, checking for updates...</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">Published by: %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Unable to communicate with server</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Unable to dowload changelog!</system:String>

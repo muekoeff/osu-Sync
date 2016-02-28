@@ -13,15 +13,12 @@
     <system:String x:Key="Meta_translators">Diterjemahkan oleh: Kuuhaku722, -Troke-</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">Daftar Beatmap osu! di osu!Sync</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Daftar Beatmap osu! terkompres di osu!Sync</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file seems to be invalid or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Pesan ini dapat dinonaktifkan dalam pengaturan</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -41,7 +38,6 @@
     <system:String x:Key="MainWindow_cantConnectToServer">Tidak dapat menyambung ke server</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Memeriksa pembaruan...</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Daftar Beatmap osu!Sync terkompres</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Pengubahan di batalkan</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Pengubahan gagal</system:String>
     <system:String x:Key="MainWindow_convertFile">_Ubah file</system:String>
@@ -54,6 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Download Mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Mendownload %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Mendownload</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Apakah Anda ingin mengecek Beatmap set mana yang terpengaruh?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Apakah Anda ingin memperbaikinya?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Apakah Anda ingin menjalankan osu! sekarang?</system:String>
@@ -104,6 +101,14 @@
     <system:String x:Key="MainWindow_finished">Finished</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">At least one folder couldn't be parsed. It/They will be ignored.</system:String>
     <system:String x:Key="MainWindow_folders">Folder</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Membangun antarmuka...</system:String>
     <!-- | H -->
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">Buka daftar Beatmap</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Buka halaman daftar Beatmap di browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Buka _Pembaruan</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">Daftar Beatmap osu!Sync</system:String>
     <system:String x:Key="MainWindow_overview">Overview</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Menguraikan beatmap set terinstall...</system:String>
@@ -373,9 +377,7 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">Tidak ada catatan perubahan(changelog) tersedia</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">Harap menunggu...</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Harap menunggu, mengecek pembaruan...</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">Diterbitkan oleh: %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Tidak bisa terkoneksi ke server</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Tidak bisa mendownload catatan perubahan(changelog)!</system:String>

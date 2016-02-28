@@ -13,15 +13,12 @@
     <system:String x:Key="Meta_translators">Fordította: KriszDev</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">osu! Beatmap Lista az osy!Sync-hez</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">Tömörített osu! Betmap Lista az osu!Sync-hez</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">A konfigurációs fájl érvénytelen ezért az alkalmazás kitörli és újraindul.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Sajnáljuk, de valami féresikerült.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Ezt az üzenetet a beállításokban ki lehet kapcsolni</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -41,7 +38,6 @@
     <system:String x:Key="MainWindow_cantConnectToServer">Nem lehet kapcsolódni a szerverhez</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Frissítések keresése...</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">Törmörített osu!Sync Beatmap Lista</system:String>
     <system:String x:Key="MainWindow_conversionAborted">A konvertálás megszakadt</system:String>
     <system:String x:Key="MainWindow_conversionFailed">A konvertálás nem sikerült</system:String>
     <system:String x:Key="MainWindow_convertFile">_Fájl konvertálása</system:String>
@@ -54,6 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Letöltési tükör</system:String>
     <system:String x:Key="MainWindow_downloading">%0 letöltése...</system:String>
     <system:String x:Key="MainWindow_downloading1">Letöltés</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Szeretnéd kiválasztani hogy mely Beatmap csomagok értintettek?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Szeretnéd kijavítani?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Szertnéd elindítani az osu!-t?</system:String>
@@ -104,6 +101,14 @@
     <system:String x:Key="MainWindow_finished">Finished</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">Legalább egy mappát nem lehetett olvasni, ezek ki lesznek hagyva.</system:String>
     <system:String x:Key="MainWindow_folders">Mappák</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Felület lérehozása...</system:String>
     <!-- | H -->
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">Beatmap lista megnyitása</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Frissítő _Megnyitása</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync Beatmap Lista</system:String>
     <system:String x:Key="MainWindow_overview">Áttekintés</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Telepített Beatmap csomagok keresése...</system:String>
@@ -373,9 +377,7 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">A változások listája nem elérhető</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">Kérjük várjon...</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">Egy pillanat, frissítések keresése...</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">Készítette: %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">Nem lehet kommunikálni a szerverrel</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">Nem lehet letölteni a módosítások listáját!</system:String>

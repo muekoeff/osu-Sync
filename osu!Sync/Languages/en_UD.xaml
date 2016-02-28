@@ -13,15 +13,12 @@
     <system:String x:Key="Meta_translators">naseweis520 :ʎq uoıʇɐןsuɐɹʇ</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">ɔuʎs¡nso ɹoɟ ʇsıן dɐɯʇɐǝq ¡nso</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">ɔuʎs¡nso ɹoɟ ʇsıן dɐɯʇɐǝq ¡nso pǝssǝɹdɯoɔ</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">˙pǝʇɹɐʇsǝɹ uoıʇɐɔıןddɐ ǝɥʇ puɐ pǝʇǝןǝp ǝq ןןıʍ ʇı ˙pǝʇɐpʇno ɹo pıןɐʌuı ǝq oʇ sɯǝǝs ǝןıɟ uoıʇɐɹnƃıɟuoɔ ɹnoʎ</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">˙ƃuoɹʍ ʇuǝʍ ƃuıɥʇǝɯos 'ʎɹɹos</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">sƃuıʇʇǝs ǝɥʇ uı pǝןqɐsıp ǝq uɐɔ ǝƃɐssǝɯ sıɥʇ</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">sƃuıʇʇǝs uı ǝןqɐǝןqɐsıp ǝƃɐssǝɯ</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -41,7 +38,6 @@
     <system:String x:Key="MainWindow_cantConnectToServer">ɹǝʌɹǝs oʇ ʇɔǝuuoɔ ʇ,uɐɔ</system:String>
     <system:String x:Key="MainWindow_cantDownload">˙ɹoɹɹıɯ sıɥʇ ʎq pǝpıʌoɹd ʇ,usı ʇı ʇɐɥʇ ɹo ʇsıxǝ ʇou sǝop dɐɯʇɐǝq ǝɥʇ ʇɐɥʇ ǝq ʎɐɯ suosɐǝɹ ǝןqıssod ˙pǝpɐoןuʍop ǝq ʇ,upןnoɔ sdɐɯʇɐǝq ǝsǝɥʇ</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">˙˙˙sǝʇɐpdn ɹoɟ ƃuıʞɔǝɥɔ</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">ʇsıן dɐɯʇɐǝq ɔuʎs¡nso pǝssǝɹdɯoɔ</system:String>
     <system:String x:Key="MainWindow_conversionAborted">pǝʇɹoqɐ uoısɹǝʌuoɔ</system:String>
     <system:String x:Key="MainWindow_conversionFailed">pǝןıɐɟ uoısɹǝʌuoɔ</system:String>
     <system:String x:Key="MainWindow_convertFile">ǝןıɟ ʇɹǝʌuo_ɔ</system:String>
@@ -54,6 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">ɹoɹɹıɯ pɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downloading">˙˙˙%0 ƃuıpɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downloading1">ƃuıpɐoןuʍop</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">ןıɐuqɯnɥʇ dɐɯʇɐǝq pɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">¿pǝʇɔǝɟɟɐ ǝɹɐ sʇǝs dɐɯʇɐǝq ɥɔıɥʍ ʞɔǝɥɔ oʇ ʇuɐʍ noʎ op</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">¿ʇɐɥʇ xıɟ oʇ ʇuɐʍ noʎ op</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">¿ʍou ¡nso ʇɹɐʇs oʇ ʇuɐʍ noʎ op</system:String>
@@ -104,6 +101,14 @@
     <system:String x:Key="MainWindow_finished">pǝɥsıuıɟ</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">˙pǝɹouƃı ǝq ןןıʍ ʎǝɥʇ/ʇı ˙pǝsɹɐd ǝq ʇ,upןnoɔ ɹǝpןoɟ ǝuo ʇsɐǝן ʇɐ</system:String>
     <system:String x:Key="MainWindow_folders">sɹǝpןoɟ</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">sǝnןɐʌ pǝʇɐɹɐdǝs-ɹǝʇɔɐɹɐɥɔ/ǝןıɟ ʌsɔ</system:String>
+    <system:String x:Key="MainWindow_fileext_html">ǝןıɟ ןɯʇɥ</system:String>
+    <system:String x:Key="MainWindow_fileext_json">uoıʇɐʇou ʇɔǝɾqo ʇdıɹɔsɐʌɐɾ/ǝןıɟ uosɾ</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">ʇsıן dɐɯʇɐǝq ɔuʎs¡nso</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">ʇsıן dɐɯʇɐǝq ɔuʎs¡nso pǝssǝɹdɯoɔ</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">ǝןıɟ ʇxǝʇ</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">sǝןıɟ xןqso pǝddız</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">˙˙˙ǝɔɐɟɹǝʇuı ƃuıʇɐɹǝuǝƃ</system:String>
     <!-- | H -->
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">ʇsıן dɐɯʇɐǝq uǝdo</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">ɹǝsʍoɹq uı ǝƃɐd ƃuıʇsıן dɐɯʇɐǝq uǝdo</system:String>
     <system:String x:Key="MainWindow_openUpdater">ɹǝʇɐpd_n uǝdo</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">ʇsıן dɐɯʇɐǝq ɔuʎs¡nso</system:String>
     <system:String x:Key="MainWindow_overview">ʍǝıʌɹǝʌo</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">˙˙˙sʇǝs dɐɯʇɐǝq pǝןןɐʇsuı ƃuısɹɐd</system:String>
@@ -373,9 +377,7 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">ǝןqɐןıɐʌɐ ƃoןǝƃuɐɥɔ ou</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">˙˙˙ʇıɐʍ ǝsɐǝןd</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">˙˙˙sǝʇɐpdn ɹoɟ ƃuıʞɔǝɥɔ 'ʇıɐʍ ǝsɐǝןd</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">%0 :ʎq pǝɥsıןqnd</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">ɹǝʌɹǝs ɥʇıʍ ǝʇɐɔıunɯɯoɔ oʇ ǝןqɐun</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">¡ƃoןǝƃuɐɥɔ pɐoןʍop oʇ ǝןqɐun</system:String>

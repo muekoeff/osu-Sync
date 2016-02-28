@@ -10,18 +10,15 @@
     <!-- Meta & More -->
     <!-- | T -->
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
-    <system:String x:Key="Meta_translators">翻譯： Oinari-sama (稻荷), Moonlight Feather (飛羽)</system:String>
+    <system:String x:Key="Meta_translators">翻譯： Oinari-sama (稻荷), Moonlight Feather (飛羽), hongkongpeople (茄子)</system:String>
 
     <!-- GlobalVar -->
-    <!-- | E -->
-    <system:String x:Key="GlobalVar_extensionBeatmapList">osu!Sync 用的譜面清單</system:String>
-    <system:String x:Key="GlobalVar_extensionCompressedBeatmapList">osu!Sync 用的已壓縮譜面清單</system:String>
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">您的設定檔是無效的或過時的。它將會被刪除，程式將會重啟。</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">對不起，出現問題。</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">此信息可以在設置中停用</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -39,9 +36,8 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_取消</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">無法連接到伺服器</system:String>
-    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
+    <system:String x:Key="MainWindow_cantDownload">無法下載這些鋪面。有可能是某些譜面不存在或這個鏡像站沒有提供這些譜面。</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">正在檢查更新...</system:String>
-    <system:String x:Key="MainWindow_compressedOsuSyncBeatmapList">已壓縮的 osu!Sync 圖譜清單</system:String>
     <system:String x:Key="MainWindow_conversionAborted">轉換已中止</system:String>
     <system:String x:Key="MainWindow_conversionFailed">轉換失敗</system:String>
     <system:String x:Key="MainWindow_convertFile">轉換檔案(_C)</system:String>
@@ -50,10 +46,11 @@
     <!-- | D -->
     <system:String x:Key="MainWindow_downloadAndInstall">下載和安裝</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">下載圖譜(_D)</system:String>
-    <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">下載失敗。</system:String>
     <system:String x:Key="MainWindow_downloadMirror">鏡像下載</system:String>
     <system:String x:Key="MainWindow_downloading">下載中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下載中</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">要檢查哪些圖組受到影響嗎？</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">想要解決這個問題嗎？</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">現在要啟動 osu! 嗎？</system:String>
@@ -69,7 +66,7 @@
     <!-- | |> F -->
     <system:String x:Key="MainWindow_detailsPanel_favoriteCount">收藏數</system:String>
     <!-- | |> F -->
-    <system:String x:Key="MainWindow_detailsPanel_generalError">A general error occured.</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_generalError">發生錯誤。</system:String>
     <!-- | |> P -->
     <system:String x:Key="MainWindow_detailsPanel_passCount">平均過關次數</system:String>
     <system:String x:Key="MainWindow_detailsPanel_playCount">平均遊玩次數</system:String>
@@ -93,22 +90,30 @@
     <system:String x:Key="MainWindow_extensionDeleteFailed">無法刪除檔關聯。</system:String>
     <system:String x:Key="MainWindow_extensionDone">檔案關聯註冊成功，謝謝。(⌒▽⌒)☆</system:String>
     <system:String x:Key="MainWindow_extensionFailed">無法註冊檔關聯。</system:String>
-    <system:String x:Key="MainWindow_extensionNotAssociated">Some file extensions aren't associated with this application.</system:String>
-    <system:String x:Key="MainWindow_extensionWrong">Some file extensions are outdated.</system:String>
+    <system:String x:Key="MainWindow_extensionNotAssociated">一些檔案類型沒有和這個程式關聯。</system:String>
+    <system:String x:Key="MainWindow_extensionWrong">有一些檔案類型已經過時。</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_fetchedIdIsNaN">讀取的ID不是數字。</system:String>
     <system:String x:Key="MainWindow_fetching">讀取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">讀取中...</system:String>
     <system:String x:Key="MainWindow_file">檔案(_F)</system:String>
     <system:String x:Key="MainWindow_file404">無法開啟檔案。它不 (再) 存在。</system:String>
-    <system:String x:Key="MainWindow_finished">Finished</system:String>
+    <system:String x:Key="MainWindow_finished">任務完成</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">無法解析一個或更多資料夾。它 (們) 將被忽略。</system:String>
     <system:String x:Key="MainWindow_folders">資料夾</system:String>
+    <!-- >| FileExt -->
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成介面......</system:String>
     <!-- | H -->
     <system:String x:Key="MainWindow_help">幫助(_H)</system:String>
-    <system:String x:Key="MainWindow_hideInstalled">Hide already installed Beatmaps</system:String>
+    <system:String x:Key="MainWindow_hideInstalled">隱藏已經擁有的譜面</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID已分配</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">如果還有問題的話, 請用設定裏面的回饋選項留言給我們。</system:String>
@@ -139,7 +144,6 @@
     <system:String x:Key="MainWindow_openBeatmapList">開啟譜面清單</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">在瀏覽器中打開 osu! 圖譜頁面</system:String>
     <system:String x:Key="MainWindow_openUpdater">開啟更新程式(_U)</system:String>
-    <system:String x:Key="MainWindow_osuSyncBeatmapList">osu!Sync 譜面清單</system:String>
     <system:String x:Key="MainWindow_overview">概覽</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">解析已安裝的圖組...</system:String>
@@ -166,7 +170,7 @@
     <system:String x:Key="MainWindow_skippedBeatmaps">略過的圖組</system:String>
     <system:String x:Key="MainWindow_someBeatmapsDifferFromNormal">您的有些圖組不是一般格式。</system:String>
     <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenExported">有些圖組無法匯出</system:String>
-    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">Some beatmap sets hadn't been imported.</system:String>
+    <system:String x:Key="MainWindow_someBeatmapSetsHadntBeenImported">有一些譜面包沒有被匯入。</system:String>
     <system:String x:Key="MainWindow_syncCompleted">同步已完成</system:String>
     <system:String x:Key="MainWindow_synchronize">同步</system:String>
     <system:String x:Key="MainWindow_syncing">同步中...</system:String>
@@ -248,11 +252,11 @@
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">您確定真的要重設設定檔 (這是不可復原的)？</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">每 x 張譜面自動匯入已下載的圖組 (純數值)</system:String>
     <!-- | B -->
-    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
+    <system:String x:Key="WindowSettings_beatmapPanelCall">調出譜面面板</system:String>
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">類別</system:String>
-    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync (Only if elevated)</system:String>
+    <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">在每次同步時檢查檔案關聯（管理員權限）</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">檢查更新......</system:String>
     <system:String x:Key="WindowSettings_configuration">配置</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">建立桌面捷徑</system:String>
@@ -277,7 +281,7 @@
     <system:String x:Key="WindowSettings_generalFeedback">一般回饋</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">匯入/下載</system:String>
-    <system:String x:Key="WindowSettings_importerAskOsu">Ask whether to start osu! after import process</system:String>
+    <system:String x:Key="WindowSettings_importerAskOsu">完成匯入操作後，查詢是否啟動osu!</system:String>
     <system:String x:Key="WindowSettings_interface">介面</system:String>
     <system:String x:Key="WindowSettings_invalid">無效</system:String>
     <system:String x:Key="WindowSettings_invalidValue">數值無效！</system:String>
@@ -290,14 +294,14 @@
     <system:String x:Key="WindowSettings_maximumOnceAMonth">最多每週一次。</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAWeek">最多每個月一次 (不推薦)。</system:String>
     <system:String x:Key="WindowSettings_message">訊息</system:String>
-    <system:String x:Key="WindowSettings_monitoring">Monitoring</system:String>
+    <system:String x:Key="WindowSettings_monitoring">監控面版</system:String>
     <!-- | N -->
     <system:String x:Key="WindowSettings_never">永不 ヽ(≧Д≦)ノ  (不推薦)。</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">額，此資料夾還~不存在。</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">額，沒有設定檔...</system:String>
     <system:String x:Key="WindowSettings_notifications">通知</system:String>
     <!-- | O --> 
-    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, that's done. -- Do you want to restart osu!Sync now?</system:String>
+    <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">操作完成。要重新啟動 osu!Sync 嗎？</system:String>
     <system:String x:Key="WindowSettings_openApiLog">開啟API日誌檔案</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">開啟程式檔案資料夾</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">有更新時啟動更新程式。</system:String>
@@ -338,7 +342,7 @@
     <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">使用更新補丁工具來自動安裝更新</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">有效</system:String>
-    <system:String x:Key="WindowSettings_validate">Validate</system:String>
+    <system:String x:Key="WindowSettings_validate">驗證</system:String>
     <!-- | W -->
     <system:String x:Key="WindowSettings_warnNotElevated">由於程式目前沒有系統管理員權限，某些選項可能將被停用。</system:String>
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">圖譜資訊面板寬度 (純數值，5~95)</system:String>
@@ -373,14 +377,12 @@
     <!-- | N -->
     <system:String x:Key="WindowUpdater_noChangelogAvailable">沒有可用的更新日誌</system:String>
     <!-- | P -->
-    <system:String x:Key="WindowUpdater_pleaseWait">請稍候...</system:String>
     <system:String x:Key="WindowUpdater_pleaseWaitCheckingForUpdates">請稍候，正在檢查更新...</system:String>
-    <system:String x:Key="WindowUpdater_publishedBy">作者： %0</system:String>
     <!-- | U -->
     <system:String x:Key="WindowUpdater_unableToCommunicateWithServer">無法與伺服器連線</system:String>
     <system:String x:Key="WindowUpdater_unableToDownloadChangelog">無法下載更新日誌 ！</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">You're using the latest version</system:String>
+    <system:String x:Key="WindowUpdater_yourUsingTheLatestVersion">你正在使用最新版本</system:String>
     <system:String x:Key="WindowUpdater_yourVersion">您的版本： %0</system:String>
 
     <!-- Window_Welcome -->
@@ -389,9 +391,9 @@
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync 是用來匯出/匯入 osu! 譜面的免費工具。您可以製作方便分享的譜面清單。</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowWelcome_subtitle">... to osu!Sync.</system:String>
+    <system:String x:Key="WindowWelcome_subtitle">... 使用 osu!Sync</system:String>
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">歡迎</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">請注意，這個工具是由naseweis520開發的非官方工具，和osu! 和peppy沒有關係。</system:String>
 </ResourceDictionary>

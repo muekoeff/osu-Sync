@@ -221,22 +221,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_DeleteFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteFileAssociation.Click
-        Dim RegisterError As Boolean = False
-        Dim RegisterCounter As Integer = 0
-        For Each Extension As String In Application_FileExtensions
-            If DeleteFileAssociation(Extension, Application_FileExtensionsLong(RegisterCounter)) Then
-                RegisterCounter += 1
-            Else
-                RegisterError = True
-                Exit For
-            End If
-        Next
-
-        If Not RegisterError Then
-            MsgBox(_e("MainWindow_extensionDeleteDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
-        Else
-            MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-        End If
+        If DeleteOsuSyncFileAssociations() Then MsgBox(_e("MainWindow_extensionDeleteDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
     End Sub
 
     Private Sub Button_Tool_ImporterAuto_InstallCounter_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAuto_InstallCounter_Down.Click
@@ -285,18 +270,7 @@ Public Class Window_Settings
 
     Private Sub Button_Tool_Reset_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Reset.Click
         If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToReset"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
-            Dim RegisterError As Boolean = False
-            Dim RegisterCounter As Integer = 0
-            For Each Extension As String In Application_FileExtensions
-                If DeleteFileAssociation(Extension, Application_FileExtensionsLong(RegisterCounter)) Then
-                    RegisterCounter += 1
-                Else
-                    RegisterError = True
-                    Exit For
-                End If
-            Next
-
-            If RegisterError Then MsgBox(_e("MainWindow_extensionDeleteFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            DeleteOsuSyncFileAssociations()
             If Directory.Exists(I__Path_Programm) Then
                 Try
                     Directory.Delete(I__Path_Programm, True)
@@ -325,26 +299,7 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_UpdateFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_UpdateFileAssociation.Click
-        Dim RegisterError As Boolean = False
-        Dim RegisterCounter As Integer = 0
-        For Each Extension As String In Application_FileExtensions
-            If CreateFileAssociation(Extension,
-                                                     Application_FileExtensionsLong(RegisterCounter),
-                                                     Application_FileExtensionsDescription(RegisterCounter),
-                                                     Application_FileExtensionsIcon(RegisterCounter),
-                                                     Reflection.Assembly.GetExecutingAssembly().Location.ToString) Then
-                RegisterCounter += 1
-            Else
-                RegisterError = True
-                Exit For
-            End If
-        Next
-
-        If Not RegisterError Then
-            MsgBox(_e("MainWindow_extensionDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
-        Else
-            MsgBox(_e("MainWindow_extensionFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-        End If
+        CreateOsuSyncFileAssociations()
     End Sub
 
     Private Sub Button_Tool_Update_PathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Update_PathDefault.Click
