@@ -180,7 +180,7 @@
     <system:String x:Key="MainWindow_unableToCheckForUpdates">无法检查更新。</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">应用程序无法从指定的镜像中获取数据。可能是该镜像目前关闭中。请在设置窗口中选择其他镜像站点以便解决该问题。如果你想跳过这个文件请按“是”，跳过整个下载请按“否”</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
-    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder. Please specify the path to osu! in the following window.</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">找不到 osu! 文件夹。请在下面的窗口指定 osu! 的路径。</system:String>
     <system:String x:Key="MainWindow_unableToGetId">无法获取 ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">无法解析部分 beatmaps 的ID，他们将会无法提交（不能导出）。</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">无法获取更新包的下载路径。</system:String>

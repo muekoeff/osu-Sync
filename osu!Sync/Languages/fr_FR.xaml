@@ -18,7 +18,7 @@
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Désolé, une erreur s'est produite.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message désactivable dans les paramètres</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -50,7 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Serveur miroir</system:String>
     <system:String x:Key="MainWindow_downloading">Téléchargement %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Téléchargement</system:String>
-    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Télécharger la miniature de la Beatmap</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Voulez-vous vérifier quels beatmap sets sont affectés ?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Voulez-vous corriger cela ?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Voulez-vous démarrer osu! maintenant ?</system:String>
@@ -102,13 +102,13 @@
     <system:String x:Key="MainWindow_folderCouldntBeParsed">Au moins un dossier n'a pas pu être traité. Il(s) seront ignorés.</system:String>
     <system:String x:Key="MainWindow_folders">Dossiers</system:String>
     <!-- >| FileExt -->
-    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
-    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
-    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
-    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
-    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
-    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
-    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
+    <system:String x:Key="MainWindow_fileext_csv">Fichier CSV/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">Fichier HTML</system:String>
+    <system:String x:Key="MainWindow_fileext_json">Fichier JSON/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">Liste de Beatmaps osu!Sync</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">Liste compressée de Beatmaps osu!Sync</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">Fichier texte</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Fichier OSBLX compressé</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Génération de l'interface...</system:String>
     <!-- | H -->

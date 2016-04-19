@@ -17,7 +17,7 @@
             <TextBlock FontSize="18" Foreground="#111" Margin="0,5,0,0" Text="{DynamicResource WindowWelcome_message}" TextWrapping="Wrap" />
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom">
-            <Button x:Name="Button_SkipLogin" Content="{DynamicResource WindowWelcome_continue}" FontSize="14" VerticalAlignment="Top" Height="50" />
+            <Button x:Name="Button_SkipLogin" Content="{DynamicResource WindowWelcome_continue}" FontSize="14" Padding="5,15" VerticalAlignment="Top" />
             <TextBlock Foreground="#666" Text="{DynamicResource WindowWelcome_warning}" TextAlignment="Center" TextWrapping="Wrap" />
         </StackPanel>
     </Grid>

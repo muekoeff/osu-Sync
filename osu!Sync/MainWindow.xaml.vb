@@ -1496,14 +1496,17 @@ Class MainWindow
                     ' Reads straight from osu!.db
                     Dim DatabasePath As String = Setting_osu_Path + "\osu!.db"
                     Using Reader As OsuReader = New OsuReader(File.OpenRead(DatabasePath))
-                        Dim Version = Reader.ReadInt32()
-                        Dim FolderCount = Reader.ReadInt32()
-                        Reader.ReadBytes(9)
-                        Dim User = Reader.ReadString()
+                        ' More details: http://j.mp/1PIyjCY
+                        Reader.ReadInt32()                                          ' osu! version (e.g. 20150203) 
+                        Reader.ReadInt32()                                          ' Folder Count 
+                        Reader.ReadBoolean()                                        ' AccountUnlocked (only false when the account is locked or banned in any way)
+                        Reader.ReadDate()                                           ' Date the account will be unlocked 
+                        Reader.ReadString()                                         ' Player name 
+                        Dim BeatmapCount As Integer = Reader.ReadInt32()            ' Number of beatmaps 
                         Dim FoundIDs As New List(Of Integer)
-                        Dim BeatmapCount = Reader.ReadInt32()
-                        For i = 1 To BeatmapCount                                   ' More details: http://j.mp/1PIyjCY
+                        For i = 1 To BeatmapCount
                             Dim BeatmapDetails As New Beatmap
+                            Reader.ReadInt32()                                      ' Unknown 
                             BeatmapDetails.Artist = Reader.ReadString()             ' Artist name
                             Reader.ReadString()                                     '  Artist name, in Unicode
                             BeatmapDetails.Title = Reader.ReadString()              ' Song title

@@ -14,9 +14,9 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei scheint ungültig oder veraltet sein. Sie wird gelöscht und die Anwendung neugestartet.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei scheint ungültig oder veraltet zu sein. Sie wird gelöscht und die Anwendung wird neugestartet.</system:String>
     <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Entschuldigung, irgendetwas lief schief.</system:String>
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Entschuldigung, irgendetwas ist schief gegangen.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Nachricht in Einstellungen deaktivierbar</system:String>
     
@@ -36,8 +36,8 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cancel">_Abbrechen</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Verbindung zum Server nicht möglich</system:String>
-    <system:String x:Key="MainWindow_cantDownload">Diese Beatmaps konnten nicht heruntergeladen werden. Mögliche Gründe können sein, dass die Beatmap nicht existiert oder sie nicht von diesem Mirror zur Verfügung gestellt wird.</system:String>
-    <system:String x:Key="MainWindow_checkingForUpdates">Prüft auf Updates...</system:String>
+    <system:String x:Key="MainWindow_cantDownload">Diese Beatmaps konnten nicht heruntergeladen werden. Mögliche Gründe sind, dass die Beatmap nicht existiert oder sie nicht von diesem Mirror zur Verfügung gestellt wird.</system:String>
+    <system:String x:Key="MainWindow_checkingForUpdates">Auf Aktualisierungen überprüfen...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Konversion abgebrochen</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Konversion fehlgeschlagen</system:String>
     <system:String x:Key="MainWindow_convertFile">_Datei konvertieren</system:String>
@@ -60,7 +60,7 @@
     <!-- | |> B -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Beatmapdetails</system:String>
     <!-- | |> |> Beatmap Status -->
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Schwebend</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Unbestätigt</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Gerankt</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Ungerankt</system:String>
     <!-- | |> F -->

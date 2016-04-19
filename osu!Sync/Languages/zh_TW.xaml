@@ -50,7 +50,7 @@
     <system:String x:Key="MainWindow_downloadMirror">鏡像下載</system:String>
     <system:String x:Key="MainWindow_downloading">下載中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下載中</system:String>
-    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">下載譜面縮圖</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">要檢查哪些圖組受到影響嗎？</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">想要解決這個問題嗎？</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">現在要啟動 osu! 嗎？</system:String>
@@ -102,13 +102,13 @@
     <system:String x:Key="MainWindow_folderCouldntBeParsed">無法解析一個或更多資料夾。它 (們) 將被忽略。</system:String>
     <system:String x:Key="MainWindow_folders">資料夾</system:String>
     <!-- >| FileExt -->
-    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
-    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
-    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
-    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
-    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
-    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
-    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
+    <system:String x:Key="MainWindow_fileext_csv">CSV 檔案 / 字元分隔值 ( Character-Separated Values )</system:String>
+    <system:String x:Key="MainWindow_fileext_html">HTML 檔案</system:String>
+    <system:String x:Key="MainWindow_fileext_json">JSON 檔案 / JavaScript 物件標記 ( JavaScript Object Notation )</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync 譜面清單</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">壓縮的 osu!Sync 譜面清單</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">文字檔案</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zip壓縮的 OSBLX 檔案</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成介面......</system:String>
     <!-- | H -->
