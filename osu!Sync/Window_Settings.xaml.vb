@@ -45,34 +45,36 @@ Public Class Window_Settings
     End Function
 
     Private Sub Action_ApplySettings()
-        Setting_Api_Enabled_BeatmapPanel = CBool(CheckBox_Api_EnableInBeatmapPanel.IsChecked)
-        Setting_Api_Key = TextBox_Api_ApiKey.Text
-        Setting_osu_Path = TextBox_osu_Path.Text
-        Setting_osu_SongsPath = TextBox_osu_SongsPath.Text
-        Setting_Tool_CheckFileAssociation = CBool(CheckBox_Tool_CheckFileAssociation.IsChecked)
-        Setting_Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
-        Setting_Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
-        Setting_Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
-        Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then Setting_Tool_Importer_AutoInstallCounter = Val
-        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) AndAlso Val >= 5 And Val <= 95 Then Setting_Tool_Interface_BeatmapDetailPanelWidth = Val
-        Setting_Tool_SyncOnStartup = CBool(CheckBox_Tool_SyncOnStartup.IsChecked)
-        ' Load Language
-        Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
-        If Not ComboBox_Tool_Languages.Text = "" And Not Setting_Tool_Language = LanguageCode_Short Then
-            If Not GetTranslationName(LanguageCode_Short) = "" Then
-                LoadLanguage(GetTranslationName(LanguageCode_Short), LanguageCode_Short)
-                MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+        With AppSettings
+            .Api_Enabled_BeatmapPanel = CBool(CheckBox_Api_EnableInBeatmapPanel.IsChecked)
+            .Api_Key = TextBox_Api_ApiKey.Text
+            .osu_Path = TextBox_osu_Path.Text
+            .osu_SongsPath = TextBox_osu_SongsPath.Text
+            .Tool_CheckFileAssociation = CBool(CheckBox_Tool_CheckFileAssociation.IsChecked)
+            .Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
+            .Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
+            .Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
+            Dim Val As Integer
+            If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then .Tool_Importer_AutoInstallCounter = Val
+            If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) AndAlso Val >= 5 And Val <= 95 Then .Tool_Interface_BeatmapDetailPanelWidth = Val
+            .Tool_SyncOnStartup = CBool(CheckBox_Tool_SyncOnStartup.IsChecked)
+            ' Load Language
+            Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
+            If Not ComboBox_Tool_Languages.Text = "" And Not .Tool_Language = LanguageCode_Short Then
+                If Not GetTranslationName(LanguageCode_Short) = "" Then
+                    LoadLanguage(GetTranslationName(LanguageCode_Short), LanguageCode_Short)
+                    MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+                End If
             End If
-        End If
-        Setting_Tool_RequestElevationOnStartup = CBool(CheckBox_Tool_RequestElevationOnStartup.IsChecked)
-        Setting_Tool_Update_SavePath = TextBox_Tool_Update_Path.Text
-        Setting_Tool_Update_DeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
-        Setting_Tool_Update_UseDownloadPatcher = CBool(CheckBox_Tool_Update_UseDownloadPatcher.IsChecked)
-        Setting_Messages_Importer_AskOsu = CBool(CheckBox_Messages_Importer_AskOsu.IsChecked)
-        Setting_Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
-        Setting_Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
-        Action_SaveSettings()
+            .Tool_RequestElevationOnStartup = CBool(CheckBox_Tool_RequestElevationOnStartup.IsChecked)
+            .Tool_Update_SavePath = TextBox_Tool_Update_Path.Text
+            .Tool_Update_DeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
+            .Tool_Update_UseDownloadPatcher = CBool(CheckBox_Tool_Update_UseDownloadPatcher.IsChecked)
+            .Messages_Importer_AskOsu = CBool(CheckBox_Messages_Importer_AskOsu.IsChecked)
+            .Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
+            .Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
+            .SaveSettings()
+        End With
     End Sub
 
     Private Sub ApiClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
@@ -111,8 +113,8 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Api_OpenLog_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_OpenLog.Click
-        If File.Exists(I__Path_Programm & "\Logs\ApiAccess.txt") Then
-            Process.Start(I__Path_Programm & "\Logs\ApiAccess.txt")
+        If File.Exists(AppDataPath & "\Logs\ApiAccess.txt") Then
+            Process.Start(AppDataPath & "\Logs\ApiAccess.txt")
         Else
             MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End If
@@ -207,8 +209,8 @@ Public Class Window_Settings
 
     Private Sub Button_Tool_DeleteConfiguration_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteConfiguration.Click
         If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToDeleteConfig"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
-            If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
-                File.Delete(I__Path_Programm & "\Settings\Settings.config")
+            If File.Exists(AppDataPath & "\Settings\Settings.config") Then
+                File.Delete(AppDataPath & "\Settings\Settings.config")
 
                 If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                     Forms.Application.Restart()
@@ -261,8 +263,8 @@ Public Class Window_Settings
     End Sub
 
     Private Sub Button_Tool_OpenDataFolder_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_OpenDataFolder.Click
-        If Directory.Exists(I__Path_Programm) Then
-            Process.Start(I__Path_Programm)
+        If Directory.Exists(AppDataPath) Then
+            Process.Start(AppDataPath)
         Else
             MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
         End If
@@ -271,9 +273,9 @@ Public Class Window_Settings
     Private Sub Button_Tool_Reset_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Reset.Click
         If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToReset"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
             DeleteOsuSyncFileAssociations()
-            If Directory.Exists(I__Path_Programm) Then
+            If Directory.Exists(AppDataPath) Then
                 Try
-                    Directory.Delete(I__Path_Programm, True)
+                    Directory.Delete(AppDataPath, True)
                 Catch ex As IOException
                 End Try
             End If
@@ -317,7 +319,7 @@ Public Class Window_Settings
             .DefaultExt = "exe",
             .FileName = "osu!",
             .Filter = _e("WindowSettings_executableFiles") & " (*.exe)|*.exe",
-            .InitialDirectory = GetDetectedOsuPath(),
+            .InitialDirectory = AppSettings.DetectOsuPath(),
             .Multiselect = False,
             .Title = _e("WindowSettings_pleaseOpenOsu")}
 
@@ -351,8 +353,8 @@ Public Class Window_Settings
         Dim SelectDirectory As New Forms.FolderBrowserDialog With {
             .Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
             .ShowNewFolderButton = False}
-        If Directory.Exists(Setting_Tool_Update_SavePath) Then
-            SelectDirectory.SelectedPath = Setting_Tool_Update_SavePath
+        If Directory.Exists(AppSettings.Tool_Update_SavePath) Then
+            SelectDirectory.SelectedPath = AppSettings.Tool_Update_SavePath
         Else
             SelectDirectory.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
         End If
@@ -370,23 +372,23 @@ Public Class Window_Settings
             Button_Tool_UpdateFileAssociation.IsEnabled = False
         End If
 
-        CheckBox_Api_EnableInBeatmapPanel.IsChecked = Setting_Api_Enabled_BeatmapPanel
-        CheckBox_Messages_Importer_AskOsu.IsChecked = Setting_Messages_Importer_AskOsu
-        CheckBox_Messages_Updater_OpenUpdater.IsChecked = Setting_Messages_Updater_OpenUpdater
-        CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = Setting_Messages_Updater_UnableToCheckForUpdates
-        CheckBox_Tool_CheckFileAssociation.IsChecked = Setting_Tool_CheckFileAssociation
-        CheckBox_Tool_RequestElevationOnStartup.IsChecked = Setting_Tool_RequestElevationOnStartup
-        CheckBox_Tool_SyncOnStartup.IsChecked = Setting_Tool_SyncOnStartup
-        CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = Setting_Tool_Update_DeleteFileAfter
-        CheckBox_Tool_Update_UseDownloadPatcher.IsChecked = Setting_Tool_Update_UseDownloadPatcher
-        ComboBox_Tool_CheckForUpdates.SelectedIndex = Setting_Tool_CheckForUpdates
+        CheckBox_Api_EnableInBeatmapPanel.IsChecked = AppSettings.Api_Enabled_BeatmapPanel
+        CheckBox_Messages_Importer_AskOsu.IsChecked = AppSettings.Messages_Importer_AskOsu
+        CheckBox_Messages_Updater_OpenUpdater.IsChecked = AppSettings.Messages_Updater_OpenUpdater
+        CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = AppSettings.Messages_Updater_UnableToCheckForUpdates
+        CheckBox_Tool_CheckFileAssociation.IsChecked = AppSettings.Tool_CheckFileAssociation
+        CheckBox_Tool_RequestElevationOnStartup.IsChecked = AppSettings.Tool_RequestElevationOnStartup
+        CheckBox_Tool_SyncOnStartup.IsChecked = AppSettings.Tool_SyncOnStartup
+        CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = AppSettings.Tool_Update_DeleteFileAfter
+        CheckBox_Tool_Update_UseDownloadPatcher.IsChecked = AppSettings.Tool_Update_UseDownloadPatcher
+        ComboBox_Tool_CheckForUpdates.SelectedIndex = AppSettings.Tool_CheckForUpdates
         ' Load mirrors and select current one
         For Each a In Application_Mirrors
             ComboBox_Tool_DownloadMirror.Items.Add(a.Value.DisplayName)
             If a.Key = 0 Then ComboBox_Tool_DownloadMirror.Items.Add(New Separator)
         Next
-        ComboBox_Tool_DownloadMirror.SelectedIndex = Setting_Tool_DownloadMirror
-        ComboBox_Tool_EnableNotifyIcon.SelectedIndex = Setting_Tool_EnableNotifyIcon
+        ComboBox_Tool_DownloadMirror.SelectedIndex = AppSettings.Tool_DownloadMirror
+        ComboBox_Tool_EnableNotifyIcon.SelectedIndex = AppSettings.Tool_EnableNotifyIcon
         ' Load languages and select current one
         Dim InsertedCodes As New List(Of String)
         Dim Counter As Integer = 0
@@ -395,7 +397,7 @@ Public Class Window_Settings
         For Each a In Application_Languages
             If Not InsertedCodes.Contains(a.Value.Code) Then
                 If a.Value.Code = "en_US" Then IndexEN = Counter
-                If a.Key = Setting_Tool_Language Then IndexUserLanguage = Counter
+                If a.Key = AppSettings.Tool_Language Then IndexUserLanguage = Counter
                 InsertedCodes.Add(a.Value.Code)
                 ComboBox_Tool_Languages.Items.Add(a.Key & " | " & a.Value.DisplayName_English & "/" & a.Value.DisplayName)
                 Counter += 1
@@ -406,11 +408,11 @@ Public Class Window_Settings
         Else
             ComboBox_Tool_Languages.SelectedIndex = IndexEN
         End If
-        TextBox_Api_ApiKey.Text = Setting_Api_Key
-        TextBox_osu_Path.Text = Setting_osu_Path
-        TextBox_osu_SongsPath.Text = Setting_osu_SongsPath
-        Textbox_Tool_Importer_AutoInstallCounter.Text = Setting_Tool_Importer_AutoInstallCounter.ToString
-        TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = Setting_Tool_Interface_BeatmapDetailPanelWidth.ToString
-        TextBox_Tool_Update_Path.Text = Setting_Tool_Update_SavePath
+        TextBox_Api_ApiKey.Text = AppSettings.Api_Key
+        TextBox_osu_Path.Text = AppSettings.osu_Path
+        TextBox_osu_SongsPath.Text = AppSettings.osu_SongsPath
+        Textbox_Tool_Importer_AutoInstallCounter.Text = AppSettings.Tool_Importer_AutoInstallCounter.ToString
+        TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = AppSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString
+        TextBox_Tool_Update_Path.Text = AppSettings.Tool_Update_SavePath
     End Sub
 End Class

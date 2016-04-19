@@ -22,9 +22,9 @@
 
     Private Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 #If DEBUG Then
-        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", GetTranslationName(Setting_Tool_Language))
+        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", GetTranslationName(AppSettings.Tool_Language))
 #Else
-        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", GetTranslationName(Setting_Tool_Language))
+        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", GetTranslationName(AppSettings.Tool_Language))
 #End If
     End Sub
 End Class

@@ -14,6 +14,73 @@ Class Language
     Property DisplayName As String
     Property DisplayName_English As String
 End Class
+Class Settings
+    Public _version As String = My.Application.Info.Version.ToString
+    Public Api_Key As String = ""
+    Public Api_Enabled_BeatmapPanel As Boolean = False
+    Public osu_Path As String = DetectOsuPath(False)
+    Public osu_SongsPath As String = osu_Path & "\Songs"
+    Public Tool_CheckForUpdates As Integer = 3
+    Public Tool_CheckFileAssociation As Boolean = True
+    Public Tool_DownloadMirror As Integer = 0
+    Public Tool_EnableNotifyIcon As Integer = 0
+    Public Tool_Importer_AutoInstallCounter As Integer = 10
+    Public Tool_Interface_BeatmapDetailPanelWidth As Integer = 40
+    Public Tool_Language As String = "en"
+    Public Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
+    Public Tool_SyncOnStartup As Boolean = False
+    Public Tool_RequestElevationOnStartup As Boolean = False
+    Public Tool_Update_DeleteFileAfter As Boolean = True
+    Public Tool_Update_SavePath As String = I__Path_Temp & "\Updater"
+    Public Tool_Update_UseDownloadPatcher As Boolean = True
+    Public Messages_Importer_AskOsu As Boolean = True
+    Public Messages_Updater_OpenUpdater As Boolean = True
+    Public Messages_Updater_UnableToCheckForUpdates As Boolean = True
+
+    ''' <param name="AllowConfig"></param> Enable on initialization to prevent System.TypeInitializationException
+    ''' <returns>Path to osu!</returns>
+    Function DetectOsuPath(Optional AllowConfig As Boolean = True) As String
+        If AllowConfig AndAlso Directory.Exists(AppSettings.osu_Path) Then
+            Return AppSettings.osu_Path
+        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!") Then
+            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!"
+        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
+            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!"
+        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
+            Return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!"
+        Else
+            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+        End If
+    End Function
+
+    Sub LoadSettings()
+        If File.Exists(AppDataPath & "\Settings\Settings.json") Then
+            Try
+                AppSettings = JsonConvert.DeserializeObject(Of Settings)(File.ReadAllText(AppDataPath & "\Settings\Settings.json"))
+                ' Load language library
+                If Not GetTranslationName(AppSettings.Tool_Language) = "" Then LoadLanguage(GetTranslationName(AppSettings.Tool_Language), AppSettings.Tool_Language)
+                ' Perform compatibility check
+                Action_CheckCompatibility(New Version(AppSettings._version))
+            Catch ex As Exception
+                MessageBox.Show(_e("GlobalVar_invalidConfiguration"), AppDataPath, MessageBoxButton.OK, MessageBoxImage.Error)
+                File.Delete(AppDataPath & "\Settings\Settings.json")
+                Process.Start(Reflection.Assembly.GetExecutingAssembly().Location.ToString)
+                Windows.Application.Current.Shutdown()
+                Exit Sub
+            End Try
+        End If
+    End Sub
+
+    Sub SaveSettings()
+        Directory.CreateDirectory(AppDataPath & "\Settings")
+        Using ConfigFile = File.CreateText(AppDataPath & "\Settings\Settings.json")
+            Dim JO As JObject = JObject.FromObject(AppSettings)
+            Dim JS = New JsonSerializer()
+            JS.Serialize(ConfigFile, AppSettings)
+        End Using
+    End Sub
+End Class
+
 Module Global_Var
     Public Application_FileExtensions()() As String = {
             ({".nw520-osbl", "naseweis520.osuSync.osuBeatmapList", "MainWindow_fileext_osbl", """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2"}),
@@ -34,10 +101,14 @@ Module Global_Var
             .WebURL = "http://osu.uu.gl/"
         }}
     }
+
+    Public AppDataPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
+    Public AppName As String = My.Application.Info.AssemblyName
+    Public AppSettings As New Settings
+
     Public I__StartUpArguments() As String
     Public Const I__Path_Web_nw520OsySyncApi As String = "http://api.nw520.de/osuSync/"
     Public Const I__Path_Web_osuApi As String = "https://osu.ppy.sh/api/"
-    Public I__Path_Programm As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\naseweis520\osu!Sync"
     Public I__Path_Temp As String = Path.GetTempPath() & "naseweis520\osu!Sync"
     Public Const I__MsgBox_DefaultTitle As String = "osu!Sync"
     Public I__MsgBox_DefaultTitle_CanBeDisabled As String = "osu!Sync | " & _e("GlobalVar_messageCanBeDisabled")
@@ -45,27 +116,6 @@ Module Global_Var
     Public Tool_DontApplySettings As Boolean = False
     Public Tool_HasWriteAccessToOsu As Boolean = False  ' Set in MainWindow.xaml.vb\MainWindow_Loaded()
     Public Tool_IsElevated As Boolean = False   ' Set in Application.xaml.vb\Application_Startup()
-
-    Public Setting_Api_Key As String = ""
-    Public Setting_Api_Enabled_BeatmapPanel As Boolean = False
-    Public Setting_osu_Path As String = GetDetectedOsuPath()
-    Public Setting_osu_SongsPath As String = Setting_osu_Path & "\Songs"
-    Public Setting_Tool_CheckForUpdates As Integer = 3
-    Public Setting_Tool_CheckFileAssociation As Boolean = True
-    Public Setting_Tool_DownloadMirror As Integer = 0
-    Public Setting_Tool_EnableNotifyIcon As Integer = 0
-    Public Setting_Tool_Importer_AutoInstallCounter As Integer = 10
-    Public Setting_Tool_Interface_BeatmapDetailPanelWidth As Integer = 40
-    Public Setting_Tool_Language As String = "en"
-    Public Setting_Tool_LastCheckForUpdates As String = "01-01-2000 00:00:00"
-    Public Setting_Tool_SyncOnStartup As Boolean = False
-    Public Setting_Tool_RequestElevationOnStartup As Boolean = False
-    Public Setting_Tool_Update_DeleteFileAfter As Boolean = True
-    Public Setting_Tool_Update_SavePath As String = I__Path_Temp & "\Updater"
-    Public Setting_Tool_Update_UseDownloadPatcher As Boolean = True
-    Public Setting_Messages_Importer_AskOsu As Boolean = True
-    Public Setting_Messages_Updater_OpenUpdater As Boolean = True
-    Public Setting_Messages_Updater_UnableToCheckForUpdates As Boolean = True
 
     Function _e(ByRef Text As String) As String
         Try
@@ -195,20 +245,6 @@ Module Global_Var
         Return True
     End Function
 
-    Function GetDetectedOsuPath() As String
-        If Directory.Exists(Setting_osu_Path) Then
-            Return Setting_osu_Path
-        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!") Then
-            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\osu!"
-        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!") Then
-            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) & "\osu!"
-        ElseIf Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!") Then
-            Return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\osu!"
-        Else
-            Return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-        End If
-    End Function
-
     Function GetTranslationName(ByVal LanguageCode_Short As String) As String
         If Application_Languages.ContainsKey(LanguageCode_Short) Then
             Return Application_Languages(LanguageCode_Short).Code
@@ -225,15 +261,15 @@ Module Global_Var
         With JContent
             .Add("application", New JObject From {
                  {"isElevated", CStr(isElevated)},
-                 {"lastUpdateCheck", Setting_Tool_LastCheckForUpdates},
+                 {"lastUpdateCheck", AppSettings.Tool_LastCheckForUpdates},
                  {"version", My.Application.Info.Version.ToString}})
             .Add("config", New JObject From {
-                 {"downloadMirror", Setting_Tool_DownloadMirror.ToString},
-                 {"updateInterval", Setting_Tool_CheckForUpdates.ToString}})
+                 {"downloadMirror", AppSettings.Tool_DownloadMirror.ToString},
+                 {"updateInterval", AppSettings.Tool_CheckForUpdates.ToString}})
             .Add("language", New JObject From {
                  {"code", New JObject From {
-                    {"long", GetTranslationName(Setting_Tool_Language)},
-                    {"short", Setting_Tool_Language}
+                    {"long", GetTranslationName(AppSettings.Tool_Language)},
+                    {"short", AppSettings.Tool_Language}
                  }}})
             .Add("system", New JObject From {
                  {"cultureInfo", System.Globalization.CultureInfo.CurrentCulture.ToString()},
@@ -246,7 +282,7 @@ Module Global_Var
     End Function
 
     Sub LoadLanguage(ByVal LanguageCode_Long As String, ByVal LanguageCode_Short As String)
-        Setting_Tool_Language = LanguageCode_Short
+        AppSettings.Tool_Language = LanguageCode_Short
         Try
             Windows.Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
                                                                      .Source = New Uri("Languages/" & LanguageCode_Long & ".xaml", UriKind.Relative)})
@@ -280,82 +316,59 @@ Module Global_Var
         If ConfigVersion < My.Application.Info.Version Then  ' Detect update
             Select Case ConfigVersion
                 Case < New Version("1.0.0.1")
-                    If Setting_Tool_DownloadMirror = 1 Then
-                        Setting_Tool_DownloadMirror = 0
+                    If AppSettings.Tool_DownloadMirror = 1 Then
+                        AppSettings.Tool_DownloadMirror = 0
                         MsgBox("The previously selected mirror 'Loli.al' has been shutdown by the owner and therefore caused crashes in previous versions." & vbNewLine &
-                               "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Compatibility Check | osu!Sync")
-                        Action_SaveSettings()
+                               "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Compatibility Check | " & AppName)
+                        AppSettings.SaveSettings()
+                    End If
+                Case < New Version("1.0.0.13")
+                    If File.Exists(AppDataPath & "\Settings\Settings.config") Then
+                        If MessageBox.Show("osu!Sync 1.0.0.13 has an improved method of saving its configuration which will replace the old one in the next version." & vbNewLine &
+                                           "Your current, outdated version, is going to migrated to the new one now.", "Compatibility Check | " & AppName, MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.OK) = MessageBoxResult.OK Then
+                            AppSettings.SaveSettings()
+                            File.Delete(AppDataPath & "\Settings\Settings.config")
+                        End If
                     End If
             End Select
         End If
     End Sub
 
-    Sub Action_SaveSettings()
-        Directory.CreateDirectory(I__Path_Programm & "\Settings")
-        Using ConfigFile = File.CreateText(I__Path_Programm & "\Settings\Settings.config")
-            Dim Content As New Dictionary(Of String, String)
-            With Content
-                .Add("_version", My.Application.Info.Version.ToString)
-                .Add("Setting_Api_Enabled_BeatmapPanel", CStr(Setting_Api_Enabled_BeatmapPanel))
-                .Add("Setting_Api_Key", Setting_Api_Key)
-                .Add("Setting_osu_Path", Setting_osu_Path)
-                .Add("Setting_osu_SongsPath", Setting_osu_SongsPath)
-                .Add("Setting_Tool_CheckFileAssociation", CStr(Setting_Tool_CheckFileAssociation))
-                .Add("Setting_Tool_CheckForUpdates", CStr(Setting_Tool_CheckForUpdates))
-                .Add("Setting_Tool_DownloadMirror", CStr(Setting_Tool_DownloadMirror))
-                .Add("Setting_Tool_EnableNotifyIcon", CStr(Setting_Tool_EnableNotifyIcon))
-                .Add("Setting_Tool_Importer_AutoInstallCounter", CStr(Setting_Tool_Importer_AutoInstallCounter))
-                .Add("Setting_Tool_Interface_BeatmapDetailPanelWidth", CStr(Setting_Tool_Interface_BeatmapDetailPanelWidth))
-                .Add("Setting_Tool_Language", Setting_Tool_Language)
-                .Add("Setting_Tool_LastCheckForUpdates", CStr(Setting_Tool_LastCheckForUpdates))
-                .Add("Setting_Tool_RequestElevationOnStartup", CStr(Setting_Tool_RequestElevationOnStartup))
-                .Add("Setting_Tool_SyncOnStartup", CStr(Setting_Tool_SyncOnStartup))
-                .Add("Setting_Tool_Update_DeleteFileAfter", CStr(Setting_Tool_Update_DeleteFileAfter))
-                .Add("Setting_Tool_Update_SavePath", CStr(Setting_Tool_Update_SavePath))
-                .Add("Setting_Tool_Update_UseDownloadPatcher", CStr(Setting_Tool_Update_UseDownloadPatcher))
-                .Add("Setting_Messages_Importer_AskOsu", CStr(Setting_Messages_Importer_AskOsu))
-                .Add("Setting_Messages_Updater_OpenUpdater", CStr(Setting_Messages_Updater_OpenUpdater))
-                .Add("Setting_Messages_Updater_UnableToCheckForUpdates", CStr(Setting_Messages_Updater_UnableToCheckForUpdates))
-            End With
-            Dim Serializer = New JsonSerializer()
-            Serializer.Serialize(ConfigFile, Content)
-        End Using
-    End Sub
-
+    ' @DEPRECATED SINCE 1.0.0.13
     Sub Action_LoadSettings()
         Try
-            Dim ConfigFile As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(I__Path_Programm & "\Settings\Settings.config")), JObject)
+            Dim ConfigFile As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(AppDataPath & "\Settings\Settings.config")), JObject)
             Dim PreviousVersion As Version
 
             PreviousVersion = Version.Parse(CStr(ConfigFile.SelectToken("_version")))
-            If Not ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel") Is Nothing Then Setting_Api_Enabled_BeatmapPanel = CBool(ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel"))
-            If Not ConfigFile.SelectToken("Setting_Api_Key") Is Nothing Then Setting_Api_Key = CStr(ConfigFile.SelectToken("Setting_Api_Key"))
-            If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then Setting_osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
-            If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then Setting_osu_SongsPath = CStr(ConfigFile.SelectToken("Setting_osu_SongsPath"))
-            If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then Setting_Tool_CheckFileAssociation = CBool(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"))
-            If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then Setting_Tool_CheckForUpdates = CInt(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"))
-            If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then Setting_Tool_DownloadMirror = CInt(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"))
-            If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then Setting_Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter") Is Nothing Then Setting_Tool_Importer_AutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth") Is Nothing Then Setting_Tool_Interface_BeatmapDetailPanelWidth = CInt(ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth"))
+            If Not ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel") Is Nothing Then AppSettings.Api_Enabled_BeatmapPanel = CBool(ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel"))
+            If Not ConfigFile.SelectToken("Setting_Api_Key") Is Nothing Then AppSettings.Api_Key = CStr(ConfigFile.SelectToken("Setting_Api_Key"))
+            If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then AppSettings.osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
+            If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then AppSettings.osu_SongsPath = CStr(ConfigFile.SelectToken("Setting_osu_SongsPath"))
+            If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then AppSettings.Tool_CheckFileAssociation = CBool(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"))
+            If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then AppSettings.Tool_CheckForUpdates = CInt(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"))
+            If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then AppSettings.Tool_DownloadMirror = CInt(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"))
+            If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then AppSettings.Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter") Is Nothing Then AppSettings.Tool_Importer_AutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth") Is Nothing Then AppSettings.Tool_Interface_BeatmapDetailPanelWidth = CInt(ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth"))
             If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
-                Setting_Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
+                AppSettings.Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
                 ' Load language library
-                If Not GetTranslationName(Setting_Tool_Language) = "" Then LoadLanguage(GetTranslationName(Setting_Tool_Language), Setting_Tool_Language)
+                If Not GetTranslationName(AppSettings.Tool_Language) = "" Then LoadLanguage(GetTranslationName(AppSettings.Tool_Language), AppSettings.Tool_Language)
             End If
-            If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then Setting_Tool_LastCheckForUpdates = CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"))
-            If Not ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup") Is Nothing Then Setting_Tool_RequestElevationOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup"))
-            If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then Setting_Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then Setting_Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then Setting_Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then Setting_Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
-            If Not ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu") Is Nothing Then Setting_Messages_Importer_AskOsu = CBool(ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu"))
-            If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then Setting_Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
-            If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then Setting_Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
+            If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then AppSettings.Tool_LastCheckForUpdates = CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates"))
+            If Not ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup") Is Nothing Then AppSettings.Tool_RequestElevationOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup"))
+            If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then AppSettings.Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then AppSettings.Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then AppSettings.Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
+            If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then AppSettings.Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
+            If Not ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu") Is Nothing Then AppSettings.Messages_Importer_AskOsu = CBool(ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu"))
+            If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then AppSettings.Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
+            If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then AppSettings.Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
             Action_CheckCompatibility(PreviousVersion)
         Catch ex As Exception
             MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-            File.Delete(I__Path_Programm & "\Settings\Settings.config")
+            File.Delete(AppDataPath & "\Settings\Settings.config")
             Forms.Application.Restart()
             Application.Current.Shutdown()
             Exit Sub
@@ -483,11 +496,11 @@ Module Global_Var
     End Function
 
     Sub WriteToApiLog(Method As String, Optional Result As String = "{Failed}")
-        Directory.CreateDirectory(I__Path_Programm & "\Logs")
+        Directory.CreateDirectory(AppDataPath & "\Logs")
         Try
             ' Trim
             If Result.Length > 250 Then Result = Result.Substring(0, 247) & "..."
-            Dim Stream As StreamWriter = File.AppendText(I__Path_Programm & "\Logs\ApiAccess.txt")
+            Dim Stream As StreamWriter = File.AppendText(AppDataPath & "\Logs\ApiAccess.txt")
             Dim Content As String = ""
             Content += "[" & Now.ToString() & " / " & My.Application.Info.Version.ToString & "] "
             Content += Method & ":" & vbNewLine & vbTab & Result

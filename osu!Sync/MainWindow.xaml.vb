@@ -207,8 +207,8 @@ Class MainWindow
         Dim UpdateClient As New WebClient
         UpdateClient.DownloadStringAsync(New Uri(I__Path_Web_nw520OsySyncApi & "/app/updater.latestVersion.json"))
         AddHandler UpdateClient.DownloadStringCompleted, AddressOf UpdateClient_DownloadStringCompleted
-        Setting_Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
-        Action_SaveSettings()
+        AppSettings.Tool_LastCheckForUpdates = Date.Now.ToString("dd-MM-yyyy hh:mm:ss")
+        AppSettings.SaveSettings()
     End Sub
 
     ''' <summary>
@@ -503,7 +503,7 @@ Class MainWindow
     End Sub
 
     Function Action_ShowBalloon(Content As String, Optional Title As String = "osu!Sync", Optional Icon As BalloonIcon = BalloonIcon.Info, Optional BallonNextAction As NotifyNextAction = NotifyNextAction.None) As Boolean
-        If Setting_Tool_EnableNotifyIcon = 0 Then
+        If AppSettings.Tool_EnableNotifyIcon = 0 Then
             With NotifyIcon
                 .Tag = BallonNextAction
                 .ShowBalloonTip(Title, Content, Icon)
@@ -520,7 +520,7 @@ Class MainWindow
     ''' <remarks></remarks>
     Sub Action_StartOrFocusOsu()
         If Not Process.GetProcessesByName("osu!").Count > 0 Then
-            If File.Exists(Setting_osu_Path & "\osu!.exe") Then Process.Start(Setting_osu_Path & "\osu!.exe") Else MsgBox(_e("MainWindow_unableToFindOsuExe"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            If File.Exists(AppSettings.osu_Path & "\osu!.exe") Then Process.Start(AppSettings.osu_Path & "\osu!.exe") Else MsgBox(_e("MainWindow_unableToFindOsuExe"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
         Else
             For Each ObjProcess As Process In Process.GetProcessesByName("osu!")
                 AppActivate(ObjProcess.Id)
@@ -542,7 +542,7 @@ Class MainWindow
 
     Sub Action_ToggleMinimizeToTray()
         If Visibility = Visibility.Visible Then
-            Select Case Setting_Tool_EnableNotifyIcon
+            Select Case AppSettings.Tool_EnableNotifyIcon
                 Case 0, 2, 3
                     Visibility = Visibility.Hidden
                     NotifyIcon.Visibility = Visibility.Visible
@@ -551,7 +551,7 @@ Class MainWindow
             End Select
         Else
             Visibility = Visibility.Visible
-            Select Case Setting_Tool_EnableNotifyIcon
+            Select Case AppSettings.Tool_EnableNotifyIcon
                 Case 3, 4
                     NotifyIcon.Visibility = Visibility.Collapsed
             End Select
@@ -565,7 +565,7 @@ Class MainWindow
         End With
 
         ' NotifyIcon
-        Select Case Setting_Tool_EnableNotifyIcon
+        Select Case AppSettings.Tool_EnableNotifyIcon
             Case 0, 2
                 MenuItem_Program_MinimizeToTray.Visibility = Visibility.Visible
                 NotifyIcon.Visibility = Visibility.Visible
@@ -578,9 +578,9 @@ Class MainWindow
         End Select
 
         ' Check Write Access
-        Tool_HasWriteAccessToOsu = CheckDirAccess(Setting_osu_SongsPath)
+        Tool_HasWriteAccessToOsu = CheckDirAccess(AppSettings.osu_SongsPath)
         If Tool_HasWriteAccessToOsu = False Then
-            If Setting_Tool_RequestElevationOnStartup Then
+            If AppSettings.Tool_RequestElevationOnStartup Then
                 If Action_RequestElevation() Then
                     Windows.Application.Current.Shutdown()
                     Exit Sub
@@ -648,9 +648,9 @@ Class MainWindow
                         AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf Action_OpenBmDP
                         AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBeatmapListing
                     End If
-                    If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         Try
-                            UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                            UI_Thumbnail.Source = New BitmapImage(New Uri(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                         Catch ex As NotSupportedException
                             UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                         End Try
@@ -787,8 +787,8 @@ Class MainWindow
                     Grid.SetColumn(UI_Thumbnail, 1)
 
                     Dim ThumbPath As String = ""
-                    If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
-                        ThumbPath = (Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg")
+                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                        ThumbPath = (AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg")
                     ElseIf File.Exists(I__Path_Temp & "\Cache\Thumbnails\" & SelectedBeatmap.ID & ".jpg") Then
                         ThumbPath = (I__Path_Temp & "\Cache\Thumbnails\" & SelectedBeatmap.ID & ".jpg")
                     End If
@@ -891,7 +891,7 @@ Class MainWindow
 
                 If ImporterContainer.BeatmapList_Tag_ToInstall.Count = 0 Then Importer_Run.IsEnabled = False Else Importer_Run.IsEnabled = True
                 Importer_UpdateInfo()
-                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
+                Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(AppSettings.Tool_DownloadMirror).DisplayName
             Case UpdateBeatmapDisplayDestinations.Exporter
                 ExporterWrapper.Children.Clear()
                 For Each SelectedBeatmap As Beatmap In BeatmapList
@@ -919,9 +919,9 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
                     AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf Action_OpenBmDP
-                    If File.Exists(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
                         Try
-                            UI_Thumbnail.Source = New BitmapImage(New Uri(Setting_osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                            UI_Thumbnail.Source = New BitmapImage(New Uri(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
                         Catch ex As NotSupportedException
                             UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                         End Try
@@ -1033,7 +1033,7 @@ Class MainWindow
                 If Not JSON_Array.First Is Nothing Then
                     Dim CI As Globalization.CultureInfo
                     Try
-                        CI = New Globalization.CultureInfo(GetTranslationName(Setting_Tool_Language).Replace("_", "-"))
+                        CI = New Globalization.CultureInfo(GetTranslationName(AppSettings.Tool_Language).Replace("_", "-"))
                     Catch ex As Globalization.CultureNotFoundException
                         CI = New Globalization.CultureInfo("en-US")
                     End Try
@@ -1091,7 +1091,7 @@ Class MainWindow
     End Sub
 
     Sub Button_SyncDo_Click(sender As Object, e As RoutedEventArgs) Handles Button_SyncDo.Click
-        If Tool_IsElevated AndAlso Setting_Tool_CheckFileAssociation Then Action_CheckFileAssociation()
+        If Tool_IsElevated AndAlso AppSettings.Tool_CheckFileAssociation Then Action_CheckFileAssociation()
         Action_Sync_GetIDs()
     End Sub
 
@@ -1100,7 +1100,7 @@ Class MainWindow
     End Sub
 
     Sub Flyout_BeatmapDetails_RequestBringIntoView(sender As Object, e As RequestBringIntoViewEventArgs) Handles Flyout_BeatmapDetails.RequestBringIntoView
-        Flyout_BeatmapDetails.Width = Setting_Tool_Interface_BeatmapDetailPanelWidth * (ActualWidth / 100)
+        Flyout_BeatmapDetails.Width = AppSettings.Tool_Interface_BeatmapDetailPanelWidth * (ActualWidth / 100)
     End Sub
 
     Sub Interface_SetLoader(Optional Message As String = "Please wait")
@@ -1173,8 +1173,8 @@ Class MainWindow
 
         ' Thumbnail
         Dim ThumbPath As String = ""
-        If File.Exists(Setting_osu_Path & "\Data\bt\" & ID & "l.jpg") Then
-            ThumbPath = (Setting_osu_Path & "\Data\bt\" & ID & "l.jpg")
+        If File.Exists(AppSettings.osu_Path & "\Data\bt\" & ID & "l.jpg") Then
+            ThumbPath = (AppSettings.osu_Path & "\Data\bt\" & ID & "l.jpg")
         ElseIf File.Exists(I__Path_Temp & "\Cache\Thumbnails\" & ID & ".jpg") Then
             ThumbPath = (I__Path_Temp & "\Cache\Thumbnails\" & ID & ".jpg")
         End If
@@ -1189,7 +1189,7 @@ Class MainWindow
         End If
 
         ' Api
-        If Setting_Api_Enabled_BeatmapPanel And Not ID = -1 Then
+        If AppSettings.Api_Enabled_BeatmapPanel And Not ID = -1 Then
             If BeatmapDetailClient.IsBusy Then BeatmapDetailClient.CancelAsync()
             ' Reset
             BeatmapDetails_APIFavouriteCount.Text = "..."
@@ -1201,7 +1201,7 @@ Class MainWindow
             BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
 
             Try
-                BeatmapDetailClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & Setting_Api_Key & "&s=" & ID))
+                BeatmapDetailClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & AppSettings.Api_Key & "&s=" & ID))
             Catch ex As NotSupportedException
                 With BeatmapDetails_APIWarn
                     .Content = _e("MainWindow_detailsPanel_generalError")
@@ -1234,13 +1234,14 @@ Class MainWindow
 #End If
 
         ' Load Configuration
-        If File.Exists(I__Path_Programm & "\Settings\Settings.config") Then
+        If File.Exists(AppDataPath & "\Settings\Settings.json") Then
+            AppSettings.LoadSettings()
+        ElseIf File.Exists(AppDataPath & "\Settings\Settings.config") Then  ' @DEPRECATED SINCE 1.0.0.13
             Action_LoadSettings()
         Else
             Dim Window_Welcome As New Window_Welcome
             Window_Welcome.ShowDialog()
-
-            Action_SaveSettings()
+            AppSettings.SaveSettings()
         End If
 
         ' Apply settings (like NotifyIcon)
@@ -1250,14 +1251,14 @@ Class MainWindow
         If Directory.Exists(I__Path_Temp & "\Downloads\Beatmaps") Then Directory.Delete(I__Path_Temp & "\Downloads\Beatmaps", True)
 
         ' Check For Updates
-        Select Case Setting_Tool_CheckForUpdates
+        Select Case AppSettings.Tool_CheckForUpdates
             Case 0
                 Action_CheckForUpdates()
             Case 1
                 TextBlock_Programm_Updater.Content = _e("MainWindow_updatesDisabled")
             Case Else
                 Dim Interval As Integer
-                Select Case Setting_Tool_CheckForUpdates
+                Select Case AppSettings.Tool_CheckForUpdates
                     Case 3
                         Interval = 1
                     Case 4
@@ -1266,7 +1267,7 @@ Class MainWindow
                         Interval = 30
                 End Select
 
-                If DateDiff(DateInterval.Day, Date.ParseExact(Setting_Tool_LastCheckForUpdates, "dd-MM-yyyy hh:mm:ss", Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= Interval Then
+                If DateDiff(DateInterval.Day, Date.ParseExact(AppSettings.Tool_LastCheckForUpdates, "dd-MM-yyyy hh:mm:ss", Globalization.DateTimeFormatInfo.InvariantInfo), Date.Now) >= Interval Then
                     Action_CheckForUpdates()
                 Else
                     TextBlock_Programm_Updater.Content = _e("MainWindow_updateCheckNotNecessary")
@@ -1287,10 +1288,10 @@ Class MainWindow
                 Importer_ReadListFile(ImporterContainer.FilePath)
             Else
                 MsgBox(_e("MainWindow_file404"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                If Setting_Tool_SyncOnStartup Then Action_Sync_GetIDs()
+                If AppSettings.Tool_SyncOnStartup Then Action_Sync_GetIDs()
             End If
         Else
-            If Setting_Tool_SyncOnStartup Then Action_Sync_GetIDs()
+            If AppSettings.Tool_SyncOnStartup Then Action_Sync_GetIDs()
         End If
     End Sub
 
@@ -1448,14 +1449,14 @@ Class MainWindow
         Try
             Answer = JObject.Parse(e.Result)
         Catch ex As JsonReaderException
-            If Setting_Messages_Updater_UnableToCheckForUpdates Then
+            If AppSettings.Messages_Updater_UnableToCheckForUpdates Then
                 MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
                 MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
             End If
             TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
             Exit Sub
         Catch ex As Reflection.TargetInvocationException
-            If Setting_Messages_Updater_UnableToCheckForUpdates Then
+            If AppSettings.Messages_Updater_UnableToCheckForUpdates Then
                 MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle_CanBeDisabled)
             End If
             TextBlock_Programm_Updater.Content = _e("MainWindow_unableToCheckForUpdates")
@@ -1468,7 +1469,7 @@ Class MainWindow
         Else
             TextBlock_Programm_Updater.Content = _e("MainWindow_updateAvailable").Replace("%0", LatestVer)
             Action_ShowBalloon(_e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", LatestVer), , , NotifyNextAction.OpenUpdater)
-            If Setting_Messages_Updater_OpenUpdater Then Interface_ShowUpdaterWindow()
+            If AppSettings.Messages_Updater_OpenUpdater Then Interface_ShowUpdaterWindow()
         End If
     End Sub
 
@@ -1478,7 +1479,7 @@ Class MainWindow
         Arguments = TryCast(e.Argument, BGWcallback_SyncGetIDs)
         Dim Answer As New BGWcallback_SyncGetIDs
 
-        If Not Directory.Exists(Setting_osu_SongsPath) Then
+        If Not Directory.Exists(AppSettings.osu_SongsPath) Then
             Answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist
             e.Result = Answer
             Exit Sub
@@ -1488,13 +1489,13 @@ Class MainWindow
             Case BGWcallback_SyncGetIDs.ArgModes.Sync
                 BGW__Action_Sync_GetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
                                     .Progress__CurrentAction = BGWcallback_SyncGetIDs.ProgressCurrentActions.CountingTotalFolders,
-                                    .Progress__Current = Directory.GetDirectories(Setting_osu_SongsPath).Count})
+                                    .Progress__Current = Directory.GetDirectories(AppSettings.osu_SongsPath).Count})
 
                 Dim Beatmap_InvalidFolder As String = ""
                 Dim Beatmap_InvalidIDBeatmaps As String = ""
-                If File.Exists(Setting_osu_Path + "\osu!.db") Then
+                If File.Exists(AppSettings.osu_Path + "\osu!.db") Then
                     ' Reads straight from osu!.db
-                    Dim DatabasePath As String = Setting_osu_Path + "\osu!.db"
+                    Dim DatabasePath As String = AppSettings.osu_Path + "\osu!.db"
                     Using Reader As OsuReader = New OsuReader(File.OpenRead(DatabasePath))
                         ' More details: http://j.mp/1PIyjCY
                         Reader.ReadInt32()                                          ' osu! version (e.g. 20150203) 
@@ -1553,7 +1554,7 @@ Class MainWindow
                         Next
                     End Using
                 Else
-                    For Each DirectoryList As String In Directory.GetDirectories(Setting_osu_SongsPath)
+                    For Each DirectoryList As String In Directory.GetDirectories(AppSettings.osu_SongsPath)
                         Dim DirectoryInfo As New DirectoryInfo(DirectoryList)
                         If Not DirectoryInfo.Name.ToLower = "failed" And Not DirectoryInfo.Name.ToLower = "tutorial" Then
                             Dim FoundFile As Boolean = False
@@ -1840,8 +1841,8 @@ Class MainWindow
         Importer_Progress.Value = 0
         Importer_Progress.IsIndeterminate = True
         TextBlock_Progress.Content = _e("MainWindow_fetching").Replace("%0", CStr(ImporterContainer.BeatmapList_Tag_ToInstall.First.Beatmap.ID))
-        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(Setting_Tool_DownloadMirror).DisplayName
-        RequestURI = Application_Mirrors(Setting_Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(ImporterContainer.BeatmapList_Tag_ToInstall.First.Beatmap.ID))
+        Importer_DownloadMirrorInfo.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(AppSettings.Tool_DownloadMirror).DisplayName
+        RequestURI = Application_Mirrors(AppSettings.Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(ImporterContainer.BeatmapList_Tag_ToInstall.First.Beatmap.ID))
 
         With ImporterContainer.BeatmapList_Tag_ToInstall.First
             .UI_DecoBorderLeft.Fill = StandardColors.BlueLight
@@ -1873,7 +1874,7 @@ Class MainWindow
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
                 For Each FilePath In Directory.GetFiles(I__Path_Temp & "\Downloads\Beatmaps")
-                    File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                    File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath))
                 Next
                 With Importer_Progress
                     .IsIndeterminate = False
@@ -1911,7 +1912,7 @@ Class MainWindow
     End Sub
 
     Sub Importer_DownloadMirrorInfo_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles Importer_DownloadMirrorInfo.MouseDown
-        Process.Start(Application_Mirrors(Setting_Tool_DownloadMirror).WebURL)
+        Process.Start(Application_Mirrors(AppSettings.Tool_DownloadMirror).WebURL)
     End Sub
 
     Sub Importer_DownloadThumb(sender As Object, e As MouseButtonEventArgs)
@@ -1986,7 +1987,7 @@ Class MainWindow
         TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
         For Each FilePath In Directory.GetFiles(I__Path_Temp & "\Downloads\Beatmaps")
-            If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Else File.Delete(FilePath)
+            If Not File.Exists(AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath)) Else File.Delete(FilePath)
         Next
         With Importer_Progress
             .IsIndeterminate = False
@@ -2021,7 +2022,7 @@ Class MainWindow
                      _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BeatmapsTotal.ToString) & vbNewLine & vbNewLine &
                 _e("MainWindow_pressF5"))
 
-        If Setting_Messages_Importer_AskOsu AndAlso Not Process.GetProcessesByName("osu!").Count > 0 AndAlso MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
+        If AppSettings.Messages_Importer_AskOsu AndAlso Not Process.GetProcessesByName("osu!").Count > 0 AndAlso MessageBox.Show(_e("MainWindow_doYouWantToStartOsuNow"), I__MsgBox_DefaultTitle_CanBeDisabled, MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then Action_StartOrFocusOsu()
         Button_SyncDo.IsEnabled = True
         Importer_Cancel.IsEnabled = True
     End Sub
@@ -2032,7 +2033,7 @@ Class MainWindow
 
     Sub Importer_Downloader_ToNextDownload()
         If ImporterContainer.BeatmapList_Tag_ToInstall.Count > 0 Then
-            If Not Setting_Tool_Importer_AutoInstallCounter = 0 And Setting_Tool_Importer_AutoInstallCounter <= ImporterContainer.Counter Then  ' Install file if necessary
+            If Not AppSettings.Tool_Importer_AutoInstallCounter = 0 And AppSettings.Tool_Importer_AutoInstallCounter <= ImporterContainer.Counter Then  ' Install file if necessary
                 ImporterContainer.Counter = 0
                 With Importer_Progress
                     .IsIndeterminate = True
@@ -2042,9 +2043,9 @@ Class MainWindow
                 TextBlock_Progress.Content = _e("MainWindow_installingFiles")
 
                 For Each FilePath In Directory.GetFiles(I__Path_Temp & "\Downloads\Beatmaps")
-                    If Not File.Exists(Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
+                    If Not File.Exists(AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
                         Try
-                            File.Move(FilePath, Setting_osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                            File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath))
                         Catch ex As IOException
                             MsgBox("Unable to install beatmap '" & Path.GetFileName(FilePath) & "'.", MsgBoxStyle.Critical, "Debug | osu!Sync")
                         End Try

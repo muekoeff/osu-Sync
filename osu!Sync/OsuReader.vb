@@ -14,7 +14,7 @@ Public Class OsuReader
         Throw New IOException("Invalid string tag")
     End Function
 
-    Public Function ReadDate() As DateTime
+    Public Function ReadDate() As Date
         Return New DateTime(ReadInt64())
     End Function
 End Class
