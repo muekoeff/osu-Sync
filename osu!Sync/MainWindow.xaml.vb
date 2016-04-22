@@ -67,8 +67,7 @@ Public Class BGWcallback_SyncGetIDs
     Property Progress__Current As Integer
     Property Progress__CurrentAction As ProgressCurrentActions
     Property Return__Status As ReturnStatuses
-    Property Return__Sync_BmList_Installed As New List(Of Beatmap)
-    Property Return__Sync_BmList_InstalledIds As New List(Of Integer)
+    Property Return__Sync_BmDic_Installed As New Dictionary(Of Integer, Beatmap)
     Property Return__Sync_Warnings As String
 End Class
 
@@ -114,8 +113,7 @@ Class MainWindow
     Private WithEvents BmDP_Client As New WebClient
     Private WithEvents FadeOut As New DoubleAnimation()
 
-    Private BmList_Installed As New List(Of Beatmap)
-    Private BmList_InstalledIds As New List(Of Integer)
+    Private BmDic_Installed As New Dictionary(Of Integer, Beatmap)
     Private Exporter_BmList_SelectedTags As New List(Of Importer.TagData)
     Private Exporter_BmList_UnselectedTags As New List(Of Importer.TagData)
     Private ImporterContainer As New Importer
@@ -123,7 +121,7 @@ Class MainWindow
     Private Interface_LoaderProgressBar As New ProgressBar
     Private Sync_Done As Boolean = False
     Private Sync_Done_ImporterRequest As Boolean = False
-    Private Sync_Done_ImporterRequest_SaveValue As New List(Of Beatmap)
+    Private Sync_Done_ImporterRequest_SaveValue As New Dictionary(Of Integer, Beatmap)
 
     Private WithEvents BGW_SyncGetIDs As New ComponentModel.BackgroundWorker With {
         .WorkerReportsProgress = True,
@@ -147,11 +145,11 @@ Class MainWindow
     ''' <param name="Source">List of beatmaps</param>
     ''' <returns><code>List(Of Beatmap)</code> as CSV-String.</returns>
     ''' <remarks></remarks>
-    Function ConvertBmListToCSV(ByVal Source As List(Of Beatmap)) As String
+    Function ConvertBmListToCSV(Source As Dictionary(Of Integer, Beatmap)) As String
         Dim Content As String = "sep=;" & vbNewLine
         Content += "ID;Artist;Creator;Title" & vbNewLine
-        For Each SelectedBeatmap As Beatmap In Source
-            Content += SelectedBeatmap.ID & ";" & """" & SelectedBeatmap.Artist & """;""" & SelectedBeatmap.Creator & """;""" & SelectedBeatmap.Title & """" & vbNewLine
+        For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
+            Content += SelBm.Value.ID & ";" & """" & SelBm.Value.Artist & """;""" & SelBm.Value.Creator & """;""" & SelBm.Value.Title & """" & vbNewLine
         Next
         Return Content
     End Function
@@ -162,7 +160,7 @@ Class MainWindow
     ''' <param name="Source">List of beatmaps</param>
     ''' <returns><code>List(Of Beatmap)</code> as HTML and possible warnings together in a String().</returns>
     ''' <remarks></remarks>
-    Function ConvertBmListToHTML(ByVal Source As List(Of Beatmap)) As String()
+    Function ConvertBmListToHTML(Source As Dictionary(Of Integer, Beatmap)) As String()
         Dim Failed As String = ""
         Dim HTML_Source As String = "<!doctype html>" & vbNewLine &
             "<html>" & vbNewLine &
@@ -173,14 +171,14 @@ Class MainWindow
             vbTab & "<div id=""Sort""><ul><li><strong>Sort by...</strong></li><li><a class=""SortParameter"" href=""#Sort_Artist"">Artist</a></li><li><a class=""SortParameter"" href=""#Sort_Creator"">Creator</a></li><li><a class=""SortParameter"" href=""#Sort_SetName"">Name</a></li><li><a class=""SortParameter"" href=""#Sort_SetID"">Set ID</a></li></ul></div>" & vbNewLine &
             vbTab & "<div id=""ListWrapper"">"
 
-        For Each SelectedBeatmap As Beatmap In Source
-            If SelectedBeatmap.ID = -1 Then
-                Failed += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
+        For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
+            If SelBm.Value.ID = -1 Then
+                Failed += vbNewLine & "• " & SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist & " | " & SelBm.Value.Title
             Else
-                SelectedBeatmap.Artist.Replace("""", "'")
-                SelectedBeatmap.Creator.Replace("""", "'")
-                SelectedBeatmap.Title.Replace("""", "'")
-                HTML_Source += vbNewLine & vbTab & vbTab & "<article id=""beatmap-" & SelectedBeatmap.ID & """ data-artist=""" & SelectedBeatmap.Artist & """ data-creator=""" & SelectedBeatmap.Creator & """ data-setName=""" & SelectedBeatmap.Title & """ data-setID=""" & SelectedBeatmap.ID & """><a class=""DownloadArrow"" href=""https://osu.ppy.sh/d/" & SelectedBeatmap.ID & """ target=""_blank"">&#8250;</a><h1><span title=""Beatmap Set Name"">" & SelectedBeatmap.Title & "</span></h1><h2><span title=""Beatmap Set ID"">" & SelectedBeatmap.ID & "</span></h2><p><a class=""InfoTitle"" data-function=""artist"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Artist & """ target=""_blank"">Artist.</a> " & SelectedBeatmap.Artist & " <a class=""InfoTitle"" data-function=""creator"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelectedBeatmap.Creator & """ target=""_blank"">Creator.</a> " & SelectedBeatmap.Creator & " <a class=""InfoTitle"" data-function=""overview"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & """ target=""_blank"">Overview.</a> <a class=""InfoTitle"" data-function=""discussion"" href=""https://osu.ppy.sh/s/" & SelectedBeatmap.ID & "#disqus_thread"" target=""_blank"">Discussion.</a></p></article>"
+                SelBm.Value.Artist.Replace("""", "'")
+                SelBm.Value.Creator.Replace("""", "'")
+                SelBm.Value.Title.Replace("""", "'")
+                HTML_Source += vbNewLine & vbTab & vbTab & "<article id=""beatmap-" & SelBm.Value.ID & """ data-artist=""" & SelBm.Value.Artist & """ data-creator=""" & SelBm.Value.Creator & """ data-setName=""" & SelBm.Value.Title & """ data-setID=""" & SelBm.Value.ID & """><a class=""DownloadArrow"" href=""https://osu.ppy.sh/d/" & SelBm.Value.ID & """ target=""_blank"">&#8250;</a><h1><span title=""Beatmap Set Name"">" & SelBm.Value.Title & "</span></h1><h2><span title=""Beatmap Set ID"">" & SelBm.Value.ID & "</span></h2><p><a class=""InfoTitle"" data-function=""artist"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelBm.Value.Artist & """ target=""_blank"">Artist.</a> " & SelBm.Value.Artist & " <a class=""InfoTitle"" data-function=""creator"" href=""https://osu.ppy.sh/p/beatmaplist?q=" & SelBm.Value.Creator & """ target=""_blank"">Creator.</a> " & SelBm.Value.Creator & " <a class=""InfoTitle"" data-function=""overview"" href=""https://osu.ppy.sh/s/" & SelBm.Value.ID & """ target=""_blank"">Overview.</a> <a class=""InfoTitle"" data-function=""discussion"" href=""https://osu.ppy.sh/s/" & SelBm.Value.ID & "#disqus_thread"" target=""_blank"">Discussion.</a></p></article>"
             End If
         Next
         HTML_Source += "</div>" & vbNewLine &
@@ -200,24 +198,24 @@ Class MainWindow
     ''' <param name="Source">List of beatmaps</param>
     ''' <returns><code>List(Of Beatmap)</code> as OSBL and possible warnings together in a String().</returns>
     ''' <remarks></remarks>
-    Function ConvertBmListToJSON(Source As List(Of Beatmap)) As String()
+    Function ConvertBmListToJSON(Source As Dictionary(Of Integer, Beatmap)) As String()
         Dim Failed_Unsubmitted As String = ""
         Dim Failed_Alread_Assigned As String = ""
         Dim Content As New Dictionary(Of String, Dictionary(Of String, String))
         Content.Add("_info", New Dictionary(Of String, String) From {
                     {"_date", Date.Now.ToString("yyyyMMdd")},
                     {"_version", My.Application.Info.Version.ToString}})
-        For Each SelectedBeatmap As Beatmap In Source
-            If SelectedBeatmap.ID = -1 Then
-                Failed_Unsubmitted += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
-            ElseIf Content.ContainsKey(SelectedBeatmap.ID.ToString) Then
-                Failed_Alread_Assigned += vbNewLine & "• " & SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist & " | " & SelectedBeatmap.Title
+        For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
+            If SelBm.Value.ID = -1 Then
+                Failed_Unsubmitted += vbNewLine & "• " & SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist & " | " & SelBm.Value.Title
+            ElseIf Content.ContainsKey(SelBm.Value.ID.ToString) Then
+                Failed_Alread_Assigned += vbNewLine & "• " & SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist & " | " & SelBm.Value.Title
             Else
-                Content.Add(SelectedBeatmap.ID.ToString, New Dictionary(Of String, String) From {
-                            {"artist", SelectedBeatmap.Artist},
-                            {"creator", SelectedBeatmap.Creator},
-                            {"id", SelectedBeatmap.ID.ToString},
-                            {"title", SelectedBeatmap.Title}})
+                Content.Add(SelBm.Value.ID.ToString, New Dictionary(Of String, String) From {
+                            {"artist", SelBm.Value.Artist},
+                            {"creator", SelBm.Value.Creator},
+                            {"id", SelBm.Value.ID.ToString},
+                            {"title", SelBm.Value.Title}})
             End If
         Next
         Dim Content_Json As String = JsonConvert.SerializeObject(Content)
@@ -235,20 +233,20 @@ Class MainWindow
     ''' <param name="Source">List of beatmaps</param>
     ''' <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
     ''' <remarks></remarks>
-    Function ConvertBmListToTXT(Source As List(Of Beatmap)) As String
+    Function ConvertBmListToTXT(Source As Dictionary(Of Integer, Beatmap)) As String
         Dim Content As String = "// osu!Sync (" & My.Application.Info.Version.ToString & ") | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
-        For Each SelectedBeatmap As Beatmap In Source
-            Content += "=====   " & SelectedBeatmap.ID & "   =====" & vbNewLine &
-                "Creator: " & vbTab & SelectedBeatmap.Creator & vbNewLine &
-                "Artist: " & vbTab & SelectedBeatmap.Artist & vbNewLine &
-                "ID: " & vbTab & vbTab & vbTab & SelectedBeatmap.ID & vbNewLine &
-                "Title: " & vbTab & vbTab & SelectedBeatmap.Title & vbNewLine & vbNewLine
+        For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
+            Content += "=====   " & SelBm.Value.ID & "   =====" & vbNewLine &
+                "Creator: " & vbTab & SelBm.Value.Creator & vbNewLine &
+                "Artist: " & vbTab & SelBm.Value.Artist & vbNewLine &
+                "ID: " & vbTab & vbTab & vbTab & SelBm.Value.ID & vbNewLine &
+                "Title: " & vbTab & vbTab & SelBm.Value.Title & vbNewLine & vbNewLine
         Next
         Return Content
     End Function
 
-    Function ConvertSavedJSONtoListBeatmap(ByVal Source As JObject) As List(Of Beatmap)
-        Dim BeatmapList As New List(Of Beatmap)
+    Function ConvertSavedJSONtoListBeatmap(Source As JObject) As Dictionary(Of Integer, Beatmap)
+        Dim BeatmapList As New Dictionary(Of Integer, Beatmap)
 
         For Each SelectedToken As JToken In Source.Values
             If Not SelectedToken.Path.StartsWith("_") Then
@@ -256,22 +254,10 @@ Class MainWindow
                     .ID = CInt(SelectedToken.SelectToken("id")),
                     .Title = CStr(SelectedToken.SelectToken("title")),
                     .Artist = CStr(SelectedToken.SelectToken("artist"))}
-
                 If Not SelectedToken.SelectToken("artist") Is Nothing Then CurrentBeatmap.Creator = CStr(SelectedToken.SelectToken("creator"))
-                BeatmapList.Add(CurrentBeatmap)
+                BeatmapList.Add(CurrentBeatmap.ID, CurrentBeatmap)
             End If
         Next
-
-        Return BeatmapList
-    End Function
-
-    Function ConvertSavedJSONtoListBeatmapIDs(ByVal Source As JObject) As List(Of Integer)
-        Dim BeatmapList As New List(Of Integer)
-
-        For Each SelectedToken As JToken In Source.Values
-            If Not SelectedToken.Path.StartsWith("_") Then BeatmapList.Add(CInt(SelectedToken.SelectToken("id")))
-        Next
-
         Return BeatmapList
     End Function
 
@@ -321,7 +307,7 @@ Class MainWindow
     ''' <param name="Destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
     ''' <param name="LastUpdateTime">Only required when <paramref name="Destination"/> = Installed</param>
     ''' <remarks></remarks>
-    Sub BmDisplayUpdate(BeatmapList As List(Of Beatmap), Optional Destination As UpdateBmDisplayDestinations = UpdateBmDisplayDestinations.Installed, Optional LastUpdateTime As String = Nothing)
+    Sub BmDisplayUpdate(BeatmapList As Dictionary(Of Integer, Beatmap), Optional Destination As UpdateBmDisplayDestinations = UpdateBmDisplayDestinations.Installed, Optional LastUpdateTime As String = Nothing)
         Select Case Destination
             Case UpdateBmDisplayDestinations.Installed
                 With La_FooterLastSync
@@ -336,11 +322,11 @@ Class MainWindow
 
                 BeatmapWrapper.Children.Clear()
 
-                For Each SelectedBeatmap As Beatmap In BeatmapList
+                For Each SelBm As KeyValuePair(Of Integer, Beatmap) In BeatmapList
                     Dim UI_Grid = New Grid() With {
                         .Height = 80,
                         .Margin = New Thickness(0, 0, 0, 5),
-                        .Tag = SelectedBeatmap,
+                        .Tag = SelBm.Value,
                         .Width = Double.NaN}
                     With UI_Grid.ColumnDefinitions
                         .Add(New ColumnDefinition With {
@@ -356,15 +342,15 @@ Class MainWindow
                     Dim UI_DecoBorderLeft = New Rectangle
                     Dim UI_Thumbnail = New Image
                     Grid.SetColumn(UI_Thumbnail, 2)
-                    If SelectedBeatmap.ID = -1 Then
+                    If SelBm.Value.ID = -1 Then
                         AddHandler(UI_Thumbnail.MouseUp), AddressOf BmDP_Show
                     Else
                         AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf BmDP_Show
                         AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf OpenBmListing
                     End If
-                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelBm.Value.ID & "l.jpg") Then
                         Try
-                            UI_Thumbnail.Source = New BitmapImage(New Uri(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                            UI_Thumbnail.Source = New BitmapImage(New Uri(AppSettings.osu_Path & "\Data\bt\" & SelBm.Value.ID & "l.jpg"))
                         Catch ex As NotSupportedException
                             UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                         End Try
@@ -377,7 +363,7 @@ Class MainWindow
                         .Foreground = StandardColors.GrayDark,
                         .Height = 36,
                         .HorizontalAlignment = HorizontalAlignment.Left,
-                        .Text = SelectedBeatmap.Title,
+                        .Text = SelBm.Value.Title,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 4)
@@ -390,8 +376,8 @@ Class MainWindow
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 4)
-                    If Not SelectedBeatmap.ID = -1 Then UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmitted") & " | " & SelectedBeatmap.Artist
-                    If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
+                    If Not SelBm.Value.ID = -1 Then UI_TextBlock_Caption.Text = SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmitted") & " | " & SelBm.Value.Artist
+                    If Not SelBm.Value.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelBm.Value.Creator
                     Dim UI_Checkbox_IsInstalled = New CheckBox With {
                         .Content = _e("MainWindow_isInstalled"),
                         .HorizontalAlignment = HorizontalAlignment.Left,
@@ -463,10 +449,10 @@ Class MainWindow
                     Sync_GetIDs()
                     Exit Sub
                 End If
-                For Each SelectedBeatmap As Beatmap In BeatmapList
+                For Each SelBm As KeyValuePair(Of Integer, Beatmap) In BeatmapList
                     Bu_ImporterCancel.IsEnabled = True
                     Dim Check_IfInstalled As Boolean
-                    If BmList_InstalledIds.Contains(SelectedBeatmap.ID) Then Check_IfInstalled = True Else Check_IfInstalled = False
+                    If BmDic_Installed.ContainsKey(SelBm.Value.ID) Then Check_IfInstalled = True Else Check_IfInstalled = False
                     Dim UI_Grid = New Grid() With {
                         .Height = 51,
                         .Margin = New Thickness(0, 0, 0, 5),
@@ -489,10 +475,10 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
                     Dim ThumbPath As String = ""
-                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
-                        ThumbPath = (AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg")
-                    ElseIf File.Exists(AppTempPath & "\Cache\Thumbnails\" & SelectedBeatmap.ID & ".jpg") Then
-                        ThumbPath = (AppTempPath & "\Cache\Thumbnails\" & SelectedBeatmap.ID & ".jpg")
+                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelBm.Value.ID & "l.jpg") Then
+                        ThumbPath = (AppSettings.osu_Path & "\Data\bt\" & SelBm.Value.ID & "l.jpg")
+                    ElseIf File.Exists(AppTempPath & "\Cache\Thumbnails\" & SelBm.Value.ID & ".jpg") Then
+                        ThumbPath = (AppTempPath & "\Cache\Thumbnails\" & SelBm.Value.ID & ".jpg")
                     End If
                     If Not ThumbPath = "" Then
                         Try
@@ -524,7 +510,7 @@ Class MainWindow
                         .Height = 30,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
-                        .Text = SelectedBeatmap.Title,
+                        .Text = SelBm.Value.Title,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 2)
@@ -533,12 +519,12 @@ Class MainWindow
                         .FontSize = 12,
                         .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
-                        .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
+                        .Text = SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist,
                         .Margin = New Thickness(10, 30, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 2)
-                    If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
+                    If Not SelBm.Value.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelBm.Value.Creator
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_downloadAndInstall"),
                         .HorizontalAlignment = HorizontalAlignment.Right,
@@ -560,7 +546,7 @@ Class MainWindow
                     AddHandler(UI_Checkbox_IsSelected.Checked), AddressOf Importer_AddBmToSel
                     AddHandler(UI_Checkbox_IsSelected.Unchecked), AddressOf Importer_RemoveBmFromSel
                     Dim TagData As New Importer.TagData With {
-                        .Beatmap = SelectedBeatmap,
+                        .Beatmap = SelBm.Value,
                         .IsInstalled = Check_IfInstalled,
                         .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
                         .UI_DecoBorderLeft = UI_DecoBorderLeft,
@@ -587,7 +573,7 @@ Class MainWindow
                 TB_ImporterMirror.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(AppSettings.Tool_DownloadMirror).DisplayName
             Case UpdateBmDisplayDestinations.Exporter
                 SP_ExporterWrapper.Children.Clear()
-                For Each SelectedBeatmap As Beatmap In BeatmapList
+                For Each SelBm As KeyValuePair(Of Integer, Beatmap) In BeatmapList
                     Dim UI_Grid = New Grid() With {
                         .Height = 51,
                         .Margin = New Thickness(0, 0, 0, 5),
@@ -609,9 +595,9 @@ Class MainWindow
                         .VerticalAlignment = VerticalAlignment.Stretch}
                     Grid.SetColumn(UI_Thumbnail, 1)
                     AddHandler(UI_Thumbnail.MouseRightButtonUp), AddressOf BmDP_Show
-                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg") Then
+                    If File.Exists(AppSettings.osu_Path & "\Data\bt\" & SelBm.Value.ID & "l.jpg") Then
                         Try
-                            UI_Thumbnail.Source = New BitmapImage(New Uri(AppSettings.osu_Path & "\Data\bt\" & SelectedBeatmap.ID & "l.jpg"))
+                            UI_Thumbnail.Source = New BitmapImage(New Uri(AppSettings.osu_Path & "\Data\bt\" & SelBm.Value.ID & "l.jpg"))
                         Catch ex As NotSupportedException
                             UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
                         End Try
@@ -625,7 +611,7 @@ Class MainWindow
                         .Height = 30,
                         .HorizontalAlignment = HorizontalAlignment.Left,
                         .Margin = New Thickness(10, 0, 0, 0),
-                        .Text = SelectedBeatmap.Title,
+                        .Text = SelBm.Value.Title,
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Title, 2)
@@ -634,13 +620,13 @@ Class MainWindow
                         .FontSize = 12,
                         .Foreground = StandardColors.GreenDark,
                         .HorizontalAlignment = HorizontalAlignment.Left,
-                        .Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist,
+                        .Text = SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist,
                         .Margin = New Thickness(10, 30, 0, 0),
                         .TextWrapping = TextWrapping.Wrap,
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_TextBlock_Caption, 2)
-                    If Not SelectedBeatmap.ID = -1 Then UI_TextBlock_Caption.Text = SelectedBeatmap.ID.ToString & " | " & SelectedBeatmap.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelectedBeatmap.Artist
-                    If Not SelectedBeatmap.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelectedBeatmap.Creator
+                    If Not SelBm.Value.ID = -1 Then UI_TextBlock_Caption.Text = SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist Else UI_TextBlock_Caption.Text = _e("MainWindow_unsubmittedBeatmapCantBeExported") & " | " & SelBm.Value.Artist
+                    If Not SelBm.Value.Creator = "Unknown" Then UI_TextBlock_Caption.Text += " | " & SelBm.Value.Creator
                     Dim UI_Checkbox_IsSelected = New CheckBox With {
                         .Content = _e("MainWindow_selectToExport"),
                         .HorizontalAlignment = HorizontalAlignment.Right,
@@ -648,7 +634,7 @@ Class MainWindow
                         .Margin = New Thickness(10, 5, 0, 0),
                         .VerticalAlignment = VerticalAlignment.Top}
                     Grid.SetColumn(UI_Checkbox_IsSelected, 2)
-                    If SelectedBeatmap.ID = -1 Then
+                    If SelBm.Value.ID = -1 Then
                         With UI_Checkbox_IsSelected
                             .IsChecked = False
                             .IsEnabled = False
@@ -662,7 +648,7 @@ Class MainWindow
                         AddHandler(UI_Thumbnail.MouseLeftButtonUp), AddressOf Exporter_DetermineWheterAddOrRemove
                     End If
                     Dim TagData As New Importer.TagData With {
-                        .Beatmap = SelectedBeatmap,
+                        .Beatmap = SelBm.Value,
                         .UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
                         .UI_DecoBorderLeft = UI_DecoBorderLeft,
                         .UI_Grid = UI_Grid,
@@ -793,7 +779,7 @@ Class MainWindow
     End Sub
 #End Region
 
-    Sub Exporter_ExportBmDialog(Source As List(Of Beatmap), Optional DialogTitle As String = "")
+    Sub Exporter_ExportBmDialog(Source As Dictionary(Of Integer, Beatmap), Optional DialogTitle As String = "")
         If DialogTitle = "" Then DialogTitle = _e("MainWindow_exportInstalledBeatmaps1")
         Dim Dialog_SaveFile As New Microsoft.Win32.SaveFileDialog()
         With Dialog_SaveFile
@@ -1241,7 +1227,7 @@ Class MainWindow
             MsgBox(_e("MainWindow_youNeedToSyncFirst"), MsgBoxStyle.Exclamation, AppName)
             Exit Sub
         End If
-        Exporter_ExportBmDialog(BmList_Installed)
+        Exporter_ExportBmDialog(BmDic_Installed)
     End Sub
 
     Sub MI_FileExportSelected_Click(sender As Object, e As RoutedEventArgs) Handles MI_FileExportSelected.Click
@@ -1249,7 +1235,7 @@ Class MainWindow
             MsgBox(_e("MainWindow_youNeedToSyncFirst"), MsgBoxStyle.Exclamation, AppName)
             Exit Sub
         End If
-        BmDisplayUpdate(BmList_Installed, UpdateBmDisplayDestinations.Exporter)
+        BmDisplayUpdate(BmDic_Installed, UpdateBmDisplayDestinations.Exporter)
     End Sub
 
     Sub MI_FileOpenBmList_Click(sender As Object, e As RoutedEventArgs) Handles MI_FileOpenBmList.Click
@@ -1511,10 +1497,9 @@ Class MainWindow
 
                             If Not FoundIDs.Contains(BeatmapDetails.ID) Then
                                 FoundIDs.Add(BeatmapDetails.ID)
-                                Answer.Return__Sync_BmList_Installed.Add(BeatmapDetails)
-                                Answer.Return__Sync_BmList_InstalledIds.Add(BeatmapDetails.ID)
+                                Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
                                 BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
-                                    .Progress__Current = Answer.Return__Sync_BmList_InstalledIds.Count})
+                                    .Progress__Current = Answer.Return__Sync_BmDic_Installed.Count})
                             End If
                         Next
                     End Using
@@ -1574,10 +1559,9 @@ Class MainWindow
                                             Beatmap_InvalidIDBeatmaps += "• " & BeatmapDetails.ID & " | " & BeatmapDetails.Artist & " | " & BeatmapDetails.Title & vbNewLine
                                         End Try
                                     End If
-                                    Answer.Return__Sync_BmList_Installed.Add(BeatmapDetails)
-                                    Answer.Return__Sync_BmList_InstalledIds.Add(BeatmapDetails.ID)
+                                    Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
                                     BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
-                                        .Progress__Current = Answer.Return__Sync_BmList_InstalledIds.Count})
+                                        .Progress__Current = Answer.Return__Sync_BmDic_Installed.Count})
                                     Exit For
                                 End If
                             Next
@@ -1592,8 +1576,7 @@ Class MainWindow
                                         .ID = CInt(Beatmap_ID),
                                         .Title = Beatmap_Name,
                                         .Artist = Beatmap_Artist}
-                                    Answer.Return__Sync_BmList_Installed.Add(CurrentBeatmap)
-                                    Answer.Return__Sync_BmList_InstalledIds.Add(CInt(Beatmap_ID))
+                                    Answer.Return__Sync_BmDic_Installed.Add(CurrentBeatmap.ID, CurrentBeatmap)
                                 Catch ex As Exception
                                     Beatmap_InvalidFolder += "• " & DirectoryInfo.Name & vbNewLine
                                 End Try
@@ -1630,7 +1613,7 @@ Class MainWindow
         Dim Answer As BGWcallback_SyncGetIDs = TryCast(e.Result, BGWcallback_SyncGetIDs)
         Select Case Answer.Return__Status
             Case 0
-                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BmList_InstalledIds.Count.ToString)
+                Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BmDic_Installed.Count.ToString)
                 If Not Answer.Return__Sync_Warnings = "" Then
                     If MessageBox.Show(_e("MainWindow_someBeatmapsDifferFromNormal") & vbNewLine &
                                        _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
@@ -1641,11 +1624,10 @@ Class MainWindow
                         End With
                     End If
                 End If
-                BmList_Installed = Answer.Return__Sync_BmList_Installed
-                BmList_InstalledIds = Answer.Return__Sync_BmList_InstalledIds
+                BmDic_Installed = Answer.Return__Sync_BmDic_Installed
 
                 Sync_Done = True
-                BmDisplayUpdate(BmList_Installed)
+                BmDisplayUpdate(BmDic_Installed)
                 OverlayShow(_e("MainWindow_syncCompleted"), "")
                 OverlayFadeOut()
 
@@ -1706,9 +1688,9 @@ Class MainWindow
     End Sub
 
     Sub Bu_ExporterRun_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ExporterRun.Click
-        Dim Result As New List(Of Beatmap)
+        Dim Result As New Dictionary(Of Integer, Beatmap)
         For Each Item As Importer.TagData In Exporter_BmList_SelectedTags
-            Result.Add(Item.Beatmap)
+            Result.Add(Item.Beatmap.ID, Item.Beatmap)
         Next
         Exporter_ExportBmDialog(Result, "Export selected beatmaps")
         TI_Exporter.Visibility = Visibility.Collapsed
