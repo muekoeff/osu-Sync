@@ -1,30 +1,30 @@
-﻿Public Class Window_About
+﻿Class Window_About
 
-    Private Sub Contact_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles Contact.MouseUp
+    Sub TB_Contact_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_Contact.MouseUp
         Process.Start("mailto:team@nw520.de?subject=Contact%20|%20osu!Sync")
     End Sub
 
-    Private Sub Feedback_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles Feedback.MouseUp
+    Sub TB_Feedback_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_Feedback.MouseUp
         MainWindow.Interface_ShowSettingsWindow(4)
     End Sub
 
-    Private Sub GitHub_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles GitHub.MouseUp
+    Sub TB_GitHub_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_GitHub.MouseUp
         Process.Start("https://github.com/naseweis520/osu-Sync")
     End Sub
 
-    Private Sub osuForum_MouseUp(sender As Object, e As MouseEventArgs) Handles osuForum.MouseUp
+    Sub TB_osuForum_MouseUp(sender As Object, e As MouseEventArgs) Handles TB_osuForum.MouseUp
         Process.Start("https://osu.ppy.sh/forum/t/270446")
     End Sub
 
-    Private Sub TextBlock_Version_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TextBlock_Version.MouseUp
+    Sub TB_Version_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_Version.MouseUp
         MainWindow.Interface_ShowUpdaterWindow()
     End Sub
 
-    Private Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+    Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 #If DEBUG Then
-        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", GetTranslationName(AppSettings.Tool_Language))
+        TB_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", TranslationNameGet(AppSettings.Tool_Language))
 #Else
-        TextBlock_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", GetTranslationName(AppSettings.Tool_Language))
+        TB_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", TranslationNameGet(AppSettings.Tool_Language))
 #End If
     End Sub
 End Class

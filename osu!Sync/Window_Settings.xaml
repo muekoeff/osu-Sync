@@ -16,18 +16,18 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock FontSize="48" FontWeight="Light" Foreground="#27AE60" Text="{DynamicResource MainWindow_settings}" VerticalAlignment="Top" />
-        <TabControl x:Name="Tabber" Margin="0,64,0,0">
+        <TabControl x:Name="TC_Main" Margin="0,64,0,0">
             <TabItem Header="{DynamicResource WindowSettings_general}">
                 <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock x:Name="TextBlock_WarnNotElevated" Foreground="#AAAAAA" Margin="0,0,0,5" Text="{DynamicResource WindowSettings_warnNotElevated}" TextAlignment="Center" />
+                        <TextBlock x:Name="TB_NotElevated" Foreground="#AAA" Margin="0,0,0,5" Text="{DynamicResource WindowSettings_warnNotElevated}" TextAlignment="Center" />
                         <Expander Header="{DynamicResource WindowSettings_general}" Margin="0">
                             <StackPanel>
-                                <CheckBox x:Name="CheckBox_Tool_SyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" />
-                                <CheckBox x:Name="CheckBox_Tool_CheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
-                                <CheckBox x:Name="CheckBox_Tool_RequestElevationOnStartup" Content="{DynamicResource WindowSettings_requestElevationOnStartup}" Margin="0,5,0,0" />
+                                <CheckBox x:Name="CB_ToolSyncOnStartup" Content="{DynamicResource WindowSettings_syncOnStartup}" />
+                                <CheckBox x:Name="CB_ToolCheckFileAssociation" Content="{DynamicResource WindowSettings_checkFileAssociationsEverySync}" Margin="0,5,0,0" />
+                                <CheckBox x:Name="CB_ToolRequestElevationOnStartup" Content="{DynamicResource WindowSettings_requestElevationOnStartup}" Margin="0,5,0,0" />
                                 <TextBlock Text="{DynamicResource WindowSettings_enableNotifyIconInTrayArea}" TextWrapping="Wrap" Margin="0,5,0,0"/>
-                                <ComboBox x:Name="ComboBox_Tool_EnableNotifyIcon">
+                                <ComboBox x:Name="CB_ToolEnableNotifyIcon">
                                     <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysEnableNotifyBalloons}" />
                                     <Separator />
                                     <ComboBoxItem Content="{DynamicResource WindowSettings_showAlwaysDisableNotifyBalloons}" />
@@ -39,7 +39,7 @@
                         <Expander Header="{DynamicResource WindowSettings_updater}" Margin="0">
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" />
-                                <ComboBox x:Name="ComboBox_Tool_CheckForUpdates">
+                                <ComboBox x:Name="CB_ToolCheckForUpdates">
                                     <ComboBoxItem Content="{DynamicResource WindowSettings_everyLaunch}" />
                                     <ComboBoxItem Content="{DynamicResource WindowSettings_never}" />
                                     <Separator />
@@ -53,24 +53,24 @@
                                         <ColumnDefinition Width="8*" />
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="TextBox_Tool_Update_Path" Height="23" TextWrapping="Wrap" />
-                                    <Button x:Name="Button_Tool_Update_PathDefault" Content="{DynamicResource WindowSettings_default}" Margin="2,0,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Grid.Column="1" />
+                                    <TextBox x:Name="TB_ToolUpdate_Path" Height="23" TextWrapping="Wrap" />
+                                    <Button x:Name="Bu_ToolUpdate_PathDefault" Content="{DynamicResource WindowSettings_default}" Margin="2,0,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Grid.Column="1" />
                                 </Grid>
-                                <CheckBox x:Name="CheckBox_Tool_Update_UseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
-                                <CheckBox x:Name="CheckBox_Tool_UpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
+                                <CheckBox x:Name="CB_ToolUpdate_UseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
+                                <CheckBox x:Name="CB_ToolUpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
                             </StackPanel>
                         </Expander>
                         <Expander Header="{DynamicResource WindowSettings_language}" Margin="0">
                             <StackPanel>
                                 <!-- [REF] Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
-                                <ComboBox x:Name="ComboBox_Tool_Languages" />
+                                <ComboBox x:Name="CB_ToolLanguages" />
                             </StackPanel>
                         </Expander>
                         <Expander Header="{DynamicResource WindowSettings_importDownload}" Margin="0">
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource WindowSettings_useThisDownloadMirror}" />
                                 <!-- [REF] Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
-                                <ComboBox x:Name="ComboBox_Tool_DownloadMirror" />
+                                <ComboBox x:Name="CB_ToolDownloadMirror" />
                                 <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -78,9 +78,9 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="Textbox_Tool_Importer_AutoInstallCounter" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" />
-                                    <Button x:Name="Button_Tool_Importer_AutoInstallCounter_Up" Content="˄" Margin="2,0,0,0" Grid.Column="1" />
-                                    <Button x:Name="Button_Tool_ImporterAuto_InstallCounter_Down" Content="˅" Margin="2,0,0,0" Grid.Column="2" />
+                                    <TextBox x:Name="TB_ToolImporterAutoInstallCounter" Text="0" ToolTip="{DynamicResource WindowSettings_tt_enter0ToInstallWhenAllDownloadsFinished}" />
+                                    <Button x:Name="Bu_ToolImporterAutoInstallCounterUp" Content="˄" Margin="2,0,0,0" Grid.Column="1" />
+                                    <Button x:Name="Bu_ToolImporterAutoInstallCounterDown" Content="˅" Margin="2,0,0,0" Grid.Column="2" />
                                 </Grid>
                             </StackPanel>
                         </Expander>
@@ -94,20 +94,20 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="TextBox_Tool_Interface_BeatmapDetailPanelWidth" />
+                                    <TextBox x:Name="TB_ToolInterface_BeatmapDetailPanelWidth" />
                                     <TextBlock Margin="2,5,0,0" Grid.Column="1">%</TextBlock>
-                                    <Button x:Name="Button_Tool_Interface_BeatmapDetailPanelWidth_Up" Content="˄" Margin="2,0,0,0" Grid.Column="2" />
-                                    <Button x:Name="Button_Tool_Interface_BeatmapDetailPanelWidth_Down" Content="˅" Margin="2,0,0,0" Grid.Column="3" />
+                                    <Button x:Name="Bu_ToolInterface_BeatmapDetailPanelWidth_Up" Content="˄" Margin="2,0,0,0" Grid.Column="2" />
+                                    <Button x:Name="Bu_ToolInterface_BeatmapDetailPanelWidth_Down" Content="˅" Margin="2,0,0,0" Grid.Column="3" />
                                 </Grid>
                             </StackPanel>
                         </Expander>
-                        <Button x:Name="Button_CreateShortcut" Content="{DynamicResource WindowSettings_createShortcutOnDesktop}" FontSize="12" Margin="0,15,0,0" />
-                        <Button x:Name="Button_Tool_RestartElevated" Content="{DynamicResource WindowSettings_restartElevated}" FontSize="12" Margin="0,5,0,0" />
-                        <Button x:Name="Button_Tool_OpenDataFolder" Content="{DynamicResource WindowSettings_openDataFolder}" FontSize="12" Margin="0,5,0,0" />
-                        <Button x:Name="Button_Tool_UpdateFileAssociation" Content="{DynamicResource WindowSettings_updateFileAssocations}" FontSize="12" Margin="0,5,0,0" />
-                        <Button x:Name="Button_Tool_DeleteConfiguration" Content="{DynamicResource WindowSettings_deleteConfiguration}" FontSize="12" Margin="0,15,0,0" />
-                        <Button x:Name="Button_Tool_DeleteFileAssociation" Content="{DynamicResource WindowSettings_deleteFileAssociation}" FontSize="12" Margin="0,5,0,0" />
-                        <Button x:Name="Button_Tool_Reset" Content="{DynamicResource WindowSettings_resetOsuSync}" FontSize="12" Margin="0,15,0,0" />
+                        <Button x:Name="Bu_CreateShortcut" Content="{DynamicResource WindowSettings_createShortcutOnDesktop}" FontSize="12" Margin="0,15,0,0" />
+                        <Button x:Name="Bu_ToolRestartElevated" Content="{DynamicResource WindowSettings_restartElevated}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Bu_ToolOpenDataFolder" Content="{DynamicResource WindowSettings_openDataFolder}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Bu_ToolUpdateFileAssociation" Content="{DynamicResource WindowSettings_updateFileAssocations}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Bu_ToolDeleteConfiguration" Content="{DynamicResource WindowSettings_deleteConfiguration}" FontSize="12" Margin="0,15,0,0" />
+                        <Button x:Name="Bu_ToolDeleteFileAssociation" Content="{DynamicResource WindowSettings_deleteFileAssociation}" FontSize="12" Margin="0,5,0,0" />
+                        <Button x:Name="Bu_ToolReset" Content="{DynamicResource WindowSettings_resetOsuSync}" FontSize="12" Margin="0,15,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -115,15 +115,15 @@
                 <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
                         <TextBlock Text="{DynamicResource WindowSettings_pathToOsu}" />
-                        <TextBox x:Name="TextBox_osu_Path" Height="23" />
+                        <TextBox x:Name="TB_osu_Path" Height="23" />
                         <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_pathToSongsFolder}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TextBox_osu_SongsPath" />
-                            <Button x:Name="Button_osu_SongPathDefault" Content="{DynamicResource WindowSettings_default}" Margin="2,0,0,0" Grid.Column="1" />
+                            <TextBox x:Name="TB_osu_SongsPath" />
+                            <Button x:Name="Bu_osuSongPathDefault" Content="{DynamicResource WindowSettings_default}" Margin="2,0,0,0" Grid.Column="1" />
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>
@@ -131,11 +131,11 @@
             <TabItem Header="{DynamicResource WindowSettings_notifications}">
                 <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_importDownload}" />
-                        <CheckBox x:Name="CheckBox_Messages_Importer_AskOsu" Content="{DynamicResource WindowSettings_importerAskOsu}" Margin="0,5,0,0" />
-                        <TextBlock FontSize="24" Foreground="#555555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_updater}" />
-                        <CheckBox x:Name="CheckBox_Messages_Updater_OpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
-                        <CheckBox x:Name="CheckBox_Messages_Updater_UnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_importDownload}" />
+                        <CheckBox x:Name="CB_MessagesImporterAskOsu" Content="{DynamicResource WindowSettings_importerAskOsu}" Margin="0,5,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_updater}" />
+                        <CheckBox x:Name="CB_MessagesUpdaterOpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
+                        <CheckBox x:Name="CB_MessagesUpdaterUnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -143,35 +143,34 @@
                 <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
                         <TextBlock Text="{DynamicResource WindowSettings_apiIntro}" TextWrapping="Wrap" />
-                        <Button x:Name="Button_Api_Request" Content="{DynamicResource WindowSettings_apiRequest}" FontSize="12" Margin="0,10,0,0" />
-                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_activation}" Margin="0,15,0,0" />
+                        <Button x:Name="Bu_ApiRequest" Content="{DynamicResource WindowSettings_apiRequest}" FontSize="12" Margin="0,10,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_activation}" Margin="0,15,0,0" />
                         <TextBlock Text="{DynamicResource WindowSettings_apiKey}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TextBox_Api_ApiKey" Height="23" />
-                            <Button x:Name="Button_Api_ApiKey_Validate" Content="{DynamicResource WindowSettings_validate}" FontSize="12" Margin="5,0,0,0" Grid.Column="1" />
+                            <TextBox x:Name="TB_ApiKey" Height="23" />
+                            <Button x:Name="Bu_ApiKey_Validate" Content="{DynamicResource WindowSettings_validate}" FontSize="12" Margin="5,0,0,0" Grid.Column="1" />
                         </Grid>
-                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_configuration}" Margin="0,15,0,0" />
-                        <CheckBox x:Name="CheckBox_Api_EnableInBeatmapPanel" Content="{DynamicResource WindowSettings_EnableApiInBeatmapPanel}" Margin="0,5,0,0" />
-                        <TextBlock FontSize="24" Foreground="#555555" Text="{DynamicResource WindowSettings_monitoring}" Margin="0,15,0,0" />
-                        <Button x:Name="Button_Api_OpenLog" Content="{DynamicResource WindowSettings_openApiLog}" FontSize="12" />
+                        <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_configuration}" Margin="0,15,0,0" />
+                        <CheckBox x:Name="CB_ApiEnableInBeatmapPanel" Content="{DynamicResource WindowSettings_EnableApiInBeatmapPanel}" Margin="0,5,0,0" />
+                        <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_monitoring}" Margin="0,15,0,0" />
+                        <Button x:Name="Bu_ApiOpenLog" Content="{DynamicResource WindowSettings_openApiLog}" FontSize="12" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="{DynamicResource WindowSettings_feedback}">
                 <ScrollViewer Background="#E5E5E5">
                     <Grid Margin="5">
-                        <Button x:Name="Button_Feedback_Prepare" Content="{DynamicResource WindowSettings_prepareForm}" Height="40" />
                         <StackPanel x:Name="StackPanel_Feedback" IsEnabled="False" Margin="0,10,0,0" Visibility="Collapsed">
                             <TextBlock Text="{DynamicResource WindowSettings_yourName}" />
-                            <TextBox x:Name="TextBox_Feedback_Username"/>
+                            <TextBox x:Name="TB_FeedbackUsername"/>
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_yourEmail}" />
-                            <TextBox x:Name="TextBox_Feedback_eMail"/>
+                            <TextBox x:Name="TB_FeedbackeMail"/>
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_category}" />
-                            <ComboBox x:Name="ComboBox_Feedback_Category">
+                            <ComboBox x:Name="CB_FeedbackCategory">
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_bug}" />
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_featureRequest}" />
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_generalFeedback}" />
@@ -180,19 +179,19 @@
                                 <ComboBoxItem Content="{DynamicResource WindowSettings_other}" />
                             </ComboBox>
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" />
-                            <RichTextBox x:Name="RichTextBox_Feedback_Message" Height="75" />
+                            <RichTextBox x:Name="RTB_FeedbackMessage" Height="75" />
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_furtherInformation}" />
                             <RichTextBox IsReadOnly="True">
                                 <FlowDocument>
                                     <Paragraph>
-                                        <Run x:Name="Run_Feedback_FurtherInfo"></Run>
+                                        <Run x:Name="Ru_FeedbackInfo" />
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-                            <Button x:Name="Button_Feedback_Submit" Content="{DynamicResource WindowSettings_submit}" Height="40" Margin="0,5,0,0" />
+                            <Button x:Name="Bu_FeedbackSubmit" Content="{DynamicResource WindowSettings_submit}" Height="40" Margin="0,5,0,0" />
                         </StackPanel>
-                        <Grid x:Name="Grid_Feedback_Overlay" Background="#CC27AE60" Visibility="Hidden">
-                            <TextBlock x:Name="Overlay_Title" FontSize="48" Foreground="White" HorizontalAlignment="Center" Text="{DynamicResource WindowSettings_submitting}" VerticalAlignment="Center" />
+                        <Grid x:Name="Gr_FeedbackOverlay" Background="#CC27AE60" Visibility="Hidden">
+                            <TextBlock FontSize="48" Foreground="White" HorizontalAlignment="Center" Text="{DynamicResource WindowSettings_submitting}" VerticalAlignment="Center" />
                         </Grid>
                     </Grid>
                 </ScrollViewer>
@@ -204,9 +203,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="Button_Done" Content="{DynamicResource WindowSettings_save}" FontSize="14" IsDefault="True" Padding="5,15" />
-            <Button x:Name="Button_Apply" Content="{DynamicResource WindowSettings_apply}" FontSize="14" Margin="5,0,0,0" Padding="5,15" Grid.Column="1" />
-            <Button x:Name="Button_Cancel" Content="{DynamicResource MainWindow_cancel}" FontSize="14" IsCancel="True" Margin="5,0,0,0" Padding="5,15" Grid.Column="2" />
+            <Button x:Name="Bu_Done" Content="{DynamicResource WindowSettings_save}" FontSize="14" IsDefault="True" Padding="5,15" />
+            <Button x:Name="Bu_Apply" Content="{DynamicResource WindowSettings_apply}" FontSize="14" Margin="5,0,0,0" Padding="5,15" Grid.Column="1" />
+            <Button x:Name="Bu_Cancel" Content="{DynamicResource MainWindow_cancel}" FontSize="14" IsCancel="True" Margin="5,0,0,0" Padding="5,15" Grid.Column="2" />
         </Grid>
     </Grid>
 </Controls:MetroWindow>

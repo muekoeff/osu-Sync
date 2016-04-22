@@ -3,10 +3,10 @@ Imports System.Net
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Public Class Window_Updater
+Class Window_Updater
     Private WithEvents Client As New WebClient
     Private DownloadMode As DownloadModes = DownloadModes.Info
-    Private Update_DownloadPatcherToPath As String = I__Path_Temp & "\Updater\UpdatePatcher.exe"
+    Private Update_DownloadPatcherToPath As String = AppTempPath & "\Updater\UpdatePatcher.exe"
     Private Update_DownloadToPath As String
     Private Update_FileName As String
     Private Update_Path As String
@@ -14,18 +14,18 @@ Public Class Window_Updater
     Private Update_Version As String
     Private Update_TotalBytes As String
 
-    Private Enum DownloadModes
+    Enum DownloadModes
         Info = 0
         DownloadPatcher = 1
         DownloadUpdate = 2
     End Enum
 
-    Private Sub Action_DownloadUpdate()
+    Sub Action_DownloadUpdate()
         DownloadMode = DownloadModes.DownloadUpdate
         Client.DownloadFileAsync(New Uri(Update_Path), Update_DownloadToPath & ".tmp")
     End Sub
 
-    Private Sub Action_LoadUpdateInformation(ByRef Answer As JObject)
+    Sub Action_LoadUpdateInformation(ByRef Answer As JObject)
         Update_Path_UpdatePatcher = CStr(Answer.SelectToken("patcher").SelectToken("path"))
 
         For Each a In Answer.SelectToken("latestRepoRelease").SelectToken("assets")
@@ -36,20 +36,20 @@ Public Class Window_Updater
         Next
 
         If Update_Path IsNot Nothing Then
-            Button_Update.IsEnabled = True
+            Bu_Update.IsEnabled = True
         Else
-            MsgBox(_e("MainWindow_unableToGetUpdatePath"))
+            MsgBox(_e("MainWindow_unableToGetUpdatePath"), MsgBoxStyle.Critical, AppName)
         End If
     End Sub
 
-    Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
+    Sub Bu_Done_Click(sender As Object, e As RoutedEventArgs) Handles Bu_Done.Click
         Close()
     End Sub
 
-    Private Sub Button_Update_Click(sender As Object, e As RoutedEventArgs) Handles Button_Update.Click
+    Sub Bu_Update_Click(sender As Object, e As RoutedEventArgs) Handles Bu_Update.Click
         Cursor = Cursors.AppStarting
-        Button_Done.IsEnabled = False
-        Button_Update.IsEnabled = False
+        Bu_Done.IsEnabled = False
+        Bu_Update.IsEnabled = False
 
         Update_DownloadToPath = AppSettings.Tool_Update_SavePath & "\" & Update_FileName
         If File.Exists(Update_DownloadToPath) Then File.Delete(Update_DownloadToPath)
@@ -68,7 +68,7 @@ Public Class Window_Updater
         End If
     End Sub
 
-    Private Sub Client_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles Client.DownloadFileCompleted
+    Sub Client_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles Client.DownloadFileCompleted
         Select Case DownloadMode
             Case DownloadModes.DownloadPatcher
                 File.Move(Update_DownloadPatcherToPath & ".tmp",
@@ -76,8 +76,8 @@ Public Class Window_Updater
                 Action_DownloadUpdate()
             Case DownloadModes.DownloadUpdate
                 Cursor = Cursors.Arrow
-                TextBlock_Status.Text = _e("WindowUpdater_downloadFinished").Replace("%0", Update_TotalBytes)
-                Button_Done.IsEnabled = True
+                TB_Status.Text = _e("WindowUpdater_downloadFinished").Replace("%0", Update_TotalBytes)
+                Bu_Done.IsEnabled = True
                 File.Move(Update_DownloadToPath & ".tmp",
                               Update_DownloadToPath)
                 If AppSettings.Tool_Update_UseDownloadPatcher Then
@@ -95,47 +95,47 @@ Public Class Window_Updater
                     Windows.Application.Current.Shutdown()
                     Exit Sub
                 Else
-                    If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then Process.Start(AppSettings.Tool_Update_SavePath)
+                    If MessageBox.Show(_e("WindowUpdater_doYouWantToOpenPathWhereUpdatedFilesHaveBeenSaved"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then Process.Start(AppSettings.Tool_Update_SavePath)
                 End If
         End Select
     End Sub
 
-    Private Sub Client_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles Client.DownloadProgressChanged
+    Sub Client_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles Client.DownloadProgressChanged
         Select Case DownloadMode
             Case DownloadModes.DownloadPatcher
                 Update_TotalBytes = CStr(e.TotalBytesToReceive)
-                ProgressBar_Progress.Value = e.ProgressPercentage
-                TextBlock_Status.Text = _e("WindowUpdater_downloadingInstaller").Replace("%0", e.BytesReceived.ToString).Replace("%1", e.TotalBytesToReceive.ToString)
+                PB_Progress.Value = e.ProgressPercentage
+                TB_Status.Text = _e("WindowUpdater_downloadingInstaller").Replace("%0", e.BytesReceived.ToString).Replace("%1", e.TotalBytesToReceive.ToString)
             Case DownloadModes.DownloadUpdate
                 Update_TotalBytes = CStr(e.TotalBytesToReceive)
-                ProgressBar_Progress.Value = e.ProgressPercentage
-                TextBlock_Status.Text = _e("WindowUpdater_downloadingUpdatePackage").Replace("%0", e.BytesReceived.ToString).Replace("%1", e.TotalBytesToReceive.ToString)
+                PB_Progress.Value = e.ProgressPercentage
+                TB_Status.Text = _e("WindowUpdater_downloadingUpdatePackage").Replace("%0", e.BytesReceived.ToString).Replace("%1", e.TotalBytesToReceive.ToString)
         End Select
     End Sub
 
-    Private Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
+    Sub Client_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs) Handles Client.DownloadStringCompleted
         Select Case DownloadMode
             Case DownloadModes.Info
                 Dim Answer As JObject
                 Try
                     Answer = JObject.Parse(e.Result)
                 Catch ex As JsonReaderException
-                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
-                    TextBlock_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
-                    ProgressBar_Progress.IsIndeterminate = False
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, AppName)
+                    TB_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
+                    TB_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
+                    PB_Progress.IsIndeterminate = False
                     Exit Sub
                 Catch ex As Reflection.TargetInvocationException
                     Clipboard.SetText("https: //osu.ppy.sh/forum/t/270446")
-                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
-                    TextBlock_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
-                    ProgressBar_Progress.IsIndeterminate = False
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, AppName)
+                    TB_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
+                    TB_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
+                    PB_Progress.IsIndeterminate = False
                     Exit Sub
                 End Try
 
                 Update_Version = CStr(Answer.SelectToken("latestRepoRelease").SelectToken("tag_name"))
-                TextBlock_Header_VersionInfo.Text += " | " & _e("WindowUpdater_latestVersion").Replace("%0", Update_Version)
+                TB_VersionInfo.Text += " | " & _e("WindowUpdater_latestVersion").Replace("%0", Update_Version)
 
                 Dim Paragraph As New Paragraph()
                 Dim FlowDocument As New FlowDocument()
@@ -147,36 +147,35 @@ Public Class Window_Updater
                         .Add(New Run(CStr(Answer.SelectToken("latestRepoRelease").SelectToken("body")).Replace("```Indent" & vbNewLine, "").Replace(vbNewLine & "```", "")))
                     End With
                 Catch ex As Exception
-                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
-                    MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, AppName)
                     Close()
                     Exit Sub
                 End Try
                 FlowDocument.Blocks.Add(Paragraph)
-                RichTextBox_Changelog.Document = FlowDocument
+                RTB_Changelog.Document = FlowDocument
                 Cursor = Cursors.Arrow
-                ProgressBar_Progress.IsIndeterminate = False
+                PB_Progress.IsIndeterminate = False
 
                 If Update_Version = My.Application.Info.Version.ToString Then
-                    TextBlock_Status.Text = _e("WindowUpdater_yourUsingTheLatestVersion")
+                    TB_Status.Text = _e("WindowUpdater_yourUsingTheLatestVersion")
 #If DEBUG Then
                     Console.WriteLine("[DEBUG] Enabled Download button")
                     Action_LoadUpdateInformation(Answer)
 #End If
                 Else
-                    TextBlock_Status.Text = _e("WindowUpdater_anUpdateIsAvailable")
+                    TB_Status.Text = _e("WindowUpdater_anUpdateIsAvailable")
                     Action_LoadUpdateInformation(Answer)
                 End If
         End Select
     End Sub
 
-    Private Sub Window_Updater_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        If AppSettings.Tool_Update_UseDownloadPatcher = False Then Button_Update.Content = _e("WindowUpdater_download")
+    Sub Window_Updater_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If AppSettings.Tool_Update_UseDownloadPatcher = False Then Bu_Update.Content = _e("WindowUpdater_download")
 #If DEBUG Then
-        TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString & " (Dev)")
+        TB_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString & " (Dev)")
 #Else
-        TextBlock_Header_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
+        TB_VersionInfo.Text = _e("WindowUpdater_yourVersion").Replace("%0", My.Application.Info.Version.ToString)
 #End If
-        Client.DownloadStringAsync(New Uri(I__Path_Web_nw520OsySyncApi & "app/updater.latestVersion.json"))
+        Client.DownloadStringAsync(New Uri(WebNw520ApiRoot & "app/updater.latestVersion.json"))
     End Sub
 End Class

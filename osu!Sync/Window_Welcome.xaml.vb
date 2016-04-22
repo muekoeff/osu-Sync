@@ -2,7 +2,7 @@
 
     Private ShutdownAfterClose As Boolean = True
 
-    Private Sub Button_SkipLogin_Click(sender As Object, e As RoutedEventArgs) Handles Button_SkipLogin.Click
+    Private Sub Bu_Continue_Click(sender As Object, e As RoutedEventArgs) Handles Bu_Continue.Click
         ShutdownAfterClose = False
         DirectCast(Windows.Application.Current.MainWindow, MainWindow).Activate()
         Close()

@@ -3,9 +3,9 @@ Imports System.Net
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Public Class Window_Settings
+Class Window_Settings
 
-    Private Function CreateShortcut(ByVal sLinkFile As String,
+    Function CreateShortcut(ByVal sLinkFile As String,
                                    ByVal sTargetFile As String,
                                    Optional ByVal sArguments As String = "",
                                    Optional ByVal sDescription As String = "",
@@ -44,312 +44,293 @@ Public Class Window_Settings
         Return emailMatch.Success
     End Function
 
-    Private Sub Action_ApplySettings()
+    Sub ApplySettings()
         With AppSettings
-            .Api_Enabled_BeatmapPanel = CBool(CheckBox_Api_EnableInBeatmapPanel.IsChecked)
-            .Api_Key = TextBox_Api_ApiKey.Text
-            .osu_Path = TextBox_osu_Path.Text
-            .osu_SongsPath = TextBox_osu_SongsPath.Text
-            .Tool_CheckFileAssociation = CBool(CheckBox_Tool_CheckFileAssociation.IsChecked)
-            .Tool_CheckForUpdates = ComboBox_Tool_CheckForUpdates.SelectedIndex
-            .Tool_DownloadMirror = ComboBox_Tool_DownloadMirror.SelectedIndex
-            .Tool_EnableNotifyIcon = ComboBox_Tool_EnableNotifyIcon.SelectedIndex
-            Dim Val As Integer
-            If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then .Tool_Importer_AutoInstallCounter = Val
-            If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) AndAlso Val >= 5 And Val <= 95 Then .Tool_Interface_BeatmapDetailPanelWidth = Val
-            .Tool_SyncOnStartup = CBool(CheckBox_Tool_SyncOnStartup.IsChecked)
+            .Api_Enabled_BeatmapPanel = CBool(CB_ApiEnableInBeatmapPanel.IsChecked)
+            .Api_Key = TB_ApiKey.Text
+            .osu_Path = TB_osu_Path.Text
+            .osu_SongsPath = TB_osu_SongsPath.Text
+            .Tool_CheckFileAssociation = CBool(CB_ToolCheckFileAssociation.IsChecked)
+            .Tool_CheckForUpdates = CB_ToolCheckForUpdates.SelectedIndex
+            .Tool_DownloadMirror = CB_ToolDownloadMirror.SelectedIndex
+            .Tool_EnableNotifyIcon = CB_ToolEnableNotifyIcon.SelectedIndex
+            If IsNumeric(TB_ToolImporterAutoInstallCounter.Text) Then .Tool_Importer_AutoInstallCounter = CInt(TB_ToolImporterAutoInstallCounter.Text)
+            If IsNumeric(TB_ToolInterface_BeatmapDetailPanelWidth.Text) AndAlso
+                CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) >= 5 And CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) <= 95 Then .Tool_Interface_BeatmapDetailPanelWidth = CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text)
+            .Tool_SyncOnStartup = CBool(CB_ToolSyncOnStartup.IsChecked)
             ' Load Language
-            Dim LanguageCode_Short As String = ComboBox_Tool_Languages.Text.Substring(0, ComboBox_Tool_Languages.Text.IndexOf(" "))
-            If Not ComboBox_Tool_Languages.Text = "" And Not .Tool_Language = LanguageCode_Short Then
-                If Not GetTranslationName(LanguageCode_Short) = "" Then
-                    LoadLanguage(GetTranslationName(LanguageCode_Short), LanguageCode_Short)
-                    MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+            Dim LanguageCode_Short As String = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "))
+            If Not CB_ToolLanguages.Text = "" And Not .Tool_Language = LanguageCode_Short Then
+                If Not TranslationNameGet(LanguageCode_Short) = "" Then
+                    LanguageLoad(TranslationNameGet(LanguageCode_Short), LanguageCode_Short)
+                    MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, AppName)
                 End If
             End If
-            .Tool_RequestElevationOnStartup = CBool(CheckBox_Tool_RequestElevationOnStartup.IsChecked)
-            .Tool_Update_SavePath = TextBox_Tool_Update_Path.Text
-            .Tool_Update_DeleteFileAfter = CBool(CheckBox_Tool_UpdateDeleteFileAfter.IsChecked)
-            .Tool_Update_UseDownloadPatcher = CBool(CheckBox_Tool_Update_UseDownloadPatcher.IsChecked)
-            .Messages_Importer_AskOsu = CBool(CheckBox_Messages_Importer_AskOsu.IsChecked)
-            .Messages_Updater_OpenUpdater = CBool(CheckBox_Messages_Updater_OpenUpdater.IsChecked)
-            .Messages_Updater_UnableToCheckForUpdates = CBool(CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked)
+            .Tool_RequestElevationOnStartup = CBool(CB_ToolRequestElevationOnStartup.IsChecked)
+            .Tool_Update_SavePath = TB_ToolUpdate_Path.Text
+            .Tool_Update_DeleteFileAfter = CBool(CB_ToolUpdateDeleteFileAfter.IsChecked)
+            .Tool_Update_UseDownloadPatcher = CBool(CB_ToolUpdate_UseDownloadPatcher.IsChecked)
+            .Messages_Importer_AskOsu = CBool(CB_MessagesImporterAskOsu.IsChecked)
+            .Messages_Updater_OpenUpdater = CBool(CB_MessagesUpdaterOpenUpdater.IsChecked)
+            .Messages_Updater_UnableToCheckForUpdates = CBool(CB_MessagesUpdaterUnableToCheckForUpdates.IsChecked)
             .SaveSettings()
         End With
     End Sub
 
-    Private Sub ApiClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
+    Sub ApiClient_DownloadStringCompleted(sender As Object, e As DownloadStringCompletedEventArgs)
         Dim JSON_Array As JArray
         Try
             WriteToApiLog("/api/get_beatmaps", e.Result)
             JSON_Array = CType(JsonConvert.DeserializeObject(e.Result), JArray)
             If Not CType(JSON_Array.First, JObject).SelectToken("beatmapset_id") Is Nothing Then
-                With Button_Api_ApiKey_Validate
+                With Bu_ApiKey_Validate
                     .Content = _e("WindowSettings_valid")
                     .IsEnabled = True
                 End With
-                TextBox_Api_ApiKey.IsEnabled = True
+                TB_ApiKey.IsEnabled = True
             Else
                 Throw New ArgumentException("Unexpected value")
             End If
         Catch ex As Exception
             WriteToApiLog("/api/get_beatmaps")
-            With Button_Api_ApiKey_Validate
+            With Bu_ApiKey_Validate
                 .Content = _e("WindowSettings_invalid")
                 .IsEnabled = True
             End With
-            TextBox_Api_ApiKey.IsEnabled = True
+            TB_ApiKey.IsEnabled = True
         End Try
     End Sub
 
-    Private Sub Button_Api_ApiKey_Validate_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_ApiKey_Validate.Click
-        With Button_Api_ApiKey_Validate
+    Sub Bu_ApiKey_Validate_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ApiKey_Validate.Click
+        With Bu_ApiKey_Validate
             .Content = "..."
             .IsEnabled = False
         End With
-        TextBox_Api_ApiKey.IsEnabled = False
+        TB_ApiKey.IsEnabled = False
         Dim ApiClient As New WebClient
         AddHandler ApiClient.DownloadStringCompleted, AddressOf ApiClient_DownloadStringCompleted
-        ApiClient.DownloadStringAsync(New Uri(I__Path_Web_osuApi & "get_beatmaps?k=" & TextBox_Api_ApiKey.Text))
+        ApiClient.DownloadStringAsync(New Uri(WebOsuApiRoot & "get_beatmaps?k=" & TB_ApiKey.Text))
     End Sub
 
-    Private Sub Button_Api_OpenLog_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_OpenLog.Click
+    Sub Bu_ApiOpenLog_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ApiOpenLog.Click
         If File.Exists(AppDataPath & "\Logs\ApiAccess.txt") Then
             Process.Start(AppDataPath & "\Logs\ApiAccess.txt")
         Else
-            MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, AppName)
         End If
     End Sub
 
-    Private Sub Button_Api_Request_Click(sender As Object, e As RoutedEventArgs) Handles Button_Api_Request.Click
+    Sub Bu_ApiRequest_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ApiRequest.Click
         Process.Start("https://osu.ppy.sh/p/api")
     End Sub
 
-    Private Sub Button_Apply_Click(sender As Object, e As RoutedEventArgs) Handles Button_Apply.Click
-        Action_ApplySettings()
+    Sub Bu_Apply_Click(sender As Object, e As RoutedEventArgs) Handles Bu_Apply.Click
+        ApplySettings()
     End Sub
 
-    Private Sub Button_Cancel_Click(sender As Object, e As RoutedEventArgs) Handles Button_Cancel.Click
+    Sub Bu_Cancel_Click(sender As Object, e As RoutedEventArgs) Handles Bu_Cancel.Click
         Close()
     End Sub
 
-    Private Sub Button_CreateShortcut_Click(sender As Object, e As RoutedEventArgs) Handles Button_CreateShortcut.Click
+    Sub Bu_CreateShortcut_Click(sender As Object, e As RoutedEventArgs) Handles Bu_CreateShortcut.Click
         If Not File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk") Then
             If CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\osu!Sync.lnk",
                               Reflection.Assembly.GetExecutingAssembly().Location.ToString, "",
                               _e("WindowSettings_launchOsuSync")) Then
             Else
-                MsgBox(_e("WindowSettings_unableToCreateShortcut"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                MsgBox(_e("WindowSettings_unableToCreateShortcut"), MsgBoxStyle.Critical, AppName)
             End If
         Else
-            MsgBox(_e("WindowSettings_theresAlreadyAShortcut"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_theresAlreadyAShortcut"), MsgBoxStyle.Exclamation, AppName)
         End If
     End Sub
 
-    Private Sub Button_Done_Click(sender As Object, e As RoutedEventArgs) Handles Button_Done.Click
-        Action_ApplySettings()
+    Sub Bu_Done_Click(sender As Object, e As RoutedEventArgs) Handles Bu_Done.Click
+        ApplySettings()
         Close()
     End Sub
 
-    Private Sub Button_Feedback_Prepare_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Prepare.Click
-        Run_Feedback_FurtherInfo.Text = JsonConvert.SerializeObject(GetProgramInfoJson(), Formatting.None)
+    Sub Bu_FeedbackSubmit_Click(sender As Object, e As RoutedEventArgs) Handles Bu_FeedbackSubmit.Click
+        Dim RTB_FeedbackMessage_TextRange As New TextRange(RTB_FeedbackMessage.Document.ContentStart, RTB_FeedbackMessage.Document.ContentEnd)
 
-        With Button_Feedback_Prepare
-            .IsEnabled = False
-            .Visibility = Visibility.Collapsed
-        End With
-        With StackPanel_Feedback
-            .IsEnabled = True
-            .Margin = New Thickness(0, 0, 0, 0)
-            .Visibility = Visibility.Visible
-        End With
-    End Sub
-
-    Private Sub Button_Feedback_Submit_Click(sender As Object, e As RoutedEventArgs) Handles Button_Feedback_Submit.Click
-        Dim RichTextBox_Feedback_Message_TextRange As New TextRange(RichTextBox_Feedback_Message.Document.ContentStart, RichTextBox_Feedback_Message.Document.ContentEnd)
-
-        If TextBox_Feedback_Username.Text.Length <= 1 Then
-            MsgBox(_e("WindowSettings_yourNameIsTooShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-        ElseIf Not ValidateEmail(TextBox_Feedback_eMail.Text) Then
-            MsgBox(_e("WindowSettings_yourEmailInvalid"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-        ElseIf ComboBox_Feedback_Category.SelectedIndex = -1 Then
-            MsgBox(_e("WindowSettings_youHaveToSelectACategory"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
-        ElseIf RichTextBox_Feedback_Message_TextRange.Text.Length < 30 Then
-            MsgBox(_e("WindowSettings_yourMessageSeemsToBeQuiteShort"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+        If TB_FeedbackUsername.Text.Length <= 1 Then
+            MsgBox(_e("WindowSettings_yourNameIsTooShort"), MsgBoxStyle.Exclamation, AppName)
+        ElseIf Not ValidateEmail(TB_FeedbackeMail.Text) Then
+            MsgBox(_e("WindowSettings_yourEmailInvalid"), MsgBoxStyle.Exclamation, AppName)
+        ElseIf CB_FeedbackCategory.SelectedIndex = -1 Then
+            MsgBox(_e("WindowSettings_youHaveToSelectACategory"), MsgBoxStyle.Exclamation, AppName)
+        ElseIf RTB_FeedbackMessage_TextRange.Text.Length < 30 Then
+            MsgBox(_e("WindowSettings_yourMessageSeemsToBeQuiteShort"), MsgBoxStyle.Exclamation, AppName)
         Else
             StackPanel_Feedback.IsEnabled = False
-            Grid_Feedback_Overlay.Visibility = Visibility.Visible
+            Gr_FeedbackOverlay.Visibility = Visibility.Visible
 
             Using SubmitClient As New WebClient
                 Dim ReqParam As New Specialized.NameValueCollection
                 With ReqParam
-                    .Add("category", ComboBox_Feedback_Category.Text)
-                    .Add("debugData", Run_Feedback_FurtherInfo.Text)
-                    .Add("email", TextBox_Feedback_eMail.Text)
-                    .Add("message", RichTextBox_Feedback_Message_TextRange.Text)
-                    .Add("username", TextBox_Feedback_Username.Text)
+                    .Add("category", CB_FeedbackCategory.Text)
+                    .Add("debugData", Ru_FeedbackInfo.Text)
+                    .Add("email", TB_FeedbackeMail.Text)
+                    .Add("message", RTB_FeedbackMessage_TextRange.Text)
+                    .Add("username", TB_FeedbackUsername.Text)
                     .Add("version", My.Application.Info.Version.ToString)
                 End With
-                Dim ResponseBytes = SubmitClient.UploadValues(I__Path_Web_nw520OsySyncApi & "app/feedback.submitReport.php", "POST", ReqParam)
+                Dim ResponseBytes = SubmitClient.UploadValues(WebNw520ApiRoot & "app/feedback.submitReport.php", "POST", ReqParam)
                 Dim ResponseBody = (New Text.UTF8Encoding).GetString(ResponseBytes)
 
                 Try
-                    MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & ResponseBody, MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+                    MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & ResponseBody, MsgBoxStyle.Information, AppName)
                 Catch ex As Reflection.TargetInvocationException
-                    MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+                    MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, AppName)
                     Exit Sub
                 End Try
-                Grid_Feedback_Overlay.Visibility = Visibility.Collapsed
+                Gr_FeedbackOverlay.Visibility = Visibility.Collapsed
             End Using
         End If
     End Sub
 
-    Private Sub Button_osu_SongPathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_osu_SongPathDefault.Click
-        TextBox_osu_SongsPath.Text = TextBox_osu_Path.Text & "\Songs"
+    Sub Bu_osuSongPathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Bu_osuSongPathDefault.Click
+        TB_osu_SongsPath.Text = TB_osu_Path.Text & "\Songs"
     End Sub
 
-    Private Sub Button_Tool_DeleteConfiguration_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteConfiguration.Click
-        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToDeleteConfig"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
+    Sub Bu_ToolDeleteConfiguration_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolDeleteConfiguration.Click
+        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToDeleteConfig"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
             If File.Exists(AppDataPath & "\Settings\Settings.config") Then
                 File.Delete(AppDataPath & "\Settings\Settings.config")
 
-                If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
+                If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                     Forms.Application.Restart()
                 End If
                 Windows.Application.Current.Shutdown()
             Else
-                MsgBox(_e("WindowSettings_nopeNoConfig"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                MsgBox(_e("WindowSettings_nopeNoConfig"), MsgBoxStyle.Exclamation, AppName)
             End If
         End If
     End Sub
 
-    Private Sub Button_Tool_DeleteFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_DeleteFileAssociation.Click
-        If DeleteOsuSyncFileAssociations() Then MsgBox(_e("MainWindow_extensionDeleteDone"), MsgBoxStyle.Information, I__MsgBox_DefaultTitle)
+    Sub Bu_ToolDeleteFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolDeleteFileAssociation.Click
+        If FileAssociationsDelete() Then MsgBox(_e("MainWindow_extensionDeleteDone"), MsgBoxStyle.Information, AppName)
     End Sub
 
-    Private Sub Button_Tool_ImporterAuto_InstallCounter_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_ImporterAuto_InstallCounter_Down.Click
-        Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
-            If Val > 0 Then Textbox_Tool_Importer_AutoInstallCounter.Text = CStr(Val - 1)
+    Sub Bu_ToolImporterAutoInstallCounterDown_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolImporterAutoInstallCounterDown.Click
+        If IsNumeric(TB_ToolImporterAutoInstallCounter.Text) AndAlso CInt(TB_ToolImporterAutoInstallCounter.Text) > 0 Then
+            TB_ToolImporterAutoInstallCounter.Text = CStr(CInt(TB_ToolImporterAutoInstallCounter.Text) - 1)
         Else
-            Textbox_Tool_Importer_AutoInstallCounter.Text = "10"
+            TB_ToolImporterAutoInstallCounter.Text = "10"
         End If
     End Sub
 
-    Private Sub Button_Tool_Importer_AutoInstallCounter_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Importer_AutoInstallCounter_Up.Click
-        Dim Val As Integer
-        If Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then
-            Textbox_Tool_Importer_AutoInstallCounter.Text = CStr(Val + 1)
+    Sub Bu_ToolImporterAutoInstallCounterUp_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolImporterAutoInstallCounterUp.Click
+        If IsNumeric(TB_ToolImporterAutoInstallCounter.Text) AndAlso CInt(TB_ToolImporterAutoInstallCounter.Text) > 0 Then
+            TB_ToolImporterAutoInstallCounter.Text = CStr(CInt(TB_ToolImporterAutoInstallCounter.Text) + 1)
         Else
-            Textbox_Tool_Importer_AutoInstallCounter.Text = "10"
+            TB_ToolImporterAutoInstallCounter.Text = "10"
         End If
     End Sub
 
-    Private Sub Button_Tool_Interface_BeatmapDetailPanelWidth_Down_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Interface_BeatmapDetailPanelWidth_Down.Click
-        Dim Val As Integer
-        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Then
-            If Val > 5 Then TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val - 1)
+    Sub Bu_ToolInterface_BeatmapDetailPanelWidth_Down_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolInterface_BeatmapDetailPanelWidth_Down.Click
+        If IsNumeric(TB_ToolInterface_BeatmapDetailPanelWidth.Text) AndAlso CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) > 5 Then
+            TB_ToolInterface_BeatmapDetailPanelWidth.Text = CStr(CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) - 1)
         Else
-            TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = "40"
+            TB_ToolInterface_BeatmapDetailPanelWidth.Text = "40"
         End If
     End Sub
 
-    Private Sub Button_Tool_Interface_BeatmapDetailPanelWidth_Up_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Interface_BeatmapDetailPanelWidth_Up.Click
-        Dim Val As Integer
-        If Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Then
-            If Val < 95 Then TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = CStr(Val + 1)
+    Sub Bu_ToolInterface_BeatmapDetailPanelWidth_Up_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolInterface_BeatmapDetailPanelWidth_Up.Click
+        If IsNumeric(TB_ToolInterface_BeatmapDetailPanelWidth.Text) AndAlso CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) < 95 Then
+            TB_ToolInterface_BeatmapDetailPanelWidth.Text = CStr(CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) + 1)
         Else
-            TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = "40"
+            TB_ToolInterface_BeatmapDetailPanelWidth.Text = "40"
         End If
     End Sub
 
-    Private Sub Button_Tool_OpenDataFolder_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_OpenDataFolder.Click
+    Sub Bu_ToolOpenDataFolder_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolOpenDataFolder.Click
         If Directory.Exists(AppDataPath) Then
             Process.Start(AppDataPath)
         Else
-            MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+            MsgBox(_e("WindowSettings_nopeDirectoryDoesNotExit"), MsgBoxStyle.Exclamation, AppName)
         End If
     End Sub
 
-    Private Sub Button_Tool_Reset_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Reset.Click
-        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToReset"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
-            DeleteOsuSyncFileAssociations()
+    Sub Bu_ToolReset_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolReset.Click
+        If MessageBox.Show(_e("WindowSettings_areYouSureYouWantToReset"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) = MessageBoxResult.Yes Then
+            FileAssociationsDelete()
             If Directory.Exists(AppDataPath) Then
                 Try
                     Directory.Delete(AppDataPath, True)
                 Catch ex As IOException
                 End Try
             End If
-            If Directory.Exists(I__Path_Temp) Then
+            If Directory.Exists(AppTempPath) Then
                 Try
-                    Directory.Delete(I__Path_Temp, True)
+                    Directory.Delete(AppTempPath, True)
                 Catch ex As IOException
                 End Try
             End If
-            If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), I__MsgBox_DefaultTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then Forms.Application.Restart()
+            If MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then Forms.Application.Restart()
             Windows.Application.Current.Shutdown()
         End If
     End Sub
 
-    Private Sub Button_Tool_RestartElevated_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_RestartElevated.Click
-        If Action_RequestElevation() Then
+    Sub Bu_ToolRestartElevated_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolRestartElevated.Click
+        If RequestElevation() Then
             Tool_DontApplySettings = True
             Windows.Application.Current.Shutdown()
             Exit Sub
         Else
-            MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, I__MsgBox_DefaultTitle)
+            MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, AppName)
         End If
     End Sub
 
-    Private Sub Button_Tool_UpdateFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_UpdateFileAssociation.Click
-        CreateOsuSyncFileAssociations()
+    Sub Bu_ToolUpdateFileAssociation_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolUpdateFileAssociation.Click
+        FileAssociationsCreate()
     End Sub
 
-    Private Sub Button_Tool_Update_PathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Button_Tool_Update_PathDefault.Click
-        TextBox_Tool_Update_Path.Text = I__Path_Temp & "\Updater"
+    Sub Bu_ToolUpdate_PathDefault_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ToolUpdate_PathDefault.Click
+        TB_ToolUpdate_Path.Text = AppTempPath & "\Updater"
     End Sub
 
-    Private Sub TextBox_Api_ApiKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TextBox_Api_ApiKey.TextChanged
-        Button_Api_ApiKey_Validate.Content = _e("WindowSettings_validate")
+    Sub TB_ApiKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TB_ApiKey.TextChanged
+        Bu_ApiKey_Validate.Content = _e("WindowSettings_validate")
     End Sub
 
-    Private Sub TextBox_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_Path.GotFocus
+    Sub TB_osu_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TB_osu_Path.GotFocus
         Dim SelectFile As New Forms.OpenFileDialog With {
             .CheckFileExists = True,
             .CheckPathExists = True,
             .DefaultExt = "exe",
             .FileName = "osu!",
             .Filter = _e("WindowSettings_executableFiles") & " (*.exe)|*.exe",
-            .InitialDirectory = AppSettings.DetectOsuPath(),
+            .InitialDirectory = AppSettings.OsuPathDetect(),
             .Multiselect = False,
             .Title = _e("WindowSettings_pleaseOpenOsu")}
 
         If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then
             If Path.GetFileName(SelectFile.FileName) = "osu!.exe" Then
-                TextBox_osu_Path.Text = Path.GetDirectoryName(SelectFile.FileName)
+                TB_osu_Path.Text = Path.GetDirectoryName(SelectFile.FileName)
             Else
-                MsgBox(_e("WindowSettings_youSelectedTheWrongFile"), MsgBoxStyle.Exclamation, I__MsgBox_DefaultTitle)
+                MsgBox(_e("WindowSettings_youSelectedTheWrongFile"), MsgBoxStyle.Exclamation, AppName)
             End If
         End If
     End Sub
 
-    Private Sub TextBox_osu_SongsPath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_osu_SongsPath.GotFocus
+    Sub TB_osu_SongsPath_GotFocus(sender As Object, e As RoutedEventArgs) Handles TB_osu_SongsPath.GotFocus
         Dim SelectFile As New Forms.FolderBrowserDialog With {
             .Description = _e("WindowSettings_pleaseSelectSongsFolder")}
 
-        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then TextBox_osu_SongsPath.Text = SelectFile.SelectedPath
+        If Not SelectFile.ShowDialog() = Forms.DialogResult.Cancel Then TB_osu_SongsPath.Text = SelectFile.SelectedPath
     End Sub
 
-    Private Sub Textbox_Tool_Importer_AutoInstallCounter_LostFocus(sender As Object, e As RoutedEventArgs) Handles Textbox_Tool_Importer_AutoInstallCounter.LostFocus
-        Dim Val As Integer
-        If Not Integer.TryParse(Textbox_Tool_Importer_AutoInstallCounter.Text, Val) Then Textbox_Tool_Importer_AutoInstallCounter.Text = _e("WindowSettings_invalidValue")
+    Sub TB_ToolImporterAutoInstallCounter_LostFocus(sender As Object, e As RoutedEventArgs) Handles TB_ToolImporterAutoInstallCounter.LostFocus
+        If Not IsNumeric(TB_ToolImporterAutoInstallCounter.Text) Then TB_ToolImporterAutoInstallCounter.Text = _e("WindowSettings_invalidValue")
     End Sub
 
-    Private Sub TextBox_Tool_Interface_BeatmapDetailPanelWidth_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_Interface_BeatmapDetailPanelWidth.LostFocus
-        Dim Val As Integer
-        If Not Integer.TryParse(TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text, Val) Or Val < 5 Or Val > 95 Then TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue")
+    Sub TB_ToolInterface_BeatmapDetailPanelWidth_LostFocus(sender As Object, e As RoutedEventArgs) Handles TB_ToolInterface_BeatmapDetailPanelWidth.LostFocus
+        If Not IsNumeric(TB_ToolInterface_BeatmapDetailPanelWidth.Text) Or
+            CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) < 5 Or CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) > 95 Then TB_ToolInterface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue")
     End Sub
 
-    Private Sub TextBox_Tool_Update_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextBox_Tool_Update_Path.GotFocus
+    Sub TB_ToolUpdate_Path_GotFocus(sender As Object, e As RoutedEventArgs) Handles TB_ToolUpdate_Path.GotFocus
         Dim SelectDirectory As New Forms.FolderBrowserDialog With {
             .Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
             .ShowNewFolderButton = False}
@@ -359,60 +340,73 @@ Public Class Window_Settings
             SelectDirectory.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
         End If
 
-        If Not SelectDirectory.ShowDialog() = Forms.DialogResult.Cancel Then TextBox_Tool_Update_Path.Text = SelectDirectory.SelectedPath
+        If Not SelectDirectory.ShowDialog() = Forms.DialogResult.Cancel Then TB_ToolUpdate_Path.Text = SelectDirectory.SelectedPath
     End Sub
 
-    Private Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+    Sub TC_Main_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles TC_Main.SelectionChanged
+        Select Case TC_Main.SelectedIndex
+            Case 4
+                ' Prepare Feedback form
+                Ru_FeedbackInfo.Text = JsonConvert.SerializeObject(ProgramInfoJsonGet(), Formatting.None)
+                With StackPanel_Feedback
+                    .IsEnabled = True
+                    .Margin = New Thickness(0, 0, 0, 0)
+                    .Visibility = Visibility.Visible
+                End With
+        End Select
+    End Sub
+
+    Sub Window_Settings_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If Tool_IsElevated Then
-            Button_Tool_RestartElevated.IsEnabled = False
-            TextBlock_WarnNotElevated.Visibility = Visibility.Collapsed
+            Bu_ToolRestartElevated.IsEnabled = False
+            TB_NotElevated.Visibility = Visibility.Collapsed
         Else
-            Button_Tool_DeleteFileAssociation.IsEnabled = False
-            Button_Tool_Reset.IsEnabled = False
-            Button_Tool_UpdateFileAssociation.IsEnabled = False
+            Bu_ToolDeleteFileAssociation.IsEnabled = False
+            Bu_ToolReset.IsEnabled = False
+            Bu_ToolUpdateFileAssociation.IsEnabled = False
         End If
 
-        CheckBox_Api_EnableInBeatmapPanel.IsChecked = AppSettings.Api_Enabled_BeatmapPanel
-        CheckBox_Messages_Importer_AskOsu.IsChecked = AppSettings.Messages_Importer_AskOsu
-        CheckBox_Messages_Updater_OpenUpdater.IsChecked = AppSettings.Messages_Updater_OpenUpdater
-        CheckBox_Messages_Updater_UnableToCheckForUpdates.IsChecked = AppSettings.Messages_Updater_UnableToCheckForUpdates
-        CheckBox_Tool_CheckFileAssociation.IsChecked = AppSettings.Tool_CheckFileAssociation
-        CheckBox_Tool_RequestElevationOnStartup.IsChecked = AppSettings.Tool_RequestElevationOnStartup
-        CheckBox_Tool_SyncOnStartup.IsChecked = AppSettings.Tool_SyncOnStartup
-        CheckBox_Tool_UpdateDeleteFileAfter.IsChecked = AppSettings.Tool_Update_DeleteFileAfter
-        CheckBox_Tool_Update_UseDownloadPatcher.IsChecked = AppSettings.Tool_Update_UseDownloadPatcher
-        ComboBox_Tool_CheckForUpdates.SelectedIndex = AppSettings.Tool_CheckForUpdates
+        CB_ApiEnableInBeatmapPanel.IsChecked = AppSettings.Api_Enabled_BeatmapPanel
+        CB_MessagesImporterAskOsu.IsChecked = AppSettings.Messages_Importer_AskOsu
+        CB_MessagesUpdaterOpenUpdater.IsChecked = AppSettings.Messages_Updater_OpenUpdater
+        CB_MessagesUpdaterUnableToCheckForUpdates.IsChecked = AppSettings.Messages_Updater_UnableToCheckForUpdates
+        CB_ToolCheckFileAssociation.IsChecked = AppSettings.Tool_CheckFileAssociation
+        CB_ToolRequestElevationOnStartup.IsChecked = AppSettings.Tool_RequestElevationOnStartup
+        CB_ToolSyncOnStartup.IsChecked = AppSettings.Tool_SyncOnStartup
+        CB_ToolUpdateDeleteFileAfter.IsChecked = AppSettings.Tool_Update_DeleteFileAfter
+        CB_ToolUpdate_UseDownloadPatcher.IsChecked = AppSettings.Tool_Update_UseDownloadPatcher
+        CB_ToolCheckForUpdates.SelectedIndex = AppSettings.Tool_CheckForUpdates
         ' Load mirrors and select current one
         For Each a In Application_Mirrors
-            ComboBox_Tool_DownloadMirror.Items.Add(a.Value.DisplayName)
-            If a.Key = 0 Then ComboBox_Tool_DownloadMirror.Items.Add(New Separator)
+            CB_ToolDownloadMirror.Items.Add(a.Value.DisplayName)
+            If a.Key = 0 Then CB_ToolDownloadMirror.Items.Add(New Separator)
         Next
-        ComboBox_Tool_DownloadMirror.SelectedIndex = AppSettings.Tool_DownloadMirror
-        ComboBox_Tool_EnableNotifyIcon.SelectedIndex = AppSettings.Tool_EnableNotifyIcon
+        CB_ToolDownloadMirror.SelectedIndex = AppSettings.Tool_DownloadMirror
+        CB_ToolEnableNotifyIcon.SelectedIndex = AppSettings.Tool_EnableNotifyIcon
         ' Load languages and select current one
         Dim InsertedCodes As New List(Of String)
-        Dim Counter As Integer = 0
+        Dim i As Integer = 0
         Dim IndexUserLanguage As Integer = -1
         Dim IndexEN As Integer = 0
         For Each a In Application_Languages
             If Not InsertedCodes.Contains(a.Value.Code) Then
-                If a.Value.Code = "en_US" Then IndexEN = Counter
-                If a.Key = AppSettings.Tool_Language Then IndexUserLanguage = Counter
+                If a.Value.Code = "en_US" Then IndexEN = i
+                If a.Key = AppSettings.Tool_Language Then IndexUserLanguage = i
                 InsertedCodes.Add(a.Value.Code)
-                ComboBox_Tool_Languages.Items.Add(a.Key & " | " & a.Value.DisplayName_English & "/" & a.Value.DisplayName)
-                Counter += 1
+                CB_ToolLanguages.Items.Add(a.Key & " | " & a.Value.DisplayName_English & "/" & a.Value.DisplayName)
+                i += 1
             End If
         Next
         If Not IndexUserLanguage = -1 Then
-            ComboBox_Tool_Languages.SelectedIndex = IndexUserLanguage
+            CB_ToolLanguages.SelectedIndex = IndexUserLanguage
         Else
-            ComboBox_Tool_Languages.SelectedIndex = IndexEN
+            CB_ToolLanguages.SelectedIndex = IndexEN
         End If
-        TextBox_Api_ApiKey.Text = AppSettings.Api_Key
-        TextBox_osu_Path.Text = AppSettings.osu_Path
-        TextBox_osu_SongsPath.Text = AppSettings.osu_SongsPath
-        Textbox_Tool_Importer_AutoInstallCounter.Text = AppSettings.Tool_Importer_AutoInstallCounter.ToString
-        TextBox_Tool_Interface_BeatmapDetailPanelWidth.Text = AppSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString
-        TextBox_Tool_Update_Path.Text = AppSettings.Tool_Update_SavePath
+        TB_ApiKey.Text = AppSettings.Api_Key
+        TB_osu_Path.Text = AppSettings.osu_Path
+        TB_osu_SongsPath.Text = AppSettings.osu_SongsPath
+        TB_ToolImporterAutoInstallCounter.Text = AppSettings.Tool_Importer_AutoInstallCounter.ToString
+        TB_ToolInterface_BeatmapDetailPanelWidth.Text = AppSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString
+        TB_ToolUpdate_Path.Text = AppSettings.Tool_Update_SavePath
     End Sub
 End Class

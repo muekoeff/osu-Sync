@@ -43,6 +43,7 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Convert selected file</system:String>
     <system:String x:Key="MainWindow_creator">Creator</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
     <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Download and install</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Download Beatmaps</system:String>
@@ -176,6 +177,7 @@
     <system:String x:Key="MainWindow_syncing">Syncing...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">That's... impressive, I guess.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
@@ -314,7 +316,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Please select the directory where to save updates</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Please select your songs folder</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@nw520.de .</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Prepare Form</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Question/Help Request</system:String>
     <!-- | R -->
