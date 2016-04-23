@@ -51,6 +51,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Download mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Downloading %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Downloading</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Do you want to check which beatmap sets are affected?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Do you want to fix that?</system:String>
@@ -94,7 +95,7 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Some file extensions aren't associated with this application.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Some file extensions are outdated.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">Fetched ID is not a number.</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">Fetching %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Fetching...</system:String>
     <system:String x:Key="MainWindow_file">_File</system:String>
@@ -186,6 +187,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Unable to get ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed. They will be handled as unsubmitted (can't be exported).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Unknown file extension</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>

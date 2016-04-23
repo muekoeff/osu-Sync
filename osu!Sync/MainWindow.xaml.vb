@@ -60,13 +60,18 @@ Public Class BGWcallback_SyncGetIDs
     End Enum
 
     Enum ReturnStatuses
-        FolderDoesNotExist = 1
+        Cancelled
+        Exception
+        FolderDoesNotExist
+        Success
     End Enum
 
     Property Arg__Mode As ArgModes
+    Property Func_Invalid As List(Of String)
+    Property Func_InvalidId As List(Of String)
     Property Progress__Current As Integer
     Property Progress__CurrentAction As ProgressCurrentActions
-    Property Return__Status As ReturnStatuses
+    Property Return__Status As ReturnStatuses = ReturnStatuses.Success
     Property Return__Sync_BmDic_Installed As New Dictionary(Of Integer, Beatmap)
     Property Return__Sync_Warnings As String
 End Class
@@ -1181,7 +1186,7 @@ Class MainWindow
             .CheckFileExists = True
             .CheckPathExists = True
             .Filter = _e("MainWindow_allSupportedFileFormats") & "|*.json;*.nw520-osbl;*.nw520-osblx|" &
-                _e("MainWindow_fileext_osblx") & "|*.nw520-osbl" &
+                _e("MainWindow_fileext_osblx") & "|*.nw520-osblx|" &
                 _e("MainWindow_fileext_osbl") & "|*.nw520-osbl|" &
                 _e("MainWindow_fileext_json") & "|*.json"
             .Title = _e("MainWindow_selectASupportedFileToConvert")
@@ -1445,149 +1450,36 @@ Class MainWindow
                 Dim Beatmap_InvalidFolder As String = ""
                 Dim Beatmap_InvalidIDBeatmaps As String = ""
                 If File.Exists(AppSettings.osu_Path + "\osu!.db") Then
-                    ' Reads straight from osu!.db
                     Dim DatabasePath As String = AppSettings.osu_Path + "\osu!.db"
-                    Using Reader As OsuReader = New OsuReader(File.OpenRead(DatabasePath))
-                        ' More details: http://j.mp/1PIyjCY
-                        Reader.ReadInt32()                                          ' osu! version (e.g. 20150203) 
-                        Reader.ReadInt32()                                          ' Folder Count 
-                        Reader.ReadBoolean()                                        ' AccountUnlocked (only false when the account is locked or banned in any way)
-                        Reader.ReadDate()                                           ' Date the account will be unlocked 
-                        Reader.ReadString()                                         ' Player name 
-                        Dim BeatmapCount As Integer = Reader.ReadInt32()            ' Number of beatmaps 
-                        Dim FoundIDs As New List(Of Integer)
-                        For i = 1 To BeatmapCount
-                            Dim BeatmapDetails As New Beatmap
-                            Reader.ReadInt32()                                      ' Unknown 
-                            BeatmapDetails.Artist = Reader.ReadString()             ' Artist name
-                            Reader.ReadString()                                     '  Artist name, in Unicode
-                            BeatmapDetails.Title = Reader.ReadString()              ' Song title
-                            Reader.ReadString()                                     '  Song title, in Unicode
-                            BeatmapDetails.Creator = Reader.ReadString()            ' Creator name
-                            Reader.ReadString()                                     '  Difficulty (e.g. Hard, Insane, etc.)
-                            Reader.ReadString()                                     '  Audio file name
-                            BeatmapDetails.MD5 = Reader.ReadString()                ' MD5 hash of the beatmap
-                            Reader.ReadString()                                     '  Name of the .osu file corresponding to this beatmap
-                            BeatmapDetails.RankedStatus = Reader.ReadByte           ' Ranked status
-                            Reader.ReadBytes(38)                                    '  Other data No. of Circles/Sliders/Spinners, Last Edit, Settings etc.
-                            For j = 1 To 4                                          '  Star difficulties with various mods
-                                Dim Count = Reader.ReadInt32()
-                                If Count < 0 Then Continue For
-                                For k = 1 To Count
-                                    Reader.ReadBytes(14)
-                                Next
-                            Next
-                            Reader.ReadBytes(12)                                    '  Drain/Total/Preview Time
-                            Dim TimingPointCount = Reader.ReadInt32() 'You could probably optimise these loops. Reader.ReadBytes(Count*17) maybe. I don't have the time to test it.
-                            For j = 1 To TimingPointCount
-                                Reader.ReadBytes(17)
-                            Next
-                            Reader.ReadInt32()                                      '  Beatmap ID
-                            BeatmapDetails.ID = Reader.ReadInt32()                  ' Beatmap set ID
-                            Reader.ReadInt32()                                      '  Thread ID
-                            Reader.ReadBytes(11)
-                            Reader.ReadString()                                     '  Song source
-                            BeatmapDetails.SongTags = Reader.ReadString()           ' Song tags
-                            Reader.ReadInt16()                                      '  Online offset 
-                            Reader.ReadString()                                     '  Font used for the title of the song 
-                            BeatmapDetails.IsUnplayed = Reader.ReadBoolean()        ' Is unplayed
-                            Reader.ReadBytes(9)
-                            Reader.ReadString()                                     '  Folder name of the beatmap, relative to Songs folder 
-                            Reader.ReadBytes(18)
-
-                            If Not FoundIDs.Contains(BeatmapDetails.ID) Then
-                                FoundIDs.Add(BeatmapDetails.ID)
-                                Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
-                                BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
-                                    .Progress__Current = Answer.Return__Sync_BmDic_Installed.Count})
+                    Try
+                        Answer.Return__Sync_BmDic_Installed = ReadBmsFromDb(DatabasePath)
+                    Catch ex As IOException
+                        Try
+                            Answer.Return__Sync_BmDic_Installed = ReadBmsFromDb(DatabasePath, True)
+                        Catch ex_ As Exception
+                            If MessageBox.Show(_e("MainWindow_unableToReadBms") & " " & _e("MainWindow_fallback"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) = MessageBoxResult.Yes Then
+                                Answer = ReadBmsFromDir(AppSettings.osu_SongsPath)
+                            Else
+                                Answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled
                             End If
-                        Next
-                    End Using
-                Else
-                    For Each DirectoryList As String In Directory.GetDirectories(AppSettings.osu_SongsPath)
-                        Dim DirectoryInfo As New DirectoryInfo(DirectoryList)
-                        If Not DirectoryInfo.Name.ToLower = "failed" And Not DirectoryInfo.Name.ToLower = "tutorial" Then
-                            Dim FoundFile As Boolean = False
-
-                            For Each FileInDir In Directory.GetFiles(DirectoryList)
-                                If Path.GetExtension(FileInDir) = ".osu" Then
-                                    FoundFile = True
-
-                                    ' Read File
-                                    Dim FileReader As New StreamReader(FileInDir)
-                                    Dim TextLines As New List(Of String)
-                                    Dim BeatmapDetails As New Beatmap
-                                    Dim Found_ID As Boolean = False          ' Cause the older osu! file format doesn't include the set ID
-                                    Dim Found_Title As Boolean = False
-                                    Dim Found_Artist As Boolean = False
-                                    Dim Found_Creator As Boolean = False
-
-                                    Do While FileReader.Peek() <> -1 And TextLines.Count <= 50  ' Don't read more than 50 lines
-                                        TextLines.Add(FileReader.ReadLine())
-                                    Loop
-
-                                    For Each Line As String In TextLines
-                                        If Found_ID And Found_Title And Found_Artist And Found_Creator Then Exit For
-
-                                        If Line.StartsWith("Title:") Then
-                                            Found_Title = True
-                                            BeatmapDetails.Title = Line.Substring(6)
-                                        ElseIf Line.StartsWith("Artist:") Then
-                                            Found_Artist = True
-                                            BeatmapDetails.Artist = Line.Substring(7)
-                                        ElseIf Line.StartsWith("BeatmapSetID:") Then
-                                            Found_ID = True
-                                            Try
-                                                BeatmapDetails.ID = CInt(Line.Substring(13))
-                                            Catch ex As InvalidCastException
-                                                MsgBox(_e("MainWindow_fetchedIdIsNaN"), MsgBoxStyle.Exclamation, AppName)
-                                                BeatmapDetails.ID = -1
-                                                Found_ID = False
-                                            End Try
-                                        ElseIf Line.StartsWith("Creator:") Then
-                                            Found_Creator = True
-                                            BeatmapDetails.Creator = Line.Substring(8)
-                                        End If
-                                    Next
-
-                                    If Found_ID = False Then
-                                        ' Looks like it's an old file, so try to get ID from folder name
-                                        Try
-                                            BeatmapDetails.ID = CInt(DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" ")))
-                                        Catch ex As Exception
-                                            BeatmapDetails.ID = -1
-                                            Beatmap_InvalidIDBeatmaps += "• " & BeatmapDetails.ID & " | " & BeatmapDetails.Artist & " | " & BeatmapDetails.Title & vbNewLine
-                                        End Try
-                                    End If
-                                    Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
-                                    BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
-                                        .Progress__Current = Answer.Return__Sync_BmDic_Installed.Count})
-                                    Exit For
-                                End If
-                            Next
-
-                            ' Can't read/find osu! file
-                            If FoundFile = False Then
-                                Try
-                                    Dim Beatmap_ID As String = DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" "))
-                                    Dim Beatmap_Artist As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + 1, DirectoryInfo.Name.IndexOf(" - ") - Beatmap_ID.Length - 1)
-                                    Dim Beatmap_Name As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + Beatmap_Artist.Length + 4)
-                                    Dim CurrentBeatmap As New Beatmap With {
-                                        .ID = CInt(Beatmap_ID),
-                                        .Title = Beatmap_Name,
-                                        .Artist = Beatmap_Artist}
-                                    Answer.Return__Sync_BmDic_Installed.Add(CurrentBeatmap.ID, CurrentBeatmap)
-                                Catch ex As Exception
-                                    Beatmap_InvalidFolder += "• " & DirectoryInfo.Name & vbNewLine
-                                End Try
-                            End If
+                        End Try
+                    Catch ex_ As Exception
+                        If MessageBox.Show(_e("MainWindow_unableToReadBms") & " " & _e("MainWindow_fallback"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) = MessageBoxResult.Yes Then
+                            Answer = ReadBmsFromDir(AppSettings.osu_SongsPath)
+                        Else
+                            Answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled
                         End If
-                    Next
-                End If
-
-                If Not Beatmap_InvalidFolder = "" Or Not Beatmap_InvalidIDBeatmaps = "" Then
-                    If Not Beatmap_InvalidFolder = "" Then Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine & Beatmap_InvalidFolder & vbNewLine & vbNewLine
-                    If Not Beatmap_InvalidIDBeatmaps = "" Then Answer.Return__Sync_Warnings += "=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine & Beatmap_InvalidIDBeatmaps & vbNewLine & vbNewLine & vbNewLine
+                    End Try
+                Else
+                    If Directory.Exists(AppSettings.osu_SongsPath) Then
+                        If MessageBox.Show(_e("MainWindow_unableToReadBms") & " " & _e("MainWindow_fallback"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) = MessageBoxResult.Yes Then
+                            Answer = ReadBmsFromDir(AppSettings.osu_SongsPath)
+                        Else
+                            Answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled
+                        End If
+                    Else
+                        Answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Exception
+                    End If
                 End If
                 e.Result = Answer
         End Select
@@ -1612,7 +1504,7 @@ Class MainWindow
     Sub BGW_SyncGetIDs_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BGW_SyncGetIDs.RunWorkerCompleted
         Dim Answer As BGWcallback_SyncGetIDs = TryCast(e.Result, BGWcallback_SyncGetIDs)
         Select Case Answer.Return__Status
-            Case 0
+            Case BGWcallback_SyncGetIDs.ReturnStatuses.Success
                 Interface_LoaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Return__Sync_BmDic_Installed.Count.ToString)
                 If Not Answer.Return__Sync_Warnings = "" Then
                     If MessageBox.Show(_e("MainWindow_someBeatmapsDifferFromNormal") & vbNewLine &
@@ -1635,6 +1527,30 @@ Class MainWindow
                     Sync_Done_ImporterRequest = False
                     BmDisplayUpdate(Sync_Done_ImporterRequest_SaveValue, UpdateBmDisplayDestinations.Importer)
                 End If
+            Case BGWcallback_SyncGetIDs.ReturnStatuses.Exception
+                MsgBox(_e("MainWindow_unableToReadBms"), MsgBoxStyle.Critical, AppName)
+                Interface_ShowSettingsWindow(1)
+
+                Dim UI_TextBlock As New TextBlock With {
+                    .FontSize = 72,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Margin = New Thickness(0, 100, 0, 0),
+                    .Text = _e("MainWindow_lastSyncFailed"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+                Dim UI_TextBlock_SubTitle As New TextBlock With {
+                    .FontSize = 24,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Text = _e("MainWindow_pleaseRetry"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+
+                With BeatmapWrapper.Children
+                    .Clear()
+                    .Add(UI_TextBlock)
+                    .Add(UI_TextBlock_SubTitle)
+                End With
+                Bu_SyncRun.IsEnabled = True
             Case BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist
                 MsgBox(_e("MainWindow_unableToFindOsuFolderPleaseSpecify"), MsgBoxStyle.Critical, AppName)
                 Interface_ShowSettingsWindow(1)
@@ -1659,8 +1575,185 @@ Class MainWindow
                     .Add(UI_TextBlock_SubTitle)
                 End With
                 Bu_SyncRun.IsEnabled = True
+            Case BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled
+                Dim UI_TextBlock As New TextBlock With {
+                    .FontSize = 72,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Margin = New Thickness(0, 100, 0, 0),
+                    .Text = _e("MainWindow_lastSyncFailed"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+                Dim UI_TextBlock_SubTitle As New TextBlock With {
+                    .FontSize = 24,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Text = _e("MainWindow_pleaseRetry"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+
+                With BeatmapWrapper.Children
+                    .Clear()
+                    .Add(UI_TextBlock)
+                    .Add(UI_TextBlock_SubTitle)
+                End With
+                Bu_SyncRun.IsEnabled = True
         End Select
     End Sub
+
+    Function ReadBmsFromDb(DbPath As String, Optional Legacy As Boolean = False) As Dictionary(Of Integer, Beatmap)
+        Dim FoundBms As New Dictionary(Of Integer, Beatmap)
+        Using Reader As OsuReader = New OsuReader(File.OpenRead(DbPath))
+            ' More details: http://j.mp/1PIyjCY
+            Reader.ReadInt32()                                          ' osu! version (e.g. 20150203) 
+            Reader.ReadInt32()                                          ' Folder Count 
+            Reader.ReadBoolean()                                        ' AccountUnlocked (only false when the account is locked or banned in any way)
+            Reader.ReadDate()                                           ' Date the account will be unlocked 
+            Reader.ReadString()                                         ' Player name 
+            Dim BeatmapCount As Integer = Reader.ReadInt32()            ' Number of beatmaps 
+            For i = 1 To BeatmapCount
+                Dim BeatmapDetails As New Beatmap
+                If Not Legacy Then Reader.ReadInt32()                   ' Unknown 
+                BeatmapDetails.Artist = Reader.ReadString()             ' Artist name
+                Reader.ReadString()                                     '  Artist name, in Unicode
+                BeatmapDetails.Title = Reader.ReadString()              ' Song title
+                Reader.ReadString()                                     '  Song title, in Unicode
+                BeatmapDetails.Creator = Reader.ReadString()            ' Creator name
+                Reader.ReadString()                                     '  Difficulty (e.g. Hard, Insane, etc.)
+                Reader.ReadString()                                     '  Audio file name
+                BeatmapDetails.MD5 = Reader.ReadString()                ' MD5 hash of the beatmap
+                Reader.ReadString()                                     '  Name of the .osu file corresponding to this beatmap
+                BeatmapDetails.RankedStatus = Reader.ReadByte           ' Ranked status
+                Reader.ReadBytes(38)                                    '  Other data No. of Circles/Sliders/Spinners, Last Edit, Settings etc.
+                For j = 1 To 4                                          '  Star difficulties with various mods
+                    Dim Count = Reader.ReadInt32()
+                    If Count < 0 Then Continue For
+                    For k = 1 To Count
+                        Reader.ReadBytes(14)
+                    Next
+                Next
+                Reader.ReadBytes(12)                                    '  Drain/Total/Preview Time
+                Dim TimingPointCount = Reader.ReadInt32() 'You could probably optimise these loops. Reader.ReadBytes(Count*17) maybe. I don't have the time to test it.
+                For j = 1 To TimingPointCount
+                    Reader.ReadBytes(17)
+                Next
+                Reader.ReadInt32()                                      '  Beatmap ID
+                BeatmapDetails.ID = Reader.ReadInt32()                  ' Beatmap set ID
+                Reader.ReadInt32()                                      '  Thread ID
+                Reader.ReadBytes(11)
+                Reader.ReadString()                                     '  Song source
+                BeatmapDetails.SongTags = Reader.ReadString()           ' Song tags
+                Reader.ReadInt16()                                      '  Online offset 
+                Reader.ReadString()                                     '  Font used for the title of the song 
+                BeatmapDetails.IsUnplayed = Reader.ReadBoolean()        ' Is unplayed
+                Reader.ReadBytes(9)
+                Reader.ReadString()                                     '  Folder name of the beatmap, relative to Songs folder 
+                Reader.ReadBytes(18)
+
+                If Not FoundBms.ContainsKey(BeatmapDetails.ID) Then
+                    FoundBms.Add(BeatmapDetails.ID, BeatmapDetails)
+                    BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
+                        .Progress__Current = FoundBms.Count})
+                End If
+            Next
+        End Using
+        Return FoundBms
+    End Function
+
+    Function ReadBmsFromDir(DirPath As String, Optional Old As Boolean = False) As BGWcallback_SyncGetIDs
+        Dim Answer As New BGWcallback_SyncGetIDs With {
+            .Func_Invalid = New List(Of String),
+            .Func_InvalidId = New List(Of String)}
+        For Each DirectoryList As String In Directory.GetDirectories(DirPath)
+            Dim DirectoryInfo As New DirectoryInfo(DirectoryList)
+            If Not DirectoryInfo.Name.ToLower = "failed" And Not DirectoryInfo.Name.ToLower = "tutorial" Then
+                Dim FoundFile As Boolean = False
+                For Each FileInDir In Directory.GetFiles(DirectoryList)
+                    If Path.GetExtension(FileInDir) = ".osu" Then
+                        FoundFile = True
+                        ' Read File
+                        Dim FileReader As New StreamReader(FileInDir)
+                        Dim TextLines As New List(Of String)
+                        Dim BeatmapDetails As New Beatmap
+                        Dim Found_ID As Boolean = False          ' Cause the older osu! file format doesn't include the set ID
+                        Dim Found_Title As Boolean = False
+                        Dim Found_Artist As Boolean = False
+                        Dim Found_Creator As Boolean = False
+                        Do While FileReader.Peek() <> -1 And TextLines.Count <= 50  ' Don't read more than 50 lines
+                            TextLines.Add(FileReader.ReadLine())
+                        Loop
+                        For Each Line As String In TextLines
+                            If Found_ID And Found_Title And Found_Artist And Found_Creator Then Exit For
+                            If Line.StartsWith("Title:") Then
+                                Found_Title = True
+                                BeatmapDetails.Title = Line.Substring(6)
+                            ElseIf Line.StartsWith("Artist:") Then
+                                Found_Artist = True
+                                BeatmapDetails.Artist = Line.Substring(7)
+                            ElseIf Line.StartsWith("BeatmapSetID:") Then
+                                Found_ID = True
+                                Try
+                                    BeatmapDetails.ID = CInt(Line.Substring(13))
+                                Catch ex As InvalidCastException
+                                    BeatmapDetails.ID = -1
+                                    Found_ID = False
+                                End Try
+                            ElseIf Line.StartsWith("Creator:") Then
+                                Found_Creator = True
+                                BeatmapDetails.Creator = Line.Substring(8)
+                            End If
+                        Next
+                        If Found_ID = False Then
+                            ' Looks like it's an old file, so try to get ID from folder name
+                            Try
+                                BeatmapDetails.ID = CInt(DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" ")))
+                            Catch ex As Exception
+                                BeatmapDetails.ID = -1
+                                Answer.Func_InvalidId.Add(BeatmapDetails.ID & " | " & BeatmapDetails.Artist & " | " & BeatmapDetails.Title)
+                            End Try
+                        End If
+                        Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
+                        BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
+                            .Progress__Current = Answer.Return__Sync_BmDic_Installed.Count})
+                        Exit For
+                    End If
+                Next
+
+                ' Can't read/find osu! file
+                If FoundFile = False Then
+                    Try
+                        Dim Beatmap_ID As String = DirectoryInfo.Name.Substring(0, DirectoryInfo.Name.IndexOf(" "))
+                        Dim Beatmap_Artist As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + 1, DirectoryInfo.Name.IndexOf(" - ") - Beatmap_ID.Length - 1)
+                        Dim Beatmap_Name As String = DirectoryInfo.Name.Substring(Beatmap_ID.Length + Beatmap_Artist.Length + 4)
+                        Dim CurrentBeatmap As New Beatmap With {
+                            .ID = CInt(Beatmap_ID),
+                            .Title = Beatmap_Name,
+                            .Artist = Beatmap_Artist}
+                        Answer.Return__Sync_BmDic_Installed.Add(CurrentBeatmap.ID, CurrentBeatmap)
+                    Catch ex As Exception
+                        Answer.Func_Invalid.Add(DirectoryInfo.Name)
+                    End Try
+                End If
+            End If
+        Next
+        If Not Answer.Func_Invalid.Count = 0 Then
+            Dim SB As New Text.StringBuilder
+            SB.Append("=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine)
+            For Each Item As String In Answer.Func_Invalid
+                SB.Append("• " & Item & vbNewLine)
+            Next
+            SB.Append(vbNewLine & vbNewLine)
+            Answer.Return__Sync_Warnings += SB.ToString
+        End If
+        If Not Answer.Func_InvalidId.Count = 0 Then
+            Dim SB As New Text.StringBuilder
+            SB.Append("=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine)
+            For Each Item As String In Answer.Func_InvalidId
+                SB.Append("• " & Item & vbNewLine)
+            Next
+            SB.Append(vbNewLine & vbNewLine)
+            Answer.Return__Sync_Warnings += SB.ToString
+        End If
+        Return Answer
+    End Function
 #End Region
 
 #Region "Exporter"
@@ -1671,20 +1764,21 @@ Class MainWindow
     End Sub
 
     Sub Bu_ExporterInvertSel_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ExporterInvertSel.Click
-        ' Save unselected elements
-        Dim ListUnselected As List(Of Importer.TagData) = Exporter_BmList_UnselectedTags.ToList
-        ' Save selected elements
+        ' Copy data before manipulation
         Dim ListSelected As List(Of Importer.TagData) = Exporter_BmList_SelectedTags.ToList
-
+        Dim ListUnselected As List(Of Importer.TagData) = Exporter_BmList_UnselectedTags.ToList
         ' Loop for selected elements
-        For i = 0 To ListSelected.Count
+        Dim i As Integer = 0
+        Do While i < ListSelected.Count
             ListSelected(i).UI_Checkbox_IsSelected.IsChecked = False
-        Next
-
+            i += 1
+        Loop
         ' Loop for unselected elements
-        For i = 0 To ListUnselected.Count
+        i = 0
+        Do While i < ListUnselected.Count
             ListUnselected(i).UI_Checkbox_IsSelected.IsChecked = True
-        Next
+            i += 1
+        Loop
     End Sub
 
     Sub Bu_ExporterRun_Click(sender As Object, e As RoutedEventArgs) Handles Bu_ExporterRun.Click
@@ -1989,6 +2083,7 @@ Class MainWindow
         RemoveHandler(Csender_Bm.UI_Thumbnail.MouseRightButtonUp), AddressOf BmDP_Show
         AddHandler(Csender_Bm.UI_Thumbnail.MouseDown), AddressOf BmDP_Show
         Directory.CreateDirectory(AppTempPath & "\Cache\Thumbnails")
+        La_FooterProg.Content = _e("MainWindow_downloadingThumbnail").Replace("%0", CStr(Csender_Bm.Beatmap.ID))
         Dim ThumbClient As New WebClient
         AddHandler ThumbClient.DownloadFileCompleted, AddressOf Importer_DownloadThumb_DownloadFileCompleted
         ThumbClient.DownloadFileAsync(New Uri("https://b.ppy.sh/thumb/" & Csender_Bm.Beatmap.ID & ".jpg"), AppTempPath & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg", Csender_Bm)
