@@ -317,7 +317,7 @@ Class MainWindow
             Case UpdateBmDisplayDestinations.Installed
                 With La_FooterLastSync
                     If LastUpdateTime = Nothing Then
-                        .Content = _e("MainWindow_lastSync").Replace("%0", Date.Now.ToString(_e("MainWindow_dateFormat") & " | " & _e("MainWindow_timeFormat")))
+                        .Content = _e("MainWindow_lastSync").Replace("%0", Date.Now.ToString(_e("MainWindow_dateFormat") & " " & _e("MainWindow_timeFormat")))
                         .Tag = Date.Now.ToString("yyyyMMddHHmmss")
                     Else
                         .Content = _e("MainWindow_lastSync").Replace("%0", LastUpdateTime)
@@ -680,6 +680,7 @@ Class MainWindow
         BeatmapDetails_APIProgress.Visibility = Visibility.Collapsed
 
         If e.Cancelled Then
+            UI_SetStatus(_e("MainWindow_aborted"))
             WriteToApiLog("/api/get_beatmaps", "{Cancelled}")
         Else
             Dim JSON_Array As JArray
@@ -722,7 +723,9 @@ Class MainWindow
                     End With
 
                     BmDP_SetRankedStatus(CType(JSON_Array.First.SelectToken("approved").ToString, Beatmap.OnlineApprovedStatuses))
+                    UI_SetStatus(_e("MainWindow_finished"))
                 Else
+                    UI_SetStatus(_e("MainWindow_failed"))
                     WriteToApiLog("/api/get_beatmaps", "{UnexpectedAnswer} " & e.Result)
                     With BeatmapDetails_APIWarn
                         .Content = _e("MainWindow_detailsPanel_apiError")
@@ -730,6 +733,7 @@ Class MainWindow
                     End With
                 End If
             Catch ex As Exception
+                UI_SetStatus(_e("MainWindow_failed"))
                 WriteToApiLog("/api/get_beatmaps")
                 With BeatmapDetails_APIWarn
                     .Content = _e("MainWindow_detailsPanel_apiError")
@@ -763,12 +767,12 @@ Class MainWindow
         Else
             Exit Sub
         End If
-        Interface_ShowBmDP(Csender_Bm.ID, New BmDPDetails With {
-                           .Artist = Csender_Bm.Artist,
-                           .Creator = Csender_Bm.Creator,
-                           .IsUnplayed = Csender_Bm.IsUnplayed,
-                           .RankedStatus = Csender_Bm.RankedStatus,
-                           .Title = Csender_Bm.Title})
+        UI_ShowBmDP(Csender_Bm.ID, New BmDPDetails With {
+                    .Artist = Csender_Bm.Artist,
+                    .Creator = Csender_Bm.Creator,
+                    .IsUnplayed = Csender_Bm.IsUnplayed,
+                    .RankedStatus = Csender_Bm.RankedStatus,
+                    .Title = Csender_Bm.Title})
     End Sub
 
 #Region "Bu - Button"
@@ -959,132 +963,9 @@ Class MainWindow
         Flyout_BmDetails.Width = AppSettings.Tool_Interface_BeatmapDetailPanelWidth * (ActualWidth / 100)
     End Sub
 
-    Sub Interface_SetLoader(Optional Message As String = "Please wait")
-        Dim UI_ProgressBar = New ProgressBar With {
-            .HorizontalAlignment = HorizontalAlignment.Stretch,
-            .Visibility = Visibility.Hidden,
-            .Height = 25}
-        Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With {
-            .Height = 150,
-            .HorizontalAlignment = HorizontalAlignment.Center,
-            .IsActive = True,
-            .Margin = New Thickness(0, 100, 0, 0),
-            .VerticalAlignment = VerticalAlignment.Center,
-            .Width = 150}
-        Dim UI_TextBlock_SubTitle As New TextBlock With {
-            .FontSize = 24,
-            .Foreground = StandardColors.GrayLighter,
-            .HorizontalAlignment = HorizontalAlignment.Center,
-            .Text = Message,
-            .TextAlignment = TextAlignment.Center,
-            .VerticalAlignment = VerticalAlignment.Center}
-
-        Interface_LoaderText = UI_TextBlock_SubTitle
-        Interface_LoaderProgressBar = UI_ProgressBar
-        With BeatmapWrapper.Children
-            .Clear()
-            .Add(UI_ProgressBar)
-            .Add(UI_ProgressRing)
-            .Add(UI_TextBlock_SubTitle)
-        End With
-    End Sub
-
-    Sub Interface_ShowBmDP(ID As Integer, Details As BmDPDetails)
-        BeatmapDetails_Artist.Text = Details.Artist
-        Bu_BmDetailsListing.Tag = ID
-        BeatmapDetails_Creator.Text = Details.Creator
-        BeatmapDetails_Title.Text = Details.Title
-
-        ' IsUnplayed status
-        If Details.IsUnplayed Then
-            With BeatmapDetails_IsUnplayed
-                .Background = StandardColors.RedLight
-                .Text = _e("MainWindow_detailsPanel_playedStatus_unplayed")
-            End With
-        Else
-            With BeatmapDetails_IsUnplayed
-                .Background = StandardColors.GreenDark
-                .Text = _e("MainWindow_detailsPanel_playedStatus_played")
-            End With
-        End If
-
-        ' Ranked status
-        Select Case Details.RankedStatus
-            Case Convert.ToByte(4), Convert.ToByte(5)   ' 4 = Ranked, 5 = Approved
-                With BeatmapDetails_RankedStatus
-                    .Background = StandardColors.GreenDark
-                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked")
-                End With
-            Case Convert.ToByte(6)      ' Pending
-                With BeatmapDetails_RankedStatus
-                    .Background = StandardColors.PurpleDark
-                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_pending")
-                End With
-            Case Else
-                With BeatmapDetails_RankedStatus
-                    .Background = StandardColors.GrayLight
-                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked")
-                End With
-        End Select
-
-        ' Thumbnail
-        Dim ThumbPath As String = ""
-        If File.Exists(AppSettings.osu_Path & "\Data\bt\" & ID & "l.jpg") Then
-            ThumbPath = (AppSettings.osu_Path & "\Data\bt\" & ID & "l.jpg")
-        ElseIf File.Exists(AppTempPath & "\Cache\Thumbnails\" & ID & ".jpg") Then
-            ThumbPath = (AppTempPath & "\Cache\Thumbnails\" & ID & ".jpg")
-        End If
-        If Not ThumbPath = "" Then
-            Try
-                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(ThumbPath))
-            Catch ex As NotSupportedException
-                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
-            End Try
-        Else
-            BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
-        End If
-
-        ' Api
-        If AppSettings.Api_Enabled_BeatmapPanel And Not ID = -1 Then
-            If BmDP_Client.IsBusy Then BmDP_Client.CancelAsync()
-            ' Reset
-            BeatmapDetails_APIFavouriteCount.Text = "..."
-            BeatmapDetails_APIFunctions.Visibility = Visibility.Visible
-            BeatmapDetails_APIPassCount.Text = "..."
-            BeatmapDetails_APIPlayCount.Text = "..."
-            BeatmapDetails_APIProgress.Visibility = Visibility.Visible
-            BeatmapDetails_RankedStatus.Text = "..."
-            BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
-
-            Try
-                BmDP_Client.DownloadStringAsync(New Uri(WebOsuApiRoot & "get_beatmaps?k=" & AppSettings.Api_Key & "&s=" & ID))
-            Catch ex As NotSupportedException
-                With BeatmapDetails_APIWarn
-                    .Content = _e("MainWindow_detailsPanel_generalError")
-                    .Visibility = Visibility.Visible
-                End With
-            End Try
-        Else
-            BeatmapDetails_APIFunctions.Visibility = Visibility.Collapsed
-        End If
-
-        Flyout_BmDetails.IsOpen = True
-    End Sub
-
-    Shared Sub Interface_ShowSettingsWindow(Optional ByVal SelectedIndex As Integer = 0)
-        Dim Window_Settings As New Window_Settings
-        Window_Settings.TC_Main.SelectedIndex = SelectedIndex
-        Window_Settings.ShowDialog()
-    End Sub
-
-    Shared Sub Interface_ShowUpdaterWindow()
-        Dim Window_Updater As New Window_Updater
-        Window_Updater.ShowDialog()
-    End Sub
-
 #Region "La - Label"
     Sub La_FooterUpdater_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles La_FooterUpdater.MouseDown
-        Interface_ShowUpdaterWindow()
+        UI_ShowUpdaterWindow()
     End Sub
 
     Sub La_FooterVer_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles La_FooterVer.MouseDown
@@ -1171,7 +1052,7 @@ Class MainWindow
     End Sub
 
     Sub MI_AppSettings_Click(sender As Object, e As RoutedEventArgs) Handles MI_AppSettings.Click
-        Interface_ShowSettingsWindow()
+        UI_ShowSettingsWindow()
         If Not Tool_DontApplySettings Then ApplySettings() Else Tool_DontApplySettings = False
     End Sub
 
@@ -1276,7 +1157,7 @@ Class MainWindow
     End Sub
 
     Sub MI_HelpUpdater_Click(sender As Object, e As RoutedEventArgs) Handles MI_HelpUpdater.Click
-        Interface_ShowUpdaterWindow()
+        UI_ShowUpdaterWindow()
     End Sub
 
     Sub MI_NotifyAppShowHide_Click(sender As Object, e As RoutedEventArgs) Handles MI_NotifyAppShowHide.Click
@@ -1355,7 +1236,7 @@ Class MainWindow
     ''' <remarks></remarks>
     Sub Sync_GetIDs()
         Bu_SyncRun.IsEnabled = False
-        Interface_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
+        UI_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"))
         La_FooterLastSync.Content = _e("MainWindow_syncing")
         BGW_SyncGetIDs.RunWorkerAsync(New BGWcallback_SyncGetIDs)
     End Sub
@@ -1364,7 +1245,7 @@ Class MainWindow
     Sub TI_Notify_TrayBalloonTipClicked(sender As Object, e As RoutedEventArgs) Handles TI_Notify.TrayBalloonTipClicked
         Select Case CType(TI_Notify.Tag, NotifyNextAction)
             Case NotifyNextAction.OpenUpdater
-                Interface_ShowUpdaterWindow()
+                UI_ShowUpdaterWindow()
         End Select
     End Sub
 
@@ -1390,6 +1271,153 @@ Class MainWindow
             End Select
         End If
     End Sub
+
+#Region "UI"
+    Sub UI_SetLoader(Optional Message As String = "Please wait")
+        Dim UI_ProgressBar = New ProgressBar With {
+            .HorizontalAlignment = HorizontalAlignment.Stretch,
+            .Visibility = Visibility.Hidden,
+            .Height = 25}
+        Dim UI_ProgressRing = New MahApps.Metro.Controls.ProgressRing With {
+            .Height = 150,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .IsActive = True,
+            .Margin = New Thickness(0, 100, 0, 0),
+            .VerticalAlignment = VerticalAlignment.Center,
+            .Width = 150}
+        Dim UI_TextBlock_SubTitle As New TextBlock With {
+            .FontSize = 24,
+            .Foreground = StandardColors.GrayLighter,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .Text = Message,
+            .TextAlignment = TextAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center}
+
+        Interface_LoaderText = UI_TextBlock_SubTitle
+        Interface_LoaderProgressBar = UI_ProgressBar
+        With BeatmapWrapper.Children
+            .Clear()
+            .Add(UI_ProgressBar)
+            .Add(UI_ProgressRing)
+            .Add(UI_TextBlock_SubTitle)
+        End With
+    End Sub
+
+    Sub UI_SetStatus(Optional Message As String = "", Optional DoRecord As Boolean = False)
+        If DoRecord Then    ' Keep previous statuses as tooltip
+            Dim cTag As List(Of String)
+            If La_FooterProg.Tag Is Nothing Then
+                cTag = New List(Of String)
+            Else
+                cTag = CType(La_FooterProg.Tag, List(Of String))
+            End If
+            cTag.Add(Date.Now.ToString(_e("MainWindow_timeFormat")) & " | " & Message)
+            If cTag.Count > 10 Then cTag.RemoveRange(0, cTag.Count - 10)
+
+            Dim SB As New Text.StringBuilder
+            For Each item As String In cTag
+                SB.Append(item & vbNewLine)
+            Next
+            La_FooterProg.Tag = cTag
+            La_FooterProg.ToolTip = SB.ToString(0, SB.Length - vbNewLine.Length) ' Remove last vbNewLine
+        End If
+        La_FooterProg.Content = Message
+    End Sub
+
+    Sub UI_ShowBmDP(ID As Integer, Details As BmDPDetails)
+        BeatmapDetails_Artist.Text = Details.Artist
+        Bu_BmDetailsListing.Tag = ID
+        BeatmapDetails_Creator.Text = Details.Creator
+        BeatmapDetails_Title.Text = Details.Title
+
+        ' IsUnplayed status
+        If Details.IsUnplayed Then
+            With BeatmapDetails_IsUnplayed
+                .Background = StandardColors.RedLight
+                .Text = _e("MainWindow_detailsPanel_playedStatus_unplayed")
+            End With
+        Else
+            With BeatmapDetails_IsUnplayed
+                .Background = StandardColors.GreenDark
+                .Text = _e("MainWindow_detailsPanel_playedStatus_played")
+            End With
+        End If
+
+        ' Ranked status
+        Select Case Details.RankedStatus
+            Case Convert.ToByte(4), Convert.ToByte(5)   ' 4 = Ranked, 5 = Approved
+                With BeatmapDetails_RankedStatus
+                    .Background = StandardColors.GreenDark
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked")
+                End With
+            Case Convert.ToByte(6)      ' Pending
+                With BeatmapDetails_RankedStatus
+                    .Background = StandardColors.PurpleDark
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_pending")
+                End With
+            Case Else
+                With BeatmapDetails_RankedStatus
+                    .Background = StandardColors.GrayLight
+                    .Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked")
+                End With
+        End Select
+
+        ' Thumbnail
+        Dim ThumbPath As String = ""
+        If File.Exists(AppSettings.osu_Path & "\Data\bt\" & ID & "l.jpg") Then
+            ThumbPath = (AppSettings.osu_Path & "\Data\bt\" & ID & "l.jpg")
+        ElseIf File.Exists(AppTempPath & "\Cache\Thumbnails\" & ID & ".jpg") Then
+            ThumbPath = (AppTempPath & "\Cache\Thumbnails\" & ID & ".jpg")
+        End If
+        If Not ThumbPath = "" Then
+            Try
+                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(ThumbPath))
+            Catch ex As NotSupportedException
+                BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+            End Try
+        Else
+            BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
+        End If
+
+        ' Api
+        If AppSettings.Api_Enabled_BeatmapPanel And Not ID = -1 Then
+            If BmDP_Client.IsBusy Then BmDP_Client.CancelAsync()
+            ' Reset
+            BeatmapDetails_APIFavouriteCount.Text = "..."
+            BeatmapDetails_APIFunctions.Visibility = Visibility.Visible
+            BeatmapDetails_APIPassCount.Text = "..."
+            BeatmapDetails_APIPlayCount.Text = "..."
+            BeatmapDetails_APIProgress.Visibility = Visibility.Visible
+            BeatmapDetails_RankedStatus.Text = "..."
+            BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed
+
+            Try
+                UI_SetStatus(_e("MainWindow_fetching").Replace("%0", CStr(ID)), True)
+                BmDP_Client.DownloadStringAsync(New Uri(WebOsuApiRoot & "get_beatmaps?k=" & AppSettings.Api_Key & "&s=" & ID))
+            Catch ex As NotSupportedException
+                With BeatmapDetails_APIWarn
+                    .Content = _e("MainWindow_detailsPanel_generalError")
+                    .Visibility = Visibility.Visible
+                End With
+            End Try
+        Else
+            BeatmapDetails_APIFunctions.Visibility = Visibility.Collapsed
+        End If
+
+        Flyout_BmDetails.IsOpen = True
+    End Sub
+
+    Shared Sub UI_ShowSettingsWindow(Optional ByVal SelectedIndex As Integer = 0)
+        Dim Window_Settings As New Window_Settings
+        Window_Settings.TC_Main.SelectedIndex = SelectedIndex
+        Window_Settings.ShowDialog()
+    End Sub
+
+    Shared Sub UI_ShowUpdaterWindow()
+        Dim Window_Updater As New Window_Updater
+        Window_Updater.ShowDialog()
+    End Sub
+#End Region
 
     Sub UpdateCheck()
         La_FooterUpdater.Content = _e("MainWindow_checkingForUpdates")
@@ -1425,7 +1453,7 @@ Class MainWindow
         Else
             La_FooterUpdater.Content = _e("MainWindow_updateAvailable").Replace("%0", LatestVer)
             BalloonShow(_e("MainWindow_aNewVersionIsAvailable").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", LatestVer), , , NotifyNextAction.OpenUpdater)
-            If AppSettings.Messages_Updater_OpenUpdater Then Interface_ShowUpdaterWindow()
+            If AppSettings.Messages_Updater_OpenUpdater Then UI_ShowUpdaterWindow()
         End If
     End Sub
 
@@ -1527,74 +1555,51 @@ Class MainWindow
                     Sync_Done_ImporterRequest = False
                     BmDisplayUpdate(Sync_Done_ImporterRequest_SaveValue, UpdateBmDisplayDestinations.Importer)
                 End If
-            Case BGWcallback_SyncGetIDs.ReturnStatuses.Exception
+            Case BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled,
+                 BGWcallback_SyncGetIDs.ReturnStatuses.Exception
+                Dim UI_TextBlock As New TextBlock With {
+                    .FontSize = 72,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Margin = New Thickness(0, 100, 0, 0),
+                    .Text = _e("MainWindow_lastSyncFailed"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+                Dim UI_TextBlock_SubTitle As New TextBlock With {
+                    .FontSize = 24,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Text = _e("MainWindow_pleaseRetry"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+
+                With BeatmapWrapper.Children
+                    .Clear()
+                    .Add(UI_TextBlock)
+                    .Add(UI_TextBlock_SubTitle)
+                End With
+                Bu_SyncRun.IsEnabled = True
                 MsgBox(_e("MainWindow_unableToReadBms"), MsgBoxStyle.Critical, AppName)
-                Interface_ShowSettingsWindow(1)
-
-                Dim UI_TextBlock As New TextBlock With {
-                    .FontSize = 72,
-                    .Foreground = StandardColors.GrayLighter,
-                    .HorizontalAlignment = HorizontalAlignment.Center,
-                    .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = _e("MainWindow_lastSyncFailed"),
-                    .VerticalAlignment = VerticalAlignment.Center}
-                Dim UI_TextBlock_SubTitle As New TextBlock With {
-                    .FontSize = 24,
-                    .Foreground = StandardColors.GrayLighter,
-                    .HorizontalAlignment = HorizontalAlignment.Center,
-                    .Text = _e("MainWindow_pleaseRetry"),
-                    .VerticalAlignment = VerticalAlignment.Center}
-
-                With BeatmapWrapper.Children
-                    .Clear()
-                    .Add(UI_TextBlock)
-                    .Add(UI_TextBlock_SubTitle)
-                End With
-                Bu_SyncRun.IsEnabled = True
             Case BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist
+                Dim UI_TextBlock As New TextBlock With {
+                    .FontSize = 72,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Margin = New Thickness(0, 100, 0, 0),
+                    .Text = _e("MainWindow_lastSyncFailed"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+                Dim UI_TextBlock_SubTitle As New TextBlock With {
+                    .FontSize = 24,
+                    .Foreground = StandardColors.GrayLighter,
+                    .HorizontalAlignment = HorizontalAlignment.Center,
+                    .Text = _e("MainWindow_pleaseRetry"),
+                    .VerticalAlignment = VerticalAlignment.Center}
+
+                With BeatmapWrapper.Children
+                    .Clear()
+                    .Add(UI_TextBlock)
+                    .Add(UI_TextBlock_SubTitle)
+                End With
                 MsgBox(_e("MainWindow_unableToFindOsuFolderPleaseSpecify"), MsgBoxStyle.Critical, AppName)
-                Interface_ShowSettingsWindow(1)
-
-                Dim UI_TextBlock As New TextBlock With {
-                    .FontSize = 72,
-                    .Foreground = StandardColors.GrayLighter,
-                    .HorizontalAlignment = HorizontalAlignment.Center,
-                    .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = _e("MainWindow_lastSyncFailed"),
-                    .VerticalAlignment = VerticalAlignment.Center}
-                Dim UI_TextBlock_SubTitle As New TextBlock With {
-                    .FontSize = 24,
-                    .Foreground = StandardColors.GrayLighter,
-                    .HorizontalAlignment = HorizontalAlignment.Center,
-                    .Text = _e("MainWindow_pleaseRetry"),
-                    .VerticalAlignment = VerticalAlignment.Center}
-
-                With BeatmapWrapper.Children
-                    .Clear()
-                    .Add(UI_TextBlock)
-                    .Add(UI_TextBlock_SubTitle)
-                End With
-                Bu_SyncRun.IsEnabled = True
-            Case BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled
-                Dim UI_TextBlock As New TextBlock With {
-                    .FontSize = 72,
-                    .Foreground = StandardColors.GrayLighter,
-                    .HorizontalAlignment = HorizontalAlignment.Center,
-                    .Margin = New Thickness(0, 100, 0, 0),
-                    .Text = _e("MainWindow_lastSyncFailed"),
-                    .VerticalAlignment = VerticalAlignment.Center}
-                Dim UI_TextBlock_SubTitle As New TextBlock With {
-                    .FontSize = 24,
-                    .Foreground = StandardColors.GrayLighter,
-                    .HorizontalAlignment = HorizontalAlignment.Center,
-                    .Text = _e("MainWindow_pleaseRetry"),
-                    .VerticalAlignment = VerticalAlignment.Center}
-
-                With BeatmapWrapper.Children
-                    .Clear()
-                    .Add(UI_TextBlock)
-                    .Add(UI_TextBlock_SubTitle)
-                End With
+                UI_ShowSettingsWindow(1)
                 Bu_SyncRun.IsEnabled = True
         End Select
     End Sub
@@ -1682,7 +1687,7 @@ Class MainWindow
                         Loop
                         For Each Line As String In TextLines
                             If Found_ID And Found_Title And Found_Artist And Found_Creator Then Exit For
-                            If Line.StartsWith("Title:") Then
+                            If Line.StartsWith("Title: ") Then
                                 Found_Title = True
                                 BeatmapDetails.Title = Line.Substring(6)
                             ElseIf Line.StartsWith("Artist:") Then
@@ -1919,7 +1924,7 @@ Class MainWindow
         End With
 
         Importer_UpdateInfo(_e("MainWindow_installing"))
-        La_FooterProg.Content = _e("MainWindow_installingFiles")
+        UI_SetStatus(_e("MainWindow_installingFiles"), True)
 
         For Each FilePath In Directory.GetFiles(AppTempPath & "\Downloads\Beatmaps")
             If Not File.Exists(AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath)) Else File.Delete(FilePath)
@@ -1929,7 +1934,7 @@ Class MainWindow
             .Visibility = Visibility.Hidden
         End With
 
-        La_FooterProg.Content = ""
+        UI_SetStatus(_e("MainWindow_finished"))
         Importer_UpdateInfo(_e("MainWindow_finished"))
 
         If ImporterContainer.BmList_TagsFailed.Count > 0 Then
@@ -1975,7 +1980,7 @@ Class MainWindow
                 End With
 
                 Importer_UpdateInfo(_e("MainWindow_installing"))
-                La_FooterProg.Content = _e("MainWindow_installingFiles")
+                UI_SetStatus(_e("MainWindow_installingFiles"), True)
 
                 For Each FilePath In Directory.GetFiles(AppTempPath & "\Downloads\Beatmaps")
                     If Not File.Exists(AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath)) Then
@@ -2002,7 +2007,7 @@ Class MainWindow
             .Value = 0
             .IsIndeterminate = True
         End With
-        La_FooterProg.Content = _e("MainWindow_fetching").Replace("%0", CStr(ImporterContainer.BmList_TagsToInstall.First.Beatmap.ID))
+        UI_SetStatus(_e("MainWindow_fetching").Replace("%0", CStr(ImporterContainer.BmList_TagsToInstall.First.Beatmap.ID)), True)
         TB_ImporterMirror.Text = _e("MainWindow_downloadMirror") & ": " & Application_Mirrors(AppSettings.Tool_DownloadMirror).DisplayName
         RequestURI = Application_Mirrors(AppSettings.Tool_DownloadMirror).DownloadURL.Replace("%0", CStr(ImporterContainer.BmList_TagsToInstall.First.Beatmap.ID))
 
@@ -2033,7 +2038,7 @@ Class MainWindow
                 If ImporterContainer.BmList_TagsLeftOut.Count > 0 Then TB_ImporterInfo.Text += " | " & _e("MainWindow_leftOut").Replace("%0", ImporterContainer.BmList_TagsLeftOut.Count.ToString)
                 TB_ImporterInfo.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BmTotal.ToString)
 
-                La_FooterProg.Content = _e("MainWindow_installingFiles")
+                UI_SetStatus(_e("MainWindow_installingFiles"), True)
 
                 For Each FilePath In Directory.GetFiles(AppTempPath & "\Downloads\Beatmaps")
                     File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath))
@@ -2043,7 +2048,7 @@ Class MainWindow
                     .Visibility = Visibility.Hidden
                 End With
 
-                La_FooterProg.Content = ""
+                UI_SetStatus(_e("MainWindow_aborted"))
                 TB_ImporterInfo.Text = _e("MainWindow_aborted") &
                     " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BmList_TagsDone.Count.ToString)
                 If ImporterContainer.BmList_TagsLeftOut.Count > 0 Then TB_ImporterInfo.Text += " | " & _e("MainWindow_leftOut").Replace("%0", ImporterContainer.BmList_TagsLeftOut.Count.ToString)
@@ -2067,7 +2072,7 @@ Class MainWindow
         End If
         ImporterContainer.CurrentFileName = PathSanitize(ImporterContainer.CurrentFileName)   ' Issue #23: Replace invalid characters
 
-        La_FooterProg.Content = _e("MainWindow_downloading").Replace("%0", CStr(ImporterContainer.BmList_TagsToInstall.First.Beatmap.ID))
+        UI_SetStatus(_e("MainWindow_downloading").Replace("%0", CStr(ImporterContainer.BmList_TagsToInstall.First.Beatmap.ID)), True)
         Importer_UpdateInfo(_e("MainWindow_downloading1"))
         PB_ImporterProg.IsIndeterminate = False
         ImporterContainer.Downloader.DownloadFileAsync(New Uri(RequestURI), (AppTempPath & "\Downloads\Beatmaps\" & ImporterContainer.CurrentFileName))
@@ -2083,13 +2088,14 @@ Class MainWindow
         RemoveHandler(Csender_Bm.UI_Thumbnail.MouseRightButtonUp), AddressOf BmDP_Show
         AddHandler(Csender_Bm.UI_Thumbnail.MouseDown), AddressOf BmDP_Show
         Directory.CreateDirectory(AppTempPath & "\Cache\Thumbnails")
-        La_FooterProg.Content = _e("MainWindow_downloadingThumbnail").Replace("%0", CStr(Csender_Bm.Beatmap.ID))
+        UI_SetStatus(_e("MainWindow_downloadingThumbnail").Replace("%0", CStr(Csender_Bm.Beatmap.ID)), True)
         Dim ThumbClient As New WebClient
         AddHandler ThumbClient.DownloadFileCompleted, AddressOf Importer_DownloadThumb_DownloadFileCompleted
         ThumbClient.DownloadFileAsync(New Uri("https://b.ppy.sh/thumb/" & Csender_Bm.Beatmap.ID & ".jpg"), AppTempPath & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg", Csender_Bm)
     End Sub
 
     Sub Importer_DownloadThumb_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs)
+        UI_SetStatus(_e("MainWindow_finished"))
         Dim Csender_Bm As Importer.TagData = CType(e.UserState, Importer.TagData)
         If File.Exists(AppTempPath & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg") AndAlso My.Computer.FileSystem.GetFileInfo(AppTempPath & "\Cache\Thumbnails\" & Csender_Bm.Beatmap.ID & ".jpg").Length >= 10 Then
             Try

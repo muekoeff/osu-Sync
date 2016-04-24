@@ -164,21 +164,10 @@ Module GlobalVar
         Try
             Return Windows.Application.Current.FindResource(Text).ToString
         Catch ex As ResourceReferenceKeyNotFoundException
-            MsgBox("The application just tried to load a text (= string) which isn't registered." & vbNewLine & "Normally, this shouldn't happen." &
-                   vbNewLine & vbNewLine & "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional information:" & vbNewLine & Text, MsgBoxStyle.Critical, AppName)
-            Return "[Missing String: " + Text + "]"
-        End Try
-    End Function
-
-    Function DirAccessCheck(ByVal Directory As String) As Boolean
-        Try
-            Dim fs As New FileStream(Directory & "\Preparation.osuSync.tmp", FileMode.OpenOrCreate, FileAccess.ReadWrite)
-            Dim s As New StreamWriter(fs)
-            s.Dispose()
-            File.Delete(Directory & "\Preparation.osuSync.tmp")
-            Return True
-        Catch ex As Exception
-            Return False
+            MsgBox("The application just tried to load a text (= string) which isn't registered." & vbNewLine &
+                   "Normally, this shouldn't happen." & vbNewLine & vbNewLine &
+                   "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum." & vbNewLine & vbNewLine & "// Additional information:" & vbNewLine & Text, MsgBoxStyle.Critical, AppName)
+            Return "[Missing:" + Text + "]"
         End Try
     End Function
 
@@ -194,6 +183,18 @@ Module GlobalVar
             File.Close()
         End Using
         Return CrashFile
+    End Function
+
+    Function DirAccessCheck(ByVal Directory As String) As Boolean
+        Try
+            Dim fs As New FileStream(Directory & "\Preparation.osuSync.tmp", FileMode.OpenOrCreate, FileAccess.ReadWrite)
+            Dim s As New StreamWriter(fs)
+            s.Dispose()
+            File.Delete(Directory & "\Preparation.osuSync.tmp")
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
     End Function
 
     Function FileAssociationCreate(ByVal extension As String,

@@ -245,7 +245,7 @@
                     <TextBlock x:Name="TB_ImporterMirror" Cursor="Hand" Foreground="#DDD" HorizontalAlignment="Right" Margin="0,0,25,0" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TI_Exporter" Header="{DynamicResource MainWindow_export}">
+            <TabItem x:Name="TI_Exporter" Header="{DynamicResource MainWindow_export}" Visibility="Collapsed">
                 <Grid Margin="-5,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -286,7 +286,7 @@
             </TabItem>
         </TabControl>
         <StatusBar x:Name="SB_Footer" Background="#27AE60" Foreground="White" VerticalAlignment="Bottom" Grid.Row="3">
-            <Grid Height="37" Width="{Binding ActualWidth, ElementName=SB_Footer, Mode=OneWay}">
+            <Grid Width="{Binding ActualWidth, ElementName=SB_Footer, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Label x:Name="La_FooterLastSync" Content="{DynamicResource MainWindow_lastSyncNever}" Foreground="{Binding Foreground, ElementName=SB_Footer}" Tag="Never" />
                     <Label x:Name="La_FooterUpdater" Cursor="Hand" Foreground="{Binding Foreground, ElementName=SB_Footer}" ToolTip="{DynamicResource MainWindow_tt_openUpdater}" />

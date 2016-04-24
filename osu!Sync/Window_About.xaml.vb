@@ -1,11 +1,12 @@
 ﻿Class Window_About
 
+#Region "TB - TextArea"
     Sub TB_Contact_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_Contact.MouseUp
         Process.Start("mailto:team@nw520.de?subject=Contact%20|%20osu!Sync")
     End Sub
 
     Sub TB_Feedback_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_Feedback.MouseUp
-        MainWindow.Interface_ShowSettingsWindow(4)
+        MainWindow.UI_ShowSettingsWindow(4)
     End Sub
 
     Sub TB_GitHub_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_GitHub.MouseUp
@@ -17,8 +18,9 @@
     End Sub
 
     Sub TB_Version_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles TB_Version.MouseUp
-        MainWindow.Interface_ShowUpdaterWindow()
+        MainWindow.UI_ShowUpdaterWindow()
     End Sub
+#End Region
 
     Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 #If DEBUG Then
