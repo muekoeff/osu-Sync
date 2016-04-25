@@ -288,20 +288,22 @@ Class MainWindow
         End Select
 
         ' Check Write Access
-        Tool_HasWriteAccessToOsu = DirAccessCheck(AppSettings.osu_SongsPath)
-        If Tool_HasWriteAccessToOsu = False Then
-            If AppSettings.Tool_RequestElevationOnStartup Then
-                If RequestElevation() Then
-                    Windows.Application.Current.Shutdown()
-                    Exit Sub
-                Else
-                    MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, AppName)
+        If Directory.Exists(AppSettings.osu_SongsPath) Then
+            Tool_HasWriteAccessToOsu = DirAccessCheck(AppSettings.osu_SongsPath)
+            If Tool_HasWriteAccessToOsu = False Then
+                If AppSettings.Tool_RequestElevationOnStartup Then
+                    If RequestElevation() Then
+                        Windows.Application.Current.Shutdown()
+                        Exit Sub
+                    Else
+                        MsgBox(_e("MainWindow_elevationFailed"), MsgBoxStyle.Critical, AppName)
+                    End If
                 End If
+                With La_FooterWarn
+                    .Content = _e("MainWindow_noAccess")
+                    .ToolTip = _e("MainWindow_tt_noAccess")
+                End With
             End If
-            With La_FooterWarn
-                .Content = _e("MainWindow_noAccess")
-                .ToolTip = _e("MainWindow_tt_noAccess")
-            End With
         End If
     End Sub
 
@@ -1687,7 +1689,7 @@ Class MainWindow
                         Loop
                         For Each Line As String In TextLines
                             If Found_ID And Found_Title And Found_Artist And Found_Creator Then Exit For
-                            If Line.StartsWith("Title: ") Then
+                            If Line.StartsWith("Title:") Then
                                 Found_Title = True
                                 BeatmapDetails.Title = Line.Substring(6)
                             ElseIf Line.StartsWith("Artist:") Then
@@ -1714,11 +1716,12 @@ Class MainWindow
                                 BeatmapDetails.ID = -1
                                 Answer.Func_InvalidId.Add(BeatmapDetails.ID & " | " & BeatmapDetails.Artist & " | " & BeatmapDetails.Title)
                             End Try
-                        End If
-                        Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
-                        BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
+                        Else
+                            If Not Answer.Return__Sync_BmDic_Installed.ContainsKey(BeatmapDetails.ID) Then Answer.Return__Sync_BmDic_Installed.Add(BeatmapDetails.ID, BeatmapDetails)
+                            BGW_SyncGetIDs.ReportProgress(Nothing, New BGWcallback_SyncGetIDs With {
                             .Progress__Current = Answer.Return__Sync_BmDic_Installed.Count})
-                        Exit For
+                            Exit For
+                        End If
                     End If
                 Next
 
@@ -1732,7 +1735,7 @@ Class MainWindow
                             .ID = CInt(Beatmap_ID),
                             .Title = Beatmap_Name,
                             .Artist = Beatmap_Artist}
-                        Answer.Return__Sync_BmDic_Installed.Add(CurrentBeatmap.ID, CurrentBeatmap)
+                        If Not Answer.Return__Sync_BmDic_Installed.ContainsKey(CurrentBeatmap.ID) Then Answer.Return__Sync_BmDic_Installed.Add(CurrentBeatmap.ID, CurrentBeatmap)
                     Catch ex As Exception
                         Answer.Func_Invalid.Add(DirectoryInfo.Name)
                     End Try
