@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Konfigurasjonsfilen din ser ut til å være ugyldig eller utdatert. Den vil bli slettet og programmet vil startes på nytt.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Beklager, noe gikk galt.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Konverter valgt fil</system:String>
     <system:String x:Key="MainWindow_creator">Skaper</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Last ned og installer</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Last ned beatmaps</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Nedlasting mislyktes</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Alternativ nedlastningskilde</system:String>
     <system:String x:Key="MainWindow_downloading">Laster ned %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Laster ned</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Vil du se hvilke beatmap-sett som er berørt?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Vil du få det fikset?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Noen filtyper er ikke forbundet med dette programmet.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Noen filtyper er utdaterte.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">Hentet ID er ikke et tall.</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">Henter %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Henter...</system:String>
     <system:String x:Key="MainWindow_file">_Fil</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">Synkroniserer...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Det er... imponerende, tror jeg.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Kan ikke se etter oppdateringer.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">Kan ikke hente ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">IDene til noen beatmaps kunne ikke leses. De vil bli behandlet som ikke innsendt (kan ikke eksporteres).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Ukjent filetternavn</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Ikke innsendt</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Beatmap-sett som ikke er innsendt kan ikke eksporteres</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Velg mappen hvor oppdateringer skal lagres</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Velg sangmappen din</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Prøv igjen senere eller kontakt oss direkte: team@nw520.de .</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Forbered skjema</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Spørsmål/Forespørsel om hjelp</system:String>
     <!-- | R -->

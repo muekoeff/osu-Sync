@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">File konfigurasi anda Invalid atau Outdated. File akan segera di hapus dan aplikasi direstart kembali.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Pesan dimatikan di settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Ubah file yang di pilih</system:String>
     <system:String x:Key="MainWindow_creator">Pembuat</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Download dan install</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Download Beatmap</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Download Gagal</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Download Mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Mendownload %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Mendownload</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Apakah Anda ingin mengecek Beatmap set mana yang terpengaruh?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Apakah Anda ingin memperbaikinya?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Beberapa file ekstensi tidak dapat digunakan di aplikasi ini.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Beberapa file ektensi telah outdated.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">ID yang di ambil bukan angka.</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">Mengambil %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Mengambil...</system:String>
     <system:String x:Key="MainWindow_file">_File</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">Menyinkronisasi...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Itu mengesankan, menurut saya.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Tidak dapat memeriksa updates.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">Aplikasi ini dapat mengambil data yang diperlukan dari mirror yang dipilih. Penyebab yang mungkin adalah bahwa server mirror sedang down. Dalam rangka untuk memperbaiki masalah ini, cobalah untuk memilih mirror lain di pengaturan. Jika Anda ingin melewati file ini 'Ya', untuk membatalkan seluruh Download tekan 'No'.</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">Tidak bisa mendapatkan ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Beberapa Beatmap ID tidak bisa diurai. Beatmap akan di handle sebagai unsubmitted (tidak bisa di ekspor).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Gagal mendownload path untuk update package.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">File ekstensi tidak di ketahui</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Beatmap set yang belum di ajukan/unsubmitted tidak bisa di ekspor</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Mohon pilih direktori untuk menyimpan pembaruan</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Mohon pilih folder songs Anda</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Tolong coba lagi atau silakan kontak via: team@nw520.de .</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Siapkan formulir</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Permintaan Pertanyaan/Bantuan</system:String>
     <!-- | R -->

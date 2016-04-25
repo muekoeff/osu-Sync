@@ -1579,7 +1579,6 @@ Class MainWindow
                     .Add(UI_TextBlock_SubTitle)
                 End With
                 Bu_SyncRun.IsEnabled = True
-                MsgBox(_e("MainWindow_unableToReadBms"), MsgBoxStyle.Critical, AppName)
             Case BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist
                 Dim UI_TextBlock As New TextBlock With {
                     .FontSize = 72,

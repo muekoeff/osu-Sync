@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Twój plik konfiguracyjny wygląda na uszkodzony albo nieaktualny. Zostanie on usunięta a aplikacja zrestartowana.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Przepraszamy, coś poszło nie tak.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Można wyłączyć tą wiadomość w ustawieniach</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Przekonwertuj wybrany plik</system:String>
     <system:String x:Key="MainWindow_creator">Twórca</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Pobierz i zainstaluj</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Pobierz beatmapy</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Pobieranie nie powiodło się</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Mirror pobierania</system:String>
     <system:String x:Key="MainWindow_downloading">Pobieranie %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Pobieranie</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Pobierz miniaturę beatmapy</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Czy chcesz sprawdzić, na które zestawy beatmap wpłynął program?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Czy chcesz to naprawić?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Niektóre rozszerzenia plików nie są powiązane z tą aplikacją.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Niektóre pliki są nieaktualne.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">Pobrane ID nie jest numerem.</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">Pobieranie %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Pobieranie...</system:String>
     <system:String x:Key="MainWindow_file">_Plik</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">Synchronizowanie...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">To... imponujące.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Nie udało się sprawdzić aktualizacji.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">Aplikacja nie jest w stanie pobrać wymaganych danych z serwera. Prawdopodobnie nie jest on online. Aby naprawić ten błąd spróbuj zaznaczyć inny serwer w ustawieniach. Jeżeli chcesz pominąć ten plik naciśnij 'Tak', aby anulować całe pobieranie naciśnij 'Nie'.</system:String>
@@ -185,6 +190,8 @@
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">ID niektórych beatmap nie mogą być odczytane.
 Zostaną oznaczone jako niewysłane (nie wyeksportowane).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Nie można znaleźć ścieżki do pakietu aktualizacji.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Nieznane rozszerzenie pliku</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Niedołączone</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Niedołączone zestawy beatmap nie mogą być wyeksportowane.</system:String>
@@ -314,7 +321,6 @@ Zostaną oznaczone jako niewysłane (nie wyeksportowane).</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Wybierz miejsce zapisu aktualizacji</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Wybierz swój folder z piosenkami</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Spróbuj ponownie później, lub skontaktuj się z nami: team@naseweis520.ml .</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Przygotuj formularz</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Pytanie/Prośba pomocy</system:String>
     <!-- | R -->

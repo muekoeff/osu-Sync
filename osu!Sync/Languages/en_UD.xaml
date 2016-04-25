@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">˙pǝʇɹɐʇsǝɹ uoıʇɐɔıןddɐ ǝɥʇ puɐ pǝʇǝןǝp ǝq ןןıʍ ʇı ˙pǝʇɐpʇno ɹo pıןɐʌuı ǝq oʇ sɯǝǝs ǝןıɟ uoıʇɐɹnƃıɟuoɔ ɹnoʎ</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">˙pǝʇɹɐʇsǝɹ uoıʇɐɔıןddɐ ǝɥʇ puɐ pǝʇǝןǝp ǝq ןןıʍ ʇı ˙pǝʇɐpʇno ɹo pǝʇdnɹɹoɔ sı ǝןıɟ uoıʇɐɹnbıɟuoɔ ɹnoʎ</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">˙ƃuoɹʍ ʇuǝʍ ƃuıɥʇǝɯos 'ʎɹɹos</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">sƃuıʇʇǝs uı ǝןqɐǝןqɐsıp ǝƃɐssǝɯ</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">ǝןqɐǝןqɐsıp ǝbɐssǝɯ</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">ǝןıɟ pǝʇɔǝןǝs ʇɹǝʌuo_ɔ</system:String>
     <system:String x:Key="MainWindow_creator">ɹoʇɐǝɹɔ</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">yyyy/dd/MM</system:String>
+    <system:String x:Key="MainWindow_details">sןıɐʇǝp</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">ןןɐʇsuı puɐ pɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">sdɐɯʇɐǝq pɐoןuʍo_p</system:String>
     <system:String x:Key="MainWindow_downloadFailed">pǝןıɐɟ pɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downloadMirror">ɹoɹɹıɯ pɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downloading">˙˙˙%0 ƃuıpɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downloading1">ƃuıpɐoןuʍop</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">˙˙˙%0 ןıɐuqɯnɥʇ buıpɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">ןıɐuqɯnɥʇ dɐɯʇɐǝq pɐoןuʍop</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">¿pǝʇɔǝɟɟɐ ǝɹɐ sʇǝs dɐɯʇɐǝq ɥɔıɥʍ ʞɔǝɥɔ oʇ ʇuɐʍ noʎ op</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">¿ʇɐɥʇ xıɟ oʇ ʇuɐʍ noʎ op</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">˙uoıʇɐɔıןddɐ sıɥʇ ɥʇıʍ pǝʇɐıɔossɐ ʇ,uǝɹɐ suoısuǝʇxǝ ǝןıɟ ǝɯos</system:String>
     <system:String x:Key="MainWindow_extensionWrong">˙pǝʇɐpʇno ǝɹɐ suoısuǝʇxǝ ǝןıɟ ǝɯos</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">˙ɹǝqɯnu ɐ ʇou sı pı pǝɥɔʇǝɟ</system:String>
+    <system:String x:Key="MainWindow_failed">pǝןıɐɟ</system:String>
+    <system:String x:Key="MainWindow_fallback">˙poɥʇǝɯ ʇןnɐɟǝp ǝɥʇ uɐɥʇ ǝʇɐɹnɔɔɐuı ǝɹoɯ puɐ ɹǝʍoןs ɥɔnɯ s,ʇı ʇɐɥʇ 'puıɯ uı dǝǝʞ ǝsɐǝןd ¿poɥʇǝɯ-ʎɹoʇɔǝɹıp-uɐɔs ǝɥʇ oʇ ʞɔɐqןןɐɟ oʇ ʇuɐʍ noʎ op</system:String>
     <system:String x:Key="MainWindow_fetching">˙˙˙%0 ƃuıɥɔʇǝɟ</system:String>
     <system:String x:Key="MainWindow_fetching1">˙˙˙ƃuıɥɔʇǝɟ</system:String>
     <system:String x:Key="MainWindow_file">ǝןı_ɟ</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">˙˙˙ƃuıɔuʎs</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">˙ssǝnƃ ı 'ǝʌıssǝɹdɯı ˙˙˙s,ʇɐɥʇ</system:String>
+    <system:String x:Key="MainWindow_timeFormat">ss:mm:HH</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">˙sǝʇɐpdn ɹoɟ ʞɔǝɥɔ oʇ ǝןqɐun.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">˙,ou, ssǝɹd pɐoןuʍop ǝןoɥʍ ǝɥʇ ʇɹoqɐ oʇ ',sǝʎ, ssǝɹd ǝןıɟ sıɥʇ dıʞs oʇ ʇuɐʍ noʎ ɟı ˙ʍopuıʍ sƃuıʇʇǝs ǝɥʇ uı ɹoɹɹıɯ ɹǝɥʇouɐ ʇɔǝןǝs oʇ ʎɹʇ 'ǝnssı sıɥʇ xıɟ oʇ ɹǝpɹo uı ˙uʍop ʎןʇuǝɹɹnɔ s,ʇı ʇɐɥʇ sı ǝsnɐɔ ǝןqıssod ɐ ˙ɹoɹɹıɯ pǝʇɔǝןǝs ǝɥʇ ɯoɹɟ ɐʇɐp pǝɹınbǝɹ ɥɔʇǝɟ oʇ ǝןqɐun sı uoıʇɐɔıןddɐ ǝɥʇ</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">pı ʇǝƃ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">˙(pǝʇɹodxǝ ǝq ʇ,uɐɔ) pǝʇʇıɯqnsun sɐ pǝןpuɐɥ ǝq ןןıʍ ʎǝɥʇ ˙pǝsɹɐd ǝq ʇ,uɐɔ sdɐɯʇɐǝq ǝɯos ɟo spı ǝɥʇ</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">˙ǝƃɐʞɔɐd ǝʇɐpdn oʇ ɥʇɐd pɐoןuʍop ʇǝƃ oʇ ǝןqɐun</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">˙sdɐɯʇɐǝq pɐǝɹ oʇ ǝןqɐun</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">˙ǝןıɟ pɐǝɹ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">uoısuǝʇxǝ ǝןıɟ uʍouʞun</system:String>
     <system:String x:Key="MainWindow_unsubmitted">pǝʇʇıɯqnsun</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">pǝʇɹodxǝ ǝq ʇ,uɐɔ sʇǝs dɐɯʇɐǝq pǝʇʇıɯqnsun</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">sǝʇɐpdn ǝʌɐs oʇ ǝɹǝɥʍ ʎɹoʇɔǝɹıp ǝɥʇ ʇɔǝןǝs ǝsɐǝןd</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">ɹǝpןoɟ sƃuos ɹnoʎ ʇɔǝןǝs ǝsɐǝןd</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">˙ team@nw520.de :ʎןʇɔǝɹıp sn ʇɔɐʇuoɔ ɹo ɹǝʇɐן uıɐƃɐ ʎɹʇ ǝsɐǝןd</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">ɯɹoɟ ǝɹɐdǝɹd</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">ʇsǝnbǝɹ dןǝɥ/uoıʇsǝnb</system:String>
     <!-- | R -->

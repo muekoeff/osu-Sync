@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">A konfigurációs fájl érvénytelen ezért az alkalmazás kitörli és újraindul.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Sajnáljuk, de valami féresikerült.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">A kiválasztott fájl konvertálása</system:String>
     <system:String x:Key="MainWindow_creator">Készítő</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Letöltés és telepítés</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Beatmapok letöltése</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Letöltési tükör</system:String>
     <system:String x:Key="MainWindow_downloading">%0 letöltése...</system:String>
     <system:String x:Key="MainWindow_downloading1">Letöltés</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Szeretnéd kiválasztani hogy mely Beatmap csomagok értintettek?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Szeretnéd kijavítani?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Néhány fájltípus nincs ezen alkalmázáshoz társítva.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Néhány fájlkiterjesztés elavult.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">A kapott azonosító nem szám.</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">%0 keresése...</system:String>
     <system:String x:Key="MainWindow_fetching1">Keresés...</system:String>
     <system:String x:Key="MainWindow_file">_Fájl</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">Szinkronizálás...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Ez... lenyűgöző, azt hiszem.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Nem lehet ellenőrizni a frissítéseket.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">Nem lehet megállapítani az azonosítót</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Néhány Beatmap azonosítóját nem lehet beolvasni ezeket fel nem töltöttnek fogom venni (nem lehet őket exportálni).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Nem tudom meghatározni a frissítés letöltési helyét.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Ismeretlen fájlkiterjesztés</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Nincs beküldve</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">A be nem küldött Beatmap-okat nem lehet exportálni</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Kérjük válassza ki azt a mappát ahová a frissítéseket mentsem</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Válaszd ki a Beatmap-ok mappáját</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Kérjük próbája meg később vagy lépjen velünk kapcsolatba közvetlen: team@nw520.de .</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Mezők előkészítése</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Kérdés/Segítségkérés</system:String>
     <!-- | R -->

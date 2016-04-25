@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">การตั้งค่าของคุณกำลังจะถูกลบ เพราะว่าไม่ถูกต้อง หรือล้าสมัย โปรแกรมกำลังจะปิดและเปิดใหม่</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">ขอโทษด้วย ระบบมีปัญหาบางอย่าง</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">แปลงไฟล์ที่ถูกเลือก</system:String>
     <system:String x:Key="MainWindow_creator">ผู้สร้าง</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">ดาวโหลดและติดตั้ง</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_ดาวโหลด Beatmaps</system:String>
     <system:String x:Key="MainWindow_downloadFailed">ดาวโหลดล้มเหลว</system:String>
     <system:String x:Key="MainWindow_downloadMirror">ดาวน์โหลด mirror</system:String>
     <system:String x:Key="MainWindow_downloading">กำลังดาวโหลด %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">กำลังดาวโหลด</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">คุณต้องการตรวจสอบชุดของ beatmap ที่ได้รับผลกระทบหรือไม่?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">คุณต้องการจะแก้ไขหรือไม่?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">นามสกุลไฟล์บางอันไม่ได้เกี่ยวข้องกับโปรแกรมนี้</system:String>
     <system:String x:Key="MainWindow_extensionWrong">นามสกุลไฟล์บางอัน ล้าสมัย</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">ID ที่ถูกดึงมาไม่ใช่ตัวเลข</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">กำลังดึง %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">กำลังดึง...</system:String>
     <system:String x:Key="MainWindow_file">ไ_ฟล์</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">กำลัง Sync...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">นี้มัน... เจ๋งมาก</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">ไม่สามารถตรวจสอบหาอัพเดทได้</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">โปรแกรมไม่สามารถดึงข้อมูลที่จำเป็นจาก mirror ที่เลือกได้  ความเป็นไปได้คือ mirror ล้มกำลังอยู่  ลองแก้ไขปัญหาโดยการเลือก mirror อื่นในหน้าต่างการตั้งค่า  ถ้าคุณต้องการข้ามขั้นตอนนี้ให้ กดปุ่ม 'ใช่' ถ้าจะยกเลิกการดาวน์โหลดทั้งหมด ให้กด 'ไม่'</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">ไม่สามารถหา ID ได้</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">ID ของ beatmaps บางอันไม่สามารถถูกอ่านได้  beatmaps เหล่านี้จะถูกจัดรวมกับกลุ่ม unsubmitted (ไม่สามารถส่งออกได้)</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">ไม่สามารถหา ตำแหน่ง ดาวโหลดเพื่ออัปเดต แพคเกจ ได้</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">นามสกุลไฟล์ที่ไม่รู้จัก</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">ชุดของ beatmap ที่ unsubmitted ไม่สามารถส่งออก</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">โปรดเลือกตำแหน่งที่จะเก็บไฟล์อัปเดต</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">กรุณาเลือกโฟลเดอร์เพลงของคุณ</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">กรุณาลองอีกครั้งภายหลัง หรือติดต่อเราโดยตรงทาง: team@nw520.de</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">จัดเตรียมแบบฟอร์ม</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">คำถาม/ขอความช่วยเหลือ</system:String>
     <!-- | R -->

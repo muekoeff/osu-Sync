@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">你的配置文件似乎无效或已过时。配置文件会被删除，程序将重启。</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">抱歉，发生了一些问题。</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable in settings</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">转换选择的文件</system:String>
     <system:String x:Key="MainWindow_creator">创建者</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">下载和安装</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_下载谱面</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">镜像下载</system:String>
     <system:String x:Key="MainWindow_downloading">下载中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下载中</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">需要检查哪些谱面受到影响吗？</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">想要解决这个问题吗？</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">一些文件扩展名未与此程序关联</system:String>
     <system:String x:Key="MainWindow_extensionWrong">一些文件扩展名已经过期</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">读取的ID不是数字。</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">读取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">读取中...</system:String>
     <system:String x:Key="MainWindow_file">_文件</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">同步中...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">诶，册那。快去下两张图去。</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">无法检查更新。</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">应用程序无法从指定的镜像中获取数据。可能是该镜像目前关闭中。请在设置窗口中选择其他镜像站点以便解决该问题。如果你想跳过这个文件请按“是”，跳过整个下载请按“否”</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">无法获取 ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">无法解析部分 beatmaps 的ID，他们将会无法提交（不能导出）。</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">无法获取更新包的下载路径。</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的文件扩展名</system:String>
     <system:String x:Key="MainWindow_unsubmitted">未提交</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">未提交的谱面不能导出</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">请选择更新文件存放的位置</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">请选择您的歌曲文件夹</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">请稍后再试或与我们直接联系: team@nw520.de</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">准备表单</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">提问/求助</system:String>
     <!-- | R -->

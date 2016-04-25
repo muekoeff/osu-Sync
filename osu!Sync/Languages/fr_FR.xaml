@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Votre fichier de configuration semble invalide ou obsolète. Il va être supprimé et l'application redémarrée.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Désolé, une erreur s'est produite.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message désactivable dans les paramètres</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Convertir fichier sélectionné</system:String>
     <system:String x:Key="MainWindow_creator">Mappeur</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">dd/MM/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Télécharger et installer</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Télécharger beatmaps</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Téléchargement échoué</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Serveur miroir</system:String>
     <system:String x:Key="MainWindow_downloading">Téléchargement %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Téléchargement</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Télécharger la miniature de la Beatmap</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Voulez-vous vérifier quels beatmap sets sont affectés ?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Voulez-vous corriger cela ?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Certaines extensions de fichiers ne sont pas associées à cette application.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Certaines extensions de fichiers ne sont pas à jour.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">L'ID récupéré n'est pas un nombre.</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">Récupération %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Récupération...</system:String>
     <system:String x:Key="MainWindow_file">_Fichier</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">Synchronisation...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">C'est... Impressionnant, je suppose.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Impossible de vérifier les mises à jours.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">L'application n'a pas pu récupérer les données nécessaires depuis le miroir sélectionné. Il est peut-être hors-ligne. Afin de résoudre ce problème, essayez de sélectionner un autre miroir dans la fenêtre des paramètres. Cliquez sur 'Oui' pour passer ce fichier, ou sur 'Non' pour annuler l'ensemble des téléchargements.</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">Impossible d'obtenir l'ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Les IDs de certaines beatmaps n'ont pas pu être analysés. Elles seront considérées comme non soumises (exportation impossible).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Impossible d'obtenir le chemin de téléchargement du package de mise à jour.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Impossible de lire le fichier.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Extension de fichier inconnue</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Non répertoriées</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Les beatmaps non répertoriées ne peuvent pas être exportées</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Veuillez sélectionner le dossier où enregistrer les mises à jour</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Veuillez sélectionner votre dossier Songs</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Merci de réessayer ultérieurement ou de nous contacter directement: team@nw520.de.</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Préparer un formulaire</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Questions/Demande d'aide</system:String>
     <!-- | R -->

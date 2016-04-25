@@ -14,11 +14,11 @@
 
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Файл настроек поврежден или устарел. osu!Sync восстановит стандартные настройки и выполнит перезапуск.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Что-то пошло не так.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Сообщения можно отключить в настройках</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -44,12 +44,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">Конвертировать текущий файл</system:String>
     <system:String x:Key="MainWindow_creator">Автор</system:String>
     <!-- | D -->
+    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Скачать и установить</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_Скачать карты</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Загрузка оборвалась</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Зеркало</system:String>
     <system:String x:Key="MainWindow_downloading">Скачивание %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Скачивание</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Загрузить миниатюру</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Показать, какие именно?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Хотите это исправить?</system:String>
@@ -93,7 +96,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Некоторые расширения не ассоциированы с этим приложением.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Некоторые файлы имеют устаревшие расширения.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_fetchedIdIsNaN">Номер карты не является числом.</system:String>
+    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">Обработка карты %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Обработка...</system:String>
     <system:String x:Key="MainWindow_file">_Файл</system:String>
@@ -176,6 +180,7 @@
     <system:String x:Key="MainWindow_syncing">Синхронизация...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">...надо же.</system:String>
+    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Не удалось проверить обновления.</system:String>
     <system:String x:Key="MainWindow_unableToFetchData">Приложение не смогло получить запрошенные данные с выбранного сервера. Возможно, сейчас он недоступен. Вы можете сменить сервер в настройках. Нажмите "да", если хотите пропустить этот файл, или "нет", чтобы остановить скачивание.</system:String>
@@ -184,6 +189,8 @@
     <system:String x:Key="MainWindow_unableToGetId">Карты без номера</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Идентификаторы некоторых карт не удалось распарсить. Они будут считаться неопубликованными (нельзя экспортировать).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Невозможно получить ссылку на обновление.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Неизвестное расширение файла</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Неопубликованная</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Не опубликованы, нельзя экспортировать</system:String>
@@ -313,7 +320,6 @@
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Директория для сохранения обновлений:</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Укажите, где хранятся карты</system:String>
     <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Пожалуйста, повторите попытку или свяжитесь с нами: team@nw520.de.</system:String>
-    <system:String x:Key="WindowSettings_prepareForm">Открыть форму</system:String>
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Вопрос</system:String>
     <!-- | R -->
