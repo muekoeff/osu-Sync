@@ -203,8 +203,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="Bu_Done" Content="{DynamicResource WindowSettings_save}" FontSize="14" IsDefault="True" Padding="5,15" />
-            <Button x:Name="Bu_Apply" Content="{DynamicResource WindowSettings_apply}" FontSize="14" Margin="5,0,0,0" Padding="5,15" Grid.Column="1" />
+            <Button x:Name="Bu_Done" Content="{DynamicResource Global_buttons_save}" FontSize="14" IsDefault="True" Padding="5,15" />
+            <Button x:Name="Bu_Apply" Content="{DynamicResource Global_buttons_apply}" FontSize="14" Margin="5,0,0,0" Padding="5,15" Grid.Column="1" />
             <Button x:Name="Bu_Cancel" Content="{DynamicResource Global_buttons_cancel}" FontSize="14" IsCancel="True" Margin="5,0,0,0" Padding="5,15" Grid.Column="2" />
         </Grid>
     </Grid>

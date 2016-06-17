@@ -151,7 +151,4 @@ Public Class Window_GenericMsgBox
         Result = CInt(CType(sender, Button).Tag)
         Close()
     End Sub
-
-    Private Sub Window_GenericMsgBox_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-    End Sub
 End Class

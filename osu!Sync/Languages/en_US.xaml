@@ -23,6 +23,7 @@
     <!-- | O -->
     <system:String x:Key="Global_buttons_ok">_OK</system:String>
     <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Save</system:String>
     <system:String x:Key="Global_buttons_skip">_Skip</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
     <!-- | Y -->
@@ -260,7 +261,6 @@
     <system:String x:Key="WindowAbout_tt_osuForum">Visit the forum thread.</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_Close</system:String>
     <system:String x:Key="WindowMessage_message">Message</system:String>
 
     <!-- Window_Settings -->
@@ -270,7 +270,6 @@
     <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
     <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
-    <system:String x:Key="WindowSettings_apply">_Apply</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Are you really sure that you want to delete the configuration file (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps (Numeric)</system:String>
@@ -343,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (delete configuration, file associations, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_Save</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Server-side answer:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Show always - Disable NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons</system:String>
@@ -387,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">An update is available</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Date of Publication: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_Done</system:String>
     <system:String x:Key="WindowUpdater_download">Download</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">_Download and Install</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Download finished. (%0 Bytes)</system:String>

@@ -28,7 +28,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="Bu_Done" Content="{DynamicResource WindowUpdater_done}" FontSize="14" IsDefault="True" Padding="5,15" />
+            <Button x:Name="Bu_Done" Content="{DynamicResource Global_buttons_ok}" FontSize="14" IsDefault="True" Padding="5,15" />
             <Button x:Name="Bu_Update" Content="{DynamicResource WindowUpdater_downloadAndInstall}" FontSize="14" IsEnabled="False" Padding="5,15" Grid.Column="1" Margin="5,0,0,0" />
         </Grid>
     </Grid>
