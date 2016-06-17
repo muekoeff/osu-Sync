@@ -7,12 +7,11 @@
         mc:Ignorable="d"
         Height="165"
         MinHeight="165"
-        ResizeMode="NoResize"
         ShowInTaskbar="False"
-        SizeToContent="WidthAndHeight"
-        Width="350"
-        MinWidth="350"
-        WindowStartupLocation="CenterOwner"
+        SizeToContent="Height"
+        Width="500"
+        MinWidth="450"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="SingleBorderWindow">
     <Grid>
         <Grid.RowDefinitions>
@@ -26,8 +25,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Image x:Name="Im_Icon" Height="35" HorizontalAlignment="Right" Margin="0,25,0,0" VerticalAlignment="Top" Width="35" Grid.ColumnSpan="2" />
-            <ScrollViewer Margin="0,0,5,0" Grid.Column="2">
-                <TextBlock x:Name="TB_Text" Margin="10,25,20,25" TextWrapping="Wrap"></TextBlock>
+            <ScrollViewer Margin="0,0,5,0" VerticalScrollBarVisibility="Auto" Grid.Column="2">
+                <TextBlock x:Name="TB_Text" Margin="10,25,20,25" TextWrapping="Wrap" />
             </ScrollViewer>
         </Grid>
         <Grid Background="#F0F0F0" Height="50" VerticalAlignment="Bottom" Grid.Row="1">

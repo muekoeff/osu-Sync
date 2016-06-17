@@ -16,26 +16,26 @@ Public Class Window_GenericMsgBox
         Public Sub New(_coreButton As MsgBoxResult)
             Select Case _coreButton
                 Case MsgBoxResult.OK
-                    Label = _e("MainWindow_buttons_ok")
+                    Label = _e("Global_buttons_ok")
                     ResultId = MsgBoxResult.OK
                     Action = ButtonAction.OK
                 Case MsgBoxResult.Cancel
-                    Label = _e("MainWindow_buttons_cancel")
+                    Label = _e("Global_buttons_cancel")
                     ResultId = MsgBoxResult.Cancel
                     Action = ButtonAction.Cancel
                 Case MsgBoxResult.Yes
-                    Label = _e("MainWindow_buttons_yes")
+                    Label = _e("Global_buttons_yes")
                     ResultId = MsgBoxResult.Yes
                     Action = ButtonAction.OK
                 Case MsgBoxResult.YesAll
-                    Label = _e("MainWindow_buttons_yesForAll")
+                    Label = _e("Global_buttons_yesForAll")
                     ResultId = MsgBoxResult.YesAll
                 Case MsgBoxResult.No
-                    Label = _e("MainWindow_buttons_no")
+                    Label = _e("Global_buttons_no")
                     ResultId = MsgBoxResult.No
                     Action = ButtonAction.Cancel
                 Case MsgBoxResult.NoAll
-                    Label = _e("MainWindow_buttons_noForAll")
+                    Label = _e("Global_buttons_noForAll")
                     ResultId = MsgBoxResult.NoAll
             End Select
 
@@ -120,12 +120,12 @@ Public Class Window_GenericMsgBox
             Select Case value
                 Case SimpleMsgBoxButton.Ok
                     Buttons = New List(Of MsgBoxButtonHolder) From {
-                        New MsgBoxButtonHolder(_e("MainWindow_buttons_ok"), MessageBoxResult.OK)
+                        New MsgBoxButtonHolder(_e("Global_buttons_ok"), MessageBoxResult.OK)
                     }
                 Case SimpleMsgBoxButton.OkCancel
                     Buttons = New List(Of MsgBoxButtonHolder) From {
-                        New MsgBoxButtonHolder(_e("MainWindow_buttons_ok"), MessageBoxResult.OK),
-                        New MsgBoxButtonHolder(_e("MainWindow_buttons_cancel"), MessageBoxResult.Cancel)
+                        New MsgBoxButtonHolder(_e("Global_buttons_ok"), MessageBoxResult.OK),
+                        New MsgBoxButtonHolder(_e("Global_buttons_cancel"), MessageBoxResult.Cancel)
                     }
             End Select
         End Set
@@ -153,9 +153,5 @@ Public Class Window_GenericMsgBox
     End Sub
 
     Private Sub Window_GenericMsgBox_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        With TB_Text
-            .MaxHeight = SystemParameters.PrimaryScreenHeight * 0.75
-            .MaxWidth = SystemParameters.PrimaryScreenWidth * 0.75
-        End With
     End Sub
 End Class

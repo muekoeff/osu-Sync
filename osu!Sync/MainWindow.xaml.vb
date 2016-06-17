@@ -97,6 +97,7 @@ Public Class Importer
     Public CurrentFileName As String
     Public Downloader As New WebClient
     Public FilePath As String
+    Public Pref_FetchFail_SkipAlways As Boolean = False
 End Class
 
 Public Class StandardColors
@@ -2027,37 +2028,44 @@ Class MainWindow
         Try
             Res = req.GetResponse()
         Catch ex As WebException
-            If MessageBox.Show(_e("MainWindow_unableToFetchData"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) = MessageBoxResult.Yes Then
-                ImporterContainer.BmList_TagsToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
-                ImporterContainer.BmList_TagsFailed.Add(ImporterContainer.BmList_TagsToInstall.First)
-                ImporterContainer.BmList_TagsToInstall.Remove(ImporterContainer.BmList_TagsToInstall.First)
-                Importer_Downloader_ToNextDownload()
-                Exit Sub
-            Else    ' No
-                ImporterContainer.BmList_TagsToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
-                TB_ImporterInfo.Text = _e("MainWindow_installing") &
-                    " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BmList_TagsDone.Count.ToString)
-                If ImporterContainer.BmList_TagsLeftOut.Count > 0 Then TB_ImporterInfo.Text += " | " & _e("MainWindow_leftOut").Replace("%0", ImporterContainer.BmList_TagsLeftOut.Count.ToString)
-                TB_ImporterInfo.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BmTotal.ToString)
-
-                UI_SetStatus(_e("MainWindow_installingFiles"), True)
-
-                For Each FilePath In Directory.GetFiles(AppTempPath & "\Downloads\Beatmaps")
-                    File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath))
-                Next
-                With PB_ImporterProg
-                    .IsIndeterminate = False
-                    .Visibility = Visibility.Hidden
-                End With
-
-                UI_SetStatus(_e("MainWindow_aborted"))
-                TB_ImporterInfo.Text = _e("MainWindow_aborted") &
-                    " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BmList_TagsDone.Count.ToString)
-                If ImporterContainer.BmList_TagsLeftOut.Count > 0 Then TB_ImporterInfo.Text += " | " & _e("MainWindow_leftOut").Replace("%0", ImporterContainer.BmList_TagsLeftOut.Count.ToString)
-                TB_ImporterInfo.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BmTotal.ToString)
-                Bu_SyncRun.IsEnabled = True
-                Bu_ImporterRun.IsEnabled = True
-                Bu_ImporterCancel.IsEnabled = True
+            If ImporterContainer.Pref_FetchFail_SkipAlways Then
+                Importer_FetchFail_ToNext()
+            Else
+                Dim Win_GenericMsgBox As New Window_GenericMsgBox(_e("MainWindow_unableToFetchMirrorData"), New List(Of Window_GenericMsgBox.MsgBoxButtonHolder) From {
+                    New Window_GenericMsgBox.MsgBoxButtonHolder(_e("Global_buttons_skip"), Window_GenericMsgBox.MsgBoxResult.Yes),
+                    New Window_GenericMsgBox.MsgBoxButtonHolder(_e("Global_buttons_skipAlways"), Window_GenericMsgBox.MsgBoxResult.YesAll),
+                    New Window_GenericMsgBox.MsgBoxButtonHolder(_e("Global_buttons_cancel"), Window_GenericMsgBox.MsgBoxResult.Cancel)
+                },, System.Drawing.SystemIcons.Exclamation)
+                Win_GenericMsgBox.ShowDialog()
+                Select Case Win_GenericMsgBox.Result
+                    Case Window_GenericMsgBox.MsgBoxResult.Yes
+                        Importer_FetchFail_ToNext()
+                    Case Window_GenericMsgBox.MsgBoxResult.YesAll
+                        ImporterContainer.Pref_FetchFail_SkipAlways = True
+                        Importer_FetchFail_ToNext()
+                    Case Window_GenericMsgBox.MsgBoxResult.Cancel, Window_GenericMsgBox.MsgBoxResult.None
+                        ImporterContainer.BmList_TagsToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
+                        TB_ImporterInfo.Text = _e("MainWindow_installing") &
+                            " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BmList_TagsDone.Count.ToString)
+                        If ImporterContainer.BmList_TagsLeftOut.Count > 0 Then TB_ImporterInfo.Text += " | " & _e("MainWindow_leftOut").Replace("%0", ImporterContainer.BmList_TagsLeftOut.Count.ToString)
+                        TB_ImporterInfo.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BmTotal.ToString)
+                        UI_SetStatus(_e("MainWindow_installingFiles"), True)
+                        For Each FilePath In Directory.GetFiles(AppTempPath & "\Downloads\Beatmaps")
+                            File.Move(FilePath, AppSettings.osu_SongsPath & "\" & Path.GetFileName(FilePath))
+                        Next
+                        With PB_ImporterProg
+                            .IsIndeterminate = False
+                            .Visibility = Visibility.Hidden
+                        End With
+                        UI_SetStatus(_e("MainWindow_aborted"))
+                        TB_ImporterInfo.Text = _e("MainWindow_aborted") &
+                            " | " & _e("MainWindow_setsDone").Replace("%0", ImporterContainer.BmList_TagsDone.Count.ToString)
+                        If ImporterContainer.BmList_TagsLeftOut.Count > 0 Then TB_ImporterInfo.Text += " | " & _e("MainWindow_leftOut").Replace("%0", ImporterContainer.BmList_TagsLeftOut.Count.ToString)
+                        TB_ImporterInfo.Text += " | " & _e("MainWindow_setsTotal").Replace("%0", ImporterContainer.BmTotal.ToString)
+                        Bu_SyncRun.IsEnabled = True
+                        Bu_ImporterRun.IsEnabled = True
+                        Bu_ImporterCancel.IsEnabled = True
+                End Select
             End If
             Exit Sub
         End Try
@@ -2114,6 +2122,13 @@ Class MainWindow
         Else
             Csender_Bm.UI_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
         End If
+    End Sub
+
+    Sub Importer_FetchFail_ToNext()
+        ImporterContainer.BmList_TagsToInstall.First.UI_DecoBorderLeft.Fill = StandardColors.OrangeLight
+        ImporterContainer.BmList_TagsFailed.Add(ImporterContainer.BmList_TagsToInstall.First)
+        ImporterContainer.BmList_TagsToInstall.Remove(ImporterContainer.BmList_TagsToInstall.First)
+        Importer_Downloader_ToNextDownload()
     End Sub
 
     Sub Importer_Init()
