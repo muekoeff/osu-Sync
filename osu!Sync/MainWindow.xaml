@@ -217,7 +217,7 @@
                             <TextBlock x:Name="TB_ImporterInfo" FontSize="18" Foreground="#DDD" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Center" />
                             <StackPanel Grid.Column="1">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button x:Name="Bu_ImporterCancel" Content="{DynamicResource MainWindow_cancel}" FontSize="16" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="15,6" VerticalAlignment="Top" />
+                                    <Button x:Name="Bu_ImporterCancel" Content="{DynamicResource MainWindow_buttons_cancel}" FontSize="16" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="15,6" VerticalAlignment="Top" />
                                     <Button x:Name="Bu_ImporterRun" Content="{DynamicResource MainWindow_downloadBeatmaps}" FontSize="16" HorizontalAlignment="Right" Padding="15,6" VerticalAlignment="Top" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" Grid.Row="1">
@@ -259,7 +259,7 @@
                             </Grid.ColumnDefinitions>
                             <Button x:Name="Bu_ExporterInvertSel" Content="{DynamicResource MainWindow_invertSelection}" FontSize="16" HorizontalAlignment="Left" Padding="10,6" VerticalAlignment="Top" />
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
-                                <Button x:Name="Bu_ExporterCancel" Content="{DynamicResource MainWindow_cancel}" FontSize="16" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="10,6" VerticalAlignment="Top" />
+                                <Button x:Name="Bu_ExporterCancel" Content="{DynamicResource MainWindow_buttons_cancel}" FontSize="16" HorizontalAlignment="Right" Margin="0,0,5,0" Padding="10,6" VerticalAlignment="Top" />
                                 <Button x:Name="Bu_ExporterRun" Content="{DynamicResource MainWindow_export}" FontSize="16" HorizontalAlignment="Right" Padding="10,6" VerticalAlignment="Top" />
                             </StackPanel>
                         </Grid>

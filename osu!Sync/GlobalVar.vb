@@ -139,7 +139,6 @@ Module GlobalVar
                 If Not TranslationNameGet(AppSettings.Tool_Language) = "" Then LanguageLoad(TranslationNameGet(AppSettings.Tool_Language), AppSettings.Tool_Language)
             End If
             If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then AppSettings.Tool_LastCheckForUpdates = Date.ParseExact(CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates")), "dd-MM-yyyy hh:mm:ss", Globalization.DateTimeFormatInfo.InvariantInfo).ToString("yyyyMMddhhmmss")
-            MsgBox(Date.ParseExact(CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates")), "dd-MM-yyyy hh:mm:ss", Globalization.DateTimeFormatInfo.InvariantInfo).ToString())
             If Not ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup") Is Nothing Then AppSettings.Tool_RequestElevationOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup"))
             If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then AppSettings.Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
             If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then AppSettings.Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
@@ -414,7 +413,7 @@ Module GlobalVar
                 Case < New Version("1.0.0.13")
                     If File.Exists(AppDataPath & "\Settings\Settings.config") Then
                         If MessageBox.Show("osu!Sync 1.0.0.13 has an improved method of saving its configuration which will replace the old one in the next version." & vbNewLine &
-                                           "Your current, outdated version, is going to migrated to the new one now.", "Post-Update Compatibility check | " & AppName, MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.OK) = MessageBoxResult.OK Then
+                                           "Your current, outdated version, is going to be migrated to the new one now.", "Post-Update Compatibility check | " & AppName, MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.OK) = MessageBoxResult.OK Then
                             AppSettings.SaveSettings()
                             File.Delete(AppDataPath & "\Settings\Settings.config")
                         End If

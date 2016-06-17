@@ -33,8 +33,18 @@
     <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap IDs can be assigned only once.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets in total parsed.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets parsed.</system:String>
+    <!-- | |> Buttons -->
+    <!-- | |> C -->
+    <system:String x:Key="MainWindow_buttons_cancel">_Cancel</system:String>
+    <!-- | |> N -->
+    <system:String x:Key="MainWindow_buttons_no">_No</system:String>
+    <system:String x:Key="MainWindow_buttons_noForAll">No, for all</system:String>
+    <!-- | |> O -->
+    <system:String x:Key="MainWindow_buttons_ok">_OK</system:String>
+    <!-- | |> Y -->
+    <system:String x:Key="MainWindow_buttons_yes">_Yes</system:String>
+    <system:String x:Key="MainWindow_buttons_yesForAll">Yes, for all</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Cancel</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Can't connect to server</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Checking for updates...</system:String>
@@ -251,7 +261,7 @@
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Activation</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
     <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
     <system:String x:Key="WindowSettings_apply">_Apply</system:String>
