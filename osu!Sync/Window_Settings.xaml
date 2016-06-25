@@ -171,12 +171,12 @@
                             <TextBox x:Name="TB_FeedbackeMail"/>
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_category}" />
                             <ComboBox x:Name="CB_FeedbackCategory">
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_bug}" />
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_featureRequest}" />
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_generalFeedback}" />
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_questionHelpRequest}" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_bug}" Tag="Bug" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_featureRequest}" Tag="Feature Request" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_generalFeedback}" Tag="General Feedback" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_questionHelpRequest}" Tag="Question/Help Request" />
                                 <Separator/>
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_other}" />
+                                <ComboBoxItem Content="{DynamicResource WindowSettings_other}" Tag="Other" />
                             </ComboBox>
                             <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" />
                             <RichTextBox x:Name="RTB_FeedbackMessage" Height="75" />
@@ -188,7 +188,7 @@
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-                            <Button x:Name="Bu_FeedbackSubmit" Content="{DynamicResource WindowSettings_submit}" Height="40" Margin="0,5,0,0" />
+                            <Button x:Name="Bu_FeedbackSubmit" Content="{DynamicResource Global_buttons_submit}" Height="40" Margin="0,5,0,0" />
                         </StackPanel>
                         <Grid x:Name="Gr_FeedbackOverlay" Background="#CC27AE60" Visibility="Hidden">
                             <TextBlock FontSize="48" Foreground="White" HorizontalAlignment="Center" Text="{DynamicResource WindowSettings_submitting}" VerticalAlignment="Center" />

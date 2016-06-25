@@ -12,13 +12,31 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Traduction par: Aerath, PyaKura, Rockageek</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">_Appliquer</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">_Annuler</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_Non</system:String>
+    <system:String x:Key="Global_buttons_noForAll">Non, pour tous</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Sauvegarder</system:String>
+    <system:String x:Key="Global_buttons_skip">_Passer</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">_Toujours passer</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Oui</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Oui, pour tous</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Votre fichier de configuration est corrompu ou obsolète. Il va être supprimé et l'application redémarrée.</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Désolé, une erreur s'est produite.</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message désactivable</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets analysés au total.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets analysés.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Annuler</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Impossible de se connecter au serveur</system:String>
     <system:String x:Key="MainWindow_cantDownload">Ces beatmaps n'ont pas pu être téléchargées. Cela peut provenir d'une beatmap inexistante ou non présente sur le miroir.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Vérification des mises à jour...</system:String>
@@ -52,7 +69,7 @@
     <system:String x:Key="MainWindow_downloadMirror">Serveur miroir</system:String>
     <system:String x:Key="MainWindow_downloading">Téléchargement %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Téléchargement</system:String>
-    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">Téléchargement de la miniature %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">Télécharger la miniature de la Beatmap</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Voulez-vous vérifier quels beatmap sets sont affectés ?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Voulez-vous corriger cela ?</system:String>
@@ -64,8 +81,8 @@
     <system:String x:Key="MainWindow_detailsPanel_beatmapsDetails">Infos de la beatmap</system:String>
     <!-- | |> |> Beatmap Status -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pending</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Classée</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Non classée</system:String>
     <!-- | |> F -->
     <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Nombre de fois marquée favorite</system:String>
     <!-- | |> F -->
@@ -75,7 +92,7 @@
     <system:String x:Key="MainWindow_detailsPanel_playCount">Nombre moyen de parties</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Détails en ligne</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Ouvrir la liste des beatmaps</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Ouvrir la page du beatmap set</system:String>
     <!-- | |> Played Status -->
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Jouée</system:String>
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Non jouée</system:String>
@@ -96,8 +113,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">Certaines extensions de fichiers ne sont pas associées à cette application.</system:String>
     <system:String x:Key="MainWindow_extensionWrong">Certaines extensions de fichiers ne sont pas à jour.</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_failed">Failed</system:String>
-    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
+    <system:String x:Key="MainWindow_failed">Échoué</system:String>
+    <system:String x:Key="MainWindow_fallback">Voulez vous retourner vers la méthode de scan des répertoires ? Sachez que cette méthode est beaucoup plus lente et moins précise que la méthode par défaut.</system:String>
     <system:String x:Key="MainWindow_fetching">Récupération %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Récupération...</system:String>
     <system:String x:Key="MainWindow_file">_Fichier</system:String>
@@ -131,7 +148,7 @@
     <system:String x:Key="MainWindow_insufficientPermissions">Autorisations insuffisantes</system:String>
     <system:String x:Key="MainWindow_invalidServerResponse">Réponse du serveur invalide</system:String>
     <system:String x:Key="MainWindow_invertSelection">Inverser la sélection</system:String>
-    <system:String x:Key="MainWindow_isInstalled">Installé?</system:String>
+    <system:String x:Key="MainWindow_isInstalled">Installée ?</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Dernière synchronisation : %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Échec de la dernière synchronisation.</system:String>
@@ -155,7 +172,7 @@
     <system:String x:Key="MainWindow_pleaseSync">Veuillez synchroniser.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Veuillez patienter...</system:String>
     <system:String x:Key="MainWindow_pressF5">Appuyez sur F5 dans osu! ou retournez au menu principal pour recharger vos beatmaps.</system:String>
-    <system:String x:Key="MainWindow_program">_Program</system:String>
+    <system:String x:Key="MainWindow_program">_Programme</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync n'est actuellement pas autorisé à accéder au dossier de musique d'osu!. Afin de de lancer le processus d'importation vous devez démarrer osu!Sync en mode administrateur. -- Voulez-vous le faire ?</system:String>
     <system:String x:Key="MainWindow_runOsu">Démarrer osu!</system:String>
@@ -183,18 +200,18 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Impossible de vérifier les mises à jours.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">L'application n'a pas pu récupérer les données nécessaires depuis le miroir sélectionné. Il est peut-être hors-ligne. Afin de résoudre ce problème, essayez de sélectionner un autre miroir dans la fenêtre des paramètres. Cliquez sur 'Oui' pour passer ce fichier, ou sur 'Non' pour annuler l'ensemble des téléchargements.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">L'application n'a pu récupérer les données requises du miroir sélectionné. Il n'est peut-être plus en service. Afin de pallier à ce problème, essayer de sélectionner un autre miroir dans la fenêtre des options. Pour passer ce fichier, cliquez sur 'Passer', pour passer tous les fichiers produisant des erreurs cliquez sur 'Toujours passer', pour abandonner l'ensemble du téléchargement cliquez sur 'Annuler'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Impossible de trouver osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Impossible de trouver le dossier d'osu!. Veuillez indiquer le chemin d'accès d'osu! dans la fenêtre suivante.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Impossible d'obtenir l'ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Les IDs de certaines beatmaps n'ont pas pu être analysés. Elles seront considérées comme non soumises (exportation impossible).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Impossible d'obtenir le chemin de téléchargement du package de mise à jour.</system:String>
-    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">Impossible de lire les beatmaps.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Impossible de lire le fichier.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Extension de fichier inconnue</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Non répertoriées</system:String>
-    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Les beatmaps non répertoriées ne peuvent pas être exportées</system:String>
-    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">Les beatmaps non répertoriées ne peuvent pas être exportées sous ce format.</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Les beatmaps non répertoriées ne peuvent être exportées</system:String>
+    <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">Les beatmaps non répertoriées ne peuvent être exportées sous ce format.</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapSets">Beatmaps sets non répertoriés</system:String>
     <system:String x:Key="MainWindow_updateAvailable">Mise à jour disponible (%0)</system:String>
     <system:String x:Key="MainWindow_updateCheckNotNecessary">Vérification des mises à jour inutile</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">Visiter le topic du forum.</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_Fermer</system:String>
     <system:String x:Key="WindowMessage_message">Message </system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Activation</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync est capable d'obtenir des informations supplémentaires sur les beatmaps à l'aide de l'osu!API (Application Programming Interface / Version 1.0). Une clé API est requise pour y accéder, afin d'empêcher les gens de surcharger le système.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync peut charger des détails supplémentaires sur les beatmaps grâce à l'osu!api 1.0. Une clé API est requise pour y accéder.</system:String>
     <system:String x:Key="WindowSettings_apiKey">Clé API</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Si vous n'avez pas de clé API vous pouvez la réclamer sur le site officiel</system:String>
-    <system:String x:Key="WindowSettings_apply">_Appliquer</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Etes-vous sûr de vouloir supprimer le fichier de configuration (impossible d'annuler)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Etes-vous sûr de vouloir réinitialiser le fichier de configuration (impossible d'annuler)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Importer automatiquement les beatmaps téléchargées après x beatmaps (Numérique)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">Réinitialiser osu!Sync (supprime la configuration, les associations de fichiers, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Redémarrer osu!Sync en mode administrateur</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_Sauvegarder</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Réponse du serveur:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Toujours montrer - Désactiver les bulles de notification</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Toujours montrer - Activer les bulles de notification</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">Une mise à jour est disponible</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Date de Publication: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_Terminé</system:String>
     <system:String x:Key="WindowUpdater_download">Télécharger</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">_Télécharger et Installer</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Téléchargement terminé. (%0 octets)</system:String>

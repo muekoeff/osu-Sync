@@ -12,6 +12,24 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Fordította: KriszDev</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">_Apply</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">_Cancel</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_No</system:String>
+    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Save</system:String>
+    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">Összesen %0 Beatmap csomagot olvastam.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 Beatmap csomagot olvastam.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Mégse</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Nem lehet kapcsolódni a szerverhez</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Frissítések keresése...</system:String>
@@ -183,7 +200,7 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Nem lehet ellenőrizni a frissítéseket.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Nem találom az osu!.exe-t.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Nem találom az osu! mappáját. Kérjük adja meg a következő ablakban.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Nem lehet megállapítani az azonosítót</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">Látogasd meg a fórumot.</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_Bezár</system:String>
     <system:String x:Key="WindowMessage_message">Üzenet</system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Aktiválás</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API Kulcs</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Ha nincsen API kulcsod akkor az osu! weboldalán kérhetsz</system:String>
-    <system:String x:Key="WindowSettings_apply">_Mentés</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Are you really sure that you want to delete the configuration file (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Automatikusan importáljon X kész letöltés után (Szám)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">osu!Sync visszaállítása (törli a konfigurációs fájlokat a fájltársításokat és a többit)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Újraindítás adminisztrátori jogokkal</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_Mentés és bezárás</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Szerver oldal válasza:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Mindig mutassa - Kikapcsolja a buborék értesítéseket</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Mindig mutassa - Bekapcsolja a buborék értesítéseket</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">Egy frissítés elérhető</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Közzététel dátuma: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_Kész</system:String>
     <system:String x:Key="WindowUpdater_download">Letöltés</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">_Letöltés és telepítés</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">A letöltés befejeződött. (%0 bájt)</system:String>

@@ -26,6 +26,7 @@
     <system:String x:Key="Global_buttons_save">_Save</system:String>
     <system:String x:Key="Global_buttons_skip">_Skip</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Yes</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
@@ -347,7 +348,6 @@
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Show message when update check failed</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Show only when window is hidden - Disable NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_submit">Submit</system:String>
     <system:String x:Key="WindowSettings_submitting">Submitting...</system:String>
     <system:String x:Key="WindowSettings_sync">Sync</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sync on application startup</system:String>

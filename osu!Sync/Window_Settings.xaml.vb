@@ -168,7 +168,7 @@ Class Window_Settings
             Using SubmitClient As New WebClient
                 Dim ReqParam As New Specialized.NameValueCollection
                 With ReqParam
-                    .Add("category", CB_FeedbackCategory.Text)
+                    .Add("category", CB_FeedbackCategory.Tag.ToString)
                     .Add("debugData", Ru_FeedbackInfo.Text)
                     .Add("email", TB_FeedbackeMail.Text)
                     .Add("message", RTB_FeedbackMessage_TextRange.Text)
@@ -181,7 +181,8 @@ Class Window_Settings
                 Try
                     MsgBox(_e("WindowSettings_serverSideAnswer") & vbNewLine & ResponseBody, MsgBoxStyle.Information, AppName)
                 Catch ex As Reflection.TargetInvocationException
-                    MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, AppName)
+                    MsgBox(_e("WindowSettings_unableToSubmitFeedback") & vbNewLine &
+                           "> " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("WindowSettings_pleaseTryAgainLaterOrContactUs"), MsgBoxStyle.Critical, AppName)
                     Exit Sub
                 End Try
                 Gr_FeedbackOverlay.Visibility = Visibility.Collapsed

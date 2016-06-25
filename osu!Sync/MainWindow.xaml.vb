@@ -179,7 +179,7 @@ Class MainWindow
 
         For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
             If SelBm.Value.ID = -1 Then
-                Failed += vbNewLine & "• " & SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist & " | " & SelBm.Value.Title
+                Failed += vbNewLine & "* " & SelBm.Value.ID.ToString & " / " & SelBm.Value.Artist & " / " & SelBm.Value.Title
             Else
                 SelBm.Value.Artist.Replace("""", "'")
                 SelBm.Value.Creator.Replace("""", "'")
@@ -213,9 +213,9 @@ Class MainWindow
                     {"_version", My.Application.Info.Version.ToString}})
         For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
             If SelBm.Value.ID = -1 Then
-                Failed_Unsubmitted += vbNewLine & "• " & SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist & " | " & SelBm.Value.Title
+                Failed_Unsubmitted += vbNewLine & "* " & SelBm.Value.ID.ToString & " / " & SelBm.Value.Artist & " / " & SelBm.Value.Title
             ElseIf Content.ContainsKey(SelBm.Value.ID.ToString) Then
-                Failed_Alread_Assigned += vbNewLine & "• " & SelBm.Value.ID.ToString & " | " & SelBm.Value.Artist & " | " & SelBm.Value.Title
+                Failed_Alread_Assigned += vbNewLine & "* " & SelBm.Value.ID.ToString & " / " & SelBm.Value.Artist & " / " & SelBm.Value.Title
             Else
                 Content.Add(SelBm.Value.ID.ToString, New Dictionary(Of String, String) From {
                             {"artist", SelBm.Value.Artist},
@@ -227,8 +227,8 @@ Class MainWindow
         Dim Content_Json As String = JsonConvert.SerializeObject(Content)
 
         Dim Failed As String = ""
-        If Not Failed_Unsubmitted = "" Then Failed += "======   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Unsubmitted & vbNewLine & vbNewLine
-        If Not Failed_Alread_Assigned = "" Then Failed += "=====   " & _e("MainWindow_idAlreadyAssigned") & "   =====" & vbNewLine & _e("MainWindow_beatmapsIdsCanBeUsedOnlyOnce") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & Failed_Alread_Assigned
+        If Not Failed_Unsubmitted = "" Then Failed += "# " & _e("MainWindow_unsubmittedBeatmapSets") & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "> " & _e("MainWindow_beatmaps") & ":" & Failed_Unsubmitted & vbNewLine & vbNewLine
+        If Not Failed_Alread_Assigned = "" Then Failed += "# " & _e("MainWindow_idAlreadyAssigned") & vbNewLine & _e("MainWindow_beatmapsIdsCanBeUsedOnlyOnce") & vbNewLine & vbNewLine & "> " & _e("MainWindow_beatmaps") & ":" & Failed_Alread_Assigned
         Dim Answer As String() = {Content_Json, Failed}
         Return Answer
     End Function
@@ -242,11 +242,11 @@ Class MainWindow
     Function ConvertBmListToTXT(Source As Dictionary(Of Integer, Beatmap)) As String
         Dim Content As String = "// osu!Sync (" & My.Application.Info.Version.ToString & ") | " & Date.Now.ToString("dd.MM.yyyy") & vbNewLine & vbNewLine
         For Each SelBm As KeyValuePair(Of Integer, Beatmap) In Source
-            Content += "=====   " & SelBm.Value.ID & "   =====" & vbNewLine &
-                "Creator: " & vbTab & SelBm.Value.Creator & vbNewLine &
-                "Artist: " & vbTab & SelBm.Value.Artist & vbNewLine &
-                "ID: " & vbTab & vbTab & vbTab & SelBm.Value.ID & vbNewLine &
-                "Title: " & vbTab & vbTab & SelBm.Value.Title & vbNewLine & vbNewLine
+            Content += "# " & SelBm.Value.ID & vbNewLine &
+                "* Creator: " & vbTab & SelBm.Value.Creator & vbNewLine &
+                "* Artist: " & vbTab & SelBm.Value.Artist & vbNewLine &
+                "* ID: " & vbTab & vbTab & vbTab & SelBm.Value.ID & vbNewLine &
+                "* Title: " & vbTab & vbTab & SelBm.Value.Title & vbNewLine & vbNewLine
         Next
         Return Content
     End Function
@@ -875,7 +875,7 @@ Class MainWindow
                     File.Close()
                 End Using
                 If Not Content(1) = "" Then
-                    Content(1) = Content(1).Insert(0, "=====   " & _e("MainWindow_unsubmittedBeatmapSets") & "   =====" & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ": ")
+                    Content(1) = Content(1).Insert(0, "# " & _e("MainWindow_unsubmittedBeatmapSets") & vbNewLine & _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") & vbNewLine & vbNewLine & "> " & _e("MainWindow_beatmaps") & ": ")
                     If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") & vbNewLine &
                              _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
                         Dim Window_Message As New Window_MessageWindow
@@ -1437,14 +1437,16 @@ Class MainWindow
             Answer = JObject.Parse(e.Result)
         Catch ex As JsonReaderException
             If AppSettings.Messages_Updater_UnableToCheckForUpdates Then
-                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, MsgTitleDisableable)
+                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine &
+                       "> " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, MsgTitleDisableable)
                 MsgBox(e.Result, MsgBoxStyle.OkOnly, "Debug | osu!Sync")
             End If
             La_FooterUpdater.Content = _e("MainWindow_unableToCheckForUpdates")
             Exit Sub
         Catch ex As Reflection.TargetInvocationException
             If AppSettings.Messages_Updater_UnableToCheckForUpdates Then
-                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, MsgTitleDisableable)
+                MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine &
+                       "> " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, MsgTitleDisableable)
             End If
             La_FooterUpdater.Content = _e("MainWindow_unableToCheckForUpdates")
             Exit Sub
@@ -1744,18 +1746,20 @@ Class MainWindow
         Next
         If Not Answer.Func_Invalid.Count = 0 Then
             Dim SB As New Text.StringBuilder
-            SB.Append("=====   " & _e("MainWindow_ignoredFolders") & "   =====" & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine & "// " & _e("MainWindow_folders") & ":" & vbNewLine)
+            SB.Append("# " & _e("MainWindow_ignoredFolders") & vbNewLine & _e("MainWindow_folderCouldntBeParsed") & vbNewLine & vbNewLine &
+                      "> " & _e("MainWindow_folders") & ":" & vbNewLine)
             For Each Item As String In Answer.Func_Invalid
-                SB.Append("• " & Item & vbNewLine)
+                SB.Append("* " & Item & vbNewLine)
             Next
             SB.Append(vbNewLine & vbNewLine)
             Answer.Return__Sync_Warnings += SB.ToString
         End If
         If Not Answer.Func_InvalidId.Count = 0 Then
             Dim SB As New Text.StringBuilder
-            SB.Append("=====   " & _e("MainWindow_unableToGetId") & "   =====" & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ":" & vbNewLine)
+            SB.Append("# " & _e("MainWindow_unableToGetId") & vbNewLine & _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") & vbNewLine & vbNewLine &
+                      "> " & _e("MainWindow_beatmaps") & ":" & vbNewLine)
             For Each Item As String In Answer.Func_InvalidId
-                SB.Append("• " & Item & vbNewLine)
+                SB.Append("* " & Item & vbNewLine)
             Next
             SB.Append(vbNewLine & vbNewLine)
             Answer.Return__Sync_Warnings += SB.ToString
@@ -1941,9 +1945,10 @@ Class MainWindow
         Importer_UpdateInfo(_e("MainWindow_finished"))
 
         If ImporterContainer.BmList_TagsFailed.Count > 0 Then
-            Dim Failed As String = "======   " & _e("MainWindow_downloadFailed") & "   =====" & vbNewLine & _e("MainWindow_cantDownload") & vbNewLine & vbNewLine & "// " & _e("MainWindow_beatmaps") & ": "
+            Dim Failed As String = "# " & _e("MainWindow_downloadFailed") & vbNewLine & _e("MainWindow_cantDownload") & vbNewLine & vbNewLine &
+                "> " & _e("MainWindow_beatmaps") & ": "
             For Each _Selection As Importer.TagData In ImporterContainer.BmList_TagsFailed
-                Failed += vbNewLine & "• " & _Selection.Beatmap.ID.ToString & " | " & _Selection.Beatmap.Artist & " | " & _Selection.Beatmap.Title
+                Failed += vbNewLine & "* " & _Selection.Beatmap.ID.ToString & " / " & _Selection.Beatmap.Artist & " / " & _Selection.Beatmap.Title
             Next
             If MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenImported") & vbNewLine &
                                _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), AppName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) = MessageBoxResult.Yes Then
@@ -2166,11 +2171,12 @@ Class MainWindow
                     Dim File_Content As String = StringDecompress(File.ReadAllText(FilePath))
                     Importer_ShowRawOSBL(File_Content, FilePath)
                 Catch ex As FormatException
-                    MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine & "// " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Error)
+                    MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine &
+                                    "> " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Error)
                 End Try
             Case ".nw520-osbl", ".json"
                 Importer_ShowRawOSBL(File.ReadAllText(FilePath), FilePath)
-            Case ".zip"     ' TODO: If contains multiple OSBLX-files read and process each one
+            Case ".zip"     ' @TODO: If contains multiple OSBLX-files read and process each one
                 Try
                     Using Zipper As ZipFile = ZipFile.Read(FilePath)
                         Dim DirectoryName As String = AppTempPath & "\Zipper\Importer-" & Date.Now.ToString("yyyy-MM-dd HH.mm.ss")
@@ -2184,7 +2190,8 @@ Class MainWindow
                         Next
                     End Using
                 Catch ex As ZipException
-                    MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine & "// " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Error)
+                    MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine &
+                                    "> " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Error)
                 End Try
             Case Else
                 MsgBox(_e("MainWindow_unknownFileExtension") & ":" & vbNewLine & Path.GetExtension(FilePath), MsgBoxStyle.Exclamation, AppName)
@@ -2210,7 +2217,8 @@ Class MainWindow
             TB_ImporterInfo.Text = FilePath
             BmDisplayUpdate(ConvertSavedJSONtoListBeatmap(File_Content_Json), UpdateBmDisplayDestinations.Importer)
         Catch ex As JsonReaderException
-            MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine & "// " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Error)
+            MessageBox.Show(_e("MainWindow_unableToReadFile") & vbNewLine & vbNewLine &
+                            "> " & _e("MainWindow_details") & ":" & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Error)
         End Try
     End Sub
 

@@ -12,9 +12,27 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">翻譯： Oinari-sama (稻荷), Moonlight Feather (飛羽), hongkongpeople (茄子)</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">套用 (_A)</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">取消 (_C)</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_No</system:String>
+    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Save</system:String>
+    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">您的設定檔是無效的或過時的。它將會被刪除，程式將會重啟。</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">對不起，出現問題。</system:String>
     <!-- | M -->
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">總計解析了 %0 圖組。</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">已解析 %0 圖組。</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_取消</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">無法連接到伺服器</system:String>
     <system:String x:Key="MainWindow_cantDownload">無法下載這些鋪面。有可能是某些譜面不存在或這個鏡像站沒有提供這些譜面。</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">正在檢查更新...</system:String>
@@ -44,15 +61,15 @@
     <system:String x:Key="MainWindow_convertSelectedFile">轉換選擇的檔案</system:String>
     <system:String x:Key="MainWindow_creator">譜面製作者</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
-    <system:String x:Key="MainWindow_details">Details</system:String>
+    <system:String x:Key="MainWindow_dateFormat">月/日/年</system:String>
+    <system:String x:Key="MainWindow_details">明細</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">下載和安裝</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">下載圖譜(_D)</system:String>
     <system:String x:Key="MainWindow_downloadFailed">下載失敗。</system:String>
     <system:String x:Key="MainWindow_downloadMirror">鏡像下載</system:String>
     <system:String x:Key="MainWindow_downloading">下載中 %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">下載中</system:String>
-    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">正在下載縮略圖 %0...</system:String>
     <system:String x:Key="MainWindow_downladThumbnail">下載譜面縮圖</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">要檢查哪些圖組受到影響嗎？</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">想要解決這個問題嗎？</system:String>
@@ -96,7 +113,7 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">一些檔案類型沒有和這個程式關聯。</system:String>
     <system:String x:Key="MainWindow_extensionWrong">有一些檔案類型已經過時。</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_failed">Failed</system:String>
+    <system:String x:Key="MainWindow_failed">失敗了</system:String>
     <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
     <system:String x:Key="MainWindow_fetching">讀取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">讀取中...</system:String>
@@ -180,17 +197,17 @@
     <system:String x:Key="MainWindow_syncing">同步中...</system:String>
     <!-- | T -->
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">這有點diao</system:String>
-    <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
+    <system:String x:Key="MainWindow_timeFormat">時:分:秒</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">無法檢查更新</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">無法自目前選取的鏡像伺服器讀取所需的資料，這可能是因為它現在正下線。要解決這個問題，試著在設定裡選取另一個鏡像。要跳過這個檔案請選「是」，要中斷整個下載程序請選「否」。</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">找不到 osu! 資料夾。請在將要開啟的視窗中指定其路徑。</system:String>
     <system:String x:Key="MainWindow_unableToGetId">無法獲取 ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">有些譜面的ID無法被解析。它們將被視為未提交的 (無法被匯出) 。</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">無法取得更新用的下載路徑。</system:String>
-    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
-    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">無法讀取譜面。</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">無法讀取檔案</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的副檔名</system:String>
     <system:String x:Key="MainWindow_unsubmitted">未提交</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">未提交的圖組不能匯出</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">打開論壇帖。</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_關閉</system:String>
     <system:String x:Key="WindowMessage_message">訊息</system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">啟用</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync 能夠從osu!api (應用程式介面 / 版本 1.0) 載入額外的譜面資訊。osu!api需要一個API金鑰來存取，這是為了防止人們濫用該系統。</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API 金鑰</system:String>
     <system:String x:Key="WindowSettings_apiRequest">如果您沒有API金鑰，您可以在 osu! 官網上申請一個</system:String>
-    <system:String x:Key="WindowSettings_apply">_套用</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">確定真的要刪除設定檔 (不能復原)？</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">您確定真的要重設設定檔 (這是不可復原的)？</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">每 x 張譜面自動匯入已下載的圖組 (純數值)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">重設 osu!Sync (刪除設定檔, 檔案關聯等等)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">以系統管理員權限重啟程式</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_保存</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">伺服器端的回應：</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">永遠顯示 - 停用通知泡泡</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">永遠顯示 - 啟用通知泡泡</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">有可用的更新</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">出版日期： %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_完成</system:String>
     <system:String x:Key="WindowUpdater_download">下載</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">下載並安裝(_D)</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">下載完成。(%0 Bytes)</system:String>

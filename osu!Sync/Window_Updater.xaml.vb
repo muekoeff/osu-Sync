@@ -120,14 +120,16 @@ Class Window_Updater
                 Try
                     Answer = JObject.Parse(e.Result)
                 Catch ex As JsonReaderException
-                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, AppName)
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine &
+                           "> " & _e("MainWindow_invalidServerResponse") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), MsgBoxStyle.Critical, AppName)
                     TB_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
                     TB_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
                     PB_Progress.IsIndeterminate = False
                     Exit Sub
                 Catch ex As Reflection.TargetInvocationException
                     Clipboard.SetText("https: //osu.ppy.sh/forum/t/270446")
-                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, AppName)
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine &
+                           "> " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, AppName)
                     TB_VersionInfo.Text += " | " & _e("WindowUpdater_unableToCommunicateWithServer")
                     TB_Status.Text = _e("WindowUpdater_unableToCommunicateWithServer")
                     PB_Progress.IsIndeterminate = False
@@ -147,7 +149,8 @@ Class Window_Updater
                         .Add(New Run(CStr(Answer.SelectToken("latestRepoRelease").SelectToken("body")).Replace("```Indent" & vbNewLine, "").Replace(vbNewLine & "```", "")))
                     End With
                 Catch ex As Exception
-                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine & "// " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, AppName)
+                    MsgBox(_e("MainWindow_unableToCheckForUpdates") & vbNewLine &
+                           "> " & _e("MainWindow_cantConnectToServer") & vbNewLine & vbNewLine & _e("MainWindow_ifThisProblemPersistsVisitTheOsuForum"), MsgBoxStyle.Critical, AppName)
                     Close()
                     Exit Sub
                 End Try

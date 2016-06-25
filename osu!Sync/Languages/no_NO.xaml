@@ -12,6 +12,24 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Oversatt av: Mystia Lorelei</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">_Apply</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">_Cancel</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_No</system:String>
+    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Save</system:String>
+    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap-sett lest totalt.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap-sett lest.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Avbryt</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Kan ikke koble til server</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Ser etter oppdateringer...</system:String>
@@ -183,7 +200,7 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Kan ikke se etter oppdateringer.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Kan ikke finne osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Kan ikke finne osu!-mappen. Vennligst spesifiser filstien til osu! i følgende vindu.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Kan ikke hente ID</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">Besøk forumtråden.</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_Lukk</system:String>
     <system:String x:Key="WindowMessage_message">Melding</system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Aktivisering</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API-nøkkel</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Hvis du ikke har en API-nøkkel kan du be om en på osu!-nettstedet</system:String>
-    <system:String x:Key="WindowSettings_apply">_Bruk</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Er du virkelig sikker på at du vil slette konfigurasjonsfilen (dette kan ikke omgjøres)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Er du virkelig sikker på at du vil tilbakestille konfigurasjonen (dette kan ikke omgjøres)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Importer automatisk nedlastede beatmaps etter x beatmaps (numerisk)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">Tilbakestill osu!Sync (slett konfigurasjon, filtilknytninger, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_Lagre</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Svar fra server:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Vis alltid - Deaktiver NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Vis alltid - Aktiver NotifyBalloons</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">En oppdatering er tilgjengelig</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Publiseringsdato: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_Ferdig</system:String>
     <system:String x:Key="WindowUpdater_download">Last ned</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">_Last ned og installer</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Nedlastning fullført. (%0 byte)</system:String>

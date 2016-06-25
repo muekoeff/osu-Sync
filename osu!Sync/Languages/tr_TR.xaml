@@ -12,6 +12,24 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Çeviri: Essovius</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">_Apply</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">_Cancel</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_No</system:String>
+    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Save</system:String>
+    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets in total parsed.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets parsed.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Cancel</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Sunucuya bağlanılamıyor</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Güncelleştirmeler kontrol ediliyor...</system:String>
@@ -183,7 +200,7 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Unable to check for updates.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Yes', to abort the whole download press 'No'.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">osu!.exe bulunamadı.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Unable to find osu! folder. Please specify the path to osu! in the following window.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Unable to get ID</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">Forum konusunu ziyaret et.</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_Close</system:String>
     <system:String x:Key="WindowMessage_message">Mesaj</system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Aktivasyon</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api (Application Programming Interface / Version 1.0). In order to get access, an API key is required, it's a way to prevent people from spamming the system.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API Key</system:String>
     <system:String x:Key="WindowSettings_apiRequest">If you haven't got an API Key you can request one on the osu! website</system:String>
-    <system:String x:Key="WindowSettings_apply">_Apply</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Are you really sure that you want to delete the configuration file (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Are you really sure that you want to reset the configuration (this cannot be undone)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps (Numeric)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (delete configuration, file associations, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_Save</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Server-side answer:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Show always - Disable NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">An update is available</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Date of Publication: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_Tamam</system:String>
     <system:String x:Key="WindowUpdater_download">İndir</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">İ_ndir ve Yükle</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Download finished. (%0 Bytes)</system:String>

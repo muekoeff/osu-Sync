@@ -12,13 +12,31 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">แปลโดย: BobbyL2k</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">_Apply</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">_Cancel</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_No</system:String>
+    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Save</system:String>
+    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Your configuration file is corrupted or outdated. It will be deleted and the application restarted.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">การตั้งค่าของคุณกำลังจะถูกลบ เพราะว่ามีความเสียหาย หรือล้าสมัย โปรแกรมกำลังจะปิดและเปิดใหม่</system:String>
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">ขอโทษด้วย ระบบมีปัญหาบางอย่าง</system:String>
     <!-- | M -->
-    <system:String x:Key="GlobalVar_messageCanBeDisabled">Message disableable</system:String>
+    <system:String x:Key="GlobalVar_messageCanBeDisabled">ข้อความสามารถถูกซ่อนได้</system:String>
     
     <!-- MainWindow -->
     <!-- | A -->
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">ทั้งหมด %0 ชุดของ beatmap ถูกอ่าน</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 ชุดของ beatmap ถูกอ่าน</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_ยกเลิก</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">ไม่สามรถเชื่อมต่อ server ได้</system:String>
     <system:String x:Key="MainWindow_cantDownload">ไม่สามารถดาวน์โหลด Beatmaps เหล่านี้ได้ สาเหตุที่เป็นไปได้คือ หนึ่ง beatmap นี้ไม่มีอยู่จริง หรือ สอง มันไม่มีอยู่บน mirror นี้</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">กำลังตรวจสอบหาอัปเดต...</system:String>
@@ -44,16 +61,16 @@
     <system:String x:Key="MainWindow_convertSelectedFile">แปลงไฟล์ที่ถูกเลือก</system:String>
     <system:String x:Key="MainWindow_creator">ผู้สร้าง</system:String>
     <!-- | D -->
-    <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
-    <system:String x:Key="MainWindow_details">Details</system:String>
+    <system:String x:Key="MainWindow_dateFormat">dd/MM/yyyy</system:String>
+    <system:String x:Key="MainWindow_details">ราย​ละเอียด</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">ดาวโหลดและติดตั้ง</system:String>
     <system:String x:Key="MainWindow_downloadBeatmaps">_ดาวโหลด Beatmaps</system:String>
     <system:String x:Key="MainWindow_downloadFailed">ดาวโหลดล้มเหลว</system:String>
     <system:String x:Key="MainWindow_downloadMirror">ดาวน์โหลด mirror</system:String>
     <system:String x:Key="MainWindow_downloading">กำลังดาวโหลด %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">กำลังดาวโหลด</system:String>
-    <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
-    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
+    <system:String x:Key="MainWindow_downloadingThumbnail">กำลังดาวน์โหลดรูป Beatmap %0...</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">ดาวน์โหลดรูป Beatmap</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">คุณต้องการตรวจสอบชุดของ beatmap ที่ได้รับผลกระทบหรือไม่?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">คุณต้องการจะแก้ไขหรือไม่?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">ต้องการจะเปิด osu! ตอนนี้?</system:String>
@@ -96,8 +113,8 @@
     <system:String x:Key="MainWindow_extensionNotAssociated">นามสกุลไฟล์บางอันไม่ได้เกี่ยวข้องกับโปรแกรมนี้</system:String>
     <system:String x:Key="MainWindow_extensionWrong">นามสกุลไฟล์บางอัน ล้าสมัย</system:String>
     <!-- | F -->
-    <system:String x:Key="MainWindow_failed">Failed</system:String>
-    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
+    <system:String x:Key="MainWindow_failed">ล้มเหลว</system:String>
+    <system:String x:Key="MainWindow_fallback">คุณต้องการย้อนกลับไปใช้วิธีสแกนไดเรกทอรีหรือไม่? โปรดทราบว่า มันช้ากว่าและไม่แม่นยำเท่าวิธีพื้นฐาน</system:String>
     <system:String x:Key="MainWindow_fetching">กำลังดึง %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">กำลังดึง...</system:String>
     <system:String x:Key="MainWindow_file">ไ_ฟล์</system:String>
@@ -106,13 +123,13 @@
     <system:String x:Key="MainWindow_folderCouldntBeParsed">มีอย่างน้องหนึ่งโฟลเดอร์ไม่สามารถถูกอ่านได้ โฟลเดอร์เหล่านี้จะถูกละเว้น</system:String>
     <system:String x:Key="MainWindow_folders">โฟลเดอร์</system:String>
     <!-- >| FileExt -->
-    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
-    <system:String x:Key="MainWindow_fileext_html">HTML file</system:String>
-    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
-    <system:String x:Key="MainWindow_fileext_osbl">osu!Sync Beatmap list</system:String>
-    <system:String x:Key="MainWindow_fileext_osblx">Compressed osu!Sync Beatmap list</system:String>
-    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
-    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
+    <system:String x:Key="MainWindow_fileext_csv">ไฟล์ CSV/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_html">ไฟล์ HTML</system:String>
+    <system:String x:Key="MainWindow_fileext_json">ไฟล์ JSON/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_osbl">รายการ Beatmap ของ osu!Sync</system:String>
+    <system:String x:Key="MainWindow_fileext_osblx">รายการ Beatmap osu!Sync ที่ถูกบีบอัด</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">ไฟล์ Text</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zip ของไฟล์ OSBLX</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">กำลังสร้าง interface...</system:String>
     <!-- | H -->
@@ -183,14 +200,14 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">ไม่สามารถตรวจสอบหาอัพเดทได้</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">โปรแกรมไม่สามารถดึงข้อมูลที่จำเป็นจาก mirror ที่เลือกได้  ความเป็นไปได้คือ mirror ล้มกำลังอยู่  ลองแก้ไขปัญหาโดยการเลือก mirror อื่นในหน้าต่างการตั้งค่า  ถ้าคุณต้องการข้ามขั้นตอนนี้ให้ กดปุ่ม 'ใช่' ถ้าจะยกเลิกการดาวน์โหลดทั้งหมด ให้กด 'ไม่'</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">หา osu!.exe ไม่เจอ</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">ไม่สามารถหาโฟลเดอร์ osu! ได้  กรุณากำหนดตำแหน่งของ osu! ในหน้าต่างนี้</system:String>
     <system:String x:Key="MainWindow_unableToGetId">ไม่สามารถหา ID ได้</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">ID ของ beatmaps บางอันไม่สามารถถูกอ่านได้  beatmaps เหล่านี้จะถูกจัดรวมกับกลุ่ม unsubmitted (ไม่สามารถส่งออกได้)</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">ไม่สามารถหา ตำแหน่ง ดาวโหลดเพื่ออัปเดต แพคเกจ ได้</system:String>
-    <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
-    <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
+    <system:String x:Key="MainWindow_unableToReadBms">ไม่สามารถอ่าน beatmaps ได้</system:String>
+    <system:String x:Key="MainWindow_unableToReadFile">ไม่สามารถอ่านไฟล์</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">นามสกุลไฟล์ที่ไม่รู้จัก</system:String>
     <system:String x:Key="MainWindow_unsubmitted">Unsubmitted</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">ชุดของ beatmap ที่ unsubmitted ไม่สามารถส่งออก</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">เข้าชมฟอรั่ม</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_ปิด</system:String>
     <system:String x:Key="WindowMessage_message">ข้อความ</system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">เปิดใช้งาน</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync สามารถโหลดรายละเอียดเพิ่มเติมของ beatmaps โดยการใช้ osu!api (Application Programming Interface / รุ่น 1.0)  ในการเข้าถึงข้อมูลนั้นจำเป็นต้องใช่ API key (ซึ่งมีไว้ป้องกันคนสแปมระบบ)</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
     <system:String x:Key="WindowSettings_apiKey">คีย์ API</system:String>
     <system:String x:Key="WindowSettings_apiRequest">ถ้าคุณไม่มี API Key คุณสามารถไปรับได้ที่เวป osu!</system:String>
-    <system:String x:Key="WindowSettings_apply">ใ_ช้งาน</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">คุณแน่ใจจริง ๆ หรอว่าจะลบไฟล์การตั้งค่า (ไม่สามารถย้อนกลับได้)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">คุณแน่ใจจริง ๆ หรอว่าจะ reset การตั้งค่า (ไม่สามารถย้อนกลับได้)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">โหลด beatmaps เข้า osu! หลังดาวน์โหลดครบ x beatmaps (ตัวเลข)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (ลบ การตั้งค่า, ไฟล์ที่เกี่ยว, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">ปิดและเปิด osu!Sync ใหม่ในโหมด "ยกระดับ"</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_บันทึก</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">คำตอบฝั่งเซิร์ฟเวอร์:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">แสดงเสมอ - ไม่ใช้งาน NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">แสดงเสมอ - เปิดใช้งาน NotifyBalloons</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">มีอัปเดตใหม่</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">วันเผยแพร่: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">เ_สร็จสิ้น</system:String>
     <system:String x:Key="WindowUpdater_download">ดาวโหลด</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">_ดาวโหลดและติดตั้ง</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">ดาวโหลดเสร็จสิ้น (%0 Bytes)</system:String>

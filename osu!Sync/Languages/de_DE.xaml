@@ -12,6 +12,24 @@
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Übersetzung von: naseweis520</system:String>
 
+    <!-- Global -->
+    <!-- | A -->
+    <system:String x:Key="Global_buttons_apply">_Anwenden</system:String>
+    <!-- | C -->
+    <system:String x:Key="Global_buttons_cancel">_Abbrechen</system:String>
+    <!-- | N -->
+    <system:String x:Key="Global_buttons_no">_Nein</system:String>
+    <system:String x:Key="Global_buttons_noForAll">Nein, alle</system:String>
+    <!-- | O -->
+    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <!-- | S -->
+    <system:String x:Key="Global_buttons_save">_Speichern</system:String>
+    <system:String x:Key="Global_buttons_skip">_Überspringen</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">_Immer überspringen</system:String>
+    <!-- | Y -->
+    <system:String x:Key="Global_buttons_yes">_Ja</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Ja, alle</system:String>
+    
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei ist korrupt oder veraltet. Sie wird gelöscht und die Anwendung wird neugestartet.</system:String>
@@ -34,7 +52,6 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 Beatmap-Sets insgesamt eingelesen.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 Beatmap-Sets eingelesen.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cancel">_Abbrechen</system:String>
     <system:String x:Key="MainWindow_cantConnectToServer">Verbindung zum Server nicht möglich</system:String>
     <system:String x:Key="MainWindow_cantDownload">Diese Beatmaps konnten nicht heruntergeladen werden. Mögliche Gründe sind, dass die Beatmap nicht existiert oder sie nicht von diesem Mirror zur Verfügung gestellt wird.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Auf Aktualisierungen überprüfen...</system:String>
@@ -183,7 +200,7 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">Überprüfung auf Updates nicht möglich.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchData">Die Anwendung kann nicht die notwendigen Daten aus dem ausgewählten Mirror abrufen. Eine mögliche Ursache ist, dass dieser derzeit offline ist. Um dieses Problem zu beheben, versuche, einen anderen Mirror im Einstellungsfenster zu wählen. Wenn du diese Datei überspringen möchtest drücke 'Ja', zum Abbrechen des ganze Downloads drücke "Nein".</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">Die Anwendung kann nicht die notwendigen Daten aus dem ausgewählten Mirror abrufen. Eine mögliche Ursache ist, dass dieser derzeit offline ist. Um dieses Problem zu beheben, versuche, einen anderen Mirror im Einstellungsfenster zu wählen. Wenn du diese Datei überspringen möchtest drücke 'Überspringen', zum automatischen Überspringen der Datei falls dieser Fehler erneut auftritt drücke "Immer überspringen", zum Abbrechen des ganzen Downloads drücke "Abbrechen".</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Konnte osu!.exe nicht finden.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Konnte osu! Ordner nicht finden. Bitte wähle den Pfad zu osu! im folgenden Fenster.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">ID konnte nicht gelesen werden</system:String>
@@ -244,17 +261,15 @@
     <system:String x:Key="WindowAbout_tt_osuForum">Besuche den Forumsthread.</system:String>
     
     <!-- Window_Message -->
-    <system:String x:Key="WindowMessage_close">_Schließen</system:String>
     <system:String x:Key="WindowMessage_message">Nachricht</system:String>
 
     <!-- Window_Settings -->
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Aktivierung</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync ist in der Lage, zusätzliche Informationen zu Beatmaps über die osu!api (Application Programming Interface / Version 1.0) zu laden. Um Zugang zu erhalten, ist ein API-Schlüssel erforderlich, dies ist ein Weg, um Leute davon abzuhalten, das System zu spammen.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync ist in der Lage weitere Details zu Beatmaps mit der osu! api 1.0 zu laden. Um Zugang zu erhalten ist ein API-Schlüssel erforderlich.</system:String>
     <system:String x:Key="WindowSettings_apiKey">API Schlüssel</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Wenn du keinen API Schlüssel hast, kannst du einen auf der osu! Website anfragen</system:String>
-    <system:String x:Key="WindowSettings_apply">_Anwenden</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Bist du wirklich sicher, dass du die Konfigurationsdatei löschen willst (dies kann nicht rückgängig gemacht werden)?</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">Bist du wirklich sicher, dass du die Konfiguration zurücksetzen möchtest (dies kann nicht rückgängig gemacht werden)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimportiere heruntergeladene Beatmaps nach X Beatmaps (Numerisch)</system:String>
@@ -327,7 +342,6 @@
     <system:String x:Key="WindowSettings_resetOsuSync">osu!Sync zurücksetzen (Konfiguration löschen, Dateiassoziationen, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">osu!Sync mit Adminrechten neustarten</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_save">_Speichern</system:String>
     <system:String x:Key="WindowSettings_serverSideAnswer">Serverseitige Antwort:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Immer anzeigen - NotifyBalloons deaktivieren</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Immer anzeigen - NotifyBalloons aktivieren</system:String>
@@ -371,7 +385,6 @@
     <system:String x:Key="WindowUpdater_anUpdateIsAvailable">Ein Update ist verfügbar</system:String>
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">Veröffentlichungstag: %0</system:String>
-    <system:String x:Key="WindowUpdater_done">_Fertig</system:String>
     <system:String x:Key="WindowUpdater_download">Herunterladen</system:String>
     <system:String x:Key="WindowUpdater_downloadAndInstall">_Herunterladen und Installieren</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">Download abgeschlossen. (%0 Bytes)</system:String>
