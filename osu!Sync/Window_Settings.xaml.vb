@@ -63,6 +63,7 @@ Class Window_Settings
             If Not CB_ToolLanguages.Text = "" And Not .Tool_Language = LangCode And TranslationList.ContainsKey(LangCode) Then
                 If TranslationLoad(TranslationList.Item(LangCode).Path) Then MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, AppName)
             ElseIf LangCode = "en_US" And TranslationHolder IsNot Nothing Then
+                AppSettings.Tool_Language = "en_US"
                 Windows.Application.Current.Resources.MergedDictionaries.Remove(TranslationHolder)
                 TranslationHolder = Nothing
             End If
@@ -395,7 +396,7 @@ Class Window_Settings
                 If a.Code = AppSettings.Tool_Language Then
                     IndexUserLanguage = i
                 End If
-                CB_ToolLanguages.Items.Add(a.Code & " | " & a.DisplayName_English & "/" & a.DisplayName)
+                CB_ToolLanguages.Items.Add(a.Code & " | " & a.DisplayName_En & "/" & a.DisplayName)
                 i += 1
             End If
         Next

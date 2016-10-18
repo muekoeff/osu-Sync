@@ -15,7 +15,7 @@ End Class
 Class Language
     Property Code As String
     Property DisplayName As String = ""
-    Property DisplayName_English As String = ""
+    Property DisplayName_En As String = ""
     Property Path As String
 End Class
 Class Settings
@@ -262,7 +262,7 @@ Module GlobalVar
                     Dim ResLanguage As New Language
                     If NewTransHolder.Contains("Meta_langCode") Then ResLanguage.Code = NewTransHolder.Item("Meta_langCode").ToString
                     If NewTransHolder.Contains("Meta_langName") Then ResLanguage.DisplayName = NewTransHolder.Item("Meta_langName").ToString
-                    If NewTransHolder.Contains("Meta_langNameEn") Then ResLanguage.DisplayName = NewTransHolder.Item("Meta_langNameEn").ToString
+                    If NewTransHolder.Contains("Meta_langNameEn") Then ResLanguage.DisplayName_En = NewTransHolder.Item("Meta_langNameEn").ToString
                     AppSettings.Tool_LanguageMeta.Add(FilePath, ResLanguage)
                     Return ResLanguage
                 Else
@@ -434,6 +434,10 @@ Module GlobalVar
                             AppSettings.SaveSettings()
                             File.Delete(AppDataPath & "\Settings\Settings.config")
                         End If
+                    End If
+                Case < New Version("1.0.0.15")
+                    If File.Exists(AppDataPath & "\Settings\Settings.config") Then
+                        File.Delete(AppDataPath & "\Settings\Settings.config")
                     End If
             End Select
         End If
