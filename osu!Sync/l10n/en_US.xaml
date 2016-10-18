@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
-    <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationInfo">Tiu apliko estas disponebla en [b]Esperanto[/b].</system:String>
-    <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">Esperanto</system:String>
+    <system:String x:Key="Forum_translationInfo">This application is available in [b]English[/b].</system:String>
 
     <!-- Meta & More -->
-    <!-- | T -->
+    <system:String x:Key="Meta_langCode">en_US</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Meta_langName">English</system:String>
+    <!-- \/ Replace "English" with the language of your translation in English -->
+    <system:String x:Key="Meta_langNameEn">English</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
-    <system:String x:Key="Meta_translators">Tradukado de: -</system:String>
+    <system:String x:Key="Meta_translators">Translation by: naseweis520</system:String>
 
     <!-- Global -->
     <!-- | A -->
@@ -26,6 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Save</system:String>
     <system:String x:Key="Global_buttons_skip">_Skip</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
+    <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Yes</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
@@ -40,8 +42,8 @@
     
     <!-- MainWindow -->
     <!-- | A -->
-    <system:String x:Key="MainWindow_aborted">Ĉesigis</system:String>
-    <system:String x:Key="MainWindow_about">_Chirkaŭ</system:String>
+    <system:String x:Key="MainWindow_aborted">Aborted</system:String>
+    <system:String x:Key="MainWindow_about">_About</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">All supported file formats</system:String>
     <system:String x:Key="MainWindow_andStillWorking">And still working...</system:String>
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">A new version is available. -- Current: %0 | Latest: %1</system:String>
@@ -52,7 +54,7 @@
     <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 beatmap sets in total parsed.</system:String>
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets parsed.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cantConnectToServer">Fini</system:String>
+    <system:String x:Key="MainWindow_cantConnectToServer">Can't connect to server</system:String>
     <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Checking for updates...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Conversion aborted</system:String>
@@ -100,7 +102,7 @@
     <system:String x:Key="MainWindow_elevationFailed">Elevation failed.</system:String>
     <system:String x:Key="MainWindow_exceptions">Exceptions</system:String>
     <system:String x:Key="MainWindow_exit">E_xit</system:String>
-    <system:String x:Key="MainWindow_export">Eksporti</system:String>
+    <system:String x:Key="MainWindow_export">Export</system:String>
     <system:String x:Key="MainWindow_exportAborted">Export aborted</system:String>
     <system:String x:Key="MainWindow_exportCompleted">Export completed</system:String>
     <system:String x:Key="MainWindow_exportedAs">Exported as %0</system:String>
@@ -140,7 +142,7 @@
     <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">If this problem persists please leave us a message via the feedback tab in the settings.</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">If this problem persists you can visit the osu! forum: http://bit.ly/1Bbmn6E (in your clipboard).</system:String>
     <system:String x:Key="MainWindow_ignoredFolders">Ignored Folders</system:String>
-    <system:String x:Key="MainWindow_import">Enporti</system:String>
+    <system:String x:Key="MainWindow_import">Import</system:String>
     <system:String x:Key="MainWindow_importAborted">Import aborted</system:String>
     <system:String x:Key="MainWindow_installationFinished">Installation finished!</system:String>
     <system:String x:Key="MainWindow_installing">Installing</system:String>
@@ -347,7 +349,6 @@
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Show message when update check failed</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Show only when window is hidden - Disable NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_submit">Submit</system:String>
     <system:String x:Key="WindowSettings_submitting">Submitting...</system:String>
     <system:String x:Key="WindowSettings_sync">Sync</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sync on application startup</system:String>

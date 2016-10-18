@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
-    <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">˙[b](uʍop ǝpısdn) ɥsıןƃuǝ[/b] uı ǝןqɐןıɐʌɐ sı uoıʇɐɔıןddɐ sıɥʇ</system:String>
-    <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">(uʍop ǝpᴉsd∩) ɥsᴉlƃuƎ</system:String>
 
     <!-- Meta & More -->
-    <!-- | T -->
+    <system:String x:Key="Meta_langCode">en_UD</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Meta_langName">(uʍop ǝpᴉsd∩) ɥsᴉlƃuƎ</system:String>
+    <!-- \/ Replace "English" with the language of your translation in English -->
+    <system:String x:Key="Meta_langNameEn">English (Upside down)</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">naseweis520 :ʎq uoıʇɐןsuɐɹʇ</system:String>
 
@@ -26,6 +27,7 @@
     <system:String x:Key="Global_buttons_save">ǝʌɐs</system:String>
     <system:String x:Key="Global_buttons_skip">dıʞs</system:String>
     <system:String x:Key="Global_buttons_skipAlways">sʎɐʍןɐ dıʞs</system:String>
+    <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">sǝʎ</system:String>
     <system:String x:Key="Global_buttons_yesForAll">ןןɐ ɹoɟ 'sǝʎ</system:String>
@@ -347,7 +349,6 @@
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">suooןןɐqʎɟıʇou ǝןqɐuǝ - sʎɐʍןɐ ʍoɥs</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">pǝןıɐɟ ʞɔǝɥɔ ǝʇɐpdn uǝɥʍ ǝƃɐssǝɯ ʍoɥs</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">suooןןɐqʎɟıʇou ǝןqɐsıp - uǝppıɥ sı ʍopuıʍ uǝɥʍ ʎןuo ʍoɥs</system:String>
-    <system:String x:Key="WindowSettings_submit">ʇıɯqns</system:String>
     <system:String x:Key="WindowSettings_submitting">˙˙˙ƃuıʇʇıɯqns</system:String>
     <system:String x:Key="WindowSettings_sync">ɔuʎs</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">dnʇɹɐʇs uoıʇɐɔıןddɐ uo ɔuʎs</system:String>

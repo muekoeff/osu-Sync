@@ -2,6 +2,9 @@
 Imports System.IO, System.IO.Compression
 Imports System.Security.Cryptography, System.Security.Principal
 Imports System.Text
+Imports System.Xml
+Imports System.Windows.Markup
+Imports System.Text.RegularExpressions
 
 Class DownloadMirror
     Property DisplayName As String
@@ -11,8 +14,9 @@ Class DownloadMirror
 End Class
 Class Language
     Property Code As String
-    Property DisplayName As String
-    Property DisplayName_English As String
+    Property DisplayName As String = ""
+    Property DisplayName_English As String = ""
+    Property Path As String
 End Class
 Class Settings
     Public _version As String = My.Application.Info.Version.ToString
@@ -26,7 +30,9 @@ Class Settings
     Public Tool_EnableNotifyIcon As Integer = 0
     Public Tool_Importer_AutoInstallCounter As Integer = 10
     Public Tool_Interface_BeatmapDetailPanelWidth As Integer = 40
-    Public Tool_Language As String = "en"
+    Public Tool_Language As String = "en_US"
+    Public Tool_LanguageMeta As New Dictionary(Of String, Language)
+    Public Tool_LanguagePath As String
     Public Tool_LastCheckForUpdates As String = "20000101000000"
     Public Tool_SyncOnStartup As Boolean = False
     Public Tool_RequestElevationOnStartup As Boolean = False
@@ -58,7 +64,12 @@ Class Settings
             Try
                 AppSettings = JsonConvert.DeserializeObject(Of Settings)(File.ReadAllText(AppDataPath & "\Settings\Settings.json"))
                 ' Load language library
-                If Not TranslationNameGet(AppSettings.Tool_Language) = "" Then LanguageLoad(TranslationNameGet(AppSettings.Tool_Language), AppSettings.Tool_Language)
+                If File.Exists(AppSettings.Tool_LanguagePath) Then
+                    TranslationLoad(AppSettings.Tool_LanguagePath)
+                Else
+                    MsgBox("Unable to find translation package.", MsgBoxStyle.Exclamation, AppName)
+                End If
+
                 ' Perform compatibility check
                 CompatibilityCheck(New Version(AppSettings._version))
             Catch ex As Exception
@@ -86,7 +97,6 @@ Module GlobalVar
             ({".nw520-osbl", "naseweis520.osuSync.osuBeatmapList", "MainWindow_fileext_osbl", """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,2"}),
             ({".nw520-osblx", "naseweis520.osuSync.compressedOsuBeatmapList", "MainWindow_fileext_osblx", """" & Reflection.Assembly.GetExecutingAssembly().Location.ToString & """,1"})
         }
-    Public Application_Languages As New Dictionary(Of String, Language) ' See PrepareData()
     Public Application_Mirrors As New Dictionary(Of Integer, DownloadMirror)(2) From {
         {0, New DownloadMirror With {
             .DisplayName = "Bloodcat.com",
@@ -108,54 +118,14 @@ Module GlobalVar
     Public AppTempPath As String = Path.GetTempPath() & "naseweis520\osu!Sync"
     Public AppSettings As New Settings
     Public MsgTitleDisableable As String = AppName & " | " & _e("GlobalVar_messageCanBeDisabled")
+    Public TranslationHolder As ResourceDictionary
+    Public TranslationList As New Dictionary(Of String, Language)
     Public Const WebNw520ApiRoot As String = "http://api.nw520.de/osuSync/"
     Public Const WebOsuApiRoot As String = "https://osu.ppy.sh/api/"
 
     Public Tool_DontApplySettings As Boolean = False
     Public Tool_HasWriteAccessToOsu As Boolean = False  ' Set in MainWindow.xaml.vb\MainWindow_Loaded()
     Public Tool_IsElevated As Boolean = False   ' Set in Application.xaml.vb\Application_Startup()
-
-
-    ' @DEPRECATED SINCE 1.0.0.13
-    Sub LoadSettings()
-        Try
-            Dim ConfigFile As JObject = CType(JsonConvert.DeserializeObject(File.ReadAllText(AppDataPath & "\Settings\Settings.config")), JObject)
-            Dim PreviousVersion As Version
-
-            PreviousVersion = Version.Parse(CStr(ConfigFile.SelectToken("_version")))
-            If Not ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel") Is Nothing Then AppSettings.Api_Enabled_BeatmapPanel = CBool(ConfigFile.SelectToken("Setting_Api_Enabled_BeatmapPanel"))
-            If Not ConfigFile.SelectToken("Setting_Api_Key") Is Nothing Then AppSettings.Api_Key = CStr(ConfigFile.SelectToken("Setting_Api_Key"))
-            If Not ConfigFile.SelectToken("Setting_osu_Path") Is Nothing Then AppSettings.osu_Path = CStr(ConfigFile.SelectToken("Setting_osu_Path"))
-            If Not ConfigFile.SelectToken("Setting_osu_SongsPath") Is Nothing Then AppSettings.osu_SongsPath = CStr(ConfigFile.SelectToken("Setting_osu_SongsPath"))
-            If Not ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation") Is Nothing Then AppSettings.Tool_CheckFileAssociation = CBool(ConfigFile.SelectToken("Setting_Tool_CheckFileAssociation"))
-            If Not ConfigFile.SelectToken("Setting_Tool_CheckForUpdates") Is Nothing Then AppSettings.Tool_CheckForUpdates = CInt(ConfigFile.SelectToken("Setting_Tool_CheckForUpdates"))
-            If Not ConfigFile.SelectToken("Setting_Tool_DownloadMirror") Is Nothing Then AppSettings.Tool_DownloadMirror = CInt(ConfigFile.SelectToken("Setting_Tool_DownloadMirror"))
-            If Not ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon") Is Nothing Then AppSettings.Tool_EnableNotifyIcon = CInt(ConfigFile.SelectToken("Setting_Tool_EnableNotifyIcon"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter") Is Nothing Then AppSettings.Tool_Importer_AutoInstallCounter = CInt(ConfigFile.SelectToken("Setting_Tool_Importer_AutoInstallCounter"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth") Is Nothing Then AppSettings.Tool_Interface_BeatmapDetailPanelWidth = CInt(ConfigFile.SelectToken("Setting_Tool_Interface_BeatmapDetailPanelWidth"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Language") Is Nothing Then
-                AppSettings.Tool_Language = CStr(ConfigFile.SelectToken("Setting_Tool_Language"))
-                ' Load language library
-                If Not TranslationNameGet(AppSettings.Tool_Language) = "" Then LanguageLoad(TranslationNameGet(AppSettings.Tool_Language), AppSettings.Tool_Language)
-            End If
-            If Not ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates") Is Nothing Then AppSettings.Tool_LastCheckForUpdates = Date.ParseExact(CStr(ConfigFile.SelectToken("Setting_Tool_LastCheckForUpdates")), "dd-MM-yyyy hh:mm:ss", Globalization.DateTimeFormatInfo.InvariantInfo).ToString("yyyyMMddhhmmss")
-            If Not ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup") Is Nothing Then AppSettings.Tool_RequestElevationOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_RequestElevationOnStartup"))
-            If Not ConfigFile.SelectToken("Setting_Tool_SyncOnStartup") Is Nothing Then AppSettings.Tool_SyncOnStartup = CBool(ConfigFile.SelectToken("Setting_Tool_SyncOnStartup"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter") Is Nothing Then AppSettings.Tool_Update_DeleteFileAfter = CBool(ConfigFile.SelectToken("Setting_Tool_Update_DeleteFileAfter"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_SavePath") Is Nothing Then AppSettings.Tool_Update_SavePath = CStr(ConfigFile.SelectToken("Setting_Tool_Update_SavePath"))
-            If Not ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher") Is Nothing Then AppSettings.Tool_Update_UseDownloadPatcher = CBool(ConfigFile.SelectToken("Setting_Tool_Update_UseDownloadPatcher"))
-            If Not ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu") Is Nothing Then AppSettings.Messages_Importer_AskOsu = CBool(ConfigFile.SelectToken("Setting_Messages_Importer_AskOsu"))
-            If Not ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater") Is Nothing Then AppSettings.Messages_Updater_OpenUpdater = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_OpenUpdater"))
-            If Not ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates") Is Nothing Then AppSettings.Messages_Updater_UnableToCheckForUpdates = CBool(ConfigFile.SelectToken("Setting_Messages_Updater_UnableToCheckForUpdates"))
-            CompatibilityCheck(PreviousVersion)
-        Catch ex As Exception
-            MsgBox(_e("GlobalVar_invalidConfiguration"), MsgBoxStyle.Exclamation, AppName)
-            File.Delete(AppDataPath & "\Settings\Settings.config")
-            Forms.Application.Restart()
-            Application.Current.Shutdown()
-            Exit Sub
-        End Try
-    End Sub
 
     ''' <param name="Text">English string to translate</param>
     ''' <returns>Translation of <paramref>Text</paramref></returns>
@@ -176,7 +146,7 @@ Module GlobalVar
         Using File As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(CrashFile, False)
             Dim Content As String = "===== osu!Sync Crash | " & Date.Now.ToString("yyyy-MM-dd HH:mm:ss") & "   =====" & vbNewLine & vbNewLine &
                 "// Information" & vbNewLine & "An exception occured in osu!Sync. If this problem persists please report it using the Feedback-window, on GitHub or on the osu!Forum." & vbNewLine & "When reporting please try to describe as detailed as possible what you've done and how the applicationen reacted." & vbNewLine & "GitHub: http://j.mp/1PDuDFp   |   osu!Forum: http://j.mp/1PDuCkK" & vbNewLine & vbNewLine &
-                "// Configuration" & vbNewLine & JsonConvert.SerializeObject(ProgramInfoJsonGet, Formatting.None) & vbNewLine & vbNewLine &
+                "// Configuration" & vbNewLine & JsonConvert.SerializeObject(ProgramInfoJsonGet, Newtonsoft.Json.Formatting.None) & vbNewLine & vbNewLine &
                 "// Exception" & vbNewLine & ex.ToString
             File.Write(Content)
             File.Close()
@@ -279,16 +249,74 @@ Module GlobalVar
         End If
     End Function
 
-    Function LanguageLoad(ByVal LanguageCode_Long As String, ByVal LanguageCode_Short As String) As Boolean
-        AppSettings.Tool_Language = LanguageCode_Short
+    Function TranslationGetMeta(FilePath As String) As Language
+        If AppSettings.Tool_LanguageMeta.ContainsKey(FilePath) Then
+            Return AppSettings.Tool_LanguageMeta.Item(FilePath)
+        Else
+            Try
+                Dim XmlRead As XmlReader = XmlReader.Create(FilePath)
+                Dim NewTransHolder As ResourceDictionary = CType(XamlReader.Load(XmlRead), ResourceDictionary)
+                XmlRead.Close()
+
+                If NewTransHolder.Contains("Meta_langCode") Then
+                    Dim ResLanguage As New Language
+                    If NewTransHolder.Contains("Meta_langCode") Then ResLanguage.Code = NewTransHolder.Item("Meta_langCode").ToString
+                    If NewTransHolder.Contains("Meta_langName") Then ResLanguage.DisplayName = NewTransHolder.Item("Meta_langName").ToString
+                    If NewTransHolder.Contains("Meta_langNameEn") Then ResLanguage.DisplayName = NewTransHolder.Item("Meta_langNameEn").ToString
+                    AppSettings.Tool_LanguageMeta.Add(FilePath, ResLanguage)
+                    Return ResLanguage
+                Else
+                    Return Nothing
+                End If
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End If
+    End Function
+
+    Function TranslationLoad(FilePath As String) As Boolean
         Try
-            Windows.Application.Current.Resources.MergedDictionaries.Add(New ResourceDictionary() With {
-                                                                     .Source = New Uri("Languages/" & LanguageCode_Long & ".xaml", UriKind.Relative)})
-            Return True
-        Catch ex As FileNotFoundException
-            MsgBox("Unable to load language package." & vbNewLine & vbNewLine & "// Details:" & vbNewLine & "System: " & Globalization.CultureInfo.CurrentCulture.ToString() & vbNewLine & "Short code: " & LanguageCode_Short & vbNewLine & "Long code: " & LanguageCode_Long, MsgBoxStyle.Critical, AppName)
+            Dim XmlRead As XmlReader = XmlReader.Create(FilePath)
+            Dim NewTransHolder As ResourceDictionary = CType(XamlReader.Load(XmlRead), ResourceDictionary)
+            XmlRead.Close()
+            If NewTransHolder.Contains("Meta_langCode") Then
+                AppSettings.Tool_Language = NewTransHolder.Item("Meta_langCode").ToString()
+                AppSettings.Tool_LanguagePath = FilePath
+                If TranslationHolder IsNot Nothing Then Windows.Application.Current.Resources.MergedDictionaries.Remove(TranslationHolder)
+                Windows.Application.Current.Resources.MergedDictionaries.Add(NewTransHolder)
+                TranslationHolder = NewTransHolder
+                Return True
+            Else
+                MsgBox("Invalid/Incompatible language package.", MsgBoxStyle.Critical, AppName)
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox("Unable to load language package." & vbNewLine & vbNewLine &
+                   "// Details:" & vbNewLine &
+                   "FilePath: " & FilePath & vbNewLine &
+                   "Exception: " & ex.Message, MsgBoxStyle.Critical, AppName)
             Return False
         End Try
+    End Function
+
+    Function TranslationMap(RootPath As String) As Dictionary(Of String, Language)
+        Dim Result As New Dictionary(Of String, Language)
+        For Each File In Directory.EnumerateFiles(RootPath)
+            Dim Filename As String = Path.GetFileNameWithoutExtension(File)
+            If New Regex("^[a-z]{2}(?:_)[A-Z]{2}$").Match(Filename).Success Then
+                Dim ResLanguage As New Language
+                Dim LangMeta As Language = TranslationGetMeta(File)
+                If LangMeta IsNot Nothing Then
+                    ResLanguage = LangMeta
+                Else
+                    ResLanguage.Code = Filename
+                End If
+                ResLanguage.Path = File
+                Result.Add(Filename, ResLanguage)
+                If Not Result.ContainsKey(Filename.Substring(0, 2)) Then Result.Add(Filename.Substring(0, 2), ResLanguage)
+            End If
+        Next
+        Return Result
     End Function
 
     Function md5(ByVal Input As String) As String
@@ -326,10 +354,7 @@ Module GlobalVar
                  {"downloadMirror", AppSettings.Tool_DownloadMirror.ToString},
                  {"updateInterval", AppSettings.Tool_CheckForUpdates.ToString}})
             .Add("language", New JObject From {
-                 {"code", New JObject From {
-                    {"long", TranslationNameGet(AppSettings.Tool_Language)},
-                    {"short", AppSettings.Tool_Language}
-                 }}})
+                 {"code", AppSettings.Tool_Language}})
             .Add("system", New JObject From {
                  {"cultureInfo", System.Globalization.CultureInfo.CurrentCulture.ToString()},
                  {"is64bit", CStr(Environment.Is64BitOperatingSystem)},
@@ -392,14 +417,6 @@ Module GlobalVar
         End Using
     End Function
 
-    Function TranslationNameGet(ByVal LanguageCode_Short As String) As String
-        If Application_Languages.ContainsKey(LanguageCode_Short) Then
-            Return Application_Languages(LanguageCode_Short).Code
-        Else
-            Return ""
-        End If
-    End Function
-
     Sub CompatibilityCheck(ConfigVersion As Version)
         If ConfigVersion < My.Application.Info.Version Then  ' Detect update
             Select Case ConfigVersion
@@ -420,80 +437,6 @@ Module GlobalVar
                     End If
             End Select
         End If
-    End Sub
-
-    Sub DataPrepare()
-        ' Languages
-        Dim LangDic As New Dictionary(Of String, Language)
-        With LangDic        ' Please sort alphabetically
-            .Add("de", New Language With {
-                 .Code = "de_DE",
-                 .DisplayName = "Deutsch",
-                 .DisplayName_English = "German"})
-            .Add("en", New Language With {
-                 .Code = "en_US",
-                 .DisplayName = "English",
-                 .DisplayName_English = "English"})
-            .Add("en_ud", New Language With {
-                 .Code = "en_ud",
-                 .DisplayName = "(uʍop ǝpısdn) ɥsıןƃuǝ",
-                 .DisplayName_English = "English (Upside Down)"})
-            '.Add("eo", New Language With {     |   Not ready for release
-            '    .Code = "eo_UY",
-            '    .DisplayName = "Esperanto",
-            '    .DisplayName_English = "Esperanto"})
-            .Add("es", New Language With {
-                 .Code = "es_EM",
-                 .DisplayName = "Español",
-                 .DisplayName_English = "Spanish (Modern)"})
-            .Add("fr", New Language With {
-                 .Code = "fr_FR",
-                 .DisplayName = "Français",
-                 .DisplayName_English = "French"})
-            .Add("hu", New Language With {
-                .Code = "hu_HU",
-                .DisplayName = "Magyar",
-                .DisplayName_English = "Hungarian"})
-            .Add("id", New Language With {
-                .Code = "id_ID",
-                .DisplayName = "Bahasa Indonesia",
-                .DisplayName_English = "Indonesian"})
-            '.Add("jp", New Language With {     |   Not ready for release
-            '    .Code = "ja_JP",
-            '    .DisplayName = "日本語",
-            '    .DisplayName_English = "Japanese"})
-            .Add("no", New Language With {
-                .Code = "no_NO",
-                .DisplayName = "Norwegian",
-                .DisplayName_English = "Norsk"})
-            .Add("pl", New Language With {
-                .Code = "pl_PL",
-                .DisplayName = "Polski",
-                .DisplayName_English = "Polish"})
-            .Add("ru", New Language With {
-                .Code = "ru_RU",
-                .DisplayName = "Русский",
-                .DisplayName_English = "Russian"})
-            .Add("th", New Language With {
-                .Code = "th_TH",
-                .DisplayName = "ภาษาไทย",
-                .DisplayName_English = "Thai"})
-            '.Add("tr", New Language With {     |   Not ready for release
-            '    .Code = "tr_TR",
-            '    .DisplayName = "Türkçe",
-            '    .DisplayName_English = "Turkish"})
-            Dim Lang_zh As New Language With {
-                .Code = "zh_CN",
-                .DisplayName = "中文 (简体)",
-                .DisplayName_English = "Chinese Simplified"}
-            .Add("zh_CN", Lang_zh)
-            .Add("zh", Lang_zh)
-            .Add("zh_TW", New Language With {
-                .Code = "zh_TW",
-                .DisplayName = "中文 (繁體)",
-                .DisplayName_English = "Chinese Traditional"})
-        End With
-        Application_Languages = LangDic
     End Sub
 
     Sub WriteToApiLog(Method As String, Optional Result As String = "{Failed}")

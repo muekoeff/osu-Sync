@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
-    <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">Esta aplicación está disponible en [b]Español[/b].</system:String>
-    <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">Español</system:String>
 
     <!-- Meta & More -->
-    <!-- | T -->
+    <system:String x:Key="Meta_langCode">es_EM</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Meta_langName">Español</system:String>
+    <!-- \/ Replace "English" with the language of your translation in English -->
+    <system:String x:Key="Meta_langNameEn">Spanish</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Traducción por: tutti13, YuukiCS</system:String>
 
@@ -26,6 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Guardar</system:String>
     <system:String x:Key="Global_buttons_skip">_Saltar</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Saltar_siempre</system:String>
+    <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Sí</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Sí, para todo</system:String>
@@ -85,12 +87,12 @@
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Rankeado</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">No Rankeado</system:String>
     <!-- | |> F -->
-    <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favorite Count</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favoritos</system:String>
     <!-- | |> F -->
     <system:String x:Key="MainWindow_detailsPanel_generalError">Se ha producido un error general.</system:String>
     <!-- | |> P -->
-    <system:String x:Key="MainWindow_detailsPanel_passCount">Average Pass Count</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_playCount">Average Play Count</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_passCount">Veces superado</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_playCount">Veces jugado</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Detalles Online</system:String>
     <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Abrir listado de Beatmap</system:String>
@@ -115,7 +117,7 @@
     <system:String x:Key="MainWindow_extensionWrong">Algunas extensiones de archivo estan obsoletas.</system:String>
     <!-- | F -->
     <system:String x:Key="MainWindow_failed">Fallido</system:String>
-    <system:String x:Key="MainWindow_fallback">Do you want to fallback to the Scan-Directory-method? Please keep in mind, that it's much slower and more inaccurate than the default method.</system:String>
+    <system:String x:Key="MainWindow_fallback">¿Quiere usar el método de Scan de directorio anterior? por favor ten en cuenta que, este método es muy lento y muy impreciso que el método por defecto.</system:String>
     <system:String x:Key="MainWindow_fetching">Buscando %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">Buscando...</system:String>
     <system:String x:Key="MainWindow_file">_Archivo</system:String>
@@ -275,7 +277,7 @@
     <system:String x:Key="WindowSettings_areYouSureYouWantToReset">¿Está realmente seguro que desea reiniciar la configuración (esto no se puede deshacer)?</system:String>
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimportación descargada de beatmaps después x beatmaps (numérico)</system:String>
     <!-- | B -->
-    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
+    <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel</system:String>
     <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
     <system:String x:Key="WindowSettings_category">Categoría</system:String>
@@ -339,7 +341,7 @@
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Pregunta/Solicitud de Ayuda</system:String>
     <!-- | R -->
-    <system:String x:Key="WindowSettings_requestElevationOnStartup">If it might be required, request elevation on startup instead of demand</system:String>
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">Si se requiere, solicitar elevación en el arranque en lugar de a pedido</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">Restablecer osu!Sync (eliminar configuración, archivos asociados, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Reiniciar osu!Sync en modo administrador</system:String>
     <!-- | S -->
@@ -348,7 +350,6 @@
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Mostrar siempre - Activar globos de notificación</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Mostrar mensaje cuando la comprobación de actualización falle</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Mostrar sólo cuando se oculta la ventana - desactivar globos de notificación</system:String>
-    <system:String x:Key="WindowSettings_submit">Enviar</system:String>
     <system:String x:Key="WindowSettings_submitting">Enviando...</system:String>
     <system:String x:Key="WindowSettings_sync">Sincronizar</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sincronizar el inicio de la aplicación</system:String>
@@ -359,8 +360,8 @@
     <system:String x:Key="WindowSettings_unableToSubmitFeedback">No se puede enviar comentarios!</system:String>
     <system:String x:Key="WindowSettings_updater">Actualizador</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">Actualice/reinscriba asociaciones de archivo</system:String>
-    <system:String x:Key="WindowSettings_useThisDownloadMirror">Descargar desde este osu! mirror...</system:String>
-    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Use update patcher to automatically install the updates</system:String>
+    <system:String x:Key="WindowSettings_useThisDownloadMirror">Descargar desde el servidor...</system:String>
+    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Instalar automáticamente las actualizaciones</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">Válido</system:String>
     <system:String x:Key="WindowSettings_validate">Validar</system:String>

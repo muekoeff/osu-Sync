@@ -692,7 +692,7 @@ Class MainWindow
                 If Not JSON_Array.First Is Nothing Then
                     Dim CI As Globalization.CultureInfo
                     Try
-                        CI = New Globalization.CultureInfo(TranslationNameGet(AppSettings.Tool_Language).Replace("_", "-"))
+                        CI = New Globalization.CultureInfo(AppSettings.Tool_Language.Replace("_", "-"))
                     Catch ex As Globalization.CultureNotFoundException
                         CI = New Globalization.CultureInfo("en-US")
                     End Try
@@ -985,9 +985,7 @@ Class MainWindow
 #End If
 
         ' Load Configuration
-        If File.Exists(AppDataPath & "\Settings\Settings.config") Then  ' @DEPRECATED SINCE 1.0.0.13
-            LoadSettings()
-        ElseIf File.Exists(AppDataPath & "\Settings\Settings.json") Then
+        If File.Exists(AppDataPath & "\Settings\Settings.json") Then
             AppSettings.LoadSettings()
         Else
             Dim Window_Welcome As New Window_Welcome

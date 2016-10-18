@@ -59,12 +59,12 @@ Class Window_Settings
                 CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) >= 5 And CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text) <= 95 Then .Tool_Interface_BeatmapDetailPanelWidth = CInt(TB_ToolInterface_BeatmapDetailPanelWidth.Text)
             .Tool_SyncOnStartup = CBool(CB_ToolSyncOnStartup.IsChecked)
             ' Load Language
-            Dim LanguageCode_Short As String = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "))
-            If Not CB_ToolLanguages.Text = "" And Not .Tool_Language = LanguageCode_Short Then
-                If Not TranslationNameGet(LanguageCode_Short) = "" Then
-                    LanguageLoad(TranslationNameGet(LanguageCode_Short), LanguageCode_Short)
-                    MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, AppName)
-                End If
+            Dim LangCode As String = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "))
+            If Not CB_ToolLanguages.Text = "" And Not .Tool_Language = LangCode And TranslationList.ContainsKey(LangCode) Then
+                If TranslationLoad(TranslationList.Item(LangCode).Path) Then MsgBox(_e("WindowSettings_languageUpdated"), MsgBoxStyle.Information, AppName)
+            ElseIf LangCode = "en_US" And TranslationHolder IsNot Nothing Then
+                Windows.Application.Current.Resources.MergedDictionaries.Remove(TranslationHolder)
+                TranslationHolder = Nothing
             End If
             .Tool_RequestElevationOnStartup = CBool(CB_ToolRequestElevationOnStartup.IsChecked)
             .Tool_Update_SavePath = TB_ToolUpdate_Path.Text
@@ -385,23 +385,24 @@ Class Window_Settings
         CB_ToolDownloadMirror.SelectedIndex = AppSettings.Tool_DownloadMirror
         CB_ToolEnableNotifyIcon.SelectedIndex = AppSettings.Tool_EnableNotifyIcon
         ' Load languages and select current one
-        Dim InsertedCodes As New List(Of String)
-        Dim i As Integer = 0
+        Dim i As Integer = 1
         Dim IndexUserLanguage As Integer = -1
-        Dim IndexEN As Integer = 0
-        For Each a In Application_Languages
-            If Not InsertedCodes.Contains(a.Value.Code) Then
-                If a.Value.Code = "en_US" Then IndexEN = i
-                If a.Key = AppSettings.Tool_Language Then IndexUserLanguage = i
-                InsertedCodes.Add(a.Value.Code)
-                CB_ToolLanguages.Items.Add(a.Key & " | " & a.Value.DisplayName_English & "/" & a.Value.DisplayName)
+        Dim AlreadyAdded As New List(Of String)
+        CB_ToolLanguages.Items.Add("en_US | English/English")   ' 0
+        For Each a In TranslationList.Values
+            If Not AlreadyAdded.Contains(a.Code) Then
+                AlreadyAdded.Add(a.Code)
+                If a.Code = AppSettings.Tool_Language Then
+                    IndexUserLanguage = i
+                End If
+                CB_ToolLanguages.Items.Add(a.Code & " | " & a.DisplayName_English & "/" & a.DisplayName)
                 i += 1
             End If
         Next
         If Not IndexUserLanguage = -1 Then
             CB_ToolLanguages.SelectedIndex = IndexUserLanguage
         Else
-            CB_ToolLanguages.SelectedIndex = IndexEN
+            CB_ToolLanguages.SelectedIndex = 0
         End If
         TB_ApiKey.Text = AppSettings.Api_Key
         TB_osu_Path.Text = AppSettings.osu_Path

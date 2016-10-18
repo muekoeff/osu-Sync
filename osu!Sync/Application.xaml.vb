@@ -31,12 +31,14 @@
         Dim WinPri = New Security.Principal.WindowsPrincipal(Security.Principal.WindowsIdentity.GetCurrent())
         Tool_IsElevated = WinPri.IsInRole(Security.Principal.WindowsBuiltInRole.Administrator)
 
-        ' Load language library
-        DataPrepare()
-        If Not TranslationNameGet(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")) = "" Then     ' Check if full language code exists (e.g. de_DE)
-            LanguageLoad(TranslationNameGet(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")), Globalization.CultureInfo.CurrentCulture.ToString())
-        ElseIf Not TranslationNameGet(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) = "" Then ' Check if main language code exists (e.g. de)
-            LanguageLoad(TranslationNameGet(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)), Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2))
+        ' Load language package
+        If IO.Directory.Exists("l10n") Then
+            TranslationList = TranslationMap("l10n")
+            If TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")) Then
+                TranslationLoad(TranslationList.Item(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")).Path)
+            ElseIf TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) Then
+                TranslationLoad(TranslationList.Item(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)).Path)
+            End If
         End If
     End Sub
 

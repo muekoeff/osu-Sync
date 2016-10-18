@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
-    <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">Cette application est disponible en [b]Français[/b].</system:String>
-    <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">Français</system:String>
 
     <!-- Meta & More -->
-    <!-- | T -->
+    <system:String x:Key="Meta_langCode">fr_FR</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Meta_langName">Français</system:String>
+    <!-- \/ Replace "English" with the language of your translation in English -->
+    <system:String x:Key="Meta_langNameEn">French</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Traduction par: Aerath, PyaKura, Rockageek</system:String>
 
@@ -26,6 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Sauvegarder</system:String>
     <system:String x:Key="Global_buttons_skip">_Passer</system:String>
     <system:String x:Key="Global_buttons_skipAlways">_Toujours passer</system:String>
+    <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Oui</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Oui, pour tous</system:String>
@@ -347,7 +349,6 @@
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Toujours montrer - Activer les bulles de notification</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Afficher un message lorsque la vérification de mise à jour échoue</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Afficher uniquement lorsque la fenêtre est masquée - Désactiver les bulles de notification</system:String>
-    <system:String x:Key="WindowSettings_submit">Envoyer</system:String>
     <system:String x:Key="WindowSettings_submitting">Envoi en cours...</system:String>
     <system:String x:Key="WindowSettings_sync">Synchroniser</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Synchroniser au démarrage de l'application</system:String>

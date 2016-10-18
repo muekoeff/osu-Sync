@@ -24,9 +24,9 @@
 
     Sub Window_About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 #If DEBUG Then
-        TB_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", TranslationNameGet(AppSettings.Tool_Language))
+        TB_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString & " (Dev)").Replace("%1", AppSettings.Tool_Language)
 #Else
-        TB_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", TranslationNameGet(AppSettings.Tool_Language))
+        TB_Version.Text = _e("WindowAbout_version").Replace("%0", My.Application.Info.Version.ToString).Replace("%1", AppSettings.Tool_Language)
 #End If
     End Sub
 End Class

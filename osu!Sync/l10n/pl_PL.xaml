@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
-    <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">Ta aplikacja jest dostępna w języku [b]polskim[/b].</system:String>
-    <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">Polski</system:String>
 
     <!-- Meta & More -->
-    <!-- | T -->
+    <system:String x:Key="Meta_langCode">pl_PL</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Meta_langName">Polski</system:String>
+    <!-- \/ Replace "English" with the language of your translation in English -->
+    <system:String x:Key="Meta_langNameEn">Polish</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Tłumaczenie: r3venger, Puciek, Vahaagn</system:String>
 
@@ -26,6 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Zapisz</system:String>
     <system:String x:Key="Global_buttons_skip">_Pomiń</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Zawsze pomijaj</system:String>
+    <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Tak</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Tak, dla wszystkich</system:String>
@@ -348,7 +350,6 @@ Zostaną oznaczone jako niewysłane (nie wyeksportowane).</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Zawsze pokazuj - Włącz NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Pokaż wiadomość, gdy sprawdzanie aktualizacji się nie powiedzie</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Pokaż tylko gdy okno jest schowane - Wyłącz NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_submit">Wyślij</system:String>
     <system:String x:Key="WindowSettings_submitting">Wysyłanie...</system:String>
     <system:String x:Key="WindowSettings_sync">Synchronizuj</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Synchronizuj przy starcie aplikacji</system:String>

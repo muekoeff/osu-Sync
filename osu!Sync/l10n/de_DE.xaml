@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Forum -->
-    <!-- | T -->
     <!-- \/ Replace "English" with the language of your translation and translate -->
     <system:String x:Key="Forum_translationInfo">Diese Anwendung ist auf [b]Deutsch[/b] verfügbar.</system:String>
-    <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Forum_translationLanguageName">Deutsch</system:String>
 
     <!-- Meta & More -->
-    <!-- | T -->
+    <system:String x:Key="Meta_langCode">de_DE</system:String>
+    <!-- \/ Replace "English" with the language of your translation and translate -->
+    <system:String x:Key="Meta_langName">Deutsch</system:String>
+    <!-- \/ Replace "English" with the language of your translation in English -->
+    <system:String x:Key="Meta_langNameEn">German</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Übersetzung von: naseweis520</system:String>
 
@@ -26,6 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Speichern</system:String>
     <system:String x:Key="Global_buttons_skip">_Überspringen</system:String>
     <system:String x:Key="Global_buttons_skipAlways">_Immer überspringen</system:String>
+    <system:String x:Key="Global_buttons_submit">Absenden</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Ja</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Ja, alle</system:String>
@@ -347,7 +349,6 @@
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Immer anzeigen - NotifyBalloons aktivieren</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Nachricht anzeigen, wenn Updateprüfung fehlschlägt</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Nur anzeigen wenn Fenster versteckt - NotifyBalloons deaktivieren</system:String>
-    <system:String x:Key="WindowSettings_submit">Absenden</system:String>
     <system:String x:Key="WindowSettings_submitting">Wird abgesendet...</system:String>
     <system:String x:Key="WindowSettings_sync">Sync</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Bei Anwendungsstart synchronisieren</system:String>
