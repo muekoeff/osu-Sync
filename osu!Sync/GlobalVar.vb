@@ -24,7 +24,7 @@ Class Settings
     Public Api_Key As String = ""
     Public Api_KeyEncrypted As String = ""
     Public osu_Path As String = OsuPathDetect(False)
-    Public osu_SongsPath As String = osu_Path & " \ Songs"
+    Public osu_SongsPath As String = osu_Path & "\Songs"
     Public Tool_CheckForUpdates As Integer = 3
     Public Tool_CheckFileAssociation As Boolean = True
     Public Tool_DownloadMirror As Integer = 0
@@ -68,12 +68,11 @@ Class Settings
                 If File.Exists(AppSettings.Tool_LanguagePath) Then
                     TranslationLoad(AppSettings.Tool_LanguagePath)
                 Else
-                    MsgBox("Unable To find translation package.", MsgBoxStyle.Exclamation, AppName)
+                    MsgBox(_e("GlobalVar_unableToFindTranslationPackage"), MsgBoxStyle.Exclamation, AppName)
                 End If
 
                 ' Decrypt API key
                 If Not AppSettings.Api_KeyEncrypted = "" Then
-                    Console.WriteLine("CHECK")
                     Try
                         AppSettings.Api_Key = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(AppSettings.Api_KeyEncrypted), Entropy, DataProtectionScope.CurrentUser))
                         AppSettings.Api_KeyEncrypted = ""
@@ -451,13 +450,6 @@ Module GlobalVar
     Sub CompatibilityCheck(ConfigVersion As Version)
         If ConfigVersion < My.Application.Info.Version Then  ' Detect update
             Select Case ConfigVersion
-                Case < New Version("1.0.0.1")
-                    If AppSettings.Tool_DownloadMirror = 1 Then
-                        AppSettings.Tool_DownloadMirror = 0
-                        MsgBox("The previously selected mirror 'Loli.al' has been shutdown by the owner and therefore caused crashes in previous versions." & vbNewLine &
-                               "Your mirror will be reset to 'Bloodcat.com'.", MsgBoxStyle.Information, "Post-Update Compatibility check | " & AppName)
-                        AppSettings.SaveSettings()
-                    End If
                 Case < New Version("1.0.0.13")
                     If File.Exists(AppDataPath & "\Settings\Settings.config") Then
                         If MessageBox.Show("osu!Sync 1.0.0.13 has an improved method of saving its configuration which will replace the old one in the next version." & vbNewLine &
