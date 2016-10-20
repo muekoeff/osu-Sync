@@ -20,10 +20,11 @@ Class Language
 End Class
 Class Settings
     Public _version As String = My.Application.Info.Version.ToString
-    Public Api_Key As String = ""
     Public Api_Enabled_BeatmapPanel As Boolean = False
+    Public Api_Key As String = ""
+    Public Api_KeyEncrypted As String = ""
     Public osu_Path As String = OsuPathDetect(False)
-    Public osu_SongsPath As String = osu_Path & "\Songs"
+    Public osu_SongsPath As String = osu_Path & " \ Songs"
     Public Tool_CheckForUpdates As Integer = 3
     Public Tool_CheckFileAssociation As Boolean = True
     Public Tool_DownloadMirror As Integer = 0
@@ -67,13 +68,31 @@ Class Settings
                 If File.Exists(AppSettings.Tool_LanguagePath) Then
                     TranslationLoad(AppSettings.Tool_LanguagePath)
                 Else
-                    MsgBox("Unable to find translation package.", MsgBoxStyle.Exclamation, AppName)
+                    MsgBox("Unable To find translation package.", MsgBoxStyle.Exclamation, AppName)
+                End If
+
+                ' Decrypt API key
+                If Not AppSettings.Api_KeyEncrypted = "" Then
+                    Console.WriteLine("CHECK")
+                    Try
+                        AppSettings.Api_Key = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(AppSettings.Api_KeyEncrypted), Entropy, DataProtectionScope.CurrentUser))
+                        AppSettings.Api_KeyEncrypted = ""
+                    Catch ex As CryptographicException
+                        MessageBox.Show(_e("GlobalVar_unableToDecryptApi") & vbNewLine & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Warning)
+                        SaveSettings()
+                    Catch ex As FormatException
+                        MessageBox.Show(_e("GlobalVar_unableToDecryptApi") & vbNewLine & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Warning)
+                        SaveSettings()
+                    Catch ex As Exception
+                        MessageBox.Show(_e("GlobalVar_unableToDecryptApi") & vbNewLine & vbNewLine & ex.Message, AppName, MessageBoxButton.OK, MessageBoxImage.Warning)
+                        SaveSettings()
+                    End Try
                 End If
 
                 ' Perform compatibility check
                 CompatibilityCheck(New Version(AppSettings._version))
-            Catch ex As Exception
-                MessageBox.Show(_e("GlobalVar_invalidConfiguration"), AppDataPath, MessageBoxButton.OK, MessageBoxImage.Error)
+                Catch ex As Exception
+                MessageBox.Show(_e("GlobalVar_invalidConfiguration"), AppName, MessageBoxButton.OK, MessageBoxImage.Error)
                 File.Delete(AppDataPath & "\Settings\Settings.json")
                 Process.Start(Reflection.Assembly.GetExecutingAssembly().Location.ToString)
                 Windows.Application.Current.Shutdown()
@@ -83,11 +102,22 @@ Class Settings
     End Sub
 
     Sub SaveSettings()
+        ' Encrypt API key
+        If Not AppSettings.Api_Key = "" Then
+            Try
+                AppSettings.Api_KeyEncrypted = Convert.ToBase64String(ProtectedData.Protect(Encoding.UTF8.GetBytes(AppSettings.Api_Key), Entropy, DataProtectionScope.CurrentUser))
+            Catch ex As CryptographicException
+                AppSettings.Api_KeyEncrypted = ""
+                MessageBox.Show(_e("GlobalVar_unableToEncryptApi"), AppName, MessageBoxButton.OK, MessageBoxImage.Warning)
+            End Try
+        End If
+
         Directory.CreateDirectory(AppDataPath & "\Settings")
         Using ConfigFile = File.CreateText(AppDataPath & "\Settings\Settings.json")
             Dim JO As JObject = JObject.FromObject(AppSettings)
+            JO.Remove("Api_Key")     ' Don't save decrypted API key
             Dim JS = New JsonSerializer()
-            JS.Serialize(ConfigFile, AppSettings)
+            JS.Serialize(ConfigFile, JO)
         End Using
     End Sub
 End Class
@@ -117,6 +147,7 @@ Module GlobalVar
     Public AppStartArgs As String()
     Public AppTempPath As String = Path.GetTempPath() & "naseweis520\osu!Sync"
     Public AppSettings As New Settings
+    Public Entropy As Byte() = {239, 130, 24, 162, 121}
     Public MsgTitleDisableable As String = AppName & " | " & _e("GlobalVar_messageCanBeDisabled")
     Public TranslationHolder As ResourceDictionary
     Public TranslationList As New Dictionary(Of String, Language)
