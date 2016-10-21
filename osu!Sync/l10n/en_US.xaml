@@ -42,7 +42,7 @@
     <!-- | U -->
     <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
     <system:String x:Key="GlobalVar_unableToEncryptApi">Unable to encrypt API key.</system:String>
-    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable To find translation package.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable to find translation package.</system:String>
 
     <!-- MainWindow -->
     <!-- | A -->

@@ -32,13 +32,15 @@
         Tool_IsElevated = WinPri.IsInRole(Security.Principal.WindowsBuiltInRole.Administrator)
 
         ' Load language package
-        If IO.Directory.Exists("l10n") Then
-            TranslationList = TranslationMap("l10n")
+        If IO.Directory.Exists(Forms.Application.StartupPath & "\l10n") Then
+            TranslationList = TranslationMap(Forms.Application.StartupPath & "\l10n")
             If TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")) Then
                 TranslationLoad(TranslationList.Item(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")).Path)
             ElseIf TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) Then
                 TranslationLoad(TranslationList.Item(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)).Path)
             End If
+        Else
+            MsgBox(Forms.Application.StartupPath & "\l10n   fALSE")
         End If
     End Sub
 
