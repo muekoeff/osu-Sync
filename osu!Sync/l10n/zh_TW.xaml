@@ -35,15 +35,19 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">您的設定檔是無效的或過時的。它將會被刪除，程式將會重啟。</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">對不起，出現問題。</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">訊息可被關閉</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">對不起，出現問題。</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Unable to encrypt API key.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable To find translation package.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">已中止</system:String>
-    <system:String x:Key="MainWindow_about">關於(_A)</system:String>
+    <system:String x:Key="MainWindow_about">關於 (_A)</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">所有支援的檔案格式</system:String>
     <system:String x:Key="MainWindow_andStillWorking">還在處理中...</system:String>
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">有可用的新版本。-- 目前運行： %0 | 最新版本： %1</system:String>
@@ -59,14 +63,14 @@
     <system:String x:Key="MainWindow_checkingForUpdates">正在檢查更新...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">轉換已中止</system:String>
     <system:String x:Key="MainWindow_conversionFailed">轉換失敗</system:String>
-    <system:String x:Key="MainWindow_convertFile">轉換檔案(_C)</system:String>
+    <system:String x:Key="MainWindow_convertFile">轉換檔案 (_C)</system:String>
     <system:String x:Key="MainWindow_convertSelectedFile">轉換選擇的檔案</system:String>
     <system:String x:Key="MainWindow_creator">譜面製作者</system:String>
     <!-- | D -->
     <system:String x:Key="MainWindow_dateFormat">月/日/年</system:String>
     <system:String x:Key="MainWindow_details">明細</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">下載和安裝</system:String>
-    <system:String x:Key="MainWindow_downloadBeatmaps">下載圖譜(_D)</system:String>
+    <system:String x:Key="MainWindow_downloadBeatmaps">下載圖譜 (_D)</system:String>
     <system:String x:Key="MainWindow_downloadFailed">下載失敗。</system:String>
     <system:String x:Key="MainWindow_downloadMirror">鏡像下載</system:String>
     <system:String x:Key="MainWindow_downloading">下載中 %0...</system:String>
@@ -101,12 +105,12 @@
     <!-- | E -->
     <system:String x:Key="MainWindow_elevationFailed">權限提升失敗。</system:String>
     <system:String x:Key="MainWindow_exceptions">例外情況</system:String>
-    <system:String x:Key="MainWindow_exit">離開</system:String>
+    <system:String x:Key="MainWindow_exit">離開 (_X)</system:String>
     <system:String x:Key="MainWindow_export">匯出</system:String>
     <system:String x:Key="MainWindow_exportAborted">匯出中止</system:String>
     <system:String x:Key="MainWindow_exportCompleted">匯出完成</system:String>
     <system:String x:Key="MainWindow_exportedAs">已匯出  %0</system:String>
-    <system:String x:Key="MainWindow_exportInstalledBeatmaps">匯出已安裝的譜面(_E)</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps">匯出已安裝的譜面 (_E)</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">匯出已安裝的譜面</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">成功刪除檔案關聯。 (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">無法刪除檔關聯。</system:String>
@@ -119,7 +123,7 @@
     <system:String x:Key="MainWindow_fallback">要退回 (fallback) 到掃描資料夾方法 (Scan-Directory-method) 嗎？這會慢上許多並且比預設的方法更不準。</system:String>
     <system:String x:Key="MainWindow_fetching">讀取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">讀取中...</system:String>
-    <system:String x:Key="MainWindow_file">檔案(_F)</system:String>
+    <system:String x:Key="MainWindow_file">檔案 (_F)</system:String>
     <system:String x:Key="MainWindow_file404">無法開啟檔案。它不 (再) 存在。</system:String>
     <system:String x:Key="MainWindow_finished">任務完成</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">無法解析一個或更多資料夾。它 (們) 將被忽略。</system:String>
@@ -135,7 +139,7 @@
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成介面......</system:String>
     <!-- | H -->
-    <system:String x:Key="MainWindow_help">幫助(_H)</system:String>
+    <system:String x:Key="MainWindow_help">幫助 (_H)</system:String>
     <system:String x:Key="MainWindow_hideInstalled">隱藏已經擁有的譜面</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID已分配</system:String>
@@ -158,7 +162,7 @@
     <system:String x:Key="MainWindow_latestVersion">最新版本</system:String>
     <system:String x:Key="MainWindow_leftOut">%0 略過</system:String>
     <!-- | M -->
-    <system:String x:Key="MainWindow_minimizeToTray">最小化到通知區域(系統匣)(_M)</system:String>
+    <system:String x:Key="MainWindow_minimizeToTray">最小化到通知區域(系統匣) (_M)</system:String>
     <!-- | N -->
     <system:String x:Key="MainWindow_noAccess">沒有存取權限</system:String>
     <system:String x:Key="MainWindow_notImportable">不能匯入</system:String>
@@ -166,7 +170,7 @@
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">開啟譜面資訊面板</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">開啟譜面清單</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">在瀏覽器中打開 osu! 圖譜頁面</system:String>
-    <system:String x:Key="MainWindow_openUpdater">開啟更新程式(_U)</system:String>
+    <system:String x:Key="MainWindow_openUpdater">開啟更新程式 (_U)</system:String>
     <system:String x:Key="MainWindow_overview">概覽</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">解析已安裝的圖組...</system:String>
@@ -174,14 +178,14 @@
     <system:String x:Key="MainWindow_pleaseSync">請同步 (Sync)。</system:String>
     <system:String x:Key="MainWindow_pleaseWait">請稍候...</system:String>
     <system:String x:Key="MainWindow_pressF5">在 osu! 中，按F5或回到主選單以重新載入譜面。</system:String>
-    <system:String x:Key="MainWindow_program">程式(_P)</system:String>
+    <system:String x:Key="MainWindow_program">程式 (_P)</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync 目前不被允許存取 osu! 的譜面資料夾。如要開始匯入您必須將 osu!Sync 以系統管理員權限重啟。-- 您要這麼做嗎？</system:String>
     <system:String x:Key="MainWindow_runOsu">執行 osu!</system:String>
     <!-- | S -->
     <system:String x:Key="MainWindow_selectADestination">選擇目標</system:String>
     <system:String x:Key="MainWindow_selectASupportedFileToConvert">選擇支援的檔案來轉換</system:String>
-    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">_選擇圖組匯出</system:String>
+    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">選擇圖組匯出 (_S)</system:String>
     <system:String x:Key="MainWindow_selectToExport">選擇匯出</system:String>
     <system:String x:Key="MainWindow_setsDone">%0 組已完成</system:String>
     <system:String x:Key="MainWindow_setsFailed">%0 組失敗</system:String>
@@ -387,7 +391,7 @@
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">出版日期： %0</system:String>
     <system:String x:Key="WindowUpdater_download">下載</system:String>
-    <system:String x:Key="WindowUpdater_downloadAndInstall">下載並安裝(_D)</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">下載並安裝 (_D)</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">下載完成。(%0 Bytes)</system:String>
     <system:String x:Key="WindowUpdater_downloadingInstaller">正在下載安裝程式 | %0 of %1 Bytes</system:String>
     <system:String x:Key="WindowUpdater_downloadingUpdatePackage">正在下載更新包 | %0 of %1 Bytes</system:String>
@@ -407,7 +411,7 @@
 
     <!-- Window_Welcome -->
     <!-- | C -->
-    <system:String x:Key="WindowWelcome_continue">_繼續</system:String>
+    <system:String x:Key="WindowWelcome_continue">繼續 (_C)</system:String>
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync 是用來匯出/匯入 osu! 譜面的免費工具。您可以製作方便分享的譜面清單。</system:String>
     <!-- | S -->

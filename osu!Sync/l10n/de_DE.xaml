@@ -35,11 +35,15 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei ist korrupt oder veraltet. Sie wird gelöscht und die Anwendung wird neugestartet.</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Entschuldigung, irgendetwas ist schief gegangen.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Nachtricht deaktivierbar</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Entschuldigung, irgendetwas ist schief gegangen.</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Nicht in der Lage, API-Schlüssel zu entschlüsseln. Dies erfolgt normalerweise, wenn die Konfigurations-Datei von einem Computer auf einen anderen kopiert wurde.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Nicht in der Lage, API-Schlüssel zu verschlüsseln.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Nicht in der Lage Übersetzungspaket zu finden.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Abgebrochen</system:String>

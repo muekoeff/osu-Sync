@@ -7,9 +7,9 @@
     <!-- Meta & More -->
     <system:String x:Key="Meta_langCode">pt_BR</system:String>
     <!-- \/ Replace "English" with the language of your translation and translate -->
-    <system:String x:Key="Meta_langName">English</system:String>
+    <system:String x:Key="Meta_langName">Português-Brasil</system:String>
     <!-- \/ Replace "English" with the language of your translation in English -->
-    <system:String x:Key="Meta_langNameEn">Portuguese, Brazilian</system:String>
+    <system:String x:Key="Meta_langNameEn">Portuguese-Brazil</system:String>
     <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Tradução por: Tarkoviski</system:String>
 
@@ -27,7 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Salvar</system:String>
     <system:String x:Key="Global_buttons_skip">_Pular</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Pular _sempre</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_submit">Enviar</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Sim</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Sim para todos</system:String>
@@ -35,11 +35,15 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">O seu arquivo de configuração está corrompido ou desatualizado. Ele será excluído e o aplicativo reiniciado.</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Desculpe, algo deu errado.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Mensagem desativável</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Desculpe, algo deu errado.</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Não foi possível descriptografar a chave da API. Normalmente isso acontece quando o arquivo de configuração é copiado diretamente de outro computador.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Não foi possível criptografar a chave da API.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Não foi possível encontrar o pacote de tradução.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Ação anulada</system:String>
@@ -340,7 +344,7 @@
     <!-- | Q -->
     <system:String x:Key="WindowSettings_questionHelpRequest">Pergunta/Solicitação de ajuda</system:String>
     <!-- | R -->
-    <system:String x:Key="WindowSettings_requestElevationOnStartup">If it might be required, request elevation on startup instead of demand</system:String>
+    <system:String x:Key="WindowSettings_requestElevationOnStartup">Caso necessário, solicitar que o aplicativo inicie como administrador na inicialização</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">Redefinir osu!Sync (excluir configurações, associações de arquivos, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Reiniciar e executar como administrador</system:String>
     <!-- | S -->

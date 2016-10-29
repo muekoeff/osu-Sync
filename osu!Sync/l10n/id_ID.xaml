@@ -35,11 +35,15 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">File konfigurasi Anda rusak atau sudah kadaluarsa. File ini akan dihapus dan aplikasi akan dibuka ulang.</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Pesan dapat dimatikan</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Unable to encrypt API key.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable To find translation package.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Dibatalkan</system:String>

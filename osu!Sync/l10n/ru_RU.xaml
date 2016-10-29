@@ -27,7 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Сохранить </system:String>
     <system:String x:Key="Global_buttons_skip">_Пропустить</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Пропускать _всегда</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_submit">Добавить</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Да</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Да, для всех</system:String>
@@ -35,11 +35,15 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Файл настроек поврежден или устарел. osu!Sync восстановит стандартные настройки и выполнит перезапуск.</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Что-то пошло не так.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Сообщение можно отключить</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Что-то пошло не так.</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Не удалось расшифровать ключ API. Обычно это случается когда вы копируете свой файл конфигурации с одного компьютера на другой.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Не удалось зашифровать ключ API.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Не удалось найти пакет перевода.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Отменено</system:String>

@@ -15,35 +15,39 @@
 
     <!-- Global -->
     <!-- | A -->
-    <system:String x:Key="Global_buttons_apply">_Apply</system:String>
+    <system:String x:Key="Global_buttons_apply">应用 (_A)</system:String>
     <!-- | C -->
-    <system:String x:Key="Global_buttons_cancel">_Cancel</system:String>
+    <system:String x:Key="Global_buttons_cancel">取消 (_C)</system:String>
     <!-- | N -->
-    <system:String x:Key="Global_buttons_no">_No</system:String>
-    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <system:String x:Key="Global_buttons_no">否 (_N)</system:String>
+    <system:String x:Key="Global_buttons_noForAll">全部选否</system:String>
     <!-- | O -->
-    <system:String x:Key="Global_buttons_ok">_OK</system:String>
+    <system:String x:Key="Global_buttons_ok">确定 (_O)</system:String>
     <!-- | S -->
-    <system:String x:Key="Global_buttons_save">_Save</system:String>
-    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
-    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_save">保存 (_S)</system:String>
+    <system:String x:Key="Global_buttons_skip">跳过 (_S)</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">总是跳过 (_A)</system:String>
+    <system:String x:Key="Global_buttons_submit">提交</system:String>
     <!-- | Y -->
-    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
-    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    <system:String x:Key="Global_buttons_yes">是 (_Y)</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">全部选是</system:String>
     
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">你的配置文件无效或已过时。配置文件会被删除，程序将重启。</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">抱歉，发生了一些问题。</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">禁用消息</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">抱歉，发生了一些问题。</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">无法解密API密钥。这通常是将配置文件从多台电脑中复制传输所导致的。</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">无法加密 API 密钥。</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">找不到翻译文件。</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">已中止</system:String>
-    <system:String x:Key="MainWindow_about">_关于</system:String>
+    <system:String x:Key="MainWindow_about">关于 (_A)</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">所有支持的数据格式</system:String>
     <system:String x:Key="MainWindow_andStillWorking">还在处理中...</system:String>
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">有新版本可用。 -- 当前：%0 | 最新：%1</system:String>
@@ -59,14 +63,14 @@
     <system:String x:Key="MainWindow_checkingForUpdates">正在检查更新...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">转换已中止</system:String>
     <system:String x:Key="MainWindow_conversionFailed">转换失败</system:String>
-    <system:String x:Key="MainWindow_convertFile">_转换文件</system:String>
+    <system:String x:Key="MainWindow_convertFile">转换文件 (_C)</system:String>
     <system:String x:Key="MainWindow_convertSelectedFile">转换选择的文件</system:String>
     <system:String x:Key="MainWindow_creator">创建者</system:String>
     <!-- | D -->
     <system:String x:Key="MainWindow_dateFormat">yyyy/MM/dd</system:String>
     <system:String x:Key="MainWindow_details">详细</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">下载和安装</system:String>
-    <system:String x:Key="MainWindow_downloadBeatmaps">_下载谱面</system:String>
+    <system:String x:Key="MainWindow_downloadBeatmaps">下载谱面 (_D)</system:String>
     <system:String x:Key="MainWindow_downloadFailed">下载失败</system:String>
     <system:String x:Key="MainWindow_downloadMirror">镜像下载</system:String>
     <system:String x:Key="MainWindow_downloading">下载中 %0...</system:String>
@@ -101,12 +105,12 @@
     <!-- | E -->
     <system:String x:Key="MainWindow_elevationFailed">获取管理员权限失败。</system:String>
     <system:String x:Key="MainWindow_exceptions">例外情况</system:String>
-    <system:String x:Key="MainWindow_exit">离开</system:String>
+    <system:String x:Key="MainWindow_exit">离开 (_X)</system:String>
     <system:String x:Key="MainWindow_export">导出</system:String>
     <system:String x:Key="MainWindow_exportAborted">导出中止</system:String>
     <system:String x:Key="MainWindow_exportCompleted">导出完成</system:String>
     <system:String x:Key="MainWindow_exportedAs">已导出  %0</system:String>
-    <system:String x:Key="MainWindow_exportInstalledBeatmaps">_导出已安装的谱面</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps">导出已安装的谱面 (_E)</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">导出已安装的谱面</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">成功删除文件关联。 (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">无法删除文件关联。</system:String>
@@ -119,7 +123,7 @@
     <system:String x:Key="MainWindow_fallback">你想要返回扫描目录的方法么？请记住该方法会慢很多，同时也不如默认的方法精确。</system:String>
     <system:String x:Key="MainWindow_fetching">读取中 %0...</system:String>
     <system:String x:Key="MainWindow_fetching1">读取中...</system:String>
-    <system:String x:Key="MainWindow_file">_文件</system:String>
+    <system:String x:Key="MainWindow_file">文件 (_F)</system:String>
     <system:String x:Key="MainWindow_file404">无法打开文件，是不是文件被移动了。</system:String>
     <system:String x:Key="MainWindow_finished">已完成</system:String>
     <system:String x:Key="MainWindow_folderCouldntBeParsed">至少有一个文件夹不能被解析。它/它们将会被忽略。</system:String>
@@ -135,7 +139,7 @@
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">生成界面......</system:String>
     <!-- | H -->
-    <system:String x:Key="MainWindow_help">_帮助</system:String>
+    <system:String x:Key="MainWindow_help">帮助 (_H)</system:String>
     <system:String x:Key="MainWindow_hideInstalled">隐藏已有的谱面</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID已分配</system:String>
@@ -158,7 +162,7 @@
     <system:String x:Key="MainWindow_latestVersion">最新版本</system:String>
     <system:String x:Key="MainWindow_leftOut">%0 略过</system:String>
     <!-- | M -->
-    <system:String x:Key="MainWindow_minimizeToTray">_最小化至通知区域（系统任务栏）</system:String>
+    <system:String x:Key="MainWindow_minimizeToTray">最小化至通知区域（系统任务栏）(_M)</system:String>
     <!-- | N -->
     <system:String x:Key="MainWindow_noAccess">没有访问权限</system:String>
     <system:String x:Key="MainWindow_notImportable">无法导入</system:String>
@@ -166,7 +170,7 @@
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">打开谱面详细信息面板</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">开启谱面清单</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">在浏览器中浏览谱面列表</system:String>
-    <system:String x:Key="MainWindow_openUpdater">开启更新程序</system:String>
+    <system:String x:Key="MainWindow_openUpdater">开启更新程序 (_U)</system:String>
     <system:String x:Key="MainWindow_overview">概览</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">解析已安装的谱面...</system:String>
@@ -174,14 +178,14 @@
     <system:String x:Key="MainWindow_pleaseSync">请同步 (Sync)。</system:String>
     <system:String x:Key="MainWindow_pleaseWait">请稍候...</system:String>
     <system:String x:Key="MainWindow_pressF5">在 osu! 中，按F5或回到主菜单以重新载入谱面。</system:String>
-    <system:String x:Key="MainWindow_program">_程序</system:String>
+    <system:String x:Key="MainWindow_program">程序 (_P)</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync 目前没有访问 osu! 谱面文件夹的权限。若要开始导入你必须將 osu!Sync 以管理员模式重启。-- 要这么做么？</system:String>
     <system:String x:Key="MainWindow_runOsu">执行 osu!</system:String>
     <!-- | S -->
     <system:String x:Key="MainWindow_selectADestination">选择目标</system:String>
     <system:String x:Key="MainWindow_selectASupportedFileToConvert">选择要转换的支持的文件</system:String>
-    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">_选择谱面导出</system:String>
+    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">选择谱面导出 (_S)</system:String>
     <system:String x:Key="MainWindow_selectToExport">选择导出</system:String>
     <system:String x:Key="MainWindow_setsDone">%0 组已完成</system:String>
     <system:String x:Key="MainWindow_setsFailed">%0 组失败</system:String>
@@ -202,7 +206,7 @@
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">无法检查更新。</system:String>
-    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">无法从指定的镜像中获取数据。可能是因为该镜像目前关闭中。请在设置窗口中选择其他镜像站点以解决该问题。如果你想跳过这个文件请按“是”，跳过整个下载请按“否”</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">找不到 osu! 文件夹。请在下面的窗口指定 osu! 的路径。</system:String>
     <system:String x:Key="MainWindow_unableToGetId">无法获取 ID</system:String>
@@ -269,7 +273,7 @@
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">激活</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync 能够通过 osu!api 1.0 读取图谱的其他信息，需要API密钥以便获得访问权限。</system:String>
     <system:String x:Key="WindowSettings_apiKey">API密钥</system:String>
     <system:String x:Key="WindowSettings_apiRequest">如果你没有API密钥，你可以从osu!的网站中申请一个。</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">确定真的要删除配置文件么 (不能复原)？</system:String>
@@ -387,7 +391,7 @@
     <!-- | D -->
     <system:String x:Key="WindowUpdater_dateOfPublication">发布日期： %0</system:String>
     <system:String x:Key="WindowUpdater_download">下载</system:String>
-    <system:String x:Key="WindowUpdater_downloadAndInstall">下载并安装</system:String>
+    <system:String x:Key="WindowUpdater_downloadAndInstall">下载并安装 (_D)</system:String>
     <system:String x:Key="WindowUpdater_downloadFinished">下载完成。(%0 Bytes)</system:String>
     <system:String x:Key="WindowUpdater_downloadingInstaller">正在下载安装程序 | %0 of %1 Bytes</system:String>
     <system:String x:Key="WindowUpdater_downloadingUpdatePackage">正在下载更新包 | %0 of %1 Bytes</system:String>
@@ -407,7 +411,7 @@
 
     <!-- Window_Welcome -->
     <!-- | C -->
-    <system:String x:Key="WindowWelcome_continue">_继续</system:String>
+    <system:String x:Key="WindowWelcome_continue">继续 (_C)</system:String>
     <!-- | M -->
     <system:String x:Key="WindowWelcome_message">osu!Sync 是用来导出/导入 osu! 谱面的免费工具。您可以制作方便分享的谱面清单。</system:String>
     <!-- | S -->

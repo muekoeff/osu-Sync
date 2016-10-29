@@ -412,6 +412,6 @@ Class Window_Settings
         TB_ToolInterface_BeatmapDetailPanelWidth.Text = AppSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString
         TB_ToolUpdate_Path.Text = AppSettings.Tool_Update_SavePath
 
-        Ex_Language.Header = Ex_Language.Header & " / Language"
+        Ex_Language.Header = _e("WindowSettings_language") & " / Language"
     End Sub
 End Class

@@ -27,7 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Zapisz</system:String>
     <system:String x:Key="Global_buttons_skip">_Pomiń</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Zawsze pomijaj</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_submit">Wyślij</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Tak</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Tak, dla wszystkich</system:String>
@@ -35,11 +35,15 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Twój plik konfiguracyjny jest uszkodzony lub nieaktualny. Zostanie on usunięty a aplikacja uruchomiona ponownie.</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Przepraszamy, coś poszło nie tak.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Wiadomość zamykająca</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Przepraszamy, coś poszło nie tak.</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Nie można odszyfrować klucza API. Zwykle zdarza się to, gdy plik konfiguracyjny został skopiowany z jednego komputera na drugi.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Nie można zaszyfrować klucza API.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Nie można znaleźć pakietu tłumaczenia.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Anulowano</system:String>

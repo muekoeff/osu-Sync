@@ -27,7 +27,7 @@
     <system:String x:Key="Global_buttons_save">_Sauvegarder</system:String>
     <system:String x:Key="Global_buttons_skip">_Passer</system:String>
     <system:String x:Key="Global_buttons_skipAlways">_Toujours passer</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_submit">Envoyer</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Oui</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Oui, pour tous</system:String>
@@ -35,11 +35,15 @@
     <!-- GlobalVar -->
     <!-- | I -->
     <system:String x:Key="GlobalVar_invalidConfiguration">Votre fichier de configuration est corrompu ou obsolète. Il va être supprimé et l'application redémarrée.</system:String>
-    <!-- | S -->
-    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Désolé, une erreur s'est produite.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Message désactivable</system:String>
-    
+    <!-- | S -->
+    <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Désolé, une erreur s'est produite.</system:String>
+    <!-- | U -->
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Impossible de décrypter la clé API. Cela arrive lorsque vous copiez votre fichier de configuration d'un ordinateur à l'autre.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Impossible de crypter la clé API.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Impossible de trouver le package de traduction.</system:String>
+
     <!-- MainWindow -->
     <!-- | A -->
     <system:String x:Key="MainWindow_aborted">Abandonné</system:String>
