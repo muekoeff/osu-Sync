@@ -60,7 +60,7 @@
                                 <CheckBox x:Name="CB_ToolUpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
                             </StackPanel>
                         </Expander>
-                        <Expander Header="{DynamicResource WindowSettings_language}" Margin="0">
+                        <Expander x:Name="Ex_Language" Header="{DynamicResource WindowSettings_language}" Margin="0">
                             <StackPanel>
                                 <!-- [REF] Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
                                 <ComboBox x:Name="CB_ToolLanguages" />

@@ -411,5 +411,7 @@ Class Window_Settings
         TB_ToolImporterAutoInstallCounter.Text = AppSettings.Tool_Importer_AutoInstallCounter.ToString
         TB_ToolInterface_BeatmapDetailPanelWidth.Text = AppSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString
         TB_ToolUpdate_Path.Text = AppSettings.Tool_Update_SavePath
+
+        Ex_Language.Header = Ex_Language.Header & " / Language"
     End Sub
 End Class
