@@ -36,11 +36,10 @@
             TranslationList = TranslationMap(Forms.Application.StartupPath & "\l10n")
             If TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")) Then
                 TranslationLoad(TranslationList.Item(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")).Path)
-            ElseIf TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) Then
+            ElseIf TranslationList.ContainsKey(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) _
+                And Not Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2) = "en" Then     ' Don't load en_UD
                 TranslationLoad(TranslationList.Item(Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)).Path)
             End If
-        Else
-            MsgBox(Forms.Application.StartupPath & "\l10n   fALSE")
         End If
     End Sub
 

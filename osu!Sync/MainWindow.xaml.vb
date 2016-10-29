@@ -1373,7 +1373,7 @@ Class MainWindow
         If Not ThumbPath = "" Then
             Try
                 BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri(ThumbPath))
-            Catch ex As NotSupportedException
+            Catch ex As Exception       ' IOException, NotSupportedException
                 BeatmapDetails_Thumbnail.Source = New BitmapImage(New Uri("Resources/NoThumbnail.png", UriKind.Relative))
             End Try
         Else
