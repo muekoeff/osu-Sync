@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "osu!Sync", "osu!Sync\osu!Sync.vbproj", "{F040C4BA-C36A-4DAD-BDC9-90E680309D9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu!Sync", "osu!Sync\osu!Sync.csproj", "{A5733D95-54F1-4850-B656-919F0D5DF4F2}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "osu!Sync UpdatePatcher", "osu!Sync UpdatePatcher\osu!Sync UpdatePatcher.vbproj", "{1483DE86-73B2-4782-BBC9-6020FD3C86FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu!Sync UpdatePatcher", "osu!Sync UpdatePatcher\osu!Sync UpdatePatcher.csproj", "{696301D5-D13F-4BB1-94F4-B000B8D69849}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F040C4BA-C36A-4DAD-BDC9-90E680309D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F040C4BA-C36A-4DAD-BDC9-90E680309D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F040C4BA-C36A-4DAD-BDC9-90E680309D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F040C4BA-C36A-4DAD-BDC9-90E680309D9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1483DE86-73B2-4782-BBC9-6020FD3C86FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1483DE86-73B2-4782-BBC9-6020FD3C86FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1483DE86-73B2-4782-BBC9-6020FD3C86FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1483DE86-73B2-4782-BBC9-6020FD3C86FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

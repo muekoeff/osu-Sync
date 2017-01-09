@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>osu!Sync</name>
+    </assembly>
+    <members>
+        <member name="T:osuSync.Application">
+            <summary>
+            Application
+            </summary>
+        </member>
+        <member name="M:osuSync.Application.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:osuSync.Application.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="M:osuSync.Settings.osuPathDetect(System.Boolean)">
+            <param name="allowConfig"></param> Enable on initialization to prevent System.TypeInitializationException
+            <returns>Path to osu!</returns>
+        </member>
+        <member name="M:osuSync.GlobalVar._e(System.String)">
+            <param name="text">English string to translate</param>
+            <returns>Translation of <paramref>Text</paramref></returns>
+        </member>
+        <member name="T:osuSync.MainWindow">
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:osuSync.MainWindow.ConvertBmListToCSV(System.Collections.Generic.Dictionary{System.Int32,osuSync.Beatmap})">
+            <summary>
+            Converts the given <code>List(Of Beatmap)</code> to a CSV-String.
+            </summary>
+            <param name="source">List of beatmaps</param>
+            <returns><code>List(Of Beatmap)</code> as CSV-String.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.ConvertBmListToHtml(System.Collections.Generic.Dictionary{System.Int32,osuSync.Beatmap})">
+            <summary>
+            Converts the given <code>List(Of Beatmap)</code> to HTML-Code.
+            </summary>
+            <param name="source">List of beatmaps</param>
+            <returns><code>List(Of Beatmap)</code> as HTML and possible warnings together in a String().</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.ConvertBmListToJson(System.Collections.Generic.Dictionary{System.Int32,osuSync.Beatmap})">
+            <summary>
+            Converts the given <code>List(Of Beatmap)</code> to OSBL.
+            </summary>
+            <param name="source">List of beatmaps</param>
+            <returns><code>List(Of Beatmap)</code> as OSBL and possible warnings together in a String().</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.ConvertBmListToTxt(System.Collections.Generic.Dictionary{System.Int32,osuSync.Beatmap})">
+            <summary>
+            Converts the given <code>List(Of Beatmap)</code> to a TXT-String.
+            </summary>
+            <param name="source">List of beatmaps</param>
+            <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.BmDisplayUpdate(System.Collections.Generic.Dictionary{System.Int32,osuSync.Beatmap},osuSync.UpdateBmDisplayDestinations,System.String)">
+            <summary>
+            Updates the beatmap list interface.
+            </summary>
+            <param name="bmList">List of Beatmaps to display</param>
+            <param name="destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
+            <param name="lastUpdateTime">Only required when <paramref name="destination"/> = Installed</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.FileAssociationCheck">
+            <summary>
+            Checks osu!Sync's file associations and creates them if necessary.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.StartOrFocusOsu">
+            <summary>
+            Determines whether to start or (when it's running) to focus osu!.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.Sync_GetIDs">
+            <summary>
+            Determines wether to load cache or to sync and will start the progress.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:osuSync.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.Window_About">
+            <summary>
+            Window_About
+            </summary>
+        </member>
+        <member name="M:osuSync.Window_About.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.Window_GenericMsgBox">
+            <summary>
+            Window_GenericMsgBox
+            </summary>
+        </member>
+        <member name="M:osuSync.Window_GenericMsgBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.Window_MessageWindow">
+            <summary>
+            Window_MessageWindow
+            </summary>
+        </member>
+        <member name="M:osuSync.Window_MessageWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.Window_Settings">
+            <summary>
+            Window_Settings
+            </summary>
+        </member>
+        <member name="M:osuSync.Window_Settings.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.Window_Updater">
+            <summary>
+            Window_Updater
+            </summary>
+        </member>
+        <member name="M:osuSync.Window_Updater.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.Window_Welcome">
+            <summary>
+            Window_Welcome
+            </summary>
+        </member>
+        <member name="M:osuSync.Window_Welcome.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osu_Sync.My.Resources.Resources">
+            <summary>
+              Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+            </summary>
+        </member>
+        <member name="P:osu_Sync.My.Resources.Resources.ResourceManager">
+            <summary>
+              Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+            </summary>
+        </member>
+        <member name="P:osu_Sync.My.Resources.Resources.Culture">
+            <summary>
+              Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+              Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+            </summary>
+        </member>
+        <member name="P:osu_Sync.My.Resources.Resources.nw520_osbl">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+            </summary>
+        </member>
+    </members>
+</doc>

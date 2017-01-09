@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>osu!Sync UpdatePatcher</name>
+    </assembly>
+    <members>
+        <member name="T:osuSync_UpdatePatcher.MainWindow">
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:osuSync_UpdatePatcher.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Application">
+            <summary>
+            Application
+            </summary>
+        </member>
+        <member name="M:Application.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Application.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+    </members>
+</doc>
