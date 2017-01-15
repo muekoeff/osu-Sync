@@ -46,6 +46,7 @@
     <NoWarn>1591</NoWarn>
     <WarningLevel>4</WarningLevel>
     <Optimize>true</Optimize>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,9 +77,6 @@
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
-  <PropertyGroup>
-    <PostBuildEvent>"$(DevEnvDir)Tools\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)Icons"</PostBuildEvent>
-  </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -331,4 +329,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(DevEnvDir)Tools\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)Icons"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace osuSync {
     partial class Application {
-		#if !DEBUG
+#if !DEBUG
 		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
 			e.Handled = true;
 			MessageBox.Show("B-ba-baka     ｡･ﾟﾟ･(>д<)･ﾟﾟ･｡\n\n" +
@@ -20,9 +20,11 @@ namespace osuSync {
                 Environment.Exit(1);
 			} catch (Exception) {}
 		}
-		#endif
+#else
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) { }
+#endif
 
-		private void Application_Startup(object sender, StartupEventArgs e) {
+        private void Application_Startup(object sender, StartupEventArgs e) {
 			// Save Startup Arguments
 			if(e.Args.Length != 0)
                 GlobalVar.appStartArgs = e.Args;

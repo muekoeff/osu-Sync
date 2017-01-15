@@ -133,9 +133,9 @@ namespace osuSync {
 		public void Client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e) {
 			switch(downloadMode) {
 				case DownloadModes.Info:
-					JObject Answer = null;
+					JObject answer = null;
 					try {
-						Answer = JObject.Parse(e.Result);
+						answer = JObject.Parse(e.Result);
 					} catch(JsonReaderException) {
 						MessageBox.Show(GlobalVar._e("MainWindow_unableToCheckForUpdates") + "\n"
                             + "> " + GlobalVar._e("MainWindow_invalidServerResponse") + "\n\n"
@@ -155,16 +155,16 @@ namespace osuSync {
 						return;
 					}
 
-					update_version = Convert.ToString(Answer.SelectToken("latestRepoRelease").SelectToken("tag_name"));
+					update_version = Convert.ToString(answer.SelectToken("latestRepoRelease").SelectToken("tag_name"));
 					TB_VersionInfo.Text += " | " + GlobalVar._e("WindowUpdater_latestVersion").Replace("%0", update_version);
 
 					Paragraph Paragraph = new Paragraph();
 					FlowDocument FlowDocument = new FlowDocument();
 					try {
-                        Paragraph.Inlines.Add(new Run("# " + GlobalVar._e("WindowUpdater_dateOfPublication").Replace("%0", Convert.ToString(Answer.SelectToken("latestRepoRelease").SelectToken("published_at")).Substring(0, 10))));
+                        Paragraph.Inlines.Add(new Run("# " + GlobalVar._e("WindowUpdater_dateOfPublication").Replace("%0", Convert.ToString(answer.SelectToken("latestRepoRelease").SelectToken("published_at")).Substring(0, 10))));
                         Paragraph.Inlines.Add(new LineBreak());
                         Paragraph.Inlines.Add(new LineBreak());
-                        Paragraph.Inlines.Add(new Run(Convert.ToString(Answer.SelectToken("latestRepoRelease").SelectToken("body")).Replace("```Indent\n", "").Replace("\n```", "")));
+                        Paragraph.Inlines.Add(new Run(Convert.ToString(answer.SelectToken("latestRepoRelease").SelectToken("body")).Replace("```Indent", "").Replace("```", "")));
 					} catch(Exception) {
 						MessageBox.Show(GlobalVar._e("MainWindow_unableToCheckForUpdates") + "\n"
                             + "> " + GlobalVar._e("MainWindow_cantConnectToServer") + "\n\n"
@@ -181,11 +181,11 @@ namespace osuSync {
 						TB_Status.Text = GlobalVar._e("WindowUpdater_yourUsingTheLatestVersion");
 #if DEBUG
 						Console.WriteLine("[DEBUG] Enabled Download button");
-						Action_LoadUpdateInformation(ref Answer);
+						Action_LoadUpdateInformation(ref answer);
 #endif
 					} else {
 						TB_Status.Text = GlobalVar._e("WindowUpdater_anUpdateIsAvailable");
-						Action_LoadUpdateInformation(ref Answer);
+						Action_LoadUpdateInformation(ref answer);
 					}
 					break;
 			}
