@@ -96,6 +96,26 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:osuSync.UserControls.BeatmapItem_Importer">
+            <summary>
+            BeatmapItem_Importer
+            </summary>
+        </member>
+        <member name="M:osuSync.UserControls.BeatmapItem_Importer.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:osuSync.UserControls.BeatmapItem_Installed">
+            <summary>
+            BeatmapItem_Installed
+            </summary>
+        </member>
+        <member name="M:osuSync.UserControls.BeatmapItem_Installed.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
         <member name="T:osuSync.Window_About">
             <summary>
             Window_About

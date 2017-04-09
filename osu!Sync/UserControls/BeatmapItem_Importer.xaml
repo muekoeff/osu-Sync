@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="osuSync.UserControls.BeatmapItem_Importer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="56" d:DesignWidth="500">
+    <Grid x:Name="Gr_Grid" Height="51" Margin="0,0,0,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="73" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Rectangle x:Name="Re_DecoBorder" Fill="{StaticResource GreenLightBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Image x:Name="Im_Thumbnail" Cursor="Hand" HorizontalAlignment="Stretch" Margin="5,0,0,0" VerticalAlignment="Stretch" Grid.Column="1" />
+        <StackPanel Margin="10,0,0,0" Grid.Column="2">
+            <TextBlock x:Name="TBl_Title" FontFamily="Segoe UI" FontSize="22" Foreground="{StaticResource GrayDarkBrush}" HorizontalAlignment="Left" TextWrapping="Wrap" />
+            <TextBlock x:Name="TBl_Caption" FontFamily="Segoe UI Light" FontSize="12" Foreground="{StaticResource GreenDarkBrush}" HorizontalAlignment="Left" TextWrapping="Wrap" />
+        </StackPanel>
+        <CheckBox x:Name="CB_IsSelected" Content="{DynamicResource MainWindow_downloadAndInstall}" HorizontalAlignment="Right" IsChecked="True" Margin="10,5,0,0" VerticalAlignment="Top" Grid.Column="2" />
+    </Grid>
+</UserControl>

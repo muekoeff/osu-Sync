@@ -14,8 +14,8 @@ namespace osuSync {
 		}
 
 		public void SetMessage(string message, string title = null, string subTitle = null) {
-			TB_Title.Text = (title == null ? GlobalVar._e("WindowMessage_message") : title);
-            TB_SubTitle.Text = (subTitle == null ? GlobalVar.appName : subTitle);
+			TB_Title.Text = (title ?? GlobalVar._e("WindowMessage_message"));
+            TB_SubTitle.Text = (subTitle ?? GlobalVar.appName);
 
             Paragraph Paragraph = new Paragraph();
 			Paragraph.Inlines.Add(new Run(message));

@@ -15,6 +15,33 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="l10n/en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="BlueLight">#FF3498DB</Color>
+            <SolidColorBrush x:Key="BlueLightBrush" Color="{StaticResource BlueLight}" />
+
+            <Color x:Key="GrayDark">#FF555555</Color>
+            <SolidColorBrush x:Key="GrayDarkBrush" Color="{StaticResource GrayDark}" />
+
+            <Color x:Key="GrayLight">#FF999999</Color>
+            <SolidColorBrush x:Key="GrayLightBrush" Color="{StaticResource GrayLight}" />
+
+            <Color x:Key="GrayLighter">#FFDDDDDD</Color>
+            <SolidColorBrush x:Key="GrayLighterBrush" Color="{StaticResource GrayLighter}" />
+
+            <Color x:Key="GreenDark">#FF008136</Color>
+            <SolidColorBrush x:Key="GreenDarkBrush" Color="{StaticResource GreenDark}" />
+
+            <Color x:Key="GreenLight">#FF27AE60</Color>
+            <SolidColorBrush x:Key="GreenLightBrush" Color="{StaticResource GreenLight}" />
+
+            <Color x:Key="OrangeLight">#FFE67E2E</Color>
+            <SolidColorBrush x:Key="OrangeLightBrush" Color="{StaticResource OrangeLight}" />
+
+            <Color x:Key="PurpleDark">#FF8E44AD</Color>
+            <SolidColorBrush x:Key="PurpleDarkBrush" Color="{StaticResource PurpleDark}" />
+
+            <Color x:Key="RedLight">#FFE74C3C</Color>
+            <SolidColorBrush x:Key="RedLightBrush" Color="{StaticResource RedLight}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

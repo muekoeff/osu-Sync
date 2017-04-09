@@ -19,7 +19,7 @@ namespace osuSync_UpdatePatcher {
         private BackgroundWorker withEventsFieldWorker = new BackgroundWorker {
             WorkerReportsProgress = true
         };
-        private BackgroundWorker worker {
+        private BackgroundWorker Worker {
             get { return withEventsFieldWorker; }
             set {
                 if(withEventsFieldWorker != null) {
@@ -41,16 +41,16 @@ namespace osuSync_UpdatePatcher {
         }
 
         public MainWindow() {
-            worker.DoWork += Worker_DoWork;
-            worker.ProgressChanged += Worker_ProgressChanged;
+            Worker.DoWork += Worker_DoWork;
+            Worker.ProgressChanged += Worker_ProgressChanged;
 
         }
 
         private void Action_ZipProgress(object sender, ExtractProgressEventArgs e) {
             if(e.TotalBytesToTransfer != 0) {
                 int percentage = Convert.ToInt32(e.BytesTransferred / e.TotalBytesToTransfer * 100);
-                worker.ReportProgress(0, "Unzipping... | " + percentage + " %");
-                worker.ReportProgress(0, "[PROGRESSBAR] " + (updater_zipCount * 100) + ";" + (updater_zipCurrentCount * 100 + percentage));
+                Worker.ReportProgress(0, "Unzipping... | " + percentage + " %");
+                Worker.ReportProgress(0, "[PROGRESSBAR] " + (updater_zipCount * 100) + ";" + (updater_zipCurrentCount * 100 + percentage));
             }
         }
 
@@ -91,7 +91,7 @@ namespace osuSync_UpdatePatcher {
             ProgressBar.Visibility = Visibility.Visible;
 
             // Assign variables
-            worker.ReportProgress(0, "Reading arguments...");
+            Worker.ReportProgress(0, "Reading arguments...");
 
             // Check whether start up arguments are set (program has been run by osu!Sync) or not (ran by user)
             if(GlobalVar.startupArgs == null) {
@@ -137,15 +137,15 @@ namespace osuSync_UpdatePatcher {
                             arg_srcVer = thisSplit[1];
                             break;
                         default:
-                            worker.ReportProgress(0, "Update failed!");
+                            Worker.ReportProgress(0, "Update failed!");
                             MessageBox.Show("Whoops, one of the arguments seems to be invalid.\n" +
                                 "Update failed.", "Dialog | osu!Sync Software Update Patcher", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                            worker.ReportProgress(0, "[CANCEL]");
+                            Worker.ReportProgress(0, "[CANCEL]");
                             return;
                     }
                 }
             }
-            worker.RunWorkerAsync();
+            Worker.RunWorkerAsync();
         }
 
         private void StackPanel_Paths_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e) {
@@ -161,34 +161,34 @@ namespace osuSync_UpdatePatcher {
         private void Worker_DoWork(object sender, DoWorkEventArgs e) {
             try {
                 // Check if osu!Sync is running
-                worker.ReportProgress(0, "Checking, if osu!Sync is running...");
+                Worker.ReportProgress(0, "Checking, if osu!Sync is running...");
                 Process[] mainProcess = Process.GetProcessesByName("osu!Sync");
                 if(mainProcess.Length > 0) {
-                    worker.ReportProgress(0, "Killing osu!Sync...");
+                    Worker.ReportProgress(0, "Killing osu!Sync...");
                     mainProcess[0].Kill();
                     mainProcess[0].WaitForExit();
                 }
 
                 // Set VersionInfo
-                worker.ReportProgress(0, "[VERSIONINFO] Update from " + arg_srcVer + " to " + arg_targetVer);
-                worker.ReportProgress(0, "[PATHS] " + arg_pathToUpdatePkg + ";" + arg_pathToApp);
+                Worker.ReportProgress(0, "[VERSIONINFO] Update from " + arg_srcVer + " to " + arg_targetVer);
+                Worker.ReportProgress(0, "[PATHS] " + arg_pathToUpdatePkg + ";" + arg_pathToApp);
 
                 // Check if files exist
-                worker.ReportProgress(0, "Checking...");
+                Worker.ReportProgress(0, "Checking...");
                 if(!Directory.Exists(arg_pathToApp)) {
-                    worker.ReportProgress(0, "Update failed!");
+                    Worker.ReportProgress(0, "Update failed!");
                     MessageBox.Show("The path to the application can't be found.", "Dialog | osu!Sync Software Update Patcher", MessageBoxButton.OK, MessageBoxImage.Error);
-                    worker.ReportProgress(0, "[CANCEL]");
+                    Worker.ReportProgress(0, "[CANCEL]");
                     return;
                 } else if(!File.Exists(arg_pathToUpdatePkg)) {
-                    worker.ReportProgress(0, "Update failed!");
+                    Worker.ReportProgress(0, "Update failed!");
                     MessageBox.Show("The path to the update package can't be found.", "Dialog | osu!Sync Software Update Patcher", MessageBoxButton.OK, MessageBoxImage.Error);
-                    worker.ReportProgress(0, "[CANCEL]");
+                    Worker.ReportProgress(0, "[CANCEL]");
                     return;
                 }
 
                 // Unzip
-                worker.ReportProgress(0, "Unzipping...");
+                Worker.ReportProgress(0, "Unzipping...");
                 using(ZipFile thisZipper = ZipFile.Read(arg_pathToUpdatePkg)) {
                     thisZipper.ExtractProgress += Action_ZipProgress;
                     updater_zipCount = thisZipper.Count;
@@ -200,13 +200,13 @@ namespace osuSync_UpdatePatcher {
 
                 // Delete update package
                 if(arg_deletePkgAfter) {
-                    worker.ReportProgress(0, "Deleting update package...");
+                    Worker.ReportProgress(0, "Deleting update package...");
                     File.Delete(arg_pathToUpdatePkg);
                 }
 
-                worker.ReportProgress(0, "[FINISHED]");
+                Worker.ReportProgress(0, "[FINISHED]");
             } catch(Exception ex) {
-                worker.ReportProgress(0, "[FAILED] " + ex.Message);
+                Worker.ReportProgress(0, "[FAILED] " + ex.Message);
             }
         }
 

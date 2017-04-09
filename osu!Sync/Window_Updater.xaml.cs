@@ -37,10 +37,10 @@ namespace osuSync {
 			client.DownloadFileAsync(new Uri(update_path), update_downloadToPath + ".tmp");
 		}
 
-		public void Action_LoadUpdateInformation(ref JObject Answer) {
-			update_path_updatePatcher = Convert.ToString(Answer.SelectToken("patcher").SelectToken("path"));
+		public void Action_LoadUpdateInformation(JObject answer) {
+			update_path_updatePatcher = Convert.ToString(answer.SelectToken("patcher").SelectToken("path"));
 
-			foreach(JToken thisToken in Answer.SelectToken("latestRepoRelease").SelectToken("assets")) {
+			foreach(JToken thisToken in answer.SelectToken("latestRepoRelease").SelectToken("assets")) {
 				if(Convert.ToString(thisToken.SelectToken("name")).StartsWith("osu.Sync.") & Convert.ToString(thisToken.SelectToken("name")).EndsWith(".zip")) {
 					update_fileName = Convert.ToString(thisToken.SelectToken("name"));
 					update_path = Convert.ToString(thisToken.SelectToken("browser_download_url"));
@@ -97,14 +97,16 @@ namespace osuSync {
 					Bu_Done.IsEnabled = true;
 					File.Move(update_downloadToPath + ".tmp", update_downloadToPath);
 					if(GlobalVar.appSettings.Tool_Update_UseDownloadPatcher) {
-						ProcessStartInfo UpdatePatcher = new ProcessStartInfo();        // Run UpdatePatcher
-                        UpdatePatcher.Arguments = "-deletePackageAfter=\"" + GlobalVar.appSettings.Tool_Update_DeleteFileAfter.ToString() + "\"";
-                        UpdatePatcher.Arguments += " -destinationVersion=\"" + update_version + "\"";
-                        UpdatePatcher.Arguments += " -pathToApp=\"" + Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\"";
-                        UpdatePatcher.Arguments += " -pathToUpdate=\"" + update_downloadToPath + "\"";
-                        UpdatePatcher.Arguments += " -sourceVersion=\"" + GlobalVar.appVersion.ToString() + "\"";
-                        UpdatePatcher.FileName = update_downloadPatcherToPath;
-						Process.Start(UpdatePatcher);
+                        // Run UpdatePatcher
+                        ProcessStartInfo UpdatePatcher = new ProcessStartInfo() {
+                            Arguments = "-deletePackageAfter=\"" + GlobalVar.appSettings.Tool_Update_DeleteFileAfter.ToString() + "\""
+                                + " -destinationVersion=\"" + update_version + "\""
+                                + " -pathToApp=\"" + Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\""
+                                + " -pathToUpdate=\"" + update_downloadToPath + "\""
+                                + " -sourceVersion=\"" + GlobalVar.AppVersion.ToString() + "\"",
+                            FileName = update_downloadPatcherToPath
+                        };
+                        Process.Start(UpdatePatcher);
 						System.Windows.Application.Current.Shutdown();
 						return;
 					} else {
@@ -177,15 +179,15 @@ namespace osuSync {
 					Cursor = Cursors.Arrow;
 					PB_Progress.IsIndeterminate = false;
 
-					if(update_version == GlobalVar.appVersion.ToString()) {
+					if(update_version == GlobalVar.AppVersion.ToString()) {
 						TB_Status.Text = GlobalVar._e("WindowUpdater_yourUsingTheLatestVersion");
 #if DEBUG
 						Console.WriteLine("[DEBUG] Enabled Download button");
-						Action_LoadUpdateInformation(ref answer);
+						Action_LoadUpdateInformation(answer);
 #endif
 					} else {
 						TB_Status.Text = GlobalVar._e("WindowUpdater_anUpdateIsAvailable");
-						Action_LoadUpdateInformation(ref answer);
+						Action_LoadUpdateInformation(answer);
 					}
 					break;
 			}
@@ -201,7 +203,7 @@ namespace osuSync {
             if(GlobalVar.appSettings.Tool_Update_UseDownloadPatcher == false)
 				Bu_Update.Content = GlobalVar._e("WindowUpdater_download");
 #if DEBUG
-			TB_VersionInfo.Text = GlobalVar._e("WindowUpdater_yourVersion").Replace("%0", GlobalVar.appVersion.ToString() + " (Dev)");
+			TB_VersionInfo.Text = GlobalVar._e("WindowUpdater_yourVersion").Replace("%0", GlobalVar.AppVersion.ToString() + " (Dev)");
 #else
             TB_VersionInfo.Text = GlobalVar._e("WindowUpdater_yourVersion").Replace("%0", GlobalVar.appVersion.ToString());
 			#endif

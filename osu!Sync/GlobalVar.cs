@@ -30,13 +30,12 @@ namespace osuSync {
     }
 
     class Settings {
-
-        public string _version = GlobalVar.appVersion.ToString();
+        public string _version = GlobalVar.AppVersion.ToString();
         public bool Api_Enabled_BeatmapPanel = false;
         public string Api_Key = "";
         public string Api_KeyEncrypted = "";
-        public string osu_Path = osuPathDetect(false);
-        public string osu_SongsPath = osuPathDetect(false) + Path.DirectorySeparatorChar + "Songs";
+        public string osu_Path = OsuPathDetect(false);
+        public string osu_SongsPath = OsuPathDetect(false) + Path.DirectorySeparatorChar + "Songs";
         public int Tool_CheckForUpdates = 3;
         public bool Tool_CheckFileAssociation = true;
         public int Tool_DownloadMirror = 0;
@@ -58,7 +57,7 @@ namespace osuSync {
 
         /// <param name="allowConfig"></param> Enable on initialization to prevent System.TypeInitializationException
         /// <returns>Path to osu!</returns>
-        public static string osuPathDetect(bool allowConfig = true) {
+        public static string OsuPathDetect(bool allowConfig = true) {
             if(allowConfig && Directory.Exists(GlobalVar.appSettings.osu_Path)) {
                 return GlobalVar.appSettings.osu_Path;
             } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + Path.DirectorySeparatorChar + "osu!")) {
@@ -181,7 +180,7 @@ namespace osuSync {
         public static string[] appStartArgs;
         public static string appTempPath = Path.GetTempPath() + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync";
         public static Settings appSettings = new Settings();
-        public static Version appVersion {
+        public static Version AppVersion {
             get {
                 return (new AssemblyName(Assembly.GetExecutingAssembly().FullName)).Version;
             }
@@ -222,7 +221,7 @@ namespace osuSync {
 
         public static void CompatibilityCheck(Version configVersion) {
             // Detect update
-            if(configVersion < appVersion) {
+            if(configVersion < AppVersion) {
                 switch(configVersion.ToString()) {
                     case "1.0.0.13":
                         if(File.Exists(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config")) {
@@ -436,7 +435,7 @@ namespace osuSync {
             return result;
         }
 
-        public static string md5(string input) {    // Source: http://stackoverflow.com/a/11477466
+        public static string Md5(string input) {    // Source: http://stackoverflow.com/a/11477466
             byte[] encodedPassword = new UTF8Encoding().GetBytes(input);
             byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
             string encoded = BitConverter.ToString(hash)
@@ -454,8 +453,10 @@ namespace osuSync {
             WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             bool isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
 
-            JObject jContent = new JObject();
-            jContent.Add("application", new JObject {
+            JObject jContent = new JObject {
+                {
+                    "application",
+                    new JObject {
                 {
                     "isElevated",
                     Convert.ToString(isElevated)
@@ -466,10 +467,13 @@ namespace osuSync {
                 },
                 {
                     "version",
-                    appVersion.ToString()
+                    AppVersion.ToString()
                 }
-            });
-            jContent.Add("config", new JObject {
+            }
+                },
+                {
+                    "config",
+                    new JObject {
                 {
                     "downloadMirror",
                     appSettings.Tool_DownloadMirror.ToString()
@@ -478,12 +482,18 @@ namespace osuSync {
                     "updateInterval",
                     appSettings.Tool_CheckForUpdates.ToString()
                 }
-            });
-            jContent.Add("language", new JObject { {
+            }
+                },
+                {
+                    "language",
+                    new JObject { {
                 "code",
                 appSettings.Tool_Language
-            } });
-            jContent.Add("system", new JObject {
+            } }
+                },
+                {
+                    "system",
+                    new JObject {
                 {
                     "cultureInfo",
                     System.Globalization.CultureInfo.CurrentCulture.ToString()
@@ -496,7 +506,9 @@ namespace osuSync {
                     "operatingSystem",
                     Environment.OSVersion.Version.ToString()
                 }
-            });
+            }
+                }
+            };
 
             return jContent;
         }
@@ -559,7 +571,7 @@ namespace osuSync {
                     result = result.Substring(0, 247) + "...";
                 StreamWriter stream = File.AppendText(appDataPath + Path.DirectorySeparatorChar + "Logs" + Path.DirectorySeparatorChar + "ApiAccess.txt");
                 string content = "";
-                content += "[" + DateTime.Now.ToString() + " / " + appVersion.ToString() + "] ";
+                content += "[" + DateTime.Now.ToString() + " / " + AppVersion.ToString() + "] ";
                 content += method + ":\n" +
                     "\t" + result;
                 stream.WriteLine(content);

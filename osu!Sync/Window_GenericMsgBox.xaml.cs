@@ -80,14 +80,14 @@ namespace osuSync {
 			set {
 				SP_ButtonWrapper.Children.Clear();
 				foreach (MsgBoxButtonHolder i in value) {
-					Button thisButton = new Button();
+                    Button thisButton = new Button() {
+                        Content = i.Label,
+                        Margin = new Thickness(5, 0, 0, 0),
+                        Padding = new Thickness(10, 10, 10, 10),
+                        Tag = i.ResultId
+                    };
 
-                    thisButton.Content = i.Label;
-                    thisButton.Margin = new Thickness(5, 0, 0, 0);
-                    thisButton.Padding = new Thickness(10, 10, 10, 10);
-                    thisButton.Tag = i.ResultId;
-
-					if(i.Action == ButtonAction.Cancel) {
+                    if(i.Action == ButtonAction.Cancel) {
                         thisButton.IsCancel = true;
 					} else if (i.Action == ButtonAction.Ok) {
                         thisButton.IsDefault = true;

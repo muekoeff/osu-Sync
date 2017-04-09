@@ -34,7 +34,7 @@ namespace osuSync {
 		
 		public void WindowAbout_Loaded(object sender, RoutedEventArgs e) {
 #if DEBUG
-			TB_Version.Text = GlobalVar._e("WindowAbout_version").Replace("%0", GlobalVar.appVersion.ToString() + " (Dev)").Replace("%1", GlobalVar.appSettings.Tool_Language);
+			TB_Version.Text = GlobalVar._e("WindowAbout_version").Replace("%0", GlobalVar.AppVersion.ToString() + " (Dev)").Replace("%1", GlobalVar.appSettings.Tool_Language);
 #else
             TB_Version.Text = GlobalVar._e("WindowAbout_version").Replace("%0", GlobalVar.appVersion.ToString()).Replace("%1", GlobalVar.appSettings.Tool_Language);
 #endif

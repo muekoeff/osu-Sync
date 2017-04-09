@@ -3,6 +3,9 @@ using Ionic.Zip;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osuSync.Interfaces.UserControls;
+using osuSync.Models;
+using osuSync.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,46 +23,11 @@ using System.Windows.Media.Imaging;
 
 namespace osuSync {
 
-    public enum NotifyNextAction {
-		None = 0,
-		OpenUpdater = 1
-	}
-
     public enum UpdateBmDisplayDestinations {
         Installed = 0,
         Importer = 1,
         Exporter = 2
     }
-
-    public class Beatmap {
-		public enum OnlineApprovedStatuses {
-			Graveyard = -2,
-			WIP = -1,
-			Pending = 0,
-			Ranked = 1,
-			Approved = 2,
-			Qualified = 3
-		}
-
-		public string Artist { get; set; }
-		public string Creator { get; set; }
-		public int Id { get; set; }
-		public bool IsUnplayed { get; set; }
-		public string Md5 { get; set; }
-		public byte RankedStatus { get; set; }
-		public string SongSource { get; set; }
-		public string SongTags { get; set; }
-		public string Title { get; set; }
-	}
-
-    public class BmDPDetails {
-		public string Artist { get; set; }
-		public string Creator { get; set; }
-		public bool IsUnplayed { get; set; }
-		public byte RankedStatus { get; set; }
-		public string SongSource { get; set; }
-		public string Title { get; set; }
-	}
 
     public class BGWcallback_SyncGetIDs {
 		public enum ArgModes {
@@ -90,39 +58,16 @@ namespace osuSync {
 	}
 
     public class Importer {
-		public class TagData {
-			public Beatmap Beatmap { get; set; }
-			public bool IsInstalled { get; set; }
-			public CheckBox UI_Checkbox_IsSelected { get; set; }
-			public System.Windows.Shapes.Rectangle UI_DecoBorderLeft { get; set; }
-			public Grid UI_Grid { get; set; }
-			public TextBlock UI_TextBlock_Title { get; set; }
-			public TextBlock UI_TextBlock_Caption { get; set; }
-			public Image UI_Thumbnail { get; set; }
-		}
-
-		public List<TagData> BmList_TagsDone = new List<TagData>();
-		public List<TagData> BmList_TagsFailed = new List<TagData>();
-		public List<TagData> BmList_TagsLeftOut = new List<TagData>();
-		public List<TagData> BmList_TagsToInstall = new List<TagData>();
+		public List<BeatmapItem_Importer> BmList_TagsDone = new List<BeatmapItem_Importer>();
+		public List<BeatmapItem_Importer> BmList_TagsFailed = new List<BeatmapItem_Importer>();
+		public List<BeatmapItem_Importer> BmList_TagsLeftOut = new List<BeatmapItem_Importer>();
+		public List<BeatmapItem_Importer> BmList_TagsToInstall = new List<BeatmapItem_Importer>();
 		public int BmTotal;
 		public int Counter;
 		public string CurrentFileName;
 		public WebClient Downloader = new WebClient();
 		public string FilePath;
 		public bool Pref_FetchFail_SkipAlways = false;
-	}
-
-    public class StandardColors {
-		public static Brush BlueLight = (Brush)new BrushConverter().ConvertFrom("#3498DB");
-		public static Brush GrayDark = (Brush)new BrushConverter().ConvertFrom("#555555");
-		public static Brush GrayLight = (Brush)new BrushConverter().ConvertFrom("#999999");
-		public static Brush GrayLighter = (Brush)new BrushConverter().ConvertFrom("#DDDDDD");
-		public static Brush GreenDark = (Brush)new BrushConverter().ConvertFrom("#008136");
-		public static Brush GreenLight = (Brush)new BrushConverter().ConvertFrom("#27AE60");
-		public static Brush OrangeLight = (Brush)new BrushConverter().ConvertFrom("#E67E2E");
-		public static Brush PurpleDark = (Brush)new BrushConverter().ConvertFrom("#8E44AD");
-		public static Brush RedLight = (Brush)new BrushConverter().ConvertFrom("#E74C3C");
 	}
 
     // Bm = Beatmap
@@ -136,8 +81,8 @@ namespace osuSync {
         private WebClient BmDP_client = new WebClient();
 		private DoubleAnimation fadeOut = new DoubleAnimation();
 		private Dictionary<int, Beatmap> bmDic_installed = new Dictionary<int, Beatmap>();
-		private List<Importer.TagData> exporter_bmList_selectedTags = new List<Importer.TagData>();
-		private List<Importer.TagData> exporter_bmList_unselectedTags = new List<Importer.TagData>();
+		private List<BeatmapItem_Exporter> exporter_bmList_selectedTags = new List<BeatmapItem_Exporter>();
+		private List<BeatmapItem_Exporter> exporter_bmList_unselectedTags = new List<BeatmapItem_Exporter>();
 
 		private Importer importerContainer = new Importer();
 		private TextBlock interface_loaderText = new TextBlock();
@@ -151,10 +96,13 @@ namespace osuSync {
             InitializeComponent();
         }
 
-		public bool BalloonShow(string content, string title = null, BalloonIcon icon = BalloonIcon.Info, NotifyNextAction ballonNextAction = NotifyNextAction.None) {
+		public bool BalloonShow(string content, string title = null, BalloonIcon icon = BalloonIcon.Info, RoutedEventHandler clickHandler = null) {
 			if(GlobalVar.appSettings.Tool_EnableNotifyIcon == 0) {
-                TI_Notify.Tag = ballonNextAction;
-                TI_Notify.ShowBalloonTip((title == null ? GlobalVar.appName : title), content, icon);
+                TI_Notify.Tag = clickHandler;
+                if(clickHandler != null) {
+                    TI_Notify.TrayBalloonTipClicked += clickHandler;
+                }
+                TI_Notify.ShowBalloonTip((title ?? GlobalVar.appName), content, icon);
 				return true;
 			} else {
 				return false;
@@ -188,7 +136,7 @@ namespace osuSync {
             StringBuilder sb_html = new StringBuilder();
             sb_html.Append("<!doctype html>\n" 
                 + "<html>\n" 
-                + "<head><meta charset=\"utf-8\"><meta name=\"author\" content=\"osu!Sync\"/><meta name=\"generator\" content=\"osu!Sync " + GlobalVar.appVersion + "\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"/><title>Beatmap List | osu!Sync</title><link rel=\"icon\" type=\"image/png\" href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png\"/><link href=\"http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700\" rel=\"stylesheet\" type=\"text/css\" /><link href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css\" rel=\"stylesheet\" type=\"text/css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css\"/></head>\n" 
+                + "<head><meta charset=\"utf-8\"><meta name=\"author\" content=\"osu!Sync\"/><meta name=\"generator\" content=\"osu!Sync " + GlobalVar.AppVersion + "\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"/><title>Beatmap List | osu!Sync</title><link rel=\"icon\" type=\"image/png\" href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png\"/><link href=\"http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700\" rel=\"stylesheet\" type=\"text/css\" /><link href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css\" rel=\"stylesheet\" type=\"text/css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css\"/></head>\n" 
                 + "<body>\n" 
                 + "<div id=\"Wrapper\">\n" 
                 + "\t<header><p>Beatmap List | osu!Sync</p></header>\n" 
@@ -229,18 +177,22 @@ namespace osuSync {
             StringBuilder fail = new StringBuilder();
             StringBuilder fail_unsubmitted = new StringBuilder();
             StringBuilder fail_alreadyAssigned = new StringBuilder();
-			Dictionary<string, Dictionary<string, string>> content = new Dictionary<string, Dictionary<string, string>>();
-            content.Add("_info", new Dictionary<string, string> {
-				{
-					"_date",
-					DateTime.Now.ToString("yyyyMMdd")
-				},
-				{
-					"_version",
-					GlobalVar.appVersion.ToString()
-				}
-			});
-			foreach(KeyValuePair<int, Beatmap> thisBm in source) {
+            Dictionary<string, Dictionary<string, string>> content = new Dictionary<string, Dictionary<string, string>> {
+                {
+                    "_info",
+                    new Dictionary<string, string> {
+                {
+                    "_date",
+                    DateTime.Now.ToString("yyyyMMdd")
+                },
+                {
+                    "_version",
+                    GlobalVar.AppVersion.ToString()
+                }
+            }
+                }
+            };
+            foreach(KeyValuePair<int, Beatmap> thisBm in source) {
 				if(thisBm.Value.Id == -1) {
                     fail_unsubmitted.Append("\n* " + thisBm.Value.Id.ToString() + " / " + thisBm.Value.Artist + " / " + thisBm.Value.Title);
 				} else if(content.ContainsKey(thisBm.Value.Id.ToString())) {
@@ -288,7 +240,7 @@ namespace osuSync {
         /// <remarks></remarks>
         public string ConvertBmListToTxt(Dictionary<int, Beatmap> source) {
             StringBuilder content = new StringBuilder();
-            content.Append("// osu!Sync (" + GlobalVar.appVersion.ToString() + ") | " + DateTime.Now.ToString("dd.MM.yyyy") + "\n\n");
+            content.Append("// osu!Sync (" + GlobalVar.AppVersion.ToString() + ") | " + DateTime.Now.ToString("dd.MM.yyyy") + "\n\n");
 			foreach(KeyValuePair<int, Beatmap> thisBm in source) {
                 content.Append("# " + thisBm.Value.Id + "\n" 
                     + "* Creator: \t" + thisBm.Value.Creator + "\n" 
@@ -370,93 +322,29 @@ namespace osuSync {
 			switch(destination) {
 				case UpdateBmDisplayDestinations.Installed:
                     La_FooterLastSync.Content = (lastUpdateTime == null ? GlobalVar._e("MainWindow_lastSync").Replace("%0", DateTime.Now.ToString(GlobalVar._e("MainWindow_dateFormat") + " " + GlobalVar._e("MainWindow_timeFormat"))) : GlobalVar._e("MainWindow_lastSync").Replace("%0", lastUpdateTime));
-                    La_FooterLastSync.Tag =     (lastUpdateTime == null ? DateTime.Now.ToString("yyyyMMddHHmmss") : lastUpdateTime);
+                    La_FooterLastSync.Tag = (lastUpdateTime ?? DateTime.Now.ToString("yyyyMMddHHmmss"));
 					BeatmapWrapper.Children.Clear();
 
-					foreach(KeyValuePair<int, Beatmap> thisBm in bmList) {
-                        Grid UI_Grid = new Grid {
-							Height = 80,
-							Margin = new Thickness(0, 0, 0, 5),
-							Tag = thisBm.Value,
-							Width = double.NaN
-						};
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(10) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(108) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(10) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition());
-						var UI_DecoBorderLeft = new System.Windows.Shapes.Rectangle();
-                        Image UI_Thumbnail = new Image();
-						Grid.SetColumn(UI_Thumbnail, 2);
-						if(thisBm.Value.Id == -1) {
-							UI_Thumbnail.MouseUp += BmDP_Show;
-						} else {
-							UI_Thumbnail.MouseLeftButtonUp += BmDP_Show;
-							UI_Thumbnail.MouseRightButtonUp += OpenBmListing;
-						}
-						if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + thisBm.Value.Id + "l.jpg")) {
-							try {
-								UI_Thumbnail.Source = new BitmapImage(new Uri(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + thisBm.Value.Id + "l.jpg"));
-							} catch(NotSupportedException) {
-								UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-							}
-						} else {
-							UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-						}
-                        TextBlock UI_TextBlock_Title = new TextBlock {
-							FontFamily = new FontFamily("Segoe UI"),
-							FontSize = 28,
-							Foreground = StandardColors.GrayDark,
-							Height = 36,
-							HorizontalAlignment = HorizontalAlignment.Left,
-							Text = thisBm.Value.Title,
-							TextWrapping = TextWrapping.Wrap,
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_TextBlock_Title, 4);
-                        TextBlock UI_TextBlock_Caption = new TextBlock {
-							FontFamily = new FontFamily("Segoe UI Light"),
-							FontSize = 14,
-							Foreground = StandardColors.GreenDark,
-							HorizontalAlignment = HorizontalAlignment.Left,
-							Margin = new Thickness(0, 38, 0, 0),
-							TextWrapping = TextWrapping.Wrap,
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_TextBlock_Caption, 4);
-                        UI_TextBlock_Caption.Text = (thisBm.Value.Id != -1 ? thisBm.Value.Id.ToString() + " | " + thisBm.Value.Artist : GlobalVar._e("MainWindow_unsubmitted") + " | " + thisBm.Value.Artist);
-						if(thisBm.Value.Creator != "Unknown")
-							UI_TextBlock_Caption.Text += " | " + thisBm.Value.Creator;
-                        CheckBox UI_Checkbox_IsInstalled = new CheckBox {
-							Content = GlobalVar._e("MainWindow_isInstalled"),
-							HorizontalAlignment = HorizontalAlignment.Left,
-							IsChecked = true,
-							IsEnabled = false,
-							Margin = new Thickness(0, 62, 0, 0),
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_Checkbox_IsInstalled, 4);
-                        UI_Grid.Children.Add(UI_Checkbox_IsInstalled);
-                        UI_Grid.Children.Add(UI_DecoBorderLeft);
-                        UI_Grid.Children.Add(UI_TextBlock_Title);
-                        UI_Grid.Children.Add(UI_TextBlock_Caption);
-                        UI_Grid.Children.Add(UI_Thumbnail);
-						BeatmapWrapper.Children.Add(UI_Grid);
-					}
+                    foreach(KeyValuePair<int, Beatmap> thisBm in bmList) {
+                        var bmItem = new BeatmapItem_Installed(thisBm.Value, this);
+                        BeatmapWrapper.Children.Add(bmItem);
+                    }
 
-					if(bmList.Count == 0) {
+                    if(bmList.Count == 0) {
 						TextBlock UI_TextBlock = new TextBlock {
 							FontSize = 72,
-							Foreground = StandardColors.GreenLight,
-							HorizontalAlignment = HorizontalAlignment.Center,
+							Foreground = (SolidColorBrush)FindResource("GreenLightBrush"),
+
+                            HorizontalAlignment = HorizontalAlignment.Center,
 							Margin = new Thickness(0, 86, 0, 0),
 							Text = GlobalVar._e("MainWindow_beatmapsFound").Replace("%0", "0"),
 							VerticalAlignment = VerticalAlignment.Center
 						};
 						TextBlock UI_TextBlock_SubTitle = new TextBlock {
 							FontSize = 24,
-							Foreground = StandardColors.GreenLight,
-							HorizontalAlignment = HorizontalAlignment.Center,
+							Foreground = (SolidColorBrush)FindResource("GreenLightBrush"),
+
+                            HorizontalAlignment = HorizontalAlignment.Center,
 							Text = GlobalVar._e("MainWindow_thatsImpressiveIGuess"),
 							VerticalAlignment = VerticalAlignment.Center
 						};
@@ -467,9 +355,10 @@ namespace osuSync {
 					Bu_SyncRun.IsEnabled = true;
 					break;
 				case UpdateBmDisplayDestinations.Importer:
-					importerContainer = new Importer();
-					importerContainer.BmTotal = 0;
-					TI_Importer.Visibility = Visibility.Visible;
+                    importerContainer = new Importer() {
+                        BmTotal = 0
+                    };
+                    TI_Importer.Visibility = Visibility.Visible;
 					TC_Main.SelectedIndex = 1;
 					SP_ImporterWrapper.Children.Clear();
 					CB_ImporterHideInstalled.IsChecked = false;
@@ -488,7 +377,7 @@ namespace osuSync {
 						};
 						TextBlock UI_TextBlock_SubTitle = new TextBlock {
 							FontSize = 24,
-							Foreground = StandardColors.GrayLighter,
+							Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 							HorizontalAlignment = HorizontalAlignment.Center,
 							Text = GlobalVar._e("MainWindow_pleaseWait") + "\n" + 
                                 GlobalVar._e("MainWindow_syncing"),
@@ -502,216 +391,33 @@ namespace osuSync {
 						Sync_GetIDs();
 						return;
 					}
-					foreach(KeyValuePair<int, Beatmap> thisBm in bmList) {
-						Bu_ImporterCancel.IsEnabled = true;
-						bool checkIfInstalled = checkIfInstalled = bmDic_installed.ContainsKey(thisBm.Value.Id);
-                        Grid UI_Grid = new Grid {
-							Height = 51,
-							Margin = new Thickness(0, 0, 0, 5),
-							Width = double.NaN
-						};
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(10) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(73) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition());
-						var UI_DecoBorderLeft = new System.Windows.Shapes.Rectangle {
-							Fill = StandardColors.GreenLight,
-							VerticalAlignment = VerticalAlignment.Stretch
-						};
-						UI_DecoBorderLeft.Fill = (checkIfInstalled ? StandardColors.GreenLight : StandardColors.RedLight);
-                        Image UI_Thumbnail = new Image {
-							Cursor = Cursors.Hand,
-							HorizontalAlignment = HorizontalAlignment.Stretch,
-							Margin = new Thickness(5, 0, 0, 0),
-							VerticalAlignment = VerticalAlignment.Stretch
-						};
-						Grid.SetColumn(UI_Thumbnail, 1);
 
-						string thumbPath = "";
-						if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + thisBm.Value.Id + "l.jpg")) {
-                            thumbPath = GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + thisBm.Value.Id + "l.jpg";
-						} else if(File.Exists(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + thisBm.Value.Id + ".jpg")) {
-                            thumbPath = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + thisBm.Value.Id + ".jpg";
-						}
-						if(!string.IsNullOrEmpty(thumbPath)) {
-							try {
-                                UI_Thumbnail.Source = new BitmapImage(new Uri(thumbPath));
-                                UI_Thumbnail.ToolTip = GlobalVar._e("MainWindow_openBeatmapDetailPanel");
-								UI_Thumbnail.MouseDown += BmDP_Show;
-							} catch(NotSupportedException) {
-                                UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/DownloadThumbnail.png", UriKind.Relative));
-                                UI_Thumbnail.ToolTip = GlobalVar._e("MainWindow_downladThumbnail");
-								UI_Thumbnail.MouseLeftButtonUp += Importer_DownloadThumb;
-								UI_Thumbnail.MouseRightButtonUp += BmDP_Show;
-							}
-						} else {
-                            UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/DownloadThumbnail.png", UriKind.Relative));
-                            UI_Thumbnail.ToolTip = GlobalVar._e("MainWindow_downladThumbnail");
-							UI_Thumbnail.MouseLeftButtonUp += Importer_DownloadThumb;
-							UI_Thumbnail.MouseRightButtonUp += BmDP_Show;
-						}
-                        TextBlock UI_TextBlock_Title = new TextBlock {
-							FontFamily = new FontFamily("Segoe UI"),
-							FontSize = 22,
-							Foreground = StandardColors.GrayDark,
-							Height = 30,
-							HorizontalAlignment = HorizontalAlignment.Left,
-							Margin = new Thickness(10, 0, 0, 0),
-							Text = thisBm.Value.Title,
-							TextWrapping = TextWrapping.Wrap,
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_TextBlock_Title, 2);
-                        TextBlock UI_TextBlock_Caption = new TextBlock {
-							FontFamily = new FontFamily("Segoe UI Light"),
-							FontSize = 12,
-							Foreground = StandardColors.GreenDark,
-							HorizontalAlignment = HorizontalAlignment.Left,
-							Text = thisBm.Value.Id.ToString() + " | " + thisBm.Value.Artist,
-							Margin = new Thickness(10, 30, 0, 0),
-							TextWrapping = TextWrapping.Wrap,
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_TextBlock_Caption, 2);
-						if(thisBm.Value.Creator != "Unknown")
-							UI_TextBlock_Caption.Text += " | " + thisBm.Value.Creator;
-						var UI_Checkbox_IsSelected = new CheckBox {
-							Content = GlobalVar._e("MainWindow_downloadAndInstall"),
-							HorizontalAlignment = HorizontalAlignment.Right,
-							IsChecked = true,
-							Margin = new Thickness(10, 5, 0, 0),
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_Checkbox_IsSelected, 2);
+                    Bu_ImporterCancel.IsEnabled = true;
+                    foreach(KeyValuePair<int, Beatmap> thisBm in bmList) {
+                        var isInstalled = bmDic_installed.ContainsKey(thisBm.Value.Id);
+                        var bmItem = new BeatmapItem_Importer(thisBm.Value, this, isInstalled);
 
-                        UI_Checkbox_IsSelected.IsChecked = !checkIfInstalled;
-                        UI_Checkbox_IsSelected.IsEnabled = !checkIfInstalled;
-						UI_Checkbox_IsSelected.Checked += Importer_AddBmToSel;
-						UI_Checkbox_IsSelected.Unchecked += Importer_RemoveBmFromSel;
+						if(!isInstalled) {
+                            importerContainer.BmList_TagsToInstall.Add(bmItem);
+                        }
 
-						Importer.TagData TagData = new Importer.TagData {
-							Beatmap = thisBm.Value,
-							IsInstalled = checkIfInstalled,
-							UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
-							UI_DecoBorderLeft = UI_DecoBorderLeft,
-							UI_Grid = UI_Grid,
-							UI_TextBlock_Caption = UI_TextBlock_Caption,
-							UI_TextBlock_Title = UI_TextBlock_Title,
-							UI_Thumbnail = UI_Thumbnail
-						};
-						if(checkIfInstalled == false)
-							importerContainer.BmList_TagsToInstall.Add(TagData);
-
-						UI_Grid.Tag = TagData;
-                        UI_Grid.Children.Add(UI_Checkbox_IsSelected);
-                        UI_Grid.Children.Add(UI_DecoBorderLeft);
-                        UI_Grid.Children.Add(UI_TextBlock_Title);
-                        UI_Grid.Children.Add(UI_TextBlock_Caption);
-                        UI_Grid.Children.Add(UI_Thumbnail);
-
-						SP_ImporterWrapper.Children.Add(UI_Grid);
+						SP_ImporterWrapper.Children.Add(bmItem);
 						importerContainer.BmTotal += 1;
 					}
 
 					Bu_ImporterCancel.IsEnabled = true;
 					TB_ImporterInfo.ToolTip = TB_ImporterInfo.Text;
-					Bu_ImporterRun.IsEnabled = (importerContainer.BmList_TagsToInstall.Count == 0);
+					Bu_ImporterRun.IsEnabled = (importerContainer.BmList_TagsToInstall.Count != 0);
 					Importer_UpdateInfo();
 					TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].DisplayName;
 					break;
 				case UpdateBmDisplayDestinations.Exporter:
 					SP_ExporterWrapper.Children.Clear();
 					foreach(KeyValuePair<int, Beatmap> thisBm in bmList) {
-                        Grid UI_Grid = new Grid {
-							Height = 51,
-							Margin = new Thickness(0, 0, 0, 5),
-							Width = double.NaN
-						};
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(10) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(73) });
-                        UI_Grid.ColumnDefinitions.Add(new ColumnDefinition());
-						var UI_DecoBorderLeft = new System.Windows.Shapes.Rectangle {
-							Fill = StandardColors.GreenLight,
-							VerticalAlignment = VerticalAlignment.Stretch
-						};
-                        Image UI_Thumbnail = new Image {
-							Cursor = Cursors.Hand,
-							HorizontalAlignment = HorizontalAlignment.Stretch,
-							Margin = new Thickness(5, 0, 0, 0),
-							VerticalAlignment = VerticalAlignment.Stretch
-						};
-						Grid.SetColumn(UI_Thumbnail, 1);
-						UI_Thumbnail.MouseRightButtonUp += BmDP_Show;
-						if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + thisBm.Value.Id + "l.jpg")) {
-							try {
-								UI_Thumbnail.Source = new BitmapImage(new Uri(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + thisBm.Value.Id + "l.jpg"));
-							} catch(NotSupportedException) {
-								UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-							}
-						} else {
-							UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-						}
-                        TextBlock UI_TextBlock_Title = new TextBlock {
-							FontFamily = new FontFamily("Segoe UI"),
-							FontSize = 22,
-							Foreground = StandardColors.GrayDark,
-							Height = 30,
-							HorizontalAlignment = HorizontalAlignment.Left,
-							Margin = new Thickness(10, 0, 0, 0),
-							Text = thisBm.Value.Title,
-							TextWrapping = TextWrapping.Wrap,
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_TextBlock_Title, 2);
-                        TextBlock UI_TextBlock_Caption = new TextBlock {
-							FontFamily = new FontFamily("Segoe UI Light"),
-							FontSize = 12,
-							Foreground = StandardColors.GreenDark,
-							HorizontalAlignment = HorizontalAlignment.Left,
-							Text = thisBm.Value.Id.ToString() + " | " + thisBm.Value.Artist,
-							Margin = new Thickness(10, 30, 0, 0),
-							TextWrapping = TextWrapping.Wrap,
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_TextBlock_Caption, 2);
-                        UI_TextBlock_Caption.Text = (thisBm.Value.Id != -1 ? thisBm.Value.Id.ToString() + " | " + thisBm.Value.Artist : GlobalVar._e("MainWindow_unsubmittedBeatmapCantBeExported") + " | " + thisBm.Value.Artist);
-						if(thisBm.Value.Creator != "Unknown")
-							UI_TextBlock_Caption.Text += " | " + thisBm.Value.Creator;
-                        CheckBox UI_Checkbox_IsSelected = new CheckBox {
-							Content = GlobalVar._e("MainWindow_selectToExport"),
-							HorizontalAlignment = HorizontalAlignment.Right,
-							IsChecked = true,
-							Margin = new Thickness(10, 5, 0, 0),
-							VerticalAlignment = VerticalAlignment.Top
-						};
-						Grid.SetColumn(UI_Checkbox_IsSelected, 2);
-						if(thisBm.Value.Id == -1) {
-                            UI_Checkbox_IsSelected.IsChecked = false;
-                            UI_Checkbox_IsSelected.IsEnabled = false;
-							UI_DecoBorderLeft.Fill = StandardColors.GrayLight;
-						} else {
-							UI_Checkbox_IsSelected.Checked += Exporter_AddBmToSel;
-							UI_Checkbox_IsSelected.Unchecked += Exporter_RemoveBmFromSel;
-							UI_DecoBorderLeft.MouseUp += Exporter_DetermineWheterAddOrRemove;
-							UI_TextBlock_Title.MouseUp += Exporter_DetermineWheterAddOrRemove;
-							UI_Thumbnail.MouseLeftButtonUp += Exporter_DetermineWheterAddOrRemove;
-						}
-						Importer.TagData TagData = new Importer.TagData {
-							Beatmap = thisBm.Value,
-							UI_Checkbox_IsSelected = UI_Checkbox_IsSelected,
-							UI_DecoBorderLeft = UI_DecoBorderLeft,
-							UI_Grid = UI_Grid,
-							UI_TextBlock_Caption = UI_TextBlock_Caption,
-							UI_TextBlock_Title = UI_TextBlock_Title,
-							UI_Thumbnail = UI_Thumbnail
-						};
-						exporter_bmList_selectedTags.Add(TagData);
-						UI_Grid.Tag = TagData;
-                        UI_Grid.Children.Add(UI_Checkbox_IsSelected);
-                        UI_Grid.Children.Add(UI_DecoBorderLeft);
-                        UI_Grid.Children.Add(UI_TextBlock_Title);
-                        UI_Grid.Children.Add(UI_TextBlock_Caption);
-                        UI_Grid.Children.Add(UI_Thumbnail);
-						SP_ExporterWrapper.Children.Add(UI_Grid);
+                        var bmItem = new BeatmapItem_Exporter(thisBm.Value, this);
+
+						exporter_bmList_selectedTags.Add(bmItem);
+						SP_ExporterWrapper.Children.Add(bmItem);
 					}
 
 					TI_Exporter.Visibility = Visibility.Visible;
@@ -761,7 +467,7 @@ namespace osuSync {
 						}
 
                         BeatmapDetails_APIPassCount.Text = Math.Round((double)(passCount.Sum() / passCount.Count()), 2).ToString("n", CI);
-                        BeatmapDetails_APIPassCount.ToolTip = passCount.ToString();
+                        BeatmapDetails_APIPassCount.ToolTip = sb_passCount.ToString();
 
                         BeatmapDetails_APIPlayCount.Text = Math.Round((double)(playCount.Sum() / playCount.Count()), 2).ToString("n", CI);
                         BeatmapDetails_APIPlayCount.ToolTip = sb_playCount.ToString();
@@ -787,35 +493,29 @@ namespace osuSync {
 			switch(value) {
 				case Beatmap.OnlineApprovedStatuses.Ranked:
 				case Beatmap.OnlineApprovedStatuses.Approved:
-                    BeatmapDetails_RankedStatus.Background = StandardColors.GreenDark;
+                    BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GreenDarkBrush");
                     BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_ranked");
 					break;
 				case Beatmap.OnlineApprovedStatuses.Pending:
-                    BeatmapDetails_RankedStatus.Background = StandardColors.PurpleDark;
+                    BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("PurpleDarkBrush");
                     BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_pending");
 					break;
 				default:
-                    BeatmapDetails_RankedStatus.Background = StandardColors.GrayLight;
+                    BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GrayLightBrush");
                     BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_unranked");
 					break;
 			}
 		}
 
 		public void BmDP_Show(object sender, MouseButtonEventArgs e) {
-			Beatmap Csender_Bm = null;
+			Beatmap cSender_Bm = null;
 			if(sender is Image) {
-				Grid Cparent = (Grid)((Image)sender).Parent;
-				Csender_Bm = (Cparent.Tag is Beatmap ? (Beatmap)Cparent.Tag : ((Importer.TagData)Cparent.Tag).Beatmap);
+                IBeatmapItem cParent = (IBeatmapItem)((Grid)((Image)sender).Parent).Parent;
+				cSender_Bm = cParent.Beatmap;
 			} else {
 				return;
 			}
-			UI_ShowBmDP(Csender_Bm.Id, new BmDPDetails {
-				Artist = Csender_Bm.Artist,
-				Creator = Csender_Bm.Creator,
-				IsUnplayed = Csender_Bm.IsUnplayed,
-				RankedStatus = Csender_Bm.RankedStatus,
-				Title = Csender_Bm.Title
-			});
+			UI_ShowBmDP(cSender_Bm);
 		}
 
 		#region "Bu - Button"
@@ -833,20 +533,19 @@ namespace osuSync {
 		#endregion
 
 		public void Exporter_ExportBmDialog(Dictionary<int, Beatmap> source, string dialogTitle = null) {
-			if(dialogTitle == null)
-                dialogTitle = GlobalVar._e("MainWindow_exportInstalledBeatmaps1");
-            SaveFileDialog Dialog_SaveFile = new SaveFileDialog();
-            Dialog_SaveFile.AddExtension = true;
-            Dialog_SaveFile.Filter = GlobalVar._e("MainWindow_fileext_osblx") + "     (*.nw520-osblx)|*.nw520-osblx|" + 
-                GlobalVar._e("MainWindow_fileext_osbl") + "     (*.nw520-osbl)|*.nw520-osbl|" +
-                GlobalVar._e("MainWindow_fileext_zip") + "     (*.zip)|*.osblz.zip|" +
-                GlobalVar._e("MainWindow_fileext_html") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.html)|*.html|" +
-                GlobalVar._e("MainWindow_fileext_txt") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.txt)|*.txt|" + 
-                GlobalVar._e("MainWindow_fileext_json") + "     (*.json)|*.json|" + 
-                GlobalVar._e("MainWindow_fileext_csv") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.csv)|*.csv";
-            Dialog_SaveFile.OverwritePrompt = true;
-            Dialog_SaveFile.Title = dialogTitle;
-            Dialog_SaveFile.ValidateNames = true;
+            SaveFileDialog Dialog_SaveFile = new SaveFileDialog() {
+                AddExtension = true,
+                Filter = GlobalVar._e("MainWindow_fileext_osblx") + "     (*.nw520-osblx)|*.nw520-osblx|"
+                    + GlobalVar._e("MainWindow_fileext_osbl") + "     (*.nw520-osbl)|*.nw520-osbl|"
+                    + GlobalVar._e("MainWindow_fileext_zip") + "     (*.zip)|*.osblz.zip|"
+                    + GlobalVar._e("MainWindow_fileext_html") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.html)|*.html|"
+                    + GlobalVar._e("MainWindow_fileext_txt") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.txt)|*.txt|"
+                    + GlobalVar._e("MainWindow_fileext_json") + "     (*.json)|*.json|"
+                    + GlobalVar._e("MainWindow_fileext_csv") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.csv)|*.csv",
+                OverwritePrompt = true,
+                Title = (dialogTitle ?? GlobalVar._e("MainWindow_exportInstalledBeatmaps1")),
+                ValidateNames = true
+            };
             Dialog_SaveFile.ShowDialog();
 			if(string.IsNullOrEmpty(Dialog_SaveFile.FileName)) {
 				OverlayShow(GlobalVar._e("MainWindow_exportAborted"), null);
@@ -1044,9 +743,9 @@ namespace osuSync {
 		
 		public void MainWindow_Loaded(object sender, RoutedEventArgs e) {
 #if DEBUG
-			La_FooterVer.Content = "osu!Sync Version " + GlobalVar.appVersion.ToString() + " (Dev)";
+			La_FooterVer.Content = "osu!Sync Version " + GlobalVar.AppVersion.ToString() + " (Dev)";
 #else
-            La_FooterVer.Content = "osu!Sync Version " + GlobalVar.appVersion.ToString();
+            La_FooterVer.Content = "osu!Sync Version " + GlobalVar.AppVersion.ToString();
 #endif
 
             // BGW_syncGetIds
@@ -1107,9 +806,10 @@ namespace osuSync {
 			// Open File
 			if(GlobalVar.appStartArgs != null && Array.Exists(GlobalVar.appStartArgs, s => {
 				if(s.Substring(0, 10) == "-openFile=") {
-					importerContainer = new Importer();
-					importerContainer.FilePath = s.Substring(10);
-					return true;
+                    importerContainer = new Importer() {
+                        FilePath = s.Substring(10)
+                    };
+                    return true;
 				} else {
 					return false;
 				}
@@ -1124,7 +824,7 @@ namespace osuSync {
 			} else if(GlobalVar.appSettings.Tool_SyncOnStartup) {
                 Sync_GetIDs();
 			}
-		}
+        }
 
 		#region "MI - MenuItem"
 		public void MI_AppExit_Click(object sender, RoutedEventArgs e) {
@@ -1186,7 +886,7 @@ namespace osuSync {
 							OverlayFadeOut();
 							return;
 						}
-						Exporter_ExportBmDialog(ConvertSavedJsonToBmList(JObject.Parse(content_osbl)), "Convert selected file");   // @TODO: L10N
+						Exporter_ExportBmDialog(ConvertSavedJsonToBmList(JObject.Parse(content_osbl)), GlobalVar._e("MainWindow_convertSelectedFile"));
 						break;
 				}
 			} else {
@@ -1282,8 +982,8 @@ namespace osuSync {
 		}
 
 		public void OverlayShow(string title = null, string caption = null) {
-			TB_OverlayCaption.Text = (caption == null ? "" : caption);
-			TB_OverlayTitle.Text = (title == null ? "" : title);
+			TB_OverlayCaption.Text = (caption ?? "");
+			TB_OverlayTitle.Text = (title ?? "");
             Gr_Overlay.Opacity = 1;
             Gr_Overlay.Visibility = Visibility.Visible;
 		}
@@ -1326,11 +1026,9 @@ namespace osuSync {
 
 		#region "TI - TaskbarIcon"
 		public void TI_Notify_TrayBalloonTipClicked(object sender, RoutedEventArgs e) {
-			switch((NotifyNextAction)TI_Notify.Tag) {
-				case NotifyNextAction.OpenUpdater:
-					UI_ShowUpdaterWindow();
-					break;
-			}
+            if(TI_Notify.Tag != null && TI_Notify.Tag is RoutedEventHandler) {
+                TI_Notify.TrayBalloonTipClicked -= (RoutedEventHandler)TI_Notify.Tag;
+            }
 		}
 
 		public void TI_Notify_TrayMouseDoubleClick(object sender, RoutedEventArgs e) {
@@ -1363,8 +1061,10 @@ namespace osuSync {
 		}
 
 		#region "UI"
-		public void UI_SetLoader(string message = "Please wait") {
-            // @TODO: L10N
+		public void UI_SetLoader(string message = null) {
+            if(message == null)
+                message = GlobalVar._e("MainWindow_pleaseWait");
+
 			var UI_ProgressBar = new ProgressBar {
 				HorizontalAlignment = HorizontalAlignment.Stretch,
 				Visibility = Visibility.Hidden,
@@ -1380,7 +1080,7 @@ namespace osuSync {
 			};
 			TextBlock UI_TextBlock_SubTitle = new TextBlock {
 				FontSize = 24,
-				Foreground = StandardColors.GrayLighter,
+				Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 				HorizontalAlignment = HorizontalAlignment.Center,
 				Text = message,
 				TextAlignment = TextAlignment.Center,
@@ -1417,39 +1117,33 @@ namespace osuSync {
 			La_FooterProg.Content = message;
 		}
 
-		public void UI_ShowBmDP(int id, BmDPDetails details) {
-			BeatmapDetails_Artist.Text = details.Artist;
-			Bu_BmDetailsListing.Tag = id;
-			BeatmapDetails_Creator.Text = details.Creator;
-			BeatmapDetails_Title.Text = details.Title;
+		public void UI_ShowBmDP(Beatmap bm) {
+			BeatmapDetails_Artist.Text = bm.Artist;
+			Bu_BmDetailsListing.Tag = bm.Id;
+			BeatmapDetails_Creator.Text = bm.Creator;
+			BeatmapDetails_Title.Text = bm.Title;
 
 			// IsUnplayed status
-            BeatmapDetails_IsUnplayed.Background = (details.IsUnplayed ? StandardColors.RedLight : StandardColors.GreenDark);
-            BeatmapDetails_IsUnplayed.Text = (details.IsUnplayed ? GlobalVar._e("MainWindow_detailsPanel_playedStatus_unplayed") : GlobalVar._e("MainWindow_detailsPanel_playedStatus_played"));
+            BeatmapDetails_IsUnplayed.Background = (bm.IsUnplayed ? (SolidColorBrush)FindResource("RedLightBrush") : (SolidColorBrush)FindResource("GreenDarkBrush"));
+            BeatmapDetails_IsUnplayed.Text = (bm.IsUnplayed ? GlobalVar._e("MainWindow_detailsPanel_playedStatus_unplayed") : GlobalVar._e("MainWindow_detailsPanel_playedStatus_played"));
 
             // Ranked status
-            if(details.RankedStatus == Convert.ToByte(4)
-                || details.RankedStatus == Convert.ToByte(5)) {
-                BeatmapDetails_RankedStatus.Background = StandardColors.GreenDark;
+            if(bm.RankedStatus == Convert.ToByte(4)
+                || bm.RankedStatus == Convert.ToByte(5)) {
+                BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GreenDarkBrush");
                 BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_ranked");
-            } else if(details.RankedStatus == Convert.ToByte(6)) {
-                BeatmapDetails_RankedStatus.Background = StandardColors.PurpleDark;
+            } else if(bm.RankedStatus == Convert.ToByte(6)) {
+                BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("PurpleDarkBrush");
                 BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_pending");
             } else {
-                BeatmapDetails_RankedStatus.Background = StandardColors.GrayLight;
+                BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GrayLightBrush");
                 BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_unranked");
             }
 
 			// Thumbnail
-			string thumbPath = "";
-			if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt"  + Path.DirectorySeparatorChar + id + "l.jpg")) {
-                thumbPath = (GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + id + "l.jpg");
-			} else if(File.Exists(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + id + ".jpg")) {
-                thumbPath = (GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + id + ".jpg");
-			}
-			if(!string.IsNullOrEmpty(thumbPath)) {
+			if(!string.IsNullOrEmpty(bm.ThumbnailPath)) {
 				try {
-					BeatmapDetails_Thumbnail.Source = new BitmapImage(new Uri(thumbPath));
+					BeatmapDetails_Thumbnail.Source = new BitmapImage(new Uri(bm.ThumbnailPath));
 				} catch(Exception) { // IOException, NotSupportedException
                     BeatmapDetails_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
 				}
@@ -1458,7 +1152,7 @@ namespace osuSync {
 			}
 
 			// Api
-			if(GlobalVar.appSettings.Api_Enabled_BeatmapPanel & id != -1) {
+			if(GlobalVar.appSettings.Api_Enabled_BeatmapPanel & bm.Id != -1) {
 				if(BmDP_client.IsBusy)
 					BmDP_client.CancelAsync();
 				// Reset
@@ -1471,8 +1165,8 @@ namespace osuSync {
 				BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed;
 
 				try {
-					UI_SetStatus(GlobalVar._e("MainWindow_fetching").Replace("%0", Convert.ToString(id)), true);
-					BmDP_client.DownloadStringAsync(new Uri(GlobalVar.webOsuApiRoot + "get_beatmaps?k=" + GlobalVar.appSettings.Api_Key + "&s=" + id));
+					UI_SetStatus(GlobalVar._e("MainWindow_fetching").Replace("%0", Convert.ToString(bm.Id)), true);
+					BmDP_client.DownloadStringAsync(new Uri(GlobalVar.webOsuApiRoot + "get_beatmaps?k=" + GlobalVar.appSettings.Api_Key + "&s=" + bm.Id));
 				} catch(NotSupportedException) {
                     BeatmapDetails_APIWarn.Content = GlobalVar._e("MainWindow_detailsPanel_generalError");
                     BeatmapDetails_APIWarn.Visibility = Visibility.Visible;
@@ -1529,11 +1223,13 @@ namespace osuSync {
 			}
 
 			string latestVer = Convert.ToString(Answer.SelectToken("latestRepoRelease").SelectToken("tag_name"));
-			if(latestVer == GlobalVar.appVersion.ToString()) {
+			if(latestVer == GlobalVar.AppVersion.ToString()) {
 				La_FooterUpdater.Content = GlobalVar._e("MainWindow_latestVersion");
 			} else {
 				La_FooterUpdater.Content = GlobalVar._e("MainWindow_updateAvailable").Replace("%0", latestVer);
-				BalloonShow(GlobalVar._e("MainWindow_aNewVersionIsAvailable").Replace("%0", GlobalVar.appVersion.ToString()).Replace("%1", latestVer), null, BalloonIcon.Info, NotifyNextAction.OpenUpdater);
+				BalloonShow(GlobalVar._e("MainWindow_aNewVersionIsAvailable").Replace("%0", GlobalVar.AppVersion.ToString()).Replace("%1", latestVer), null, BalloonIcon.Info, new RoutedEventHandler(delegate (Object o, RoutedEventArgs a) {
+                    UI_ShowUpdaterWindow();
+                }));
 				if(GlobalVar.appSettings.Messages_Updater_OpenUpdater)
 					UI_ShowUpdaterWindow();
 			}
@@ -1643,7 +1339,7 @@ namespace osuSync {
 				case BGWcallback_SyncGetIDs.ReturnStatuses.Exception:
 					TextBlock UI_TextBlock = new TextBlock {
 						FontSize = 72,
-						Foreground = StandardColors.GrayLighter,
+						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Margin = new Thickness(0, 100, 0, 0),
 						Text = GlobalVar._e("MainWindow_lastSyncFailed"),
@@ -1651,7 +1347,7 @@ namespace osuSync {
 					};
 					TextBlock UI_TextBlock_SubTitle = new TextBlock {
 						FontSize = 24,
-						Foreground = StandardColors.GrayLighter,
+						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Text = GlobalVar._e("MainWindow_pleaseRetry"),
 						VerticalAlignment = VerticalAlignment.Center
@@ -1666,7 +1362,7 @@ namespace osuSync {
 				case BGWcallback_SyncGetIDs.ReturnStatuses.FolderDoesNotExist:
 					TextBlock UI_TextBlock_ = new TextBlock {
 						FontSize = 72,
-						Foreground = StandardColors.GrayLighter,
+						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Margin = new Thickness(0, 100, 0, 0),
 						Text = GlobalVar._e("MainWindow_lastSyncFailed"),
@@ -1674,7 +1370,7 @@ namespace osuSync {
 					};
 					TextBlock UI_TextBlock_SubTitle_ = new TextBlock {
 						FontSize = 24,
-						Foreground = StandardColors.GrayLighter,
+						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Text = GlobalVar._e("MainWindow_pleaseRetry"),
 						VerticalAlignment = VerticalAlignment.Center
@@ -1865,81 +1561,81 @@ namespace osuSync {
 
 		public void Bu_ExporterInvertSel_Click(object sender, RoutedEventArgs e) {
 			// Copy data before manipulation
-			List<Importer.TagData> listSelected = exporter_bmList_selectedTags.ToList();
-			List<Importer.TagData> listUnselected = exporter_bmList_unselectedTags.ToList();
+			List<BeatmapItem_Exporter> listSelected = exporter_bmList_selectedTags.ToList();
+			List<BeatmapItem_Exporter> listUnselected = exporter_bmList_unselectedTags.ToList();
 			
 			int i = 0;
 			while(i < listSelected.Count) { // Loop selected elements
-                listSelected[i].UI_Checkbox_IsSelected.IsChecked = false;
+                listSelected[i].CB_IsSelected.IsChecked = false;
 				i++;
 			}
 
 			i = 0;
 			while(i < listUnselected.Count) {   // Loop unselected elements
-                listUnselected[i].UI_Checkbox_IsSelected.IsChecked = true;
+                listUnselected[i].CB_IsSelected.IsChecked = true;
 				i++;
 			}
 		}
 
 		public void Bu_ExporterRun_Click(object sender, RoutedEventArgs e) {
 			Dictionary<int, Beatmap> answer = new Dictionary<int, Beatmap>();
-			foreach(Importer.TagData Item in exporter_bmList_selectedTags) {
+			foreach(var Item in exporter_bmList_selectedTags) {
                 answer.Add(Item.Beatmap.Id, Item.Beatmap);
 			}
-			Exporter_ExportBmDialog(answer, "Export selected beatmaps");    // @TODO: L10N
+            Exporter_ExportBmDialog(answer, GlobalVar._e("MainWindow_exportSelectedBeatmaps"));
 			TI_Exporter.Visibility = Visibility.Collapsed;
 			TC_Main.SelectedIndex = 0;
 			SP_ExporterWrapper.Children.Clear();
 		}
 
 		public void Exporter_AddBmToSel(object sender, EventArgs e) {
-			Grid cParent = (Grid)((CheckBox)sender).Parent;
-			Importer.TagData cSender_tag = (Importer.TagData)cParent.Tag;
-			exporter_bmList_unselectedTags.Remove(cSender_tag);
-			exporter_bmList_selectedTags.Add(cSender_tag);
+			BeatmapItem_Exporter cParent = (BeatmapItem_Exporter)((Grid)((CheckBox)sender).Parent).Parent;
+			exporter_bmList_unselectedTags.Remove(cParent);
+			exporter_bmList_selectedTags.Add(cParent);
 			Bu_ExporterRun.IsEnabled = (exporter_bmList_selectedTags.Count > 0);
-            cSender_tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight;
-		}
+            cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("GreenLightBrush");
+
+        }
 
 		public void Exporter_DetermineWheterAddOrRemove(object sender, EventArgs e) {
-			Grid cParent = null;
-			Importer.TagData cSender_tag = null;
+            BeatmapItem_Exporter cParent = null;
 			if(sender is Image) {
-                cParent = (Grid)((Image)sender).Parent;
+                cParent = (BeatmapItem_Exporter)((Grid)((Image)sender).Parent).Parent;
 			} else if(sender is System.Windows.Shapes.Rectangle) {
-                cParent = (Grid)((System.Windows.Shapes.Rectangle)sender).Parent;
+                cParent = (BeatmapItem_Exporter)((Grid)((System.Windows.Shapes.Rectangle)sender).Parent).Parent;
 			} else if(sender is TextBlock) {
-                cParent = (Grid)((TextBlock)sender).Parent;
+                cParent = (BeatmapItem_Exporter)((Grid)((StackPanel)((TextBlock)sender).Parent).Parent).Parent;
 			} else {
 				return;
 			}
-            cSender_tag = (Importer.TagData)cParent.Tag;
 
-			if((bool)cSender_tag.UI_Checkbox_IsSelected.IsChecked) {
-				exporter_bmList_selectedTags.Remove(cSender_tag);
+			if((bool)cParent.CB_IsSelected.IsChecked) {
+				exporter_bmList_selectedTags.Remove(cParent);
 				if(exporter_bmList_selectedTags.Count == 0)
 					Bu_ExporterRun.IsEnabled = false;
 
-                cSender_tag.UI_Checkbox_IsSelected.IsChecked = false;
-                cSender_tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight;
-			} else {
-				exporter_bmList_selectedTags.Add(cSender_tag);
+                cParent.CB_IsSelected.IsChecked = false;
+                cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("GrayLightBrush");
+
+            } else {
+				exporter_bmList_selectedTags.Add(cParent);
 				Bu_ExporterRun.IsEnabled = (exporter_bmList_selectedTags.Count > 0);
 
-                cSender_tag.UI_Checkbox_IsSelected.IsChecked = true;
-                cSender_tag.UI_DecoBorderLeft.Fill = StandardColors.GreenLight;
-			}
+                cParent.CB_IsSelected.IsChecked = true;
+                cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("GreenLightBrush");
+
+            }
 		}
 
 		public void Exporter_RemoveBmFromSel(object sender, EventArgs e) {
-			Grid cParent = (Grid)((CheckBox)sender).Parent;
-			Importer.TagData cSender_tag = (Importer.TagData)cParent.Tag;
-			exporter_bmList_selectedTags.Remove(cSender_tag);
-			exporter_bmList_unselectedTags.Add(cSender_tag);
+            BeatmapItem_Exporter cParent = (BeatmapItem_Exporter)((Grid)((CheckBox)sender).Parent).Parent;
+			exporter_bmList_selectedTags.Remove(cParent);
+			exporter_bmList_unselectedTags.Add(cParent);
 			if(exporter_bmList_selectedTags.Count == 0)
 				Bu_ExporterRun.IsEnabled = false;
-            cSender_tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight;
-		}
+            cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("GrayLightBrush");
+
+        }
 		#endregion
 
 		#region "Importer"
@@ -1955,24 +1651,23 @@ namespace osuSync {
 		}
 
 		public void CB_ImporterHideInstalled_Checked(object sender, RoutedEventArgs e) {
-			foreach(Grid thisTagData in SP_ImporterWrapper.Children) {
-				if(((Importer.TagData)thisTagData.Tag).IsInstalled) {
-                    thisTagData.Visibility = Visibility.Collapsed;
+			foreach(BeatmapItem_Importer i in SP_ImporterWrapper.Children) {
+				if(i.IsInstalled) {
+                    i.Gr_Grid.Visibility = Visibility.Collapsed;
 				}
 			}
 		}
 
 		public void CB_ImporterHideInstalled_Unchecked(object sender, RoutedEventArgs e) {
-			foreach(Grid thisChildren in SP_ImporterWrapper.Children) {
-                thisChildren.Visibility = Visibility.Visible;
+			foreach(BeatmapItem_Importer i in SP_ImporterWrapper.Children) {
+                i.Gr_Grid.Visibility = Visibility.Visible;
 			}
 		}
 
 		public void Importer_AddBmToSel(object sender, EventArgs e) {
-			Grid cParent = (Grid)((CheckBox)sender).Parent;     // Get Tag from parent Grid
-			Importer.TagData cSender_tag = (Importer.TagData)cParent.Tag;
-			importerContainer.BmList_TagsToInstall.Add(cSender_tag);
-			importerContainer.BmList_TagsLeftOut.Remove(cSender_tag);
+            BeatmapItem_Importer cParent = (BeatmapItem_Importer)((Grid)((CheckBox)sender).Parent).Parent;
+			importerContainer.BmList_TagsToInstall.Add(cParent);
+			importerContainer.BmList_TagsLeftOut.Remove(cParent);
 
 			if(importerContainer.BmList_TagsToInstall.Count > 0) {
 				Bu_ImporterRun.IsEnabled = true;
@@ -1981,8 +1676,9 @@ namespace osuSync {
 				Bu_ImporterRun.IsEnabled = false;
 			}
 			Importer_UpdateInfo();
-            cSender_tag.UI_DecoBorderLeft.Fill = StandardColors.RedLight;
-		}
+            cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("RedLightBrush");
+
+        }
 
 		public void Importer_Downloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
 			importerContainer.Counter++;
@@ -1990,8 +1686,9 @@ namespace osuSync {
 				// Detect "Beatmap Not Found" pages
 				if((new FileInfo(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName)).Length <= 3000) {
 					// File Empty
-					importerContainer.BmList_TagsToInstall.First().UI_DecoBorderLeft.Fill = StandardColors.OrangeLight;
-					try {
+					importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
+
+                    try {
 						File.Delete(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName);
 					} catch(IOException) {
 					}
@@ -2000,14 +1697,15 @@ namespace osuSync {
 					Importer_Downloader_ToNextDownload();
 				// File Normal
 				} else {
-					importerContainer.BmList_TagsToInstall.First().UI_DecoBorderLeft.Fill = StandardColors.PurpleDark;
-					importerContainer.BmList_TagsDone.Add(importerContainer.BmList_TagsToInstall.First());
+					importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("PurpleDarkBrush");
+
+                    importerContainer.BmList_TagsDone.Add(importerContainer.BmList_TagsToInstall.First());
 					importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
 					Importer_Downloader_ToNextDownload();
 				}
 			} else {
 				// File Empty
-				importerContainer.BmList_TagsToInstall.First().UI_DecoBorderLeft.Fill = StandardColors.OrangeLight;
+				importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
 				importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
 				importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
 				Importer_Downloader_ToNextDownload();
@@ -2037,7 +1735,7 @@ namespace osuSync {
 				string Failed = "# " + GlobalVar._e("MainWindow_downloadFailed") + "\n" 
                     + GlobalVar._e("MainWindow_cantDownload") + "\n\n"
                     + "> " + GlobalVar._e("MainWindow_beatmaps") + ": ";
-				foreach(Importer.TagData thisTagData in importerContainer.BmList_TagsFailed) {
+				foreach(var thisTagData in importerContainer.BmList_TagsFailed) {
 					Failed += "\n" + "* " + thisTagData.Beatmap.Id.ToString() + " / " + thisTagData.Beatmap.Artist + " / " + thisTagData.Beatmap.Title;
 				}
 				if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenImported") + "\n" 
@@ -2087,7 +1785,7 @@ namespace osuSync {
 							try {
 								File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
 							} catch(IOException) {
-								MessageBox.Show("Unable to install beatmap '" + Path.GetFileName(thisPath) + "'.", "Debug | " + GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error); // @TODO: L10N
+                                MessageBox.Show(GlobalVar._e("MainWindow_unableToInstallBeatmap").Replace("%0", Path.GetFileName(thisPath)), "Debug | " + GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 							}
 						} else {
 							File.Delete(thisPath);
@@ -2110,10 +1808,10 @@ namespace osuSync {
 			TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].DisplayName;
 			requestUri = GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].DownloadUrl.Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id));
 
-            importerContainer.BmList_TagsToInstall.First().UI_DecoBorderLeft.Fill = StandardColors.BlueLight;
-            importerContainer.BmList_TagsToInstall.First().UI_Checkbox_IsSelected.IsEnabled = false;
-            importerContainer.BmList_TagsToInstall.First().UI_Checkbox_IsSelected.IsThreeState = false;
-            importerContainer.BmList_TagsToInstall.First().UI_Checkbox_IsSelected.IsChecked = null;
+            importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("BlueLightBrush");
+            importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsEnabled = false;
+            importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsThreeState = false;
+            importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsChecked = null;
 
 			Importer_UpdateInfo(GlobalVar._e("MainWindow_fetching1"));
 
@@ -2141,8 +1839,9 @@ namespace osuSync {
 							break;
 						case (int)Window_GenericMsgBox.MsgBoxResult.Cancel:
 						case (int)Window_GenericMsgBox.MsgBoxResult.None:
-							importerContainer.BmList_TagsToInstall.First().UI_DecoBorderLeft.Fill = StandardColors.OrangeLight;
-							TB_ImporterInfo.Text = GlobalVar._e("MainWindow_installing") + " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString());
+							importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
+
+                            TB_ImporterInfo.Text = GlobalVar._e("MainWindow_installing") + " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString());
 							if(importerContainer.BmList_TagsLeftOut.Count > 0)
 								TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_leftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString());
 							TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
@@ -2188,43 +1887,10 @@ namespace osuSync {
 			importerContainer.Downloader.DownloadFileAsync(new Uri(requestUri), (GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName));
 		}
 
-		public void Importer_DownloadThumb(object sender, MouseButtonEventArgs e) {
-			Image cSender = (Image)sender;
-			Grid cParent = (Grid)cSender.Parent;
-			Importer.TagData cSender_bm = (Importer.TagData)cParent.Tag;
-
-			cSender_bm.UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/ProgressThumbnail.png", UriKind.Relative));
-			cSender_bm.UI_Thumbnail.MouseLeftButtonUp -= Importer_DownloadThumb;
-			cSender_bm.UI_Thumbnail.MouseRightButtonUp -= BmDP_Show;
-			cSender_bm.UI_Thumbnail.MouseDown += BmDP_Show;
-			Directory.CreateDirectory(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails");
-			UI_SetStatus(GlobalVar._e("MainWindow_downloadingThumbnail").Replace("%0", Convert.ToString(cSender_bm.Beatmap.Id)), true);
-			WebClient ThumbClient = new WebClient();
-			ThumbClient.DownloadFileCompleted += Importer_DownloadThumb_DownloadFileCompleted;
-			ThumbClient.DownloadFileAsync(new Uri("https://b.ppy.sh/thumb/" + cSender_bm.Beatmap.Id + ".jpg"), GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + cSender_bm.Beatmap.Id + ".jpg", cSender_bm);
-		}
-
-		public void Importer_DownloadThumb_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-			UI_SetStatus(GlobalVar._e("MainWindow_finished"));
-			Importer.TagData Csender_Bm = (Importer.TagData)e.UserState;
-			if(File.Exists(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Csender_Bm.Beatmap.Id + ".jpg") && (new FileInfo(GlobalVar.appTempPath + Path.DirectorySeparatorChar +  "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Csender_Bm.Beatmap.Id + ".jpg")).Length >= 10) {
-				try {
-                    Csender_Bm.UI_Thumbnail.Source = new BitmapImage(new Uri(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Csender_Bm.Beatmap.Id + ".jpg"));
-                    Csender_Bm.UI_Thumbnail.ToolTip = GlobalVar._e("MainWindow_openBeatmapDetailPanel");
-				} catch(NotSupportedException) {
-					Csender_Bm.UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-				}
-			} else if((new FileInfo(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Csender_Bm.Beatmap.Id + ".jpg")).Length <= 10) {
-				File.Delete(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Csender_Bm.Beatmap.Id + ".jpg");
-				Csender_Bm.UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-			} else {
-				Csender_Bm.UI_Thumbnail.Source = new BitmapImage(new Uri("Resources/NoThumbnail.png", UriKind.Relative));
-			}
-		}
-
 		public void Importer_FetchFail_ToNext() {
-			importerContainer.BmList_TagsToInstall.First().UI_DecoBorderLeft.Fill = StandardColors.OrangeLight;
-			importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
+			importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
+
+            importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
 			importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
 			Importer_Downloader_ToNextDownload();
 		}
@@ -2301,18 +1967,18 @@ namespace osuSync {
 		}
 
 		public void Importer_RemoveBmFromSel(object sender, EventArgs e) {
-			Grid Cparent = (Grid)((CheckBox)sender).Parent;
+			BeatmapItem_Importer cParent = (BeatmapItem_Importer)((Grid)((CheckBox)sender).Parent).Parent;
 			// Get Tag from parent Grid
-			Importer.TagData Csender_Tag = (Importer.TagData)Cparent.Tag;
-			importerContainer.BmList_TagsToInstall.Remove(Csender_Tag);
-			importerContainer.BmList_TagsLeftOut.Add(Csender_Tag);
+			importerContainer.BmList_TagsToInstall.Remove(cParent);
+			importerContainer.BmList_TagsLeftOut.Add(cParent);
 			if(importerContainer.BmList_TagsToInstall.Count == 0) {
 				Bu_ImporterRun.IsEnabled = false;
 				Bu_ImporterCancel.IsEnabled = true;
 			}
 			Importer_UpdateInfo();
-			Csender_Tag.UI_DecoBorderLeft.Fill = StandardColors.GrayLight;
-		}
+            cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("GrayLightBrush");
+
+        }
 
 		public void Importer_ShowRawOSBL(string fileContent, string filePath) {
 			try {
@@ -2326,7 +1992,9 @@ namespace osuSync {
 			}
 		}
 
-		public void Importer_UpdateInfo(string title = "osu!Sync") {    // @TODO: L10N
+		public void Importer_UpdateInfo(string title = null) {
+            title = (title ?? GlobalVar.appName);
+
 			TB_ImporterInfo.Text = title;
 			if(title == GlobalVar._e("MainWindow_fetching1") | title == GlobalVar._e("MainWindow_downloading1") | title == GlobalVar._e("MainWindow_installing")) {
 				TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsLeft").Replace("%0", importerContainer.BmList_TagsToInstall.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsFailed").Replace("%0", importerContainer.BmList_TagsFailed.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsLeftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());

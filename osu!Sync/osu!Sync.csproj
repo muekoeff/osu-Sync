@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>true</Optimize>
     <DefineConstants>DEBUG</DefineConstants>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,6 +61,7 @@
     <DocumentationFile>osu!Sync.xml</DocumentationFile>
     <NoWarn />
     <WarningsAsErrors>41999,42016,42020,42021,42022</WarningsAsErrors>
+    <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -134,8 +136,20 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Beatmap.cs" />
+    <Compile Include="Extensions\UserControls\BeatmapItemExtensions.cs" />
     <Compile Include="OsuReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\BeatmapItem_Exporter.xaml.cs">
+      <DependentUpon>BeatmapItem_Exporter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BeatmapItem_Importer.xaml.cs">
+      <DependentUpon>BeatmapItem_Importer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BeatmapItem_Installed.xaml.cs">
+      <DependentUpon>BeatmapItem_Installed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\UserControls\IBeatmapItem.cs" />
     <Compile Include="Window_About.xaml.cs">
       <DependentUpon>Window_About.xaml</DependentUpon>
     </Compile>
@@ -251,6 +265,18 @@
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\BeatmapItem_Exporter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BeatmapItem_Importer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BeatmapItem_Installed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Window_About.xaml">
       <SubType>Designer</SubType>

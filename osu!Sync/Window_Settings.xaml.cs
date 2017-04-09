@@ -27,16 +27,14 @@ namespace osuSync {
 			GlobalVar.appSettings.Tool_DownloadMirror = CB_ToolDownloadMirror.SelectedIndex;
 			GlobalVar.appSettings.Tool_EnableNotifyIcon = CB_ToolEnableNotifyIcon.SelectedIndex;
 
-            int val_TB_ToolImporterAutoInstallCounter;
-            if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out val_TB_ToolImporterAutoInstallCounter))
-				GlobalVar.appSettings.Tool_Importer_AutoInstallCounter = val_TB_ToolImporterAutoInstallCounter;
+            if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int val_TB_ToolImporterAutoInstallCounter))
+                GlobalVar.appSettings.Tool_Importer_AutoInstallCounter = val_TB_ToolImporterAutoInstallCounter;
 
-            int val_TB_ToolInterface_BeatmapDetailPanelWidth;
-            if(int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out val_TB_ToolInterface_BeatmapDetailPanelWidth)
+            if(int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out int val_TB_ToolInterface_BeatmapDetailPanelWidth)
                 && val_TB_ToolInterface_BeatmapDetailPanelWidth >= 5 & val_TB_ToolInterface_BeatmapDetailPanelWidth <= 95)
                 GlobalVar.appSettings.Tool_Interface_BeatmapDetailPanelWidth = Convert.ToInt32(TB_ToolInterface_BeatmapDetailPanelWidth.Text);
 
-			GlobalVar.appSettings.Tool_SyncOnStartup = Convert.ToBoolean(CB_ToolSyncOnStartup.IsChecked);
+            GlobalVar.appSettings.Tool_SyncOnStartup = Convert.ToBoolean(CB_ToolSyncOnStartup.IsChecked);
 			// Load Language
 			string LangCode = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "));
 			if(!string.IsNullOrEmpty(CB_ToolLanguages.Text) & !(GlobalVar.appSettings.Tool_Language == LangCode) & GlobalVar.translationList.ContainsKey(LangCode)) {
@@ -139,14 +137,15 @@ namespace osuSync {
 				Gr_FeedbackOverlay.Visibility = Visibility.Visible;
 
 				using(WebClient submitClient = new WebClient()) {
-					System.Collections.Specialized.NameValueCollection reqParam = new System.Collections.Specialized.NameValueCollection();
-					reqParam.Add("category", CB_FeedbackCategory.Tag.ToString());
-					reqParam.Add("debugData", Ru_FeedbackInfo.Text);
-					reqParam.Add("email", TB_FeedbackeMail.Text);
-					reqParam.Add("message", RTB_FeedbackMessage_TextRange.Text);
-					reqParam.Add("username", TB_FeedbackUsername.Text);
-					reqParam.Add("version", GlobalVar.appVersion.ToString());
-					var responseBytes = submitClient.UploadValues(GlobalVar.webNw520ApiRoot + "app/feedback.submitReport.php", "POST", reqParam);
+                    System.Collections.Specialized.NameValueCollection reqParam = new System.Collections.Specialized.NameValueCollection {
+                        { "category", CB_FeedbackCategory.Tag.ToString() },
+                        { "debugData", Ru_FeedbackInfo.Text },
+                        { "email", TB_FeedbackeMail.Text },
+                        { "message", RTB_FeedbackMessage_TextRange.Text },
+                        { "username", TB_FeedbackUsername.Text },
+                        { "version", GlobalVar.AppVersion.ToString() }
+                    };
+                    var responseBytes = submitClient.UploadValues(GlobalVar.webNw520ApiRoot + "app/feedback.submitReport.php", "POST", reqParam);
 					var responseBody = (new System.Text.UTF8Encoding()).GetString(responseBytes);
 
 					try {
@@ -188,40 +187,36 @@ namespace osuSync {
 		}
 
 		public void Bu_ToolImporterAutoInstallCounterDown_Click(object sender, RoutedEventArgs e) {
-            int TB_ToolImporterAutoInstallCounter_value;
-            if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out TB_ToolImporterAutoInstallCounter_value) && TB_ToolImporterAutoInstallCounter_value > 0) {
-				TB_ToolImporterAutoInstallCounter.Text = Convert.ToString(TB_ToolImporterAutoInstallCounter_value - 1);
-			} else {
-				TB_ToolImporterAutoInstallCounter.Text = "10";
-			}
-		}
+            if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int TB_ToolImporterAutoInstallCounter_value) && TB_ToolImporterAutoInstallCounter_value > 0) {
+                TB_ToolImporterAutoInstallCounter.Text = Convert.ToString(TB_ToolImporterAutoInstallCounter_value - 1);
+            } else {
+                TB_ToolImporterAutoInstallCounter.Text = "10";
+            }
+        }
 
 		public void Bu_ToolImporterAutoInstallCounterUp_Click(object sender, RoutedEventArgs e) {
-            int TB_ToolImporterAutoInstallCounter_value;
-            if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out TB_ToolImporterAutoInstallCounter_value) && TB_ToolImporterAutoInstallCounter_value > 0) {
-				TB_ToolImporterAutoInstallCounter.Text = Convert.ToString(TB_ToolImporterAutoInstallCounter_value + 1);
-			} else {
-				TB_ToolImporterAutoInstallCounter.Text = "10";
-			}
-		}
+            if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int TB_ToolImporterAutoInstallCounter_value) && TB_ToolImporterAutoInstallCounter_value > 0) {
+                TB_ToolImporterAutoInstallCounter.Text = Convert.ToString(TB_ToolImporterAutoInstallCounter_value + 1);
+            } else {
+                TB_ToolImporterAutoInstallCounter.Text = "10";
+            }
+        }
 
 		public void Bu_ToolInterface_BeatmapDetailPanelWidth_Down_Click(object sender, RoutedEventArgs e) {
-            int TB_ToolInterface_BeatmapDetailPanelWidth_value;
-            if(int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out TB_ToolInterface_BeatmapDetailPanelWidth_value) && TB_ToolInterface_BeatmapDetailPanelWidth_value > 5) {
-				TB_ToolInterface_BeatmapDetailPanelWidth.Text = Convert.ToString(TB_ToolInterface_BeatmapDetailPanelWidth_value - 1);
-			} else {
-				TB_ToolInterface_BeatmapDetailPanelWidth.Text = "40";
-			}
-		}
+            if(int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out int TB_ToolInterface_BeatmapDetailPanelWidth_value) && TB_ToolInterface_BeatmapDetailPanelWidth_value > 5) {
+                TB_ToolInterface_BeatmapDetailPanelWidth.Text = Convert.ToString(TB_ToolInterface_BeatmapDetailPanelWidth_value - 1);
+            } else {
+                TB_ToolInterface_BeatmapDetailPanelWidth.Text = "40";
+            }
+        }
 
 		public void Bu_ToolInterface_BeatmapDetailPanelWidth_Up_Click(object sender, RoutedEventArgs e) {
-            int TB_ToolInterface_BeatmapDetailPanelWidth_value;
-            if(int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out TB_ToolInterface_BeatmapDetailPanelWidth_value) && TB_ToolInterface_BeatmapDetailPanelWidth_value < 95) {
-				TB_ToolInterface_BeatmapDetailPanelWidth.Text = Convert.ToString(TB_ToolInterface_BeatmapDetailPanelWidth_value + 1);
-			} else {
-				TB_ToolInterface_BeatmapDetailPanelWidth.Text = "40";
-			}
-		}
+            if(int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out int TB_ToolInterface_BeatmapDetailPanelWidth_value) && TB_ToolInterface_BeatmapDetailPanelWidth_value < 95) {
+                TB_ToolInterface_BeatmapDetailPanelWidth.Text = Convert.ToString(TB_ToolInterface_BeatmapDetailPanelWidth_value + 1);
+            } else {
+                TB_ToolInterface_BeatmapDetailPanelWidth.Text = "40";
+            }
+        }
 
 		public void Bu_ToolOpenDataFolder_Click(object sender, RoutedEventArgs e) {
 			if(Directory.Exists(GlobalVar.appDataPath)) {
@@ -316,7 +311,7 @@ namespace osuSync {
 				DefaultExt = "exe",
 				FileName = "osu!",
 				Filter = GlobalVar._e("WindowSettings_executableFiles") + " (*.exe)|*.exe",
-				InitialDirectory = Settings.osuPathDetect(),
+				InitialDirectory = Settings.OsuPathDetect(),
 				Multiselect = false,
 				Title = GlobalVar._e("WindowSettings_pleaseOpenOsu")
 			};
@@ -338,16 +333,14 @@ namespace osuSync {
 		}
 
 		public void TB_ToolImporterAutoInstallCounter_LostFocus(object sender, RoutedEventArgs e) {
-            int TB_ToolImporterAutoInstallCounter_value;
-            if(!int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out TB_ToolImporterAutoInstallCounter_value))
-				TB_ToolImporterAutoInstallCounter.Text = GlobalVar._e("WindowSettings_invalidValue");
-		}
+            if(!int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int TB_ToolImporterAutoInstallCounter_value))
+                TB_ToolImporterAutoInstallCounter.Text = GlobalVar._e("WindowSettings_invalidValue");
+        }
 
 		public void TB_ToolInterface_BeatmapDetailPanelWidth_LostFocus(object sender, RoutedEventArgs e) {
-            int TB_ToolInterface_BeatmapDetailPanelWidth_value;
-            if(!int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out TB_ToolInterface_BeatmapDetailPanelWidth_value) || TB_ToolInterface_BeatmapDetailPanelWidth_value < 5 || TB_ToolInterface_BeatmapDetailPanelWidth_value > 95)
-				TB_ToolInterface_BeatmapDetailPanelWidth.Text = GlobalVar._e("WindowSettings_invalidValue");
-		}
+            if(!int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out int TB_ToolInterface_BeatmapDetailPanelWidth_value) || TB_ToolInterface_BeatmapDetailPanelWidth_value < 5 || TB_ToolInterface_BeatmapDetailPanelWidth_value > 95)
+                TB_ToolInterface_BeatmapDetailPanelWidth.Text = GlobalVar._e("WindowSettings_invalidValue");
+        }
 
 		public void TB_ToolUpdate_Path_GotFocus(object sender, RoutedEventArgs e) {
             System.Windows.Forms.FolderBrowserDialog SelectDirectory = new System.Windows.Forms.FolderBrowserDialog {

@@ -59,7 +59,7 @@
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap sets parsed.</system:String>
     <!-- | C -->
     <system:String x:Key="MainWindow_cantConnectToServer">Can't connect to server</system:String>
-    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
+    <system:String x:Key="MainWindow_cantDownload">These beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Checking for updates...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Conversion aborted</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Conversion failed</system:String>
@@ -70,13 +70,13 @@
     <system:String x:Key="MainWindow_dateFormat">MM/dd/yyyy</system:String>
     <system:String x:Key="MainWindow_details">Details</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Download and install</system:String>
-    <system:String x:Key="MainWindow_downloadBeatmaps">_Download Beatmaps</system:String>
+    <system:String x:Key="MainWindow_downloadBeatmaps">_Download beatmaps</system:String>
     <system:String x:Key="MainWindow_downloadFailed">Download failed</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Download mirror</system:String>
     <system:String x:Key="MainWindow_downloading">Downloading %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Downloading</system:String>
     <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
-    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Do you want to check which beatmap sets are affected?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Do you want to fix that?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Do you want to start osu! now?</system:String>
@@ -98,7 +98,7 @@
     <system:String x:Key="MainWindow_detailsPanel_playCount">Average Play Count</system:String>
     <!-- | |> O -->
     <system:String x:Key="MainWindow_detailsPanel_onlineDetails">Online Details</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Open Beatmap Listing</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_openBeatmapListing">Open beatmap listing</system:String>
     <!-- | |> Played Status -->
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_played">Played</system:String>
     <system:String x:Key="MainWindow_detailsPanel_playedStatus_unplayed">Unplayed</system:String>
@@ -110,8 +110,9 @@
     <system:String x:Key="MainWindow_exportAborted">Export aborted</system:String>
     <system:String x:Key="MainWindow_exportCompleted">Export completed</system:String>
     <system:String x:Key="MainWindow_exportedAs">Exported as %0</system:String>
-    <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Export installed Beatmaps</system:String>
+    <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Export installed beatmaps</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Export installed beatmaps</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Export selected beatmaps</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">File association successfully deleted. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Unable to delete file association.</system:String>
     <system:String x:Key="MainWindow_extensionDone">File association successfully registered, thank you. (⌒▽⌒)☆</system:String>
@@ -167,13 +168,13 @@
     <system:String x:Key="MainWindow_noAccess">No access</system:String>
     <system:String x:Key="MainWindow_notImportable">Not importable</system:String>
     <!-- | O -->
-    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Open Beatmap detail panel</system:String>
+    <system:String x:Key="MainWindow_openBeatmapDetailPanel">Open Beatmap Detail Panel</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">Open Beatmap List</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
     <system:String x:Key="MainWindow_openUpdater">Open _Updater</system:String>
     <system:String x:Key="MainWindow_overview">Overview</system:String>
     <!-- | P -->
-    <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Parsing installed beatmap sets...</system:String>
+    <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Parsing installed Beatmap sets...</system:String>
     <system:String x:Key="MainWindow_pleaseRetry">Please retry.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Please sync.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Please wait...</system:String>
@@ -185,7 +186,7 @@
     <!-- | S -->
     <system:String x:Key="MainWindow_selectADestination">Select a destination</system:String>
     <system:String x:Key="MainWindow_selectASupportedFileToConvert">Select a supported file to convert</system:String>
-    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">_Select some Beatmaps to export</system:String>
+    <system:String x:Key="MainWindow_selectSomeBeatmapsToExport">_Select some beatmaps to export</system:String>
     <system:String x:Key="MainWindow_selectToExport">Select to export</system:String>
     <system:String x:Key="MainWindow_setsDone">%0 sets done</system:String>
     <system:String x:Key="MainWindow_setsFailed">%0 sets failed</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Unable to get ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">The IDs of some beatmaps can't be parsed. They will be handled as unsubmitted (can't be exported).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Unable to install beatmap %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Unknown file extension</system:String>
