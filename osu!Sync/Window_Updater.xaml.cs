@@ -205,7 +205,7 @@ namespace osuSync {
 #if DEBUG
 			TB_VersionInfo.Text = GlobalVar._e("WindowUpdater_yourVersion").Replace("%0", GlobalVar.AppVersion.ToString() + " (Dev)");
 #else
-            TB_VersionInfo.Text = GlobalVar._e("WindowUpdater_yourVersion").Replace("%0", GlobalVar.appVersion.ToString());
+            TB_VersionInfo.Text = GlobalVar._e("WindowUpdater_yourVersion").Replace("%0", GlobalVar.AppVersion.ToString());
 			#endif
 			client.DownloadStringAsync(new Uri(GlobalVar.webNw520ApiRoot + "app/updater.latestVersion.json"));
 		}

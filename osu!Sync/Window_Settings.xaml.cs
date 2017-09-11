@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osuSync.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +25,7 @@ namespace osuSync {
 			GlobalVar.appSettings.osu_SongsPath = TB_osu_SongsPath.Text;
 			GlobalVar.appSettings.Tool_CheckFileAssociation = Convert.ToBoolean(CB_ToolCheckFileAssociation.IsChecked);
 			GlobalVar.appSettings.Tool_CheckForUpdates = CB_ToolCheckForUpdates.SelectedIndex;
-			GlobalVar.appSettings.Tool_DownloadMirror = CB_ToolDownloadMirror.SelectedIndex;
+			GlobalVar.appSettings.Tool_ChosenDownloadMirror = ((DownloadMirror)CB_ToolDownloadMirror.SelectedItem).Id;
 			GlobalVar.appSettings.Tool_EnableNotifyIcon = CB_ToolEnableNotifyIcon.SelectedIndex;
 
             if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int val_TB_ToolImporterAutoInstallCounter))
@@ -37,13 +38,13 @@ namespace osuSync {
             GlobalVar.appSettings.Tool_SyncOnStartup = Convert.ToBoolean(CB_ToolSyncOnStartup.IsChecked);
 			// Load Language
 			string LangCode = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "));
-			if(!string.IsNullOrEmpty(CB_ToolLanguages.Text) & !(GlobalVar.appSettings.Tool_Language == LangCode) & GlobalVar.translationList.ContainsKey(LangCode)) {
-				if(GlobalVar.TranslationLoad(GlobalVar.translationList[LangCode].Path))
+			if(!string.IsNullOrEmpty(CB_ToolLanguages.Text) & !(GlobalVar.appSettings.Tool_Language == LangCode) & TranslationManager.translationList.ContainsKey(LangCode)) {
+				if(TranslationManager.TranslationLoad(TranslationManager.translationList[LangCode].Path))
 					MessageBox.Show(GlobalVar._e("WindowSettings_languageUpdated"),  GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
-			} else if(LangCode == "en_US" & GlobalVar.translationHolder != null) {
+			} else if(LangCode == "en_US" & TranslationManager.translationHolder != null) {
                 GlobalVar.appSettings.Tool_Language = "en_US";
-				System.Windows.Application.Current.Resources.MergedDictionaries.Remove(GlobalVar.translationHolder);
-                GlobalVar.translationHolder = null;
+				System.Windows.Application.Current.Resources.MergedDictionaries.Remove(TranslationManager.translationHolder);
+                TranslationManager.translationHolder = null;
 			}
 			GlobalVar.appSettings.Tool_RequestElevationOnStartup = Convert.ToBoolean(CB_ToolRequestElevationOnStartup.IsChecked);
 			GlobalVar.appSettings.Tool_Update_SavePath = TB_ToolUpdate_Path.Text;
@@ -392,27 +393,32 @@ namespace osuSync {
 			CB_ToolUpdateDeleteFileAfter.IsChecked = GlobalVar.appSettings.Tool_Update_DeleteFileAfter;
 			CB_ToolUpdate_UseDownloadPatcher.IsChecked = GlobalVar.appSettings.Tool_Update_UseDownloadPatcher;
 			CB_ToolCheckForUpdates.SelectedIndex = GlobalVar.appSettings.Tool_CheckForUpdates;
-			// Load mirrors and select current one
-			foreach(KeyValuePair<int, DownloadMirror> thisPair in GlobalVar.app_mirrors) {
-				CB_ToolDownloadMirror.Items.Add(thisPair.Value.DisplayName);
-				if(thisPair.Key == 0)
-					CB_ToolDownloadMirror.Items.Add(new Separator());
-			}
-			CB_ToolDownloadMirror.SelectedIndex = GlobalVar.appSettings.Tool_DownloadMirror;
-			CB_ToolEnableNotifyIcon.SelectedIndex = GlobalVar.appSettings.Tool_EnableNotifyIcon;
+
+            // Load mirrors and select current one
+            var i = 0;
+            foreach(KeyValuePair<string, DownloadMirror> thisPair in GlobalVar.app_mirrors) {
+                CB_ToolDownloadMirror.Items.Add(thisPair.Value);
+
+                if(thisPair.Key == GlobalVar.appSettings.Tool_ChosenDownloadMirror)
+                    CB_ToolDownloadMirror.SelectedIndex = i;
+                i++;
+            }
+
+            CB_ToolEnableNotifyIcon.SelectedIndex = GlobalVar.appSettings.Tool_EnableNotifyIcon;
+
 			// Load languages and select current one
-			int i = 1;
+			int j = 1;
 			int indexUserLanguage = -1;
 			List<string> AlreadyAdded = new List<string>();
 			CB_ToolLanguages.Items.Add("en_US | English/English");      // 0
-			foreach(var thisPair in GlobalVar.translationList.Values) {
+			foreach(var thisPair in TranslationManager.translationList.Values) {
 				if(!AlreadyAdded.Contains(thisPair.Code)) {
 					AlreadyAdded.Add(thisPair.Code);
 					if(thisPair.Code == GlobalVar.appSettings.Tool_Language) {
-                        indexUserLanguage = i;
+                        indexUserLanguage = j;
 					}
 					CB_ToolLanguages.Items.Add(thisPair.Code + " | " + thisPair.DisplayName_en + "/" + thisPair.DisplayName);
-					i++;
+					j++;
 				}
 			}
 			if(indexUserLanguage != -1) {
@@ -420,6 +426,7 @@ namespace osuSync {
 			} else {
 				CB_ToolLanguages.SelectedIndex = 0;
 			}
+
 			TB_ApiKey.Text = GlobalVar.appSettings.Api_Key;
 			TB_osu_Path.Text = GlobalVar.appSettings.osu_Path;
 			TB_osu_SongsPath.Text = GlobalVar.appSettings.osu_SongsPath;

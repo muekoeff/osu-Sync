@@ -409,7 +409,7 @@ namespace osuSync {
 					TB_ImporterInfo.ToolTip = TB_ImporterInfo.Text;
 					Bu_ImporterRun.IsEnabled = (importerContainer.BmList_TagsToInstall.Count != 0);
 					Importer_UpdateInfo();
-					TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].DisplayName;
+					TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
 					break;
 				case UpdateBmDisplayDestinations.Exporter:
 					SP_ExporterWrapper.Children.Clear();
@@ -1805,8 +1805,8 @@ namespace osuSync {
             PB_ImporterProg.IsIndeterminate = true;
 
 			UI_SetStatus(GlobalVar._e("MainWindow_fetching").Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id)), true);
-			TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].DisplayName;
-			requestUri = GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].DownloadUrl.Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id));
+			TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
+			requestUri = GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DownloadUrl.Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id));
 
             importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("BlueLightBrush");
             importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsEnabled = false;
@@ -1816,7 +1816,9 @@ namespace osuSync {
 			Importer_UpdateInfo(GlobalVar._e("MainWindow_fetching1"));
 
 			HttpWebRequest req = (HttpWebRequest)WebRequest.Create(requestUri);
-			WebResponse res = null;
+            req.Referer = "https://osu.ppy.sh/forum/t/270446";
+            req.UserAgent = "osu!Sync v" + GlobalVar.AppVersion.ToString();
+            WebResponse res = null;
 			try {
                 res = req.GetResponse();
 			} catch(WebException) {
@@ -2006,7 +2008,7 @@ namespace osuSync {
 		}
 
 		public void TB_ImporterMirror_MouseDown(object sender, MouseButtonEventArgs e) {
-			Process.Start(GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_DownloadMirror].WebUrl);
+			Process.Start(GlobalVar.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].WebUrl);
 		}
 		#endregion
 	}

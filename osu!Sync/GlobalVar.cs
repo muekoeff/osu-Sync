@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osuSync.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ namespace osuSync {
     class DownloadMirror {
         public string DisplayName { get; set; }
         public string DownloadUrl { get; set; }
-        public int Index { get; set; }
+        public string Id { get; set; }
         public string WebUrl { get; set; }
     }
 
@@ -27,113 +28,6 @@ namespace osuSync {
         public string DisplayName { get; set; }
         public string DisplayName_en { get; set; }
         public string Path { get; set; }
-    }
-
-    class Settings {
-        public string _version = GlobalVar.AppVersion.ToString();
-        public bool Api_Enabled_BeatmapPanel = false;
-        public string Api_Key = "";
-        public string Api_KeyEncrypted = "";
-        public string osu_Path = OsuPathDetect(false);
-        public string osu_SongsPath = OsuPathDetect(false) + Path.DirectorySeparatorChar + "Songs";
-        public int Tool_CheckForUpdates = 3;
-        public bool Tool_CheckFileAssociation = true;
-        public int Tool_DownloadMirror = 0;
-        public int Tool_EnableNotifyIcon = 0;
-        public int Tool_Importer_AutoInstallCounter = 10;
-        public int Tool_Interface_BeatmapDetailPanelWidth = 40;
-        public string Tool_Language = "en_US";
-        public Dictionary<string, Language> Tool_LanguageMeta = new Dictionary<string, Language>();
-        public string Tool_LanguagePath;
-        public string Tool_LastCheckForUpdates = "20000101000000";
-        public bool Tool_SyncOnStartup = false;
-        public bool Tool_RequestElevationOnStartup = false;
-        public bool Tool_Update_DeleteFileAfter = true;
-        public string Tool_Update_SavePath = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Updater";
-        public bool Tool_Update_UseDownloadPatcher = true;
-        public bool Messages_Importer_AskOsu = true;
-        public bool Messages_Updater_OpenUpdater = true;
-        public bool Messages_Updater_UnableToCheckForUpdates = true;
-
-        /// <param name="allowConfig"></param> Enable on initialization to prevent System.TypeInitializationException
-        /// <returns>Path to osu!</returns>
-        public static string OsuPathDetect(bool allowConfig = true) {
-            if(allowConfig && Directory.Exists(GlobalVar.appSettings.osu_Path)) {
-                return GlobalVar.appSettings.osu_Path;
-            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + Path.DirectorySeparatorChar + "osu!")) {
-                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + Path.DirectorySeparatorChar + "osu!";
-            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + Path.DirectorySeparatorChar + "osu!")) {
-                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + Path.DirectorySeparatorChar + "osu!";
-            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Path.DirectorySeparatorChar + "osu!")) {
-                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Path.DirectorySeparatorChar + "osu!";
-            } else {
-                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            }
-        }
-
-        public void LoadSettings() {
-            if(File.Exists(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar +  "Settings.json")) {
-                try {
-                    GlobalVar.appSettings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json"));
-                    // Load language library
-                    if(File.Exists(GlobalVar.appSettings.Tool_LanguagePath)) {
-                        GlobalVar.TranslationLoad(GlobalVar.appSettings.Tool_LanguagePath);
-                    } else {
-                        MessageBox.Show(GlobalVar._e("GlobalVar_unableToFindTranslationPackage") + "\n\n" 
-                            + "Details:\nPath: " + GlobalVar.appSettings.Tool_LanguagePath, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-
-                    // Decrypt API key
-                    if(!string.IsNullOrEmpty(GlobalVar.appSettings.Api_KeyEncrypted)) {
-                        try {
-                            GlobalVar.appSettings.Api_Key = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(GlobalVar.appSettings.Api_KeyEncrypted), GlobalVar.entropy, DataProtectionScope.CurrentUser));
-                            GlobalVar.appSettings.Api_KeyEncrypted = "";
-                        } catch(CryptographicException ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n" + 
-                                ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                            SaveSettings();
-                        } catch(FormatException ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n" +
-                                ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                            SaveSettings();
-                        } catch(Exception ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n" +
-                                ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                            SaveSettings();
-                        }
-                    }
-
-                    // Perform compatibility check
-                    GlobalVar.CompatibilityCheck(new Version(GlobalVar.appSettings._version));
-                } catch(Exception) {
-                    MessageBox.Show(GlobalVar._e("GlobalVar_invalidConfiguration"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-                    File.Delete(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json");
-                    Process.Start(Assembly.GetExecutingAssembly().Location.ToString());
-                    Environment.Exit(1);
-                    return;
-                }
-            }
-        }
-
-        public void SaveSettings() {
-            // Encrypt API key
-            if(!string.IsNullOrEmpty(GlobalVar.appSettings.Api_Key)) {
-                try {
-                    GlobalVar.appSettings.Api_KeyEncrypted = Convert.ToBase64String(ProtectedData.Protect(Encoding.UTF8.GetBytes(GlobalVar.appSettings.Api_Key), GlobalVar.entropy, DataProtectionScope.CurrentUser));
-                } catch(CryptographicException) {
-                    GlobalVar.appSettings.Api_KeyEncrypted = "";
-                    MessageBox.Show(GlobalVar._e("GlobalVar_unableToEncryptApi"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-
-            Directory.CreateDirectory(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings");
-            using(StreamWriter configFile = File.CreateText(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json")) {
-                JObject thisAppSettings = JObject.FromObject(GlobalVar.appSettings);
-                thisAppSettings.Remove("Api_Key");      // Don't save decrypted API key
-                JsonSerializer JS = new JsonSerializer();
-                JS.Serialize(configFile, thisAppSettings);
-            }
-        }
     }
 
     static class GlobalVar {
@@ -155,22 +49,22 @@ namespace osuSync {
             new FileExtensionDefinition(".nw520-osbl", "naseweis520.osuSync.osuBeatmapList", "MainWindow_fileext_osbl", "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\",2"),
             new FileExtensionDefinition(".nw520-osblx", "naseweis520.osuSync.compressedOsuBeatmapList", "MainWindow_fileext_osblx", "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\",1"),
         };
-        public static Dictionary<int, DownloadMirror> app_mirrors = new Dictionary<int, DownloadMirror>(2) {
+        public static SortedDictionary<string, DownloadMirror> app_mirrors = new SortedDictionary<string, DownloadMirror>() {
             {
-                0,
+                "osu.hexide.com",
                 new DownloadMirror {
-                    DisplayName = "Bloodcat.com",
-                    DownloadUrl = "http://bloodcat.com/osu/s/%0",
-                    Index = 0,
-                    WebUrl = "http://bloodcat.com/osu"
+                    DisplayName = "Hexide",
+                    DownloadUrl = "https://osu.hexide.com/beatmaps/%0/download",
+                    Id = "osu.hexide.com",
+                    WebUrl = "https://osu.hexide.com/doc"
                 }
             },
             {
-                2,
+                "osu.uu.gl",
                 new DownloadMirror {
                     DisplayName = "osu.uu.gl",
                     DownloadUrl = "http://osu.uu.gl/s/%0",
-                    Index = 0,
+                    Id = "osu.uu.gl",
                     WebUrl = "http://osu.uu.gl/"
                 }
             }
@@ -193,8 +87,6 @@ namespace osuSync {
             121
         };
         public static string msgTitleDisableable = appName + " | " + _e("GlobalVar_messageCanBeDisabled");
-        public static ResourceDictionary translationHolder;
-        public static Dictionary<string, Language> translationList = new Dictionary<string, Language>();
         public const string webNw520ApiRoot = "http://api.nw520.de/osuSync/";
 
         public const string webOsuApiRoot = "https://osu.ppy.sh/api/";
@@ -236,7 +128,15 @@ namespace osuSync {
                         if(File.Exists(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config"))
                             File.Delete(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config");
                         break;
-                }
+                    case "1.0.0.16":
+                        MessageBox.Show("The way how osu!Sync stores your chosen download mirror has been improved.\n"
+                            + "Because of this your mirror has been set to 'osu.uu.gl', the current default choice.\n\n"
+                            + "Additionally, Bloodcat now requires a captcha authorisation und therefore has been removed from osu!Sync until further notice.\n"
+                            + "If you want to switch to Hexide you can do so in the settings window.", "Post-Update Compatibility check | " + appName, MessageBoxButton.OK, MessageBoxImage.Information);
+                        appSettings._version = AppVersion.ToString();
+                        appSettings.SaveSettings();
+                        break;
+                    }
             }
         }
 
@@ -359,82 +259,6 @@ namespace osuSync {
             }
         }
 
-        public static Language TranslationGetMeta(string filePath) {
-            if(appSettings.Tool_LanguageMeta.ContainsKey(filePath)) {
-                return appSettings.Tool_LanguageMeta[filePath];
-            } else {
-                try {
-                    XmlReader xmlRead = XmlReader.Create(filePath);
-                    ResourceDictionary thisTranslationHolder = (ResourceDictionary)XamlReader.Load(xmlRead);
-                    xmlRead.Close();
-
-                    if(thisTranslationHolder.Contains("Meta_langCode")) {
-                        Language resLanguage = new Language();
-                        if(thisTranslationHolder.Contains("Meta_langCode"))
-                            resLanguage.Code = thisTranslationHolder["Meta_langCode"].ToString();
-                        if(thisTranslationHolder.Contains("Meta_langName"))
-                            resLanguage.DisplayName = thisTranslationHolder["Meta_langName"].ToString();
-                        if(thisTranslationHolder.Contains("Meta_langNameEn"))
-                            resLanguage.DisplayName_en = thisTranslationHolder["Meta_langNameEn"].ToString();
-                        appSettings.Tool_LanguageMeta.Add(filePath, resLanguage);
-                        return resLanguage;
-                    } else {
-                        return null;
-                    }
-                } catch(Exception) {
-                    return null;
-                }
-            }
-        }
-
-        public static bool TranslationLoad(string filePath) {
-            try {
-                XmlReader xmlRead = XmlReader.Create(filePath);
-                ResourceDictionary thisTranslationHolder = (ResourceDictionary)XamlReader.Load(xmlRead);
-                xmlRead.Close();
-
-                if(thisTranslationHolder.Contains("Meta_langCode")) {
-                    appSettings.Tool_Language = thisTranslationHolder["Meta_langCode"].ToString();
-                    appSettings.Tool_LanguagePath = filePath;
-                    if(translationHolder != null)
-                        System.Windows.Application.Current.Resources.MergedDictionaries.Remove(translationHolder);
-                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(thisTranslationHolder);
-                    translationHolder = thisTranslationHolder;
-                    return true;
-                } else {
-                    MessageBox.Show("Invalid/Incompatible language package.", appName, MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-            } catch(Exception ex) {
-                MessageBox.Show("Unable to load language package.\n\n" +
-                    "// Details:\n" +
-                    "FilePath: " + filePath + "\n" +
-                    "Exception: " + ex.Message, appName, MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-        }
-
-        public static Dictionary<string, Language> TranslationMap(string rootPath) {
-            Dictionary<string, Language> result = new Dictionary<string, Language>();
-            foreach(string thisFile in Directory.EnumerateFiles(rootPath)) {
-                string thisFileName = Path.GetFileNameWithoutExtension(thisFile);
-                if(new Regex("^[a-z]{2}(?:_)[A-Z]{2}$").Match(thisFileName).Success) {
-                    Language resLanguage = new Language();
-                    Language langMeta = TranslationGetMeta(thisFile);
-                    if(langMeta != null) {
-                        resLanguage = langMeta;
-                    } else {
-                        resLanguage.Code = thisFileName;
-                    }
-                    resLanguage.Path = thisFile;
-                    result.Add(thisFileName, resLanguage);
-                    if(!result.ContainsKey(thisFileName.Substring(0, 2)))
-                        result.Add(thisFileName.Substring(0, 2), resLanguage);
-                }
-            }
-            return result;
-        }
-
         public static string Md5(string input) {    // Source: http://stackoverflow.com/a/11477466
             byte[] encodedPassword = new UTF8Encoding().GetBytes(input);
             byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
@@ -475,8 +299,8 @@ namespace osuSync {
                     "config",
                     new JObject {
                 {
-                    "downloadMirror",
-                    appSettings.Tool_DownloadMirror.ToString()
+                    "chosenDownloadMirror",
+                    appSettings.Tool_ChosenDownloadMirror
                 },
                 {
                     "updateInterval",

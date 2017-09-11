@@ -71,7 +71,7 @@
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource WindowSettings_useThisDownloadMirror}" />
                                 <!-- [REF] Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
-                                <ComboBox x:Name="CB_ToolDownloadMirror" />
+                                <ComboBox x:Name="CB_ToolDownloadMirror" DisplayMemberPath="DisplayName" />
                                 <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>

@@ -138,6 +138,8 @@
     </Compile>
     <Compile Include="Models\Beatmap.cs" />
     <Compile Include="Extensions\UserControls\BeatmapItemExtensions.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\TranslationManager.cs" />
     <Compile Include="OsuReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\BeatmapItem_Exporter.xaml.cs">

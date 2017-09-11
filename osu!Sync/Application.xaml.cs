@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic;
+using osuSync.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -42,13 +43,12 @@ namespace osuSync {
 
 			// Load language package
 			if(Directory.Exists(System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + "l10n")) {
-                GlobalVar.translationList = GlobalVar.TranslationMap(System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + "l10n");
-				if(GlobalVar.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
-                    GlobalVar.TranslationLoad(GlobalVar.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
-				    
-				} else if(GlobalVar.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {
+                TranslationManager.translationList = TranslationManager.TranslationMap(System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + "l10n");
+				if(TranslationManager.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
+                    TranslationManager.TranslationLoad(TranslationManager.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
+				} else if(TranslationManager.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {
                     // Prevent loading of en_UD
-                    GlobalVar.TranslationLoad(GlobalVar.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)].Path);
+                    TranslationManager.TranslationLoad(TranslationManager.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)].Path);
                 }
             }
 		}
