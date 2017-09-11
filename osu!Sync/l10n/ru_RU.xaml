@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Тип файла: %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Экспортировать установленные карты</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Выберите, куда сохранить список</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Export selected beatmaps</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">Файловые ассоциации удалены. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Не удалось удалить файловые ассоциации.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Файловые ассоциации зарегистрированы, спасибо! (⌒▽⌒)☆</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Карты без номера</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Идентификаторы некоторых карт не удалось распарсить. Они будут считаться неопубликованными (нельзя экспортировать).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Невозможно получить ссылку на обновление.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Unable to install beatmap %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Не удаётся прочитать карты.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Не удаётся прочитать файл.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Неизвестное расширение файла</system:String>

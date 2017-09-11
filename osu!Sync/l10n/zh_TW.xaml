@@ -27,7 +27,7 @@
     <system:String x:Key="Global_buttons_save">儲存 (_S)</system:String>
     <system:String x:Key="Global_buttons_skip">跳過 (_S)</system:String>
     <system:String x:Key="Global_buttons_skipAlways">總是跳過 (_A)</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_submit">提交</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">是 (_Y)</system:String>
     <system:String x:Key="Global_buttons_yesForAll">是，並套用至全部</system:String>
@@ -40,9 +40,9 @@
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">對不起，出現問題。</system:String>
     <!-- | U -->
-    <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
-    <system:String x:Key="GlobalVar_unableToEncryptApi">Unable to encrypt API key.</system:String>
-    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable To find translation package.</system:String>
+    <system:String x:Key="GlobalVar_unableToDecryptApi">無法解密 API 金鑰。通常這會在把設定檔從一台電腦複製到了另一台之後發生。</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">無法解密 API 金鑰。</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">找不到更新檔。</system:String>
 
     <!-- MainWindow -->
     <!-- | A -->
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">已匯出  %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">匯出已安裝的譜面 (_E)</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">匯出已安裝的譜面</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">匯出所選的譜面。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">成功刪除檔案關聯。 (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">無法刪除檔關聯。</system:String>
     <system:String x:Key="MainWindow_extensionDone">檔案關聯註冊成功，謝謝。(⌒▽⌒)☆</system:String>
@@ -207,11 +208,12 @@
     <!-- | U -->
     <system:String x:Key="MainWindow_unableToCheckForUpdates">無法檢查更新</system:String>
     <system:String x:Key="MainWindow_unableToFetchMirrorData">無法自所選的鏡像取得需要的資料，可能是因為伺服器目前不在線上。試著在設定中選擇另一個鏡像，問題應該能被解決。要跳過這個檔案請選「跳過」，要跳過出現這個問題的檔案請選「總是跳過」，要停止所有下載請選「取消」。</system:String>
-    <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe</system:String>
+    <system:String x:Key="MainWindow_unableToFindOsuExe">找不到 osu!.exe。</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">找不到 osu! 資料夾。請在將要開啟的視窗中指定其路徑。</system:String>
     <system:String x:Key="MainWindow_unableToGetId">無法獲取 ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">有些譜面的ID無法被解析。它們將被視為未提交的 (無法被匯出) 。</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">無法取得更新用的下載路徑。</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">無法安裝圖組 %0。</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">無法讀取譜面。</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">無法讀取檔案</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的副檔名</system:String>
@@ -292,7 +294,7 @@
     <system:String x:Key="WindowSettings_default">預設</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">刪除設定</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">刪除/解除檔案關聯</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">安裝更新後移除更新包 (僅在更新補丁工具啟用時作用)</system:String>
+    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">安裝更新後移除更新包 (僅在啟用了更新補丁工具時作用)</system:String>
     <system:String x:Key="WindowSettings_disable">停用</system:String>
     <system:String x:Key="WindowSettings_downloadUpdatePackageTo">更新檔下載到...</system:String>
     <!-- | E -->

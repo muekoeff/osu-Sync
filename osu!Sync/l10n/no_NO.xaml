@@ -42,7 +42,7 @@
     <!-- | U -->
     <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
     <system:String x:Key="GlobalVar_unableToEncryptApi">Unable to encrypt API key.</system:String>
-    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable To find translation package.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable to find translation package.</system:String>
 
     <!-- MainWindow -->
     <!-- | A -->
@@ -59,7 +59,7 @@
     <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap-sett lest.</system:String>
     <!-- | C -->
     <system:String x:Key="MainWindow_cantConnectToServer">Kan ikke koble til server</system:String>
-    <system:String x:Key="MainWindow_cantDownload">These Beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
+    <system:String x:Key="MainWindow_cantDownload">These beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
     <system:String x:Key="MainWindow_checkingForUpdates">Ser etter oppdateringer...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">Konvertering avbrutt</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Konvertering mislyktes</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="MainWindow_downloading">Laster ned %0...</system:String>
     <system:String x:Key="MainWindow_downloading1">Laster ned</system:String>
     <system:String x:Key="MainWindow_downloadingThumbnail">Downloading thumbnail %0...</system:String>
-    <system:String x:Key="MainWindow_downladThumbnail">Download Beatmap thumbnail</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Download beatmap thumbnail</system:String>
     <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Vil du se hvilke beatmap-sett som er berørt?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Vil du få det fikset?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Vil du starte osu! nå?</system:String>
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Eksportert som %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Eksporter installerte beatmaps</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Eksporter installerte beatmaps</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Export selected beatmaps</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">Filtilknytninger ble slettet. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Kan ikke slette filtilknytning.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Filtilknytning ble registrert, takk. (⌒▽⌒)☆</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Kan ikke hente ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">IDene til noen beatmaps kunne ikke leses. De vil bli behandlet som ikke innsendt (kan ikke eksporteres).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Unable to get download path to update package.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Unable to install beatmap %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Unable to read beatmaps.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Unable to read file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Ukjent filetternavn</system:String>

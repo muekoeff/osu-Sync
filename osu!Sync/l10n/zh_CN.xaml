@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">已导出  %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">导出已安装的谱面 (_E)</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">导出已安装的谱面</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">导出已选取的谱面</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">成功删除文件关联。 (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">无法删除文件关联。</system:String>
     <system:String x:Key="MainWindow_extensionDone">文件关联注册成功，谢谢。(⌒▽⌒)☆</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">无法获取 ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">无法解析部分 beatmaps 的ID，他们将会无法提交（不能导出）。</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">无法获取更新包的下载路径。</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">无法安装谱面%0。</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">无法读取谱面。</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">无法打开文件。</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">未知的文件扩展名</system:String>

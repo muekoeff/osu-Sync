@@ -15,22 +15,22 @@
 
     <!-- Global -->
     <!-- | A -->
-    <system:String x:Key="Global_buttons_apply">_Apply</system:String>
+    <system:String x:Key="Global_buttons_apply">_Terapkan</system:String>
     <!-- | C -->
-    <system:String x:Key="Global_buttons_cancel">_Cancel</system:String>
+    <system:String x:Key="Global_buttons_cancel">_Batal</system:String>
     <!-- | N -->
-    <system:String x:Key="Global_buttons_no">_No</system:String>
-    <system:String x:Key="Global_buttons_noForAll">No, for all</system:String>
+    <system:String x:Key="Global_buttons_no">_Tidak</system:String>
+    <system:String x:Key="Global_buttons_noForAll">Tidak, untuk semua</system:String>
     <!-- | O -->
     <system:String x:Key="Global_buttons_ok">_OK</system:String>
     <!-- | S -->
-    <system:String x:Key="Global_buttons_save">_Save</system:String>
-    <system:String x:Key="Global_buttons_skip">_Skip</system:String>
+    <system:String x:Key="Global_buttons_save">_Simpan</system:String>
+    <system:String x:Key="Global_buttons_skip">_Lewatkan</system:String>
     <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
     <system:String x:Key="Global_buttons_submit">Submit</system:String>
     <!-- | Y -->
-    <system:String x:Key="Global_buttons_yes">_Yes</system:String>
-    <system:String x:Key="Global_buttons_yesForAll">Yes, for all</system:String>
+    <system:String x:Key="Global_buttons_yes">_Ya</system:String>
+    <system:String x:Key="Global_buttons_yesForAll">Ya, untuk semua</system:String>
     
     <!-- GlobalVar -->
     <!-- | I -->
@@ -41,8 +41,8 @@
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | U -->
     <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
-    <system:String x:Key="GlobalVar_unableToEncryptApi">Unable to encrypt API key.</system:String>
-    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable To find translation package.</system:String>
+    <system:String x:Key="GlobalVar_unableToEncryptApi">Tidak dapat mengenkripsi kunci API.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable to find translation package.</system:String>
 
     <!-- MainWindow -->
     <!-- | A -->
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Di ekspor sebagai %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Ekspor Beatmap terinstall</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Ekspor Beatmap terinstall</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Ekspor beatmap yang dipilih</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">File asosiasi berhasil di hapus. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Tidak bisa menghapus file asosiasi.</system:String>
     <system:String x:Key="MainWindow_extensionDone">File asosiasi berhasil terdaftar, terima kasih. (⌒▽⌒)☆</system:String>
@@ -134,7 +135,7 @@
     <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
     <system:String x:Key="MainWindow_fileext_osbl">Daftar Beatmap osu!Sync</system:String>
     <system:String x:Key="MainWindow_fileext_osblx">Daftar Beatmap osu!Sync terkompres</system:String>
-    <system:String x:Key="MainWindow_fileext_txt">Text file</system:String>
+    <system:String x:Key="MainWindow_fileext_txt">File teks</system:String>
     <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Membangun antarmuka...</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Tidak bisa mendapatkan ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Beberapa Beatmap ID tidak bisa diurai. Beatmap akan di handle sebagai unsubmitted (tidak bisa di ekspor).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Gagal mendownload path untuk update package.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Tidak dapat menginstal beatmap %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Tidak bisa membaca beatmap.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Tidak bisa membaca file.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">File ekstensi tidak di ketahui</system:String>

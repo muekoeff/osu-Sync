@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Exporté en tant que %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Exporter les beatmaps installées</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Exporter les beatmaps installées</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Exporter les beatmaps sélectionnées</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">Associations de fichier correctement supprimées (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Impossible de supprimer les associations de fichier.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Associations de fichier enregistrées avec succès, merci. (⌒▽⌒)☆</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Impossible d'obtenir l'ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Les IDs de certaines beatmaps n'ont pas pu être analysés. Elles seront considérées comme non soumises (exportation impossible).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Impossible d'obtenir le chemin de téléchargement du package de mise à jour.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Impossible d'installer la beatmap %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Impossible de lire les beatmaps.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Impossible de lire le fichier.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Extension de fichier inconnue</system:String>

@@ -88,7 +88,7 @@
     <!-- | |> |> Beatmap Status -->
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_pending">Pendente</system:String>
     <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_ranked">Ranked</system:String>
-    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Unranked</system:String>
+    <system:String x:Key="MainWindow_detailsPanel_beatmapStatus_unranked">Sem classificação</system:String>
     <!-- | |> F -->
     <system:String x:Key="MainWindow_detailsPanel_favoriteCount">Favoritos</system:String>
     <!-- | |> F -->
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Exportado em formato %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Exportar beatmaps instalados</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Exportar beatmaps instalados</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Exportar beatmaps selecionados</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">Associação de arquivo excluída com sucesso. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Não foi possível excluir associação de arquivo.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Associação de arquivo registrada com sucesso, obrigado. (⌒▽⌒)☆</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">Não foi possível obter a ID</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">As IDs de alguns beatmaps não podem ser analisadas. Os beatmaps afetados serão tratados como mapas não enviados (não podem ser exportados).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Não foi possível obter o caminho de download do pacote de atualização.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Não foi possível instalar o beatmap %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Não foi possível ler os beatmaps.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Não foi possível ler o arquivo.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Extensão de arquivo desconhecida</system:String>

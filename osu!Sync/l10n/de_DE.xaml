@@ -20,7 +20,7 @@
     <system:String x:Key="Global_buttons_cancel">_Abbrechen</system:String>
     <!-- | N -->
     <system:String x:Key="Global_buttons_no">_Nein</system:String>
-    <system:String x:Key="Global_buttons_noForAll">Nein, alle</system:String>
+    <system:String x:Key="Global_buttons_noForAll">Nein, für alle</system:String>
     <!-- | O -->
     <system:String x:Key="Global_buttons_ok">_OK</system:String>
     <!-- | S -->
@@ -34,7 +34,7 @@
     
     <!-- GlobalVar -->
     <!-- | I -->
-    <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei ist korrupt oder veraltet. Sie wird gelöscht und die Anwendung wird neugestartet.</system:String>
+    <system:String x:Key="GlobalVar_invalidConfiguration">Deine Konfigurationsdatei ist beschädigt oder veraltet. Sie wird gelöscht und die Anwendung anschließend neugestartet.</system:String>
     <!-- | M -->
     <system:String x:Key="GlobalVar_messageCanBeDisabled">Nachtricht deaktivierbar</system:String>
     <!-- | S -->
@@ -42,7 +42,7 @@
     <!-- | U -->
     <system:String x:Key="GlobalVar_unableToDecryptApi">Nicht in der Lage, API-Schlüssel zu entschlüsseln. Dies erfolgt normalerweise, wenn die Konfigurations-Datei von einem Computer auf einen anderen kopiert wurde.</system:String>
     <system:String x:Key="GlobalVar_unableToEncryptApi">Nicht in der Lage, API-Schlüssel zu verschlüsseln.</system:String>
-    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Nicht in der Lage Übersetzungspaket zu finden.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Kann das Übersetzungspaket nicht finden.</system:String>
 
     <!-- MainWindow -->
     <!-- | A -->
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Exportiert als %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">Installierte Beatmaps _exportieren</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Installierte Beatmaps exportieren</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Ausgewählte Beatmaps exportieren</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">Dateizuweisung erfolgreich gelöscht. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Dateizuweisung konnte nicht gelöscht werden.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Dateizuweisung erfolgreich registriert, danke. (⌒▽⌒)☆</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">ID konnte nicht gelesen werden</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">Die IDs von einigen Beatmaps können nicht eingelesen werden. Sie werden als ungerankte gehandelt (können nicht exportiert werden).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Kann nicht Download-Pfad des aktualisieren Pakets erhalten.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Konnte Beatmap %0 nicht installieren.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Nicht in der Lage, Beatmaps zu lesen.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Datei kann nicht gelesen werden.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Unbekannte Dateinamenserweiterung</system:String>

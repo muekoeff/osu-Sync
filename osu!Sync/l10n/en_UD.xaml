@@ -20,14 +20,14 @@
     <system:String x:Key="Global_buttons_cancel">ןǝɔuɐɔ (_C)</system:String>
     <!-- | N -->
     <system:String x:Key="Global_buttons_no">ou (_N)</system:String>
-    <system:String x:Key="Global_buttons_noForAll">ןןɐ ɹoɟ 'ou</system:String>
+    <system:String x:Key="Global_buttons_noForAll">ןןɐ ɹoɟ 'oN</system:String>
     <!-- | O -->
     <system:String x:Key="Global_buttons_ok">ʞo (_O)</system:String>
     <!-- | S -->
     <system:String x:Key="Global_buttons_save">ǝʌɐs (_S)</system:String>
     <system:String x:Key="Global_buttons_skip">dıʞs (_S)</system:String>
     <system:String x:Key="Global_buttons_skipAlways">sʎɐʍןɐ dıʞs (_A)</system:String>
-    <system:String x:Key="Global_buttons_submit">ʇıɯqns</system:String>
+    <system:String x:Key="Global_buttons_submit">ʇıɯqnS</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">sǝʎ (_Y)</system:String>
     <system:String x:Key="Global_buttons_yesForAll">ןןɐ ɹoɟ 'sǝʎ</system:String>
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">%0 sɐ pǝʇɹodxǝ</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">sdɐɯʇɐǝq pǝןןɐʇsuı ʇɹodxǝ (_E)</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">sdɐɯʇɐǝq pǝןןɐʇsuı ʇɹodxǝ</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">sdɐɯʇɐǝq pǝʇɔǝlǝs ʇɹodxƎ</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">(ノД`)・゜・。˙pǝʇǝןǝp ʎןןnɟssǝɔɔns uoıʇɐıɔossɐ ǝןıɟ</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">˙uoıʇɐıɔossɐ ǝןıɟ ǝʇǝןǝp oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_extensionDone">(⌒▽⌒)☆ ˙noʎ ʞuɐɥʇ 'pǝɹǝʇsıƃǝɹ ʎןןnɟssǝɔɔns uoıʇɐıɔossɐ ǝןıɟ</system:String>
@@ -212,6 +213,7 @@
     <system:String x:Key="MainWindow_unableToGetId">pı ʇǝƃ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">˙(pǝʇɹodxǝ ǝq ʇ,uɐɔ) pǝʇʇıɯqnsun sɐ pǝןpuɐɥ ǝq ןןıʍ ʎǝɥʇ ˙pǝsɹɐd ǝq ʇ,uɐɔ sdɐɯʇɐǝq ǝɯos ɟo spı ǝɥʇ</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">˙ǝƃɐʞɔɐd ǝʇɐpdn oʇ ɥʇɐd pɐoןuʍop ʇǝƃ oʇ ǝןqɐun</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">˙%0 dɐɯʇɐǝq llɐʇsuᴉ oʇ ǝlqɐu∩</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">˙sdɐɯʇɐǝq pɐǝɹ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">˙ǝןıɟ pɐǝɹ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">uoısuǝʇxǝ ǝןıɟ uʍouʞun</system:String>

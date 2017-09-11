@@ -49,7 +49,7 @@
     <system:String x:Key="MainWindow_aborted">Anulowano</system:String>
     <system:String x:Key="MainWindow_about">_O programie</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Wszystkie wspierane formaty plików</system:String>
-    <system:String x:Key="MainWindow_andStillWorking">Pracuję dalej...</system:String>
+    <system:String x:Key="MainWindow_andStillWorking">Nadal pracuję...</system:String>
     <system:String x:Key="MainWindow_aNewVersionIsAvailable">Nowa ersja jest dostępna. Obecna %0 | Nowsza %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmapy</system:String>
@@ -112,6 +112,7 @@
     <system:String x:Key="MainWindow_exportedAs">Wyeksportowano jako %0</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps">_Wyeksportuj zainstalowane beatmapy</system:String>
     <system:String x:Key="MainWindow_exportInstalledBeatmaps1">Wyeksportuj zainstalowane beatmapy</system:String>
+    <system:String x:Key="MainWindow_exportSelectedBeatmaps">Wyeksportuj wybrane beatmapy</system:String>
     <system:String x:Key="MainWindow_extensionDeleteDone">Powiązanie pliku pomyślnie usunięte. (ノД`)・゜・。</system:String>
     <system:String x:Key="MainWindow_extensionDeleteFailed">Nie można usunąć powiązania pliku.</system:String>
     <system:String x:Key="MainWindow_extensionDone">Powiązanie pliku pomyślnie zarejestrowane, dzięki (⌒▽⌒)☆</system:String>
@@ -213,6 +214,7 @@
     <system:String x:Key="MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted">ID niektórych beatmap nie mogą być odczytane.
 Zostaną oznaczone jako niewysłane (nie wyeksportowane).</system:String>
     <system:String x:Key="MainWindow_unableToGetUpdatePath">Nie można znaleźć ścieżki do pakietu aktualizacji.</system:String>
+    <system:String x:Key="MainWindow_unableToInstallBeatmap">Nie można zainstalować beatmapy %0.</system:String>
     <system:String x:Key="MainWindow_unableToReadBms">Nie można odczytać beatmap.</system:String>
     <system:String x:Key="MainWindow_unableToReadFile">Nie można odczytać pliku.</system:String>
     <system:String x:Key="MainWindow_unknownFileExtension">Nieznane rozszerzenie pliku</system:String>
