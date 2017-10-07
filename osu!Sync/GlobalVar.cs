@@ -60,6 +60,15 @@ namespace osuSync {
                 }
             },
             {
+ +                "Ripple's Mirror",
+ +                new DownloadMirror {
+ +                    DisplayName = "Ripple Mirror",
+ +                    DownloadUrl = "https://storage.ripple.moe/d/%0",
+ +                    Id = "ripple.moe",
+ +                    WebUrl = "ripple.moe"
+ +                }
+ +          },
+            {
                 "osu.uu.gl",
                 new DownloadMirror {
                     DisplayName = "osu.uu.gl",
