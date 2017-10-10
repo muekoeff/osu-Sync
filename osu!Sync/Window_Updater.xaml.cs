@@ -20,7 +20,7 @@ namespace osuSync {
 
         private WebClient client = new WebClient();
 		private DownloadModes downloadMode = DownloadModes.Info;
-		private string update_downloadPatcherToPath = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Updater" + Path.DirectorySeparatorChar + "UpdatePatcher.exe";
+		private string update_downloadPatcherToPath = GlobalVar.appTempPath + "/Updater/UpdatePatcher.exe".Replace('/', Path.DirectorySeparatorChar);
 		private string update_downloadToPath;
 		private string update_fileName;
 		private string update_path;

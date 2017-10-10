@@ -7,9 +7,9 @@ namespace osuSync_UpdatePatcher {
         public static string[] startupArgs;
 
 		public static string WriteCrashLog(Exception ex) {
-			if(!Directory.Exists(Path.GetTempPath() + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync" + Path.DirectorySeparatorChar + "Crashes"))
-				Directory.CreateDirectory(Path.GetTempPath() + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync" + Path.DirectorySeparatorChar + "Crashes");
-			string crashFile = Path.GetTempPath() + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync" + Path.DirectorySeparatorChar + "Crashes" + Path.DirectorySeparatorChar + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".txt";
+			if(!Directory.Exists(Path.GetTempPath() + "naseweis520/osu!Sync/Crashes".Replace('/', Path.DirectorySeparatorChar)))
+				Directory.CreateDirectory(Path.GetTempPath() + "naseweis520/osu!Sync/Crashes".Replace('/', Path.DirectorySeparatorChar));
+			string crashFile = Path.GetTempPath() + "naseweis520/osu!Sync/Crashes/".Replace('/', Path.DirectorySeparatorChar) + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".txt";
 			using(StreamWriter file = new StreamWriter(crashFile, false)) {
 				string content = "=====   osu!Sync Crash | " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "   =====\n\n" + 
                     "// Information\n" +

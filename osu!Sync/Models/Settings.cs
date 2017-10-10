@@ -16,7 +16,7 @@ namespace osuSync.Models {
         public string Api_Key = "";
         public string Api_KeyEncrypted = "";
         public string osu_Path = OsuPathDetect(false);
-        public string osu_SongsPath = OsuPathDetect(false) + Path.DirectorySeparatorChar + "Songs";
+        public string osu_SongsPath = OsuPathDetect(false) + "/Songs".Replace('/', Path.DirectorySeparatorChar);
         public int Tool_CheckForUpdates = 3;
         public bool Tool_CheckFileAssociation = true;
         public String Tool_ChosenDownloadMirror = "osu.uu.gl";
@@ -30,7 +30,7 @@ namespace osuSync.Models {
         public bool Tool_SyncOnStartup = false;
         public bool Tool_RequestElevationOnStartup = false;
         public bool Tool_Update_DeleteFileAfter = true;
-        public string Tool_Update_SavePath = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Updater";
+        public string Tool_Update_SavePath = GlobalVar.appTempPath + "/Updater".Replace('/', Path.DirectorySeparatorChar);
         public bool Tool_Update_UseDownloadPatcher = true;
         public bool Messages_Importer_AskOsu = true;
         public bool Messages_Updater_OpenUpdater = true;
@@ -41,21 +41,21 @@ namespace osuSync.Models {
         public static string OsuPathDetect(bool allowConfig = true) {
             if(allowConfig && Directory.Exists(GlobalVar.appSettings.osu_Path)) {
                 return GlobalVar.appSettings.osu_Path;
-            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + Path.DirectorySeparatorChar + "osu!")) {
-                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + Path.DirectorySeparatorChar + "osu!";
-            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + Path.DirectorySeparatorChar + "osu!")) {
-                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + Path.DirectorySeparatorChar + "osu!";
-            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Path.DirectorySeparatorChar + "osu!")) {
-                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Path.DirectorySeparatorChar + "osu!";
+            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "/osu!".Replace('/', Path.DirectorySeparatorChar))) {
+                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "/osu!".Replace('/', Path.DirectorySeparatorChar);
+            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "/osu!".Replace('/', Path.DirectorySeparatorChar))) {
+                return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "/osu!".Replace('/', Path.DirectorySeparatorChar);
+            } else if(Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/osu!".Replace('/', Path.DirectorySeparatorChar))) {
+                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/osu!".Replace('/', Path.DirectorySeparatorChar);
             } else {
                 return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             }
         }
 
         public void LoadSettings() {
-            if(File.Exists(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json")) {
+            if(File.Exists(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar))) {
                 try {
-                    GlobalVar.appSettings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json"));
+                    GlobalVar.appSettings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar)));
                     // Load language library
                     if(File.Exists(GlobalVar.appSettings.Tool_LanguagePath)) {
                         TranslationManager.TranslationLoad(GlobalVar.appSettings.Tool_LanguagePath);
@@ -88,7 +88,7 @@ namespace osuSync.Models {
                     GlobalVar.CompatibilityCheck(new Version(GlobalVar.appSettings._version));
                 } catch(Exception) {
                     MessageBox.Show(GlobalVar._e("GlobalVar_invalidConfiguration"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-                    File.Delete(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json");
+                    File.Delete(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar));
                     Process.Start(Assembly.GetExecutingAssembly().Location.ToString());
                     Environment.Exit(1);
                     return;
@@ -107,8 +107,8 @@ namespace osuSync.Models {
                 }
             }
 
-            Directory.CreateDirectory(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings");
-            using(StreamWriter configFile = File.CreateText(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json")) {
+            Directory.CreateDirectory(GlobalVar.appDataPath + "/Settings".Replace('/', Path.DirectorySeparatorChar));
+            using(StreamWriter configFile = File.CreateText(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar))) {
                 JObject thisAppSettings = JObject.FromObject(GlobalVar.appSettings);
                 thisAppSettings.Remove("Api_Key");      // Don't save decrypted API key
                 JsonSerializer JS = new JsonSerializer();

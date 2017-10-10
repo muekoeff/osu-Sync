@@ -13,7 +13,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-                <ResourceDictionary Source="l10n/en_US.xaml" />
+                <ResourceDictionary Source="data/l10n/en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Color x:Key="BlueLight">#FF3498DB</Color>

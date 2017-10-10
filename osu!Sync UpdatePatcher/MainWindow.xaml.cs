@@ -59,7 +59,7 @@ namespace osuSync_UpdatePatcher {
         }
 
         private void Button_startOsusync_Click(object sender, RoutedEventArgs e) {
-            Process.Start(arg_pathToApp + Path.DirectorySeparatorChar + "osu!Sync.exe");
+            Process.Start(arg_pathToApp + "/osu!Sync.exe".Replace('/', Path.DirectorySeparatorChar));
             Environment.Exit(1);
         }
 

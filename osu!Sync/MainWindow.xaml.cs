@@ -593,11 +593,11 @@ namespace osuSync {
 					break;
 				case 3:
 					//.osblz.zip
-					string directName = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Zipper" + Path.DirectorySeparatorChar + "Exporter-" + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
+					string directName = GlobalVar.appTempPath + "/Zipper/Exporter-".Replace('/', Path.DirectorySeparatorChar) + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
 					Directory.CreateDirectory(directName);
 
 					string[] contenz_osblz = ConvertBmListToJson(source);
-					using(StreamWriter File = new StreamWriter(directName + Path.DirectorySeparatorChar + "00.nw520-osblx", false)) {
+					using(StreamWriter File = new StreamWriter(directName + "/00.nw520-osblx".Replace('/', Path.DirectorySeparatorChar), false)) {
 						File.Write(GlobalVar.StringCompress(contenz_osblz[0]));
 						File.Close();
 					}
@@ -758,7 +758,7 @@ namespace osuSync {
             fadeOut.Completed += FadeOut_Completed;
 
             // Load Configuration
-            if(File.Exists(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.json")) {
+            if(File.Exists(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar))) {
 				GlobalVar.appSettings.LoadSettings();
 			} else {
 				Window_Welcome Window_Welcome = new Window_Welcome();
@@ -770,8 +770,8 @@ namespace osuSync {
 			ApplySettings();
 
 			// Delete old downloaded beatmaps
-			if(Directory.Exists(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps"))
-				Directory.Delete(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps", true);
+			if(Directory.Exists(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar)))
+				Directory.Delete(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar), true);
 
 			// Check For Updates
 			switch(GlobalVar.appSettings.Tool_CheckForUpdates) {
@@ -1001,8 +1001,8 @@ namespace osuSync {
 		/// <remarks></remarks>
 		public void StartOrFocusOsu() {
 			if(Process.GetProcessesByName("osu!").Count() <= 0) {
-				if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "osu!.exe"))
-					Process.Start(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "osu!.exe");
+				if(File.Exists(GlobalVar.appSettings.osu_Path + "/osu!.exe".Replace('/', Path.DirectorySeparatorChar)))
+					Process.Start(GlobalVar.appSettings.osu_Path + "/osu!.exe".Replace('/', Path.DirectorySeparatorChar));
 				else
 					MessageBox.Show(GlobalVar._e("MainWindow_unableToFindOsuExe"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 			} else {
@@ -1253,8 +1253,8 @@ namespace osuSync {
 						Progress__Current = Directory.GetDirectories(GlobalVar.appSettings.osu_SongsPath).Count()
 					});
 
-					if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "osu!.db")) {
-						string dbPath = GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "osu!.db";
+					if(File.Exists(GlobalVar.appSettings.osu_Path + "/osu!.db".Replace('/', Path.DirectorySeparatorChar))) {
+						string dbPath = GlobalVar.appSettings.osu_Path + "/osu!.db".Replace('/', Path.DirectorySeparatorChar);
 						try {
 							answer.Return__Sync_BmDic_Installed = ReadBmsFromDb(dbPath);
 						} catch(IOException) {
@@ -1682,14 +1682,14 @@ namespace osuSync {
 
 		public void Importer_Downloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
 			importerContainer.Counter++;
-			if(File.Exists(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName)) {
+			if(File.Exists(GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + importerContainer.CurrentFileName)) {
 				// Detect "Beatmap Not Found" pages
-				if((new FileInfo(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName)).Length <= 3000) {
+				if((new FileInfo(GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + importerContainer.CurrentFileName)).Length <= 3000) {
 					// File Empty
 					importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
 
                     try {
-						File.Delete(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName);
+						File.Delete(GlobalVar.appTempPath + "/Downloads/Beatmaps/" + importerContainer.CurrentFileName);
 					} catch(IOException) {
 					}
 					importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
@@ -1719,7 +1719,7 @@ namespace osuSync {
 			Importer_UpdateInfo(GlobalVar._e("MainWindow_installing"));
 			UI_SetStatus(GlobalVar._e("MainWindow_installingFiles"), true);
 
-			foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps")) {
+			foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar))) {
 				if(!File.Exists(GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath)))
 					File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
 				else
@@ -1780,7 +1780,7 @@ namespace osuSync {
 					Importer_UpdateInfo(GlobalVar._e("MainWindow_installing"));
 					UI_SetStatus(GlobalVar._e("MainWindow_installingFiles"), true);
 
-					foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps")) {
+					foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar))) {
 						if(!File.Exists(GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath))) {
 							try {
 								File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
@@ -1848,7 +1848,7 @@ namespace osuSync {
 								TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_leftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString());
 							TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
 							UI_SetStatus(GlobalVar._e("MainWindow_installingFiles"), true);
-							foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps")) {
+							foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar))) {
 								File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath +  Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
 							}
 
@@ -1886,7 +1886,7 @@ namespace osuSync {
 			UI_SetStatus(GlobalVar._e("MainWindow_downloading").Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id)), true);
 			Importer_UpdateInfo(GlobalVar._e("MainWindow_downloading1"));
 			PB_ImporterProg.IsIndeterminate = false;
-			importerContainer.Downloader.DownloadFileAsync(new Uri(requestUri), (GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps" + Path.DirectorySeparatorChar + importerContainer.CurrentFileName));
+			importerContainer.Downloader.DownloadFileAsync(new Uri(requestUri), (GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + importerContainer.CurrentFileName));
 		}
 
 		public void Importer_FetchFail_ToNext() {
@@ -1906,7 +1906,7 @@ namespace osuSync {
 				Bu_ImporterRun.IsEnabled = false;
 				Bu_ImporterCancel.IsEnabled = false;
 				PB_ImporterProg.Visibility = Visibility.Visible;
-				Directory.CreateDirectory(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Downloads" + Path.DirectorySeparatorChar + "Beatmaps");
+				Directory.CreateDirectory(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar));
 				Importer_DownloadBeatmap();
 			} else {
 				if(MessageBox.Show(GlobalVar._e("MainWindow_requestElevation"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
@@ -1945,7 +1945,7 @@ namespace osuSync {
 					// @TODO: If contains multiple OSBLX-files read and process each one
 					try {
 						using(ZipFile zipper = ZipFile.Read(filePath)) {
-							string directoryName = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Zipper" + Path.DirectorySeparatorChar + "Importer-" + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
+							string directoryName = GlobalVar.appTempPath + "/Zipper/Importer-".Replace('/', Path.DirectorySeparatorChar) + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
 							Directory.CreateDirectory(directoryName);
 							foreach(ZipEntry ZipperEntry in zipper) {
 								if(Path.GetExtension(ZipperEntry.FileName) == ".nw520-osblx") {

@@ -24,12 +24,12 @@ namespace osuSync.Models {
 
         public string ThumbnailPath {
             get {
-                if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + Id + "l.jpg")) {
-                    return GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + Id + "l.jpg";
-                } else if(File.Exists(GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Id + ".jpg")) {
-                    return GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Cache" + Path.DirectorySeparatorChar + "Thumbnails" + Path.DirectorySeparatorChar + Id + ".jpg";
-                } else if(File.Exists(GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + Id + ".jpg")) {
-                    return GlobalVar.appSettings.osu_Path + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "bt" + Path.DirectorySeparatorChar + Id + ".jpg";
+                if(File.Exists(GlobalVar.appSettings.osu_Path + "/Data/bt/".Replace('/', Path.DirectorySeparatorChar) + Id + "l.jpg")) {
+                    return GlobalVar.appSettings.osu_Path + "/Data/bt/".Replace('/', Path.DirectorySeparatorChar) + Id + "l.jpg";
+                } else if(File.Exists(GlobalVar.appTempPath + "/Cache/Thumbnails/".Replace('/', Path.DirectorySeparatorChar) + Id + ".jpg")) {
+                    return GlobalVar.appTempPath + "/Cache/Thumbnails/".Replace('/', Path.DirectorySeparatorChar) + Id + ".jpg";
+                } else if(File.Exists(GlobalVar.appSettings.osu_Path + "/Data/bt/".Replace('/', Path.DirectorySeparatorChar) + Id + ".jpg")) {
+                    return GlobalVar.appSettings.osu_Path + "/Data/bt/".Replace('/', Path.DirectorySeparatorChar) + Id + ".jpg";
                 } else {
                     return null;
                 }

@@ -17,7 +17,7 @@
             <Setter Property="Foreground" Value="#111" />
         </Style>
     </Controls:MetroWindow.Resources>
-    <Grid Background="#F7F7F7">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
             <ColumnDefinition />

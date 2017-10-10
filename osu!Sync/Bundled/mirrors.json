@@ -1,0 +1,20 @@
+{
+    "osu.hexide.com": {
+        "DisplayName": "Hexide",
+        "DownloadUrl": "https://osu.hexide.com/beatmaps/%0/download",
+        "Id": "osu.hexide.com",
+        "WebUrl": "https://osu.hexide.com/doc"
+    },
+    "osu.uu.gl": {
+        "DisplayName": "osu.uu.gl",
+        "DownloadUrl": "http://osu.uu.gl/s/%0",
+        "Id": "osu.uu.gl",
+        "WebUrl": "http://osu.uu.gl/"
+    },
+    "ripple.moe": {
+        "DisplayName": "Ripple Mirror",
+        "DownloadUrl": "https://storage.ripple.moe/d/%0",
+        "Id": "ripple.moe",
+        "WebUrl": "ripple.moe"
+    }
+}

@@ -42,8 +42,8 @@ namespace osuSync {
             GlobalVar.tool_isElevated = winPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
 
 			// Load language package
-			if(Directory.Exists(System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + "l10n")) {
-                TranslationManager.translationList = TranslationManager.TranslationMap(System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + "l10n");
+			if(Directory.Exists(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar))) {
+                TranslationManager.translationList = TranslationManager.TranslationMap(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar));
 				if(TranslationManager.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
                     TranslationManager.TranslationLoad(TranslationManager.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
 				} else if(TranslationManager.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {

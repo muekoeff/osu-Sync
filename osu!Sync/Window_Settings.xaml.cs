@@ -87,8 +87,8 @@ namespace osuSync {
 		}
 
 		public void Bu_ApiOpenLog_Click(object sender, RoutedEventArgs e) {
-			if(File.Exists(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Logs" + Path.DirectorySeparatorChar + "ApiAccess.txt")) {
-				Process.Start(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Logs" + Path.DirectorySeparatorChar + "ApiAccess.txt");
+			if(File.Exists(GlobalVar.appDataPath + "/Logs/ApiAccess.txt".Replace('/', Path.DirectorySeparatorChar))) {
+				Process.Start(GlobalVar.appDataPath + "/Logs/ApiAccess.txt".Replace('/', Path.DirectorySeparatorChar));
 			} else {
 				MessageBox.Show(GlobalVar._e("WindowSettings_nopeDirectoryDoesNotExit"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
@@ -107,8 +107,8 @@ namespace osuSync {
 		}
 
 		public void Bu_CreateShortcut_Click(object sender, RoutedEventArgs e) {
-			if(!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + "osu!Sync.lnk")) {
-				if(CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + "osu!Sync.lnk", System.Reflection.Assembly.GetExecutingAssembly().Location.ToString(), "", GlobalVar._e("WindowSettings_launchOsuSync"))) {
+			if(!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/osu!Sync.lnk".Replace('/', Path.DirectorySeparatorChar))) {
+				if(CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/osu!Sync.lnk".Replace('/', Path.DirectorySeparatorChar), System.Reflection.Assembly.GetExecutingAssembly().Location.ToString(), "", GlobalVar._e("WindowSettings_launchOsuSync"))) {
 				} else {
                     MessageBox.Show(GlobalVar._e("WindowSettings_unableToCreateShortcut"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -164,13 +164,13 @@ namespace osuSync {
 		}
 
 		public void Bu_osuSongPathDefault_Click(object sender, RoutedEventArgs e) {
-			TB_osu_SongsPath.Text = TB_osu_Path.Text + Path.DirectorySeparatorChar + "Songs";
+			TB_osu_SongsPath.Text = TB_osu_Path.Text + "/Songs".Replace('/', Path.DirectorySeparatorChar);
 		}
 
 		public void Bu_ToolDeleteConfiguration_Click(object sender, RoutedEventArgs e) {
 			if(MessageBox.Show(GlobalVar._e("WindowSettings_areYouSureYouWantToDeleteConfig"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes) {
-				if(File.Exists(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config")) {
-					File.Delete(GlobalVar.appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config");
+				if(File.Exists(GlobalVar.appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar))) {
+					File.Delete(GlobalVar.appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar));
 
 					if(MessageBox.Show(GlobalVar._e("WindowSettings_okDoneDoYouWantToRestart"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 						System.Windows.Forms.Application.Restart();
@@ -261,7 +261,7 @@ namespace osuSync {
 		}
 
 		public void Bu_ToolUpdate_PathDefault_Click(object sender, RoutedEventArgs e) {
-			TB_ToolUpdate_Path.Text = GlobalVar.appTempPath + Path.DirectorySeparatorChar + "Updater";
+			TB_ToolUpdate_Path.Text = GlobalVar.appTempPath + "/Updater".Replace('/', Path.DirectorySeparatorChar);
 		}
         #endregion
 

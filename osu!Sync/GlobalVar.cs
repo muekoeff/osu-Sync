@@ -81,7 +81,7 @@ namespace osuSync {
         public static string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Path.DirectorySeparatorChar + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync";
         public static string appName = (new AssemblyName(Assembly.GetExecutingAssembly().FullName)).Name;
         public static string[] appStartArgs;
-        public static string appTempPath = Path.GetTempPath() + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync";
+        public static string appTempPath = Path.GetTempPath() + "naseweis520/osu!Sync".Replace('/', Path.DirectorySeparatorChar);
         public static Settings appSettings = new Settings();
         public static Version AppVersion {
             get {
@@ -125,17 +125,17 @@ namespace osuSync {
             if(configVersion < AppVersion) {
                 switch(configVersion.ToString()) {
                     case "1.0.0.13":
-                        if(File.Exists(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config")) {
+                        if(File.Exists(appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar))) {
                             if(MessageBox.Show("osu!Sync 1.0.0.13 has an improved method of saving its configuration which will replace the old one in the next version.\n" +
                                 "Your current, outdated version, is going to be migrated to the new one now.", "Post-Update Compatibility check | " + appName, MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.OK) == MessageBoxResult.OK) {
                                 appSettings.SaveSettings();
-                                File.Delete(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config");
+                                File.Delete(appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar));
                             }
                         }
                         break;
                     case "1.0.0.15":
-                        if(File.Exists(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config"))
-                            File.Delete(appDataPath + Path.DirectorySeparatorChar + "Settings" + Path.DirectorySeparatorChar + "Settings.config");
+                        if(File.Exists(appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar)))
+                            File.Delete(appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar));
                         break;
                     case "1.0.0.16":
                         MessageBox.Show("The way how osu!Sync stores your chosen download mirror has been improved.\n"
@@ -150,8 +150,8 @@ namespace osuSync {
         }
 
         public static string CrashLogWrite(Exception ex) {
-            Directory.CreateDirectory(appTempPath + Path.DirectorySeparatorChar + "Crashes");
-            string crashFile = appTempPath + Path.DirectorySeparatorChar + "Crashes" + Path.DirectorySeparatorChar + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + ".txt";
+            Directory.CreateDirectory(appTempPath + "/Crashes".Replace('/', Path.DirectorySeparatorChar));
+            string crashFile = appTempPath + "/Crashes/".Replace('/', Path.DirectorySeparatorChar) + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + ".txt";
             using(StreamWriter File = new StreamWriter(crashFile, false)) {
                 string content = "===== osu!Sync Crash | " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "   =====\n\n" +
                     "// Information\n" +
@@ -170,10 +170,10 @@ namespace osuSync {
 
         public static bool DirAccessCheck(string directory) {
             try {
-                FileStream fileStream = new FileStream(directory + Path.DirectorySeparatorChar + "prep.osuSync.tmp", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                FileStream fileStream = new FileStream(directory + "/prep.osuSync.tmp".Replace('/', Path.DirectorySeparatorChar), FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 StreamWriter streamWriter = new StreamWriter(fileStream);
                 streamWriter.Dispose();
-                File.Delete(directory + Path.DirectorySeparatorChar + "prep.osuSync.tmp");
+                File.Delete(directory + "/prep.osuSync.tmp".Replace('/', Path.DirectorySeparatorChar));
                 return true;
             } catch(Exception) {
                 return false;
@@ -398,11 +398,11 @@ namespace osuSync {
         }
 
         public static void WriteToApiLog(string method, string result = "{Failed}") {
-            Directory.CreateDirectory(appDataPath + Path.DirectorySeparatorChar + "Logs");
+            Directory.CreateDirectory(appDataPath + "/Logs".Replace('/', Path.DirectorySeparatorChar));
             try {
                 if(result.Length > 250) // Trim
                     result = result.Substring(0, 247) + "...";
-                StreamWriter stream = File.AppendText(appDataPath + Path.DirectorySeparatorChar + "Logs" + Path.DirectorySeparatorChar + "ApiAccess.txt");
+                StreamWriter stream = File.AppendText(appDataPath + "/Logs/ApiAccess.txt".Replace('/', Path.DirectorySeparatorChar));
                 string content = "";
                 content += "[" + DateTime.Now.ToString() + " / " + AppVersion.ToString() + "] ";
                 content += method + ":\n" +
