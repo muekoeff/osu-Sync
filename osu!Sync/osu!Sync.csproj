@@ -45,7 +45,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <NoWarn>1591</NoWarn>
     <WarningLevel>4</WarningLevel>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <DefineConstants>DEBUG</DefineConstants>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -129,12 +129,14 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions\Dictionary.cs" />
     <Compile Include="GlobalVar.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Beatmap.cs" />
     <Compile Include="Extensions\UserControls\BeatmapItemExtensions.cs" />
+    <Compile Include="Models\MirrorManager.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\TranslationManager.cs" />
     <Compile Include="OsuReader.cs" />

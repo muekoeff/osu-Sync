@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -19,12 +18,11 @@ namespace osuSync.Models {
         public string osu_SongsPath = OsuPathDetect(false) + "/Songs".Replace('/', Path.DirectorySeparatorChar);
         public int Tool_CheckForUpdates = 3;
         public bool Tool_CheckFileAssociation = true;
-        public String Tool_ChosenDownloadMirror = "osu.uu.gl";
+        public String Tool_ChosenDownloadMirror = MirrorManager.DEFAULT_MIRROR_ID;
         public int Tool_EnableNotifyIcon = 0;
         public int Tool_Importer_AutoInstallCounter = 10;
         public int Tool_Interface_BeatmapDetailPanelWidth = 40;
         public string Tool_Language = "en_US";
-        public Dictionary<string, Language> Tool_LanguageMeta = new Dictionary<string, Language>();
         public string Tool_LanguagePath;
         public string Tool_LastCheckForUpdates = "20000101000000";
         public bool Tool_SyncOnStartup = false;
@@ -70,22 +68,23 @@ namespace osuSync.Models {
                             GlobalVar.appSettings.Api_Key = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(GlobalVar.appSettings.Api_KeyEncrypted), GlobalVar.entropy, DataProtectionScope.CurrentUser));
                             GlobalVar.appSettings.Api_KeyEncrypted = "";
                         } catch(CryptographicException ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n" +
-                                ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n"
+                                + ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                             SaveSettings();
                         } catch(FormatException ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n" +
-                                ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n"
+                                + ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                             SaveSettings();
                         } catch(Exception ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n" +
-                                ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n"
+                                + ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                             SaveSettings();
                         }
                     }
 
                     // Perform compatibility check
                     GlobalVar.CompatibilityCheck(new Version(GlobalVar.appSettings._version));
+                    MirrorManager.CheckMirror();
                 } catch(Exception) {
                     MessageBox.Show(GlobalVar._e("GlobalVar_invalidConfiguration"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
                     File.Delete(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar));
@@ -108,6 +107,7 @@ namespace osuSync.Models {
             }
 
             Directory.CreateDirectory(GlobalVar.appDataPath + "/Settings".Replace('/', Path.DirectorySeparatorChar));
+            var test = GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar);
             using(StreamWriter configFile = File.CreateText(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar))) {
                 JObject thisAppSettings = JObject.FromObject(GlobalVar.appSettings);
                 thisAppSettings.Remove("Api_Key");      // Don't save decrypted API key

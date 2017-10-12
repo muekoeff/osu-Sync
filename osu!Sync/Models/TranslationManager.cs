@@ -12,30 +12,25 @@ namespace osuSync.Models {
         public static Dictionary<string, Language> translationList = new Dictionary<string, Language>();
 
         public static Language TranslationGetMeta(string filePath) {
-            if(GlobalVar.appSettings.Tool_LanguageMeta.ContainsKey(filePath)) {
-                return GlobalVar.appSettings.Tool_LanguageMeta[filePath];
-            } else {
-                try {
-                    XmlReader xmlRead = XmlReader.Create(filePath);
-                    ResourceDictionary thisTranslationHolder = (ResourceDictionary)XamlReader.Load(xmlRead);
-                    xmlRead.Close();
+            try {
+                XmlReader xmlRead = XmlReader.Create(filePath);
+                ResourceDictionary thisTranslationHolder = (ResourceDictionary)XamlReader.Load(xmlRead);
+                xmlRead.Close();
 
-                    if(thisTranslationHolder.Contains("Meta_langCode")) {
-                        Language resLanguage = new Language();
-                        if(thisTranslationHolder.Contains("Meta_langCode"))
-                            resLanguage.Code = thisTranslationHolder["Meta_langCode"].ToString();
-                        if(thisTranslationHolder.Contains("Meta_langName"))
-                            resLanguage.DisplayName = thisTranslationHolder["Meta_langName"].ToString();
-                        if(thisTranslationHolder.Contains("Meta_langNameEn"))
-                            resLanguage.DisplayName_en = thisTranslationHolder["Meta_langNameEn"].ToString();
-                        GlobalVar.appSettings.Tool_LanguageMeta.Add(filePath, resLanguage);
-                        return resLanguage;
-                    } else {
-                        return null;
-                    }
-                } catch(Exception) {
+                if(thisTranslationHolder.Contains("Meta_langCode")) {
+                    Language resLanguage = new Language();
+                    if(thisTranslationHolder.Contains("Meta_langCode"))
+                        resLanguage.Code = thisTranslationHolder["Meta_langCode"].ToString();
+                    if(thisTranslationHolder.Contains("Meta_langName"))
+                        resLanguage.DisplayName = thisTranslationHolder["Meta_langName"].ToString();
+                    if(thisTranslationHolder.Contains("Meta_langNameEn"))
+                        resLanguage.DisplayName_en = thisTranslationHolder["Meta_langNameEn"].ToString();
+                    return resLanguage;
+                } else {
                     return null;
                 }
+            } catch(Exception) {
+                return null;
             }
         }
 

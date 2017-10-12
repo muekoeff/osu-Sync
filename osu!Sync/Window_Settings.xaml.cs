@@ -25,7 +25,7 @@ namespace osuSync {
 			GlobalVar.appSettings.osu_SongsPath = TB_osu_SongsPath.Text;
 			GlobalVar.appSettings.Tool_CheckFileAssociation = Convert.ToBoolean(CB_ToolCheckFileAssociation.IsChecked);
 			GlobalVar.appSettings.Tool_CheckForUpdates = CB_ToolCheckForUpdates.SelectedIndex;
-			GlobalVar.appSettings.Tool_ChosenDownloadMirror = ((DownloadMirror)CB_ToolDownloadMirror.SelectedItem).Id;
+			GlobalVar.appSettings.Tool_ChosenDownloadMirror = ((MirrorManager.DownloadMirror)CB_ToolDownloadMirror.SelectedItem).Id;
 			GlobalVar.appSettings.Tool_EnableNotifyIcon = CB_ToolEnableNotifyIcon.SelectedIndex;
 
             if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int val_TB_ToolImporterAutoInstallCounter))
@@ -40,7 +40,7 @@ namespace osuSync {
 			string LangCode = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "));
 			if(!string.IsNullOrEmpty(CB_ToolLanguages.Text) & !(GlobalVar.appSettings.Tool_Language == LangCode) & TranslationManager.translationList.ContainsKey(LangCode)) {
 				if(TranslationManager.TranslationLoad(TranslationManager.translationList[LangCode].Path))
-					MessageBox.Show(GlobalVar._e("WindowSettings_languageUpdated"),  GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
+					MessageBox.Show(GlobalVar._e("WindowSettings_languageUpdated"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
 			} else if(LangCode == "en_US" & TranslationManager.translationHolder != null) {
                 GlobalVar.appSettings.Tool_Language = "en_US";
 				System.Windows.Application.Current.Resources.MergedDictionaries.Remove(TranslationManager.translationHolder);
@@ -396,7 +396,7 @@ namespace osuSync {
 
             // Load mirrors and select current one
             var i = 0;
-            foreach(KeyValuePair<string, DownloadMirror> thisPair in GlobalVar.app_mirrors) {
+            foreach(KeyValuePair<string, MirrorManager.DownloadMirror> thisPair in MirrorManager.app_mirrors) {
                 CB_ToolDownloadMirror.Items.Add(thisPair.Value);
 
                 if(thisPair.Key == GlobalVar.appSettings.Tool_ChosenDownloadMirror)

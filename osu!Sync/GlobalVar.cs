@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using osuSync.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -10,19 +9,9 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Markup;
-using System.Xml;
 
 namespace osuSync {
-    class DownloadMirror {
-        public string DisplayName { get; set; }
-        public string DownloadUrl { get; set; }
-        public string Id { get; set; }
-        public string WebUrl { get; set; }
-    }
-
     class Language {
         public string Code { get; set; }
         public string DisplayName { get; set; }
@@ -49,36 +38,7 @@ namespace osuSync {
             new FileExtensionDefinition(".nw520-osbl", "naseweis520.osuSync.osuBeatmapList", "MainWindow_fileext_osbl", "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\",2"),
             new FileExtensionDefinition(".nw520-osblx", "naseweis520.osuSync.compressedOsuBeatmapList", "MainWindow_fileext_osblx", "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\",1"),
         };
-        public static SortedDictionary<string, DownloadMirror> app_mirrors = new SortedDictionary<string, DownloadMirror>() {
-            {
-                "osu.hexide.com",
-                new DownloadMirror {
-                    DisplayName = "Hexide",
-                    DownloadUrl = "https://osu.hexide.com/beatmaps/%0/download",
-                    Id = "osu.hexide.com",
-                    WebUrl = "https://osu.hexide.com/doc"
-                }
-            },
-            {
-                 "ripple.moe",
-                 new DownloadMirror {
-                     DisplayName = "Ripple Mirror",
-                     DownloadUrl = "https://storage.ripple.moe/d/%0",
-                     Id = "ripple.moe",
-                     WebUrl = "ripple.moe"
-                 }
-            },
-            {
-                "osu.uu.gl",
-                new DownloadMirror {
-                    DisplayName = "osu.uu.gl",
-                    DownloadUrl = "http://osu.uu.gl/s/%0",
-                    Id = "osu.uu.gl",
-                    WebUrl = "http://osu.uu.gl/"
-                }
-            }
-        };
-        public static string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Path.DirectorySeparatorChar + "naseweis520" + Path.DirectorySeparatorChar + "osu!Sync";
+        public static string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/naseweis520/osu!Sync".Replace('/', Path.DirectorySeparatorChar);
         public static string appName = (new AssemblyName(Assembly.GetExecutingAssembly().FullName)).Name;
         public static string[] appStartArgs;
         public static string appTempPath = Path.GetTempPath() + "naseweis520/osu!Sync".Replace('/', Path.DirectorySeparatorChar);

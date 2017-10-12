@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using osuSync.Models;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -44,14 +45,16 @@ namespace osuSync {
 			// Load language package
 			if(Directory.Exists(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar))) {
                 TranslationManager.translationList = TranslationManager.TranslationMap(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar));
-				if(TranslationManager.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
-                    TranslationManager.TranslationLoad(TranslationManager.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
-				} else if(TranslationManager.translationList.ContainsKey(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {
+				if(TranslationManager.translationList.ContainsKey(CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
+                    TranslationManager.TranslationLoad(TranslationManager.translationList[CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
+				} else if(TranslationManager.translationList.ContainsKey(CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {
                     // Prevent loading of en_UD
-                    TranslationManager.TranslationLoad(TranslationManager.translationList[System.Globalization.CultureInfo.CurrentCulture.ToString().Substring(0, 2)].Path);
+                    TranslationManager.TranslationLoad(TranslationManager.translationList[CultureInfo.CurrentCulture.ToString().Substring(0, 2)].Path);
                 }
             }
-		}
+
+            MirrorManager.LoadMirrors();
+        }
 
 		private void FocusAndShutdown() {
 			if(Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Count() > 1) {
