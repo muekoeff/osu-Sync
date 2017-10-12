@@ -46,6 +46,7 @@ namespace osuSync.Models {
                 // @TODO
                 MessageBox.Show("Failed to load mirror, reset to " + app_mirrors[DEFAULT_MIRROR_ID].DisplayName + ".", GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 GlobalVar.appSettings.Tool_ChosenDownloadMirror = app_mirrors[DEFAULT_MIRROR_ID].Id;
+                GlobalVar.appSettings.SaveSettings();
             }
         }
 

@@ -360,7 +360,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>move /y "$(TargetDir)Bundled" "$(TargetDir)data"
+    <PostBuildEvent>rmdir "$(TargetDir)data" /s /q 2&gt; nul
+move /y "$(TargetDir)Bundled" "$(TargetDir)data"
 "$(DevEnvDir)Tools\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)Icons"</PostBuildEvent>
   </PropertyGroup>
 </Project>
