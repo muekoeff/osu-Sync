@@ -15,10 +15,6 @@ namespace osuSync {
 			Process.Start("mailto:team@nw520.de?subject=Contact%20|%20osu!Sync");
 		}
 
-		public void TB_Feedback_MouseUp(object sender, MouseButtonEventArgs e) {
-			MainWindow.UI_ShowSettingsWindow(4);
-		}
-
 		public void TB_GitHub_MouseUp(object sender, MouseButtonEventArgs e) {
 			Process.Start("https://github.com/naseweis520/osu-Sync");
 		}

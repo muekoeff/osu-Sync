@@ -243,8 +243,6 @@
     <system:String x:Key="WindowAbout_copyright">osu!Sync is an open-source tool created by naseweis520.</system:String>
     <!-- | E -->
     <system:String x:Key="WindowAbout_email">eMail Contact</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowAbout_feedback">Feedback</system:String>
     <!-- | G -->
     <system:String x:Key="WindowAbout_github">Source Code on GitHub</system:String>
     <!-- | L -->
@@ -261,8 +259,6 @@
     <!-- |> Tooltip (tt) -->
     <!-- |> E -->
     <system:String x:Key="WindowAbout_tt_email">Questions? Just write us a mail and we'll answer. :)</system:String>
-    <!-- |> F -->
-    <system:String x:Key="WindowAbout_tt_feedback">Open feedback window.</system:String>
     <!-- |> G -->
     <system:String x:Key="WindowAbout_tt_github">Help us making osu!Sync better.</system:String>
     <!-- |> O -->
@@ -283,9 +279,7 @@
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps after x beatmaps (Numeric)</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
-    <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
-    <system:String x:Key="WindowSettings_category">Category</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Check file associations every sync (Only if elevated)</system:String>
     <system:String x:Key="WindowSettings_checkForUpdates">Check for updates...</system:String>
     <system:String x:Key="WindowSettings_configuration">Configuration</system:String>
@@ -302,13 +296,8 @@
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Enable notify icon in tray area...</system:String>
     <system:String x:Key="WindowSettings_everyLaunch">Every launch.</system:String>
     <system:String x:Key="WindowSettings_executableFiles">Executable Files</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowSettings_featureRequest">Feature Request</system:String>
-    <system:String x:Key="WindowSettings_feedback">Feedback</system:String>
-    <system:String x:Key="WindowSettings_furtherInformation">Further Information</system:String>
     <!-- | G -->
     <system:String x:Key="WindowSettings_general">General</system:String>
-    <system:String x:Key="WindowSettings_generalFeedback">General Feedback</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Import/Download</system:String>
     <system:String x:Key="WindowSettings_importerAskOsu">Ask whether to start osu! after import process</system:String>
@@ -323,7 +312,6 @@
     <system:String x:Key="WindowSettings_maximumOnceADay">Maximum once a day (Recommended).</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAMonth">Maximum once a week.</system:String>
     <system:String x:Key="WindowSettings_maximumOnceAWeek">Maximum once a month (Not recommended).</system:String>
-    <system:String x:Key="WindowSettings_message">Message</system:String>
     <system:String x:Key="WindowSettings_monitoring">Monitoring</system:String>
     <!-- | N -->
     <system:String x:Key="WindowSettings_never">Nevoar ヽ(≧Д≦)ノ  (Not recommended).</system:String>
@@ -335,34 +323,27 @@
     <system:String x:Key="WindowSettings_openApiLog">Open API log file</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Open data folder</system:String>
     <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Open updater when new version is available</system:String>
-    <system:String x:Key="WindowSettings_other">Other</system:String>
     <!-- | P -->
     <system:String x:Key="WindowSettings_pathToOsu">Path to osu!</system:String>
     <system:String x:Key="WindowSettings_pathToSongsFolder">Path to songs folder</system:String>
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Please open the osu!.exe</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Please select the directory where to save updates</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Please select your songs folder</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Please try again later or contact us directly: team@nw520.de .</system:String>
-    <!-- | Q -->
-    <system:String x:Key="WindowSettings_questionHelpRequest">Question/Help Request</system:String>
     <!-- | R -->
     <system:String x:Key="WindowSettings_requestElevationOnStartup">If it might be required, request elevation on startup instead of demand</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (delete configuration, file associations, etc.)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_serverSideAnswer">Server-side answer:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Show always - Disable NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Show always - Enable NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Show message when update check failed</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Show only when window is hidden - Disable NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_submitting">Submitting...</system:String>
     <system:String x:Key="WindowSettings_sync">Sync</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sync on application startup</system:String>
     <!-- | T -->
     <system:String x:Key="WindowSettings_theresAlreadyAShortcut">There's already a shortcut on your desktop.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">Unable to create shortcut!</system:String>
-    <system:String x:Key="WindowSettings_unableToSubmitFeedback">Unable to submit feedback!</system:String>
     <system:String x:Key="WindowSettings_updater">Updater</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">Update/Reregister file associations</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Use this osu! Download Mirror...</system:String>
@@ -374,12 +355,6 @@
     <system:String x:Key="WindowSettings_warnNotElevated">Some options may be disabled because the application is currently not elevated.</system:String>
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel (Numeric, between 5 and 95)</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowSettings_yourEmail">Your eMail</system:String>
-    <system:String x:Key="WindowSettings_yourEmailInvalid">Your eMail seems to be invalid.</system:String>
-    <system:String x:Key="WindowSettings_youHaveToSelectACategory">You have to select a category.</system:String>
-    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Your message seems to be quite short. Please try to explain as detailed as possible.</system:String>
-    <system:String x:Key="WindowSettings_yourName">Your name/osu!Username</system:String>
-    <system:String x:Key="WindowSettings_yourNameIsTooShort">Your name/osu!Username is too short.</system:String>
     <system:String x:Key="WindowSettings_youSelectedTheWrongFile">You selected the wrong file. -- Please select the "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->

@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock FontSize="48" FontWeight="Light" Foreground="#27AE60" Text="{DynamicResource MainWindow_settings}" VerticalAlignment="Top" />
-        <TabControl x:Name="TC_Main" Margin="0,64,0,0" SelectionChanged="TC_Main_SelectionChanged">
+        <TabControl x:Name="TC_Main" Margin="0,64,0,0">
             <TabItem Header="{DynamicResource WindowSettings_general}">
                 <ScrollViewer Background="#E5E5E5">
                     <StackPanel Margin="5">
@@ -160,41 +160,6 @@
                         <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_monitoring}" Margin="0,15,0,0" />
                         <Button x:Name="Bu_ApiOpenLog" Click="Bu_ApiOpenLog_Click" Content="{DynamicResource WindowSettings_openApiLog}" FontSize="12" />
                     </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="{DynamicResource WindowSettings_feedback}">
-                <ScrollViewer Background="#E5E5E5">
-                    <Grid Margin="5">
-                        <StackPanel x:Name="StackPanel_Feedback" IsEnabled="False" Margin="0,10,0,0" Visibility="Collapsed">
-                            <TextBlock Text="{DynamicResource WindowSettings_yourName}" />
-                            <TextBox x:Name="TB_FeedbackUsername"/>
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_yourEmail}" />
-                            <TextBox x:Name="TB_FeedbackeMail"/>
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_category}" />
-                            <ComboBox x:Name="CB_FeedbackCategory">
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_bug}" Tag="Bug" />
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_featureRequest}" Tag="Feature Request" />
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_generalFeedback}" Tag="General Feedback" />
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_questionHelpRequest}" Tag="Question/Help Request" />
-                                <Separator/>
-                                <ComboBoxItem Content="{DynamicResource WindowSettings_other}" Tag="Other" />
-                            </ComboBox>
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_message}" />
-                            <RichTextBox x:Name="RTB_FeedbackMessage" Height="75" />
-                            <TextBlock Margin="0,5,0,0" Text="{DynamicResource WindowSettings_furtherInformation}" />
-                            <RichTextBox IsReadOnly="True">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Run x:Name="Ru_FeedbackInfo" />
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <Button x:Name="Bu_FeedbackSubmit" Click="Bu_FeedbackSubmit_Click" Content="{DynamicResource Global_buttons_submit}" Height="40" Margin="0,5,0,0" />
-                        </StackPanel>
-                        <Grid x:Name="Gr_FeedbackOverlay" Background="#CC27AE60" Visibility="Hidden">
-                            <TextBlock FontSize="48" Foreground="White" HorizontalAlignment="Center" Text="{DynamicResource WindowSettings_submitting}" VerticalAlignment="Center" />
-                        </Grid>
-                    </Grid>
                 </ScrollViewer>
             </TabItem>
         </TabControl>

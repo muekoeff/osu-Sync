@@ -8,7 +8,6 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace osuSync {
 
@@ -120,47 +119,6 @@ namespace osuSync {
 		public void Bu_Done_Click(object sender, RoutedEventArgs e) {
 			ApplySettings();
 			Close();
-		}
-
-		public void Bu_FeedbackSubmit_Click(object sender, RoutedEventArgs e) {
-			TextRange RTB_FeedbackMessage_TextRange = new TextRange(RTB_FeedbackMessage.Document.ContentStart, RTB_FeedbackMessage.Document.ContentEnd);
-
-			if(TB_FeedbackUsername.Text.Length <= 1) {
-                MessageBox.Show(GlobalVar._e("WindowSettings_yourNameIsTooShort"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else if(!ValidateEmail(TB_FeedbackeMail.Text)) {
-                MessageBox.Show(GlobalVar._e("WindowSettings_yourEmailInvalid"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else if(CB_FeedbackCategory.SelectedIndex == -1) {
-                MessageBox.Show(GlobalVar._e("WindowSettings_youHaveToSelectACategory"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else if(RTB_FeedbackMessage_TextRange.Text.Length < 30) {
-                MessageBox.Show(GlobalVar._e("WindowSettings_yourMessageSeemsToBeQuiteShort"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
-			} else {
-				StackPanel_Feedback.IsEnabled = false;
-				Gr_FeedbackOverlay.Visibility = Visibility.Visible;
-
-				using(WebClient submitClient = new WebClient()) {
-                    System.Collections.Specialized.NameValueCollection reqParam = new System.Collections.Specialized.NameValueCollection {
-                        { "category", CB_FeedbackCategory.Tag.ToString() },
-                        { "debugData", Ru_FeedbackInfo.Text },
-                        { "email", TB_FeedbackeMail.Text },
-                        { "message", RTB_FeedbackMessage_TextRange.Text },
-                        { "username", TB_FeedbackUsername.Text },
-                        { "version", GlobalVar.AppVersion.ToString() }
-                    };
-                    var responseBytes = submitClient.UploadValues(GlobalVar.webNw520ApiRoot + "app/feedback.submitReport.php", "POST", reqParam);
-					var responseBody = (new System.Text.UTF8Encoding()).GetString(responseBytes);
-
-					try {
-                        MessageBox.Show(GlobalVar._e("WindowSettings_serverSideAnswer") + "\n"
-                            + responseBody, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
-					} catch(Exception) {
-                        MessageBox.Show(GlobalVar._e("WindowSettings_unableToSubmitFeedback") + "\n" 
-                            + "> " + GlobalVar._e("MainWindow_cantConnectToServer") + "\n\n" 
-                            + GlobalVar._e("WindowSettings_pleaseTryAgainLaterOrContactUs"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-						return;
-					}
-					Gr_FeedbackOverlay.Visibility = Visibility.Collapsed;
-				}
-			}
 		}
 
 		public void Bu_osuSongPathDefault_Click(object sender, RoutedEventArgs e) {
@@ -354,24 +312,6 @@ namespace osuSync {
 				TB_ToolUpdate_Path.Text = SelectDirectory.SelectedPath;
 		}
         #endregion
-
-        public void TC_Main_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-			switch(TC_Main.SelectedIndex) {
-				case 4:
-					// Prepare Feedback form
-					Ru_FeedbackInfo.Text = JsonConvert.SerializeObject(GlobalVar.ProgramInfoJsonGet(), Formatting.None);
-                    StackPanel_Feedback.IsEnabled = true;
-                    StackPanel_Feedback.Margin = new Thickness(0, 0, 0, 0);
-                    StackPanel_Feedback.Visibility = Visibility.Visible;
-					break;
-			}
-		}
-
-        public bool ValidateEmail(string email) {
-            System.Text.RegularExpressions.Regex emailRegex = new System.Text.RegularExpressions.Regex("^(?<user>[^@]+)@(?<host>.+)$");
-            System.Text.RegularExpressions.Match emailMatch = emailRegex.Match(email);
-            return emailMatch.Success;
-        }
 
         public void WindowSettings_Loaded(object sender, RoutedEventArgs e) {
 			if(GlobalVar.tool_isElevated) {
