@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using static osuSync.FileExtensions;
 
 namespace osuSync {
 
@@ -141,7 +142,7 @@ namespace osuSync {
 		}
 
 		public void Bu_ToolDeleteFileAssociation_Click(object sender, RoutedEventArgs e) {
-			if(GlobalVar.FileAssociationsDelete())
+			if(FileAssociationsDelete())
                 MessageBox.Show(GlobalVar._e("MainWindow_extensionDeleteDone"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
 		}
 
@@ -187,7 +188,7 @@ namespace osuSync {
 
 		public void Bu_ToolReset_Click(object sender, RoutedEventArgs e) {
 			if(MessageBox.Show(GlobalVar._e("WindowSettings_areYouSureYouWantToReset"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes) {
-                GlobalVar.FileAssociationsDelete();
+                FileAssociationsDelete();
 				if(Directory.Exists(GlobalVar.appDataPath)) {
 					try {
 						Directory.Delete(GlobalVar.appDataPath, true);
@@ -215,7 +216,7 @@ namespace osuSync {
 		}
 
 		public void Bu_ToolUpdateFileAssociation_Click(object sender, RoutedEventArgs e) {
-            GlobalVar.FileAssociationsCreate();
+            FileAssociationsCreate();
 		}
 
 		public void Bu_ToolUpdate_PathDefault_Click(object sender, RoutedEventArgs e) {

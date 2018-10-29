@@ -117,7 +117,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Background="{Binding Background, ElementName=MenuBar}" Header="{DynamicResource MainWindow_file}">
+                <MenuItem Background="{Binding Background, ElementName=Me_Menu}" Header="{DynamicResource MainWindow_file}">
                     <MenuItem x:Name="MI_FileOpenBmList" Click="MI_FileOpenBmList_Click" Foreground="#333" Header="{DynamicResource MainWindow_openBeatmapList}">
                         <MenuItem.Icon>
                             <Path Data="M0,21.940001L64,21.940001 58.81641,53.042002 5.4832716,53.042002z M5.4829998,0L26.983213,0 26.983213,6.5154943 58.805,6.5154943 58.805,14.362 5.5063095,14.362 5.5063095,7.1121521 5.4829998,7.1121521z" Fill="#333" Height="16" Stretch="Uniform" Width="16" />
@@ -140,7 +140,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Background="{Binding Background, ElementName=MenuBar}" Header="{DynamicResource MainWindow_help}">
+                <MenuItem Background="{Binding Background, ElementName=Me_Menu}" Header="{DynamicResource MainWindow_help}">
                     <MenuItem x:Name="MI_HelpUpdater" Click="MI_HelpUpdater_Click" Foreground="#333" Header="{DynamicResource MainWindow_openUpdater}">
                         <MenuItem.Icon>
                             <Path Data="F1M1332.17,1189.59L1349.06,1172.61 1349.06,1180.59C1382.85,1180.59 1385.5,1200.57 1385.5,1204.56 1378.21,1188.58 1349.06,1196.57 1349.06,1196.57L1349.06,1204.56 1332.17,1189.59z" Fill="#333" Height="16" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Width="16">

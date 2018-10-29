@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osuSync.Interfaces.UserControls;
 using osuSync.Models;
+using osuSync.Modules.Importer;
 using osuSync.UserControls;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using static osuSync.FileExtensions;
 
 namespace osuSync {
 
@@ -57,19 +59,6 @@ namespace osuSync {
 		public string Return__Sync_Warnings { get; set; }
 	}
 
-    public class Importer {
-		public List<BeatmapItem_Importer> BmList_TagsDone = new List<BeatmapItem_Importer>();
-		public List<BeatmapItem_Importer> BmList_TagsFailed = new List<BeatmapItem_Importer>();
-		public List<BeatmapItem_Importer> BmList_TagsLeftOut = new List<BeatmapItem_Importer>();
-		public List<BeatmapItem_Importer> BmList_TagsToInstall = new List<BeatmapItem_Importer>();
-		public int BmTotal;
-		public int Counter;
-		public string CurrentFileName;
-		public WebClient Downloader = new WebClient();
-		public string FilePath;
-		public bool Pref_FetchFail_SkipAlways = false;
-	}
-
     // Bm = Beatmap
     // BmDP = Beatmap Detail Panel
 
@@ -84,7 +73,7 @@ namespace osuSync {
 		private List<BeatmapItem_Exporter> exporter_bmList_selectedTags = new List<BeatmapItem_Exporter>();
 		private List<BeatmapItem_Exporter> exporter_bmList_unselectedTags = new List<BeatmapItem_Exporter>();
 
-		private Importer importerContainer = new Importer();
+        internal ImporterHolder importerHolder;
 		private TextBlock interface_loaderText = new TextBlock();
 		private ProgressBar interface_loaderProgressBar = new ProgressBar();
 
@@ -94,6 +83,7 @@ namespace osuSync {
 
         public MainWindow() {
             InitializeComponent();
+            importerHolder = new ImporterHolder(this);
         }
 
 		public bool BalloonShow(string content, string title = null, BalloonIcon icon = BalloonIcon.Info, RoutedEventHandler clickHandler = null) {
@@ -355,7 +345,7 @@ namespace osuSync {
 					Bu_SyncRun.IsEnabled = true;
 					break;
 				case UpdateBmDisplayDestinations.Importer:
-                    importerContainer = new Importer() {
+                    importerHolder = new ImporterHolder(this) {
                         BmTotal = 0
                     };
                     TI_Importer.Visibility = Visibility.Visible;
@@ -398,17 +388,17 @@ namespace osuSync {
                         var bmItem = new BeatmapItem_Importer(thisBm.Value, this, isInstalled);
 
 						if(!isInstalled) {
-                            importerContainer.BmList_TagsToInstall.Add(bmItem);
+                            importerHolder.BmList_TagsToInstall.Add(bmItem);
                         }
 
 						SP_ImporterWrapper.Children.Add(bmItem);
-						importerContainer.BmTotal += 1;
+						importerHolder.BmTotal += 1;
 					}
 
 					Bu_ImporterCancel.IsEnabled = true;
 					TB_ImporterInfo.ToolTip = TB_ImporterInfo.Text;
-					Bu_ImporterRun.IsEnabled = (importerContainer.BmList_TagsToInstall.Count != 0);
-					Importer_UpdateInfo();
+					Bu_ImporterRun.IsEnabled = (importerHolder.BmList_TagsToInstall.Count != 0);
+                    importerHolder.SetState();
 					TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + MirrorManager.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
 					break;
 				case UpdateBmDisplayDestinations.Exporter:
@@ -687,7 +677,7 @@ namespace osuSync {
 			int fileExtensionCheck = 0;
             // @TODO: ENUM
 			//0 = OK, 1 = Missing File Extension, 2 = Invalid/Outdated File Extension
-			foreach(GlobalVar.FileExtensionDefinition thisExtension in GlobalVar.app_fileExtensions) {
+			foreach(FileExtensionDefinition thisExtension in app_fileExtensions) {
 				if(Registry.ClassesRoot.OpenSubKey(thisExtension.fileExtension) == null) {
 					if(fileExtensionCheck == 0) {
                         fileExtensionCheck = 1;
@@ -696,7 +686,7 @@ namespace osuSync {
 				}
 			}
 			if(fileExtensionCheck != 1) {
-                foreach(GlobalVar.FileExtensionDefinition thisExtension in GlobalVar.app_fileExtensions) {
+                foreach(FileExtensionDefinition thisExtension in app_fileExtensions) {
                     string registryPath = Convert.ToString(Registry.ClassesRoot.OpenSubKey(thisExtension.className).OpenSubKey("DefaultIcon").GetValue(null, "", RegistryValueOptions.None));
                     registryPath = registryPath.Substring(1, registryPath.Length - 3);
 					if(registryPath != System.Reflection.Assembly.GetExecutingAssembly().Location.ToString()) {
@@ -717,7 +707,7 @@ namespace osuSync {
                     GlobalVar._e("MainWindow_doYouWantToFixThat") : GlobalVar._e("MainWindow_extensionWrong") + "\n" +
                     GlobalVar._e("MainWindow_doYouWantToFixThat"));
 				if(MessageBox.Show(msgBox_content, GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-					GlobalVar.FileAssociationsCreate();
+					FileAssociationsCreate();
 			}
 		}
 
@@ -806,7 +796,7 @@ namespace osuSync {
 			// Open File
 			if(GlobalVar.appStartArgs != null && Array.Exists(GlobalVar.appStartArgs, s => {
 				if(s.Substring(0, 10) == "-openFile=") {
-                    importerContainer = new Importer() {
+                    importerHolder = new ImporterHolder(this) {
                         FilePath = s.Substring(10)
                     };
                     return true;
@@ -814,8 +804,8 @@ namespace osuSync {
 					return false;
 				}
 			})) {
-				if(File.Exists(importerContainer.FilePath)) {
-					Importer_ReadListFile(importerContainer.FilePath);
+				if(File.Exists(importerHolder.FilePath)) {
+					Importer_ReadListFile(importerHolder.FilePath);
 				} else {
 					MessageBox.Show(GlobalVar._e("MainWindow_file404"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 					if(GlobalVar.appSettings.Tool_SyncOnStartup)
@@ -1643,12 +1633,13 @@ namespace osuSync {
 			TC_Main.SelectedIndex = 0;
 			TI_Importer.Visibility = Visibility.Collapsed;
 			SP_ImporterWrapper.Children.Clear();
-			importerContainer = null;
+			importerHolder = null;
 		}
 
 		public void Bu_ImporterRun_Click(object sender, RoutedEventArgs e) {
-			Importer_Init();
-		}
+            importerHolder.beatmapListDownloadManager = new BeatmapListDownloadManager(this, importerHolder);
+            importerHolder.beatmapListDownloadManager.StartDownload();
+        }
 
 		public void CB_ImporterHideInstalled_Checked(object sender, RoutedEventArgs e) {
 			foreach(BeatmapItem_Importer i in SP_ImporterWrapper.Children) {
@@ -1666,264 +1657,19 @@ namespace osuSync {
 
 		public void Importer_AddBmToSel(object sender, EventArgs e) {
             BeatmapItem_Importer cParent = (BeatmapItem_Importer)((Grid)((CheckBox)sender).Parent).Parent;
-			importerContainer.BmList_TagsToInstall.Add(cParent);
-			importerContainer.BmList_TagsLeftOut.Remove(cParent);
+			importerHolder.BmList_TagsToInstall.Add(cParent);
+			importerHolder.BmList_TagsLeftOut.Remove(cParent);
 
-			if(importerContainer.BmList_TagsToInstall.Count > 0) {
+			if(importerHolder.BmList_TagsToInstall.Count > 0) {
 				Bu_ImporterRun.IsEnabled = true;
 				Bu_ImporterCancel.IsEnabled = true;
 			} else {
 				Bu_ImporterRun.IsEnabled = false;
 			}
-			Importer_UpdateInfo();
+			importerHolder.SetState();
             cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("RedLightBrush");
 
         }
-
-		public void Importer_Downloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-			importerContainer.Counter++;
-			if(File.Exists(GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + importerContainer.CurrentFileName)) {
-				// Detect "Beatmap Not Found" pages
-				if((new FileInfo(GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + importerContainer.CurrentFileName)).Length <= 3000) {
-					// File Empty
-					importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
-
-                    try {
-						File.Delete(GlobalVar.appTempPath + "/Downloads/Beatmaps/" + importerContainer.CurrentFileName);
-					} catch(IOException) {
-					}
-					importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
-					importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
-					Importer_Downloader_ToNextDownload();
-				// File Normal
-				} else {
-					importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("PurpleDarkBrush");
-
-                    importerContainer.BmList_TagsDone.Add(importerContainer.BmList_TagsToInstall.First());
-					importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
-					Importer_Downloader_ToNextDownload();
-				}
-			} else {
-				// File Empty
-				importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
-				importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
-				importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
-				Importer_Downloader_ToNextDownload();
-			}
-		}
-
-		public void Importer_Downloader_DownloadFinished() {
-            PB_ImporterProg.IsIndeterminate = true;
-            PB_ImporterProg.Value = 0;
-           
-			Importer_UpdateInfo(GlobalVar._e("MainWindow_installing"));
-			UI_SetStatus(GlobalVar._e("MainWindow_installingFiles"), true);
-
-			foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar))) {
-				if(!File.Exists(GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath)))
-					File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
-				else
-					File.Delete(thisPath);
-			}
-            PB_ImporterProg.IsIndeterminate = false;
-            PB_ImporterProg.Visibility = Visibility.Hidden;
-
-			UI_SetStatus(GlobalVar._e("MainWindow_finished"));
-			Importer_UpdateInfo(GlobalVar._e("MainWindow_finished"));
-
-			if(importerContainer.BmList_TagsFailed.Count > 0) {
-				string Failed = "# " + GlobalVar._e("MainWindow_downloadFailed") + "\n" 
-                    + GlobalVar._e("MainWindow_cantDownload") + "\n\n"
-                    + "> " + GlobalVar._e("MainWindow_beatmaps") + ": ";
-				foreach(var thisTagData in importerContainer.BmList_TagsFailed) {
-					Failed += "\n" + "* " + thisTagData.Beatmap.Id.ToString() + " / " + thisTagData.Beatmap.Artist + " / " + thisTagData.Beatmap.Title;
-				}
-				if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenImported") + "\n" 
-                    + GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
-					Window_MessageWindow Window_Message = new Window_MessageWindow();
-					Window_Message.SetMessage(Failed, GlobalVar._e("MainWindow_downloadFailed"), "Import");
-					Window_Message.ShowDialog();
-				}
-			}
-
-			BalloonShow(GlobalVar._e("MainWindow_installationFinished") + "\n" 
-                + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString()) + "\n" 
-                + GlobalVar._e("MainWindow_setsFailed").Replace("%0", importerContainer.BmList_TagsFailed.Count.ToString()) + "\n" 
-                + GlobalVar._e("MainWindow_setsLeftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString()) + "\n" 
-                + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString()));
-			MessageBox.Show(GlobalVar._e("MainWindow_installationFinished") + "\n" 
-                + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString()) + "\n"
-                + GlobalVar._e("MainWindow_setsFailed").Replace("%0", importerContainer.BmList_TagsFailed.Count.ToString()) + "\n"
-                + GlobalVar._e("MainWindow_setsLeftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString()) + "\n"
-                + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString()) + "\n\n" 
-                + GlobalVar._e("MainWindow_pressF5"), GlobalVar.appName, MessageBoxButton.OK);
-
-			if(GlobalVar.appSettings.Messages_Importer_AskOsu && !(Process.GetProcessesByName("osu!").Count() > 0) 
-                && MessageBox.Show(GlobalVar._e("MainWindow_doYouWantToStartOsuNow"), GlobalVar.msgTitleDisableable, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-				StartOrFocusOsu();
-			Bu_SyncRun.IsEnabled = true;
-			Bu_ImporterCancel.IsEnabled = true;
-		}
-
-		public void Importer_Downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
-			PB_ImporterProg.Value = e.ProgressPercentage;
-		}
-
-		public void Importer_Downloader_ToNextDownload() {
-			if(importerContainer.BmList_TagsToInstall.Count > 0) {
-				// Install file if necessary
-				if(GlobalVar.appSettings.Tool_Importer_AutoInstallCounter != 0 
-                    && GlobalVar.appSettings.Tool_Importer_AutoInstallCounter <= importerContainer.Counter) {
-                    importerContainer.Counter = 0;
-                    PB_ImporterProg.IsIndeterminate = true;
-
-					Importer_UpdateInfo(GlobalVar._e("MainWindow_installing"));
-					UI_SetStatus(GlobalVar._e("MainWindow_installingFiles"), true);
-
-					foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar))) {
-						if(!File.Exists(GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath))) {
-							try {
-								File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath + Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
-							} catch(IOException) {
-                                MessageBox.Show(GlobalVar._e("MainWindow_unableToInstallBeatmap").Replace("%0", Path.GetFileName(thisPath)), "Debug | " + GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-							}
-						} else {
-							File.Delete(thisPath);
-						}
-					}
-				}
-				Importer_DownloadBeatmap(); // Finished
-			} else {
-				Importer_Downloader_DownloadFinished();
-			}
-		}
-
-		public void Importer_DownloadBeatmap() {
-			string requestUri = null;
-
-            PB_ImporterProg.Value = 0;
-            PB_ImporterProg.IsIndeterminate = true;
-
-			UI_SetStatus(GlobalVar._e("MainWindow_fetching").Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id)), true);
-			TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + MirrorManager.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
-			requestUri = MirrorManager.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DownloadUrl.Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id));
-
-            importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("BlueLightBrush");
-            importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsEnabled = false;
-            importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsThreeState = false;
-            importerContainer.BmList_TagsToInstall.First().CB_IsSelected.IsChecked = null;
-
-			Importer_UpdateInfo(GlobalVar._e("MainWindow_fetching1"));
-
-			HttpWebRequest req = (HttpWebRequest)WebRequest.Create(requestUri);
-            req.Referer = "https://osu.ppy.sh/forum/t/270446";
-            req.UserAgent = "osu!Sync v" + GlobalVar.AppVersion.ToString();
-            WebResponse res = null;
-			try {
-                res = req.GetResponse();
-			} catch(WebException) {
-				if(importerContainer.Pref_FetchFail_SkipAlways) {
-					Importer_FetchFail_ToNext();
-				} else {
-					Window_GenericMsgBox Win_GenericMsgBox = new Window_GenericMsgBox(GlobalVar._e("MainWindow_unableToFetchMirrorData"), new List<Window_GenericMsgBox.MsgBoxButtonHolder> {
-						new Window_GenericMsgBox.MsgBoxButtonHolder(GlobalVar._e("Global_buttons_skip"), (int)Window_GenericMsgBox.MsgBoxResult.Yes),
-						new Window_GenericMsgBox.MsgBoxButtonHolder(GlobalVar._e("Global_buttons_skipAlways"), (int)Window_GenericMsgBox.MsgBoxResult.YesAll),
-						new Window_GenericMsgBox.MsgBoxButtonHolder(GlobalVar._e("Global_buttons_cancel"), (int)Window_GenericMsgBox.MsgBoxResult.Cancel)
-					}, null, System.Drawing.SystemIcons.Exclamation);
-					Win_GenericMsgBox.ShowDialog();
-					switch(Win_GenericMsgBox.Result) {
-						case (int)Window_GenericMsgBox.MsgBoxResult.Yes:
-							Importer_FetchFail_ToNext();
-							break;
-						case (int)Window_GenericMsgBox.MsgBoxResult.YesAll:
-							importerContainer.Pref_FetchFail_SkipAlways = true;
-							Importer_FetchFail_ToNext();
-							break;
-						case (int)Window_GenericMsgBox.MsgBoxResult.Cancel:
-						case (int)Window_GenericMsgBox.MsgBoxResult.None:
-							importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
-
-                            TB_ImporterInfo.Text = GlobalVar._e("MainWindow_installing") + " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString());
-							if(importerContainer.BmList_TagsLeftOut.Count > 0)
-								TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_leftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString());
-							TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
-							UI_SetStatus(GlobalVar._e("MainWindow_installingFiles"), true);
-							foreach(string thisPath in Directory.GetFiles(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar))) {
-								File.Move(thisPath, GlobalVar.appSettings.osu_SongsPath +  Path.DirectorySeparatorChar + Path.GetFileName(thisPath));
-							}
-
-                            PB_ImporterProg.IsIndeterminate = false;
-                            PB_ImporterProg.Visibility = Visibility.Hidden;
-
-							UI_SetStatus(GlobalVar._e("MainWindow_aborted"));
-							TB_ImporterInfo.Text = GlobalVar._e("MainWindow_aborted") + " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString());
-							if(importerContainer.BmList_TagsLeftOut.Count > 0)
-								TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_leftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString());
-							TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
-							Bu_SyncRun.IsEnabled = true;
-							Bu_ImporterRun.IsEnabled = true;
-							Bu_ImporterCancel.IsEnabled = true;
-							break;
-					}
-				}
-				return;
-			}
-			WebResponse response = null;
-			response = req.GetResponse();
-			response.Close();
-
-			if(response.Headers["Content-Disposition"] != null) {
-				importerContainer.CurrentFileName = response.Headers["Content-Disposition"].Substring(response.Headers["Content-Disposition"].IndexOf("filename=") + 10).Replace("\"", "");
-				if(importerContainer.CurrentFileName.Substring(importerContainer.CurrentFileName.Length - 1) == ";")
-					importerContainer.CurrentFileName = importerContainer.CurrentFileName.Substring(0, importerContainer.CurrentFileName.Length - 1);
-				if(importerContainer.CurrentFileName.Contains("; filename*=UTF-8"))
-					importerContainer.CurrentFileName = importerContainer.CurrentFileName.Substring(0, importerContainer.CurrentFileName.IndexOf(".osz") + 4);
-			} else {
-				importerContainer.CurrentFileName = Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id) + ".osz";
-			}
-			importerContainer.CurrentFileName = GlobalVar.PathSanitize(importerContainer.CurrentFileName);      // Issue #23: Replace invalid characters
-
-			UI_SetStatus(GlobalVar._e("MainWindow_downloading").Replace("%0", Convert.ToString(importerContainer.BmList_TagsToInstall.First().Beatmap.Id)), true);
-			Importer_UpdateInfo(GlobalVar._e("MainWindow_downloading1"));
-			PB_ImporterProg.IsIndeterminate = false;
-			importerContainer.Downloader.DownloadFileAsync(new Uri(requestUri), (GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + importerContainer.CurrentFileName));
-		}
-
-		public void Importer_FetchFail_ToNext() {
-			importerContainer.BmList_TagsToInstall.First().Re_DecoBorder.Fill = (SolidColorBrush)FindResource("OrangeLightBrush");
-
-            importerContainer.BmList_TagsFailed.Add(importerContainer.BmList_TagsToInstall.First());
-			importerContainer.BmList_TagsToInstall.Remove(importerContainer.BmList_TagsToInstall.First());
-			Importer_Downloader_ToNextDownload();
-		}
-
-		public void Importer_Init() {
-			importerContainer.Downloader.DownloadFileCompleted += Importer_Downloader_DownloadFileCompleted;
-			importerContainer.Downloader.DownloadProgressChanged += Importer_Downloader_DownloadProgressChanged;
-
-			if(GlobalVar.tool_hasWriteAccessToOsu) {
-				Bu_SyncRun.IsEnabled = false;
-				Bu_ImporterRun.IsEnabled = false;
-				Bu_ImporterCancel.IsEnabled = false;
-				PB_ImporterProg.Visibility = Visibility.Visible;
-				Directory.CreateDirectory(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar));
-				Importer_DownloadBeatmap();
-			} else {
-				if(MessageBox.Show(GlobalVar._e("MainWindow_requestElevation"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
-					if(GlobalVar.RequestElevation("-openFile=" + TB_ImporterInfo.ToolTip.ToString())) {
-						System.Windows.Application.Current.Shutdown();
-						return;
-					} else {
-						MessageBox.Show(GlobalVar._e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-						OverlayShow(GlobalVar._e("MainWindow_importAborted"), GlobalVar._e("MainWindow_insufficientPermissions"));
-						OverlayFadeOut();
-					}
-				} else {
-					OverlayShow(GlobalVar._e("MainWindow_importAborted"), GlobalVar._e("MainWindow_insufficientPermissions"));
-					OverlayFadeOut();
-				}
-			}
-		}
 
 		public void Importer_ReadListFile(string filePath) {
 			switch(Path.GetExtension(filePath)) {
@@ -1971,13 +1717,13 @@ namespace osuSync {
 		public void Importer_RemoveBmFromSel(object sender, EventArgs e) {
 			BeatmapItem_Importer cParent = (BeatmapItem_Importer)((Grid)((CheckBox)sender).Parent).Parent;
 			// Get Tag from parent Grid
-			importerContainer.BmList_TagsToInstall.Remove(cParent);
-			importerContainer.BmList_TagsLeftOut.Add(cParent);
-			if(importerContainer.BmList_TagsToInstall.Count == 0) {
+			importerHolder.BmList_TagsToInstall.Remove(cParent);
+			importerHolder.BmList_TagsLeftOut.Add(cParent);
+			if(importerHolder.BmList_TagsToInstall.Count == 0) {
 				Bu_ImporterRun.IsEnabled = false;
 				Bu_ImporterCancel.IsEnabled = true;
 			}
-			Importer_UpdateInfo();
+			importerHolder.SetState();
             cParent.Re_DecoBorder.Fill = (SolidColorBrush)FindResource("GrayLightBrush");
 
         }
@@ -1991,19 +1737,6 @@ namespace osuSync {
 				MessageBox.Show(GlobalVar._e("MainWindow_unableToReadFile") + "\n\n" +
                     "> " + GlobalVar._e("MainWindow_details") + ":\n" +
                     ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-		}
-
-		public void Importer_UpdateInfo(string title = null) {
-            title = (title ?? GlobalVar.appName);
-
-			TB_ImporterInfo.Text = title;
-			if(title == GlobalVar._e("MainWindow_fetching1") | title == GlobalVar._e("MainWindow_downloading1") | title == GlobalVar._e("MainWindow_installing")) {
-				TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsLeft").Replace("%0", importerContainer.BmList_TagsToInstall.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsFailed").Replace("%0", importerContainer.BmList_TagsFailed.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsLeftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
-			} else if(title == GlobalVar._e("MainWindow_finished")) {
-				TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", importerContainer.BmList_TagsDone.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsFailed").Replace("%0", importerContainer.BmList_TagsFailed.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsLeftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
-			} else {
-				TB_ImporterInfo.Text += " | " + GlobalVar._e("MainWindow_setsLeft").Replace("%0", importerContainer.BmList_TagsToInstall.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsLeftOut").Replace("%0", importerContainer.BmList_TagsLeftOut.Count.ToString()) + " | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", importerContainer.BmTotal.ToString());
 			}
 		}
 
