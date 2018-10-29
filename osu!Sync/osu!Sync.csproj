@@ -132,20 +132,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\Dictionary.cs" />
-    <Compile Include="FileAssociations.cs" />
+    <Compile Include="Modules\FileAssociations.cs" />
     <Compile Include="GlobalVar.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Beatmap.cs" />
     <Compile Include="Extensions\UserControls\BeatmapItemExtensions.cs" />
+    <Compile Include="Models\BeatmapDictionary.cs" />
     <Compile Include="Modules\Importer\BeatmapDownloadManager.cs" />
-    <Compile Include="Models\MirrorManager.cs" />
+    <Compile Include="Modules\MirrorManager.cs" />
     <Compile Include="Models\Settings.cs" />
-    <Compile Include="Models\TranslationManager.cs" />
+    <Compile Include="Modules\TranslationManager.cs" />
     <Compile Include="Modules\Importer\BeatmapListDownloadManager.cs" />
     <Compile Include="Modules\Importer\ImporterHolder.cs" />
-    <Compile Include="OsuReader.cs" />
+    <Compile Include="Models\OsuReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\BeatmapItem_Exporter.xaml.cs">
       <DependentUpon>BeatmapItem_Exporter.xaml</DependentUpon>

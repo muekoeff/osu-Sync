@@ -3,6 +3,7 @@ using osuSync.Interfaces.UserControls;
 using osuSync.Models;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync.UserControls {
 
@@ -25,7 +26,7 @@ namespace osuSync.UserControls {
                 Re_DecoBorder.MouseUp += host.Exporter_DetermineWheterAddOrRemove;
             }
 
-            TBl_Caption.Text = (Beatmap.Id != -1 ? Beatmap.Id.ToString() + " | " + Beatmap.Artist : GlobalVar._e("MainWindow_unsubmittedBeatmapCantBeExported") + " | " + Beatmap.Artist)
+            TBl_Caption.Text = (Beatmap.Id != -1 ? Beatmap.Id.ToString() + " | " + Beatmap.Artist : _e("MainWindow_unsubmittedBeatmapCantBeExported") + " | " + Beatmap.Artist)
                 + (Beatmap.Creator != "Unknown" ? TBl_Caption.Text += " | " + Beatmap.Creator : "");
             TBl_Title.Text = bm.Title;
             if(Beatmap.Id == -1) {

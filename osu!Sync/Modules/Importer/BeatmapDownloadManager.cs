@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows.Media;
-using static osuSync.Models.MirrorManager;
+using static osuSync.Modules.MirrorManager;
+using static osuSync.Modules.TranslationManager;
 using static osuSync.Window_GenericMsgBox;
 
 namespace osuSync.Models.Importer {
@@ -40,8 +41,8 @@ namespace osuSync.Models.Importer {
 
 
         private void _downloadFile(string requestUri, string fileName) {
-            window.UI_SetStatus(GlobalVar._e("MainWindow_downloading").Replace("%0", Convert.ToString(beatmapItemImporter.Beatmap.Id)), true);
-            beatmapListDownloadManager.SetState(GlobalVar._e("MainWindow_downloading1"));
+            window.UI_SetStatus(_e("MainWindow_downloading").Replace("%0", Convert.ToString(beatmapItemImporter.Beatmap.Id)), true);
+            beatmapListDownloadManager.SetState(_e("MainWindow_downloading1"));
             window.PB_ImporterProg.IsIndeterminate = false;
             importerHolder.Downloader.DownloadFileAsync(new Uri(requestUri), (GlobalVar.appTempPath + "/Downloads/Beatmaps/".Replace('/', Path.DirectorySeparatorChar) + fileName));
         }
@@ -87,25 +88,25 @@ namespace osuSync.Models.Importer {
             window.PB_ImporterProg.Value = 0;
             window.PB_ImporterProg.IsIndeterminate = true;
 
-            window.UI_SetStatus(GlobalVar._e("MainWindow_fetching").Replace("%0", Convert.ToString(beatmapItemImporter.Beatmap.Id)), true);
-            window.TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
+            window.UI_SetStatus(_e("MainWindow_fetching").Replace("%0", Convert.ToString(beatmapItemImporter.Beatmap.Id)), true);
+            window.TB_ImporterMirror.Text = _e("MainWindow_downloadMirror") + ": " + app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
 
             beatmapItemImporter.Re_DecoBorder.Fill = (SolidColorBrush)window.FindResource("BlueLightBrush");
             beatmapItemImporter.CB_IsSelected.IsEnabled = false;
             beatmapItemImporter.CB_IsSelected.IsThreeState = false;
             beatmapItemImporter.CB_IsSelected.IsChecked = null;
 
-            beatmapListDownloadManager.SetState(GlobalVar._e("MainWindow_fetching1"));
+            beatmapListDownloadManager.SetState(_e("MainWindow_fetching1"));
         }
 
         private void _state_postPingFailed() {
             if(importerHolder.Pref_FetchFail_SkipAlways) {
                 beatmapListDownloadManager.ProceedWithNextBeatmap();
             } else {
-                Window_GenericMsgBox errorMsgBox = new Window_GenericMsgBox(GlobalVar._e("MainWindow_unableToFetchMirrorData"), new List<MsgBoxButtonHolder> {
-                        new MsgBoxButtonHolder(GlobalVar._e("Global_buttons_skip"), (int)MsgBoxResult.Yes),
-                        new MsgBoxButtonHolder(GlobalVar._e("Global_buttons_skipAlways"), (int)MsgBoxResult.YesAll),
-                        new MsgBoxButtonHolder(GlobalVar._e("Global_buttons_cancel"), (int)MsgBoxResult.Cancel)
+                Window_GenericMsgBox errorMsgBox = new Window_GenericMsgBox(_e("MainWindow_unableToFetchMirrorData"), new List<MsgBoxButtonHolder> {
+                        new MsgBoxButtonHolder(_e("Global_buttons_skip"), (int)MsgBoxResult.Yes),
+                        new MsgBoxButtonHolder(_e("Global_buttons_skipAlways"), (int)MsgBoxResult.YesAll),
+                        new MsgBoxButtonHolder(_e("Global_buttons_cancel"), (int)MsgBoxResult.Cancel)
                     }, null, System.Drawing.SystemIcons.Exclamation);
                 errorMsgBox.ShowDialog();
                 switch(errorMsgBox.Result) {

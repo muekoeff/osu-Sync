@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osuSync.Interfaces.UserControls;
 using osuSync.Models;
+using osuSync.Modules;
 using osuSync.Modules.Importer;
 using osuSync.UserControls;
 using System;
@@ -21,7 +22,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using static osuSync.FileExtensions;
+using static osuSync.Modules.FileExtensions;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
 
@@ -55,7 +57,7 @@ namespace osuSync {
 		public int Progress__Current { get; set; }
 		public ProgressCurrentActions Progress__CurrentAction { get; set; }
         public ReturnStatuses Return__Status { get; set; } = ReturnStatuses.Success;
-        public Dictionary<int, Beatmap> Return__Sync_BmDic_Installed { get; set; }
+        public BeatmapDictionary Return__Sync_BmDic_Installed { get; set; }
 		public string Return__Sync_Warnings { get; set; }
 	}
 
@@ -69,7 +71,7 @@ namespace osuSync {
         };
         private WebClient BmDP_client = new WebClient();
 		private DoubleAnimation fadeOut = new DoubleAnimation();
-		private Dictionary<int, Beatmap> bmDic_installed = new Dictionary<int, Beatmap>();
+		private BeatmapDictionary bmDic_installed = new BeatmapDictionary();
 		private List<BeatmapItem_Exporter> exporter_bmList_selectedTags = new List<BeatmapItem_Exporter>();
 		private List<BeatmapItem_Exporter> exporter_bmList_unselectedTags = new List<BeatmapItem_Exporter>();
 
@@ -79,7 +81,7 @@ namespace osuSync {
 
 		private bool sync_isDone = false;
 		private bool sync_isDone_importerRequest = false;
-		private Dictionary<int, Beatmap> sync_isDone_importerRequest_saveValue = new Dictionary<int, Beatmap>();
+		private BeatmapDictionary sync_isDone_importerRequest_saveValue = new BeatmapDictionary();
 
         public MainWindow() {
             InitializeComponent();
@@ -99,150 +101,8 @@ namespace osuSync {
 			}
 		}
 
-        /// <summary>
-        /// Converts the given <code>List(Of Beatmap)</code> to a CSV-String.
-        /// </summary>
-        /// <param name="source">List of beatmaps</param>
-        /// <returns><code>List(Of Beatmap)</code> as CSV-String.</returns>
-        /// <remarks></remarks>
-        public string ConvertBmListToCSV(Dictionary<int, Beatmap> source) {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("sep=;\n");
-            sb.Append("ID;Artist;Creator;Title\n");
-			foreach(KeyValuePair<int, Beatmap> thisBm in source) {
-                sb.Append(thisBm.Value.Id + ";" + "\"" + thisBm.Value.Artist + "\";\"" + thisBm.Value.Creator + "\";\"" + thisBm.Value.Title + "\"\n");
-			}
-			return sb.ToString();
-		}
-
-        /// <summary>
-        /// Converts the given <code>List(Of Beatmap)</code> to HTML-Code.
-        /// </summary>
-        /// <param name="source">List of beatmaps</param>
-        /// <returns><code>List(Of Beatmap)</code> as HTML and possible warnings together in a String().</returns>
-        /// <remarks></remarks>
-        public string[] ConvertBmListToHtml(Dictionary<int, Beatmap> source) {
-            StringBuilder fail = new StringBuilder();
-            StringBuilder sb_html = new StringBuilder();
-            sb_html.Append("<!doctype html>\n" 
-                + "<html>\n" 
-                + "<head><meta charset=\"utf-8\"><meta name=\"author\" content=\"osu!Sync\"/><meta name=\"generator\" content=\"osu!Sync " + GlobalVar.AppVersion + "\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"/><title>Beatmap List | osu!Sync</title><link rel=\"icon\" type=\"image/png\" href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Favicon.png\"/><link href=\"http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700\" rel=\"stylesheet\" type=\"text/css\" /><link href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/style.css\" rel=\"stylesheet\" type=\"text/css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/css/tooltipster.css\"/></head>\n" 
-                + "<body>\n" 
-                + "<div id=\"Wrapper\">\n" 
-                + "\t<header><p>Beatmap List | osu!Sync</p></header>\n" 
-                + "\t<div id=\"Sort\"><ul><li><strong>Sort by...</strong></li><li><a class=\"SortParameter\" href=\"#Sort_Artist\">Artist</a></li><li><a class=\"SortParameter\" href=\"#Sort_Creator\">Creator</a></li><li><a class=\"SortParameter\" href=\"#Sort_SetName\">Name</a></li><li><a class=\"SortParameter\" href=\"#Sort_SetID\">Set ID</a></li></ul></div>\n" 
-                + "\t<div id=\"ListWrapper\">");
-
-			foreach(KeyValuePair<int, Beatmap> thisBm in source) {
-				if(thisBm.Value.Id == -1) {
-                    fail.Append("\n" +
-                        "* " + thisBm.Value.Id.ToString() + " / " + thisBm.Value.Artist + " / " + thisBm.Value.Title);
-				} else {
-                    thisBm.Value.Artist.Replace("\"", "'");
-                    thisBm.Value.Creator.Replace("\"", "'");
-                    thisBm.Value.Title.Replace("\"", "'");
-                    sb_html.Append("\n\t\t" + "<article id=\"beatmap-" + thisBm.Value.Id + "\" data-artist=\"" + thisBm.Value.Artist + "\" data-creator=\"" + thisBm.Value.Creator + "\" data-setName=\"" + thisBm.Value.Title + "\" data-setID=\"" + thisBm.Value.Id + "\"><a class=\"DownloadArrow\" href=\"https://osu.ppy.sh/d/" + thisBm.Value.Id + "\" target=\"_blank\">&#8250;</a><h1><span title=\"Beatmap Set Name\">" + thisBm.Value.Title + "</span></h1><h2><span title=\"Beatmap Set ID\">" + thisBm.Value.Id + "</span></h2><p><a class=\"InfoTitle\" data-function=\"artist\" href=\"https://osu.ppy.sh/p/beatmaplist?q=" + thisBm.Value.Artist + "\" target=\"_blank\">Artist.</a> " + thisBm.Value.Artist + " <a class=\"InfoTitle\" data-function=\"creator\" href=\"https://osu.ppy.sh/p/beatmaplist?q=" + thisBm.Value.Creator + "\" target=\"_blank\">Creator.</a> " + thisBm.Value.Creator + " <a class=\"InfoTitle\" data-function=\"overview\" href=\"https://osu.ppy.sh/s/" + thisBm.Value.Id + "\" target=\"_blank\">Overview.</a> <a class=\"InfoTitle\" data-function=\"discussion\" href=\"https://osu.ppy.sh/s/" + thisBm.Value.Id + "#disqus_thread\" target=\"_blank\">Discussion.</a></p></article>");
-				}
-			}
-            sb_html.Append("</div>\n"
-                + "</div>\n"
-                + "<footer><p>Generated with osu!Sync, an open-source tool made by <a href=\"http://nw520.de/\" target=\"_blank\">nw520</a>.</p></footer>\n" 
-                + "<script src=\"http://code.jquery.com/jquery-latest.min.js\"></script><script src=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/Tooltipster/3.2.6/js/jquery.tooltipster.min.js\"></script><script src=\"https://dl.dropboxusercontent.com/u/62617267/Projekte/osu%21Sync/export-html/1.0.0.0/script.js\"></script>\n" 
-                + "</body>\n" 
-                + "</html>");
-
-			return new string[] {
-                sb_html.ToString(),
-                fail.ToString()
-            };
-		}
-
-        /// <summary>
-        /// Converts the given <code>List(Of Beatmap)</code> to OSBL.
-        /// </summary>
-        /// <param name="source">List of beatmaps</param>
-        /// <returns><code>List(Of Beatmap)</code> as OSBL and possible warnings together in a String().</returns>
-        /// <remarks></remarks>
-        public string[] ConvertBmListToJson(Dictionary<int, Beatmap> source) {
-            StringBuilder fail = new StringBuilder();
-            StringBuilder fail_unsubmitted = new StringBuilder();
-            StringBuilder fail_alreadyAssigned = new StringBuilder();
-            Dictionary<string, Dictionary<string, string>> content = new Dictionary<string, Dictionary<string, string>> {
-                {
-                    "_info",
-                    new Dictionary<string, string> {
-                {
-                    "_date",
-                    DateTime.Now.ToString("yyyyMMdd")
-                },
-                {
-                    "_version",
-                    GlobalVar.AppVersion.ToString()
-                }
-            }
-                }
-            };
-            foreach(KeyValuePair<int, Beatmap> thisBm in source) {
-				if(thisBm.Value.Id == -1) {
-                    fail_unsubmitted.Append("\n* " + thisBm.Value.Id.ToString() + " / " + thisBm.Value.Artist + " / " + thisBm.Value.Title);
-				} else if(content.ContainsKey(thisBm.Value.Id.ToString())) {
-                    fail_alreadyAssigned.Append("\n* " + thisBm.Value.Id.ToString() + " / " + thisBm.Value.Artist + " / " + thisBm.Value.Title);
-				} else {
-                    content.Add(thisBm.Value.Id.ToString(), new Dictionary<string, string> {
-						{
-							"artist",
-                            thisBm.Value.Artist
-						},
-						{
-							"creator",
-                            thisBm.Value.Creator
-						},
-						{
-							"id",
-                            thisBm.Value.Id.ToString()
-						},
-						{
-							"title",
-                            thisBm.Value.Title
-						}
-					});
-				}
-			}
-
-			if(fail_unsubmitted.Length != 0)
-				fail.Append("# " + GlobalVar._e("MainWindow_unsubmittedBeatmapSets") + "\n" +
-                    GlobalVar._e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") + "\n\n" + 
-                    "> " + GlobalVar._e("MainWindow_beatmaps") + ":" + fail_unsubmitted.ToString() + "\n\n");
-			if(fail_alreadyAssigned.Length != 0)
-				fail.Append("# " + GlobalVar._e("MainWindow_idAlreadyAssigned") + "\n" + GlobalVar._e("MainWindow_beatmapsIdsCanBeUsedOnlyOnce") + "\n\n" + 
-                    "> " + GlobalVar._e("MainWindow_beatmaps") + ":" + fail_alreadyAssigned.ToString());
-			return new string[] {
-                JsonConvert.SerializeObject(content),
-                fail.ToString()
-            };
-		}
-
-        /// <summary>
-        /// Converts the given <code>List(Of Beatmap)</code> to a TXT-String.
-        /// </summary>
-        /// <param name="source">List of beatmaps</param>
-        /// <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
-        /// <remarks></remarks>
-        public string ConvertBmListToTxt(Dictionary<int, Beatmap> source) {
-            StringBuilder content = new StringBuilder();
-            content.Append("// osu!Sync (" + GlobalVar.AppVersion.ToString() + ") | " + DateTime.Now.ToString("dd.MM.yyyy") + "\n\n");
-			foreach(KeyValuePair<int, Beatmap> thisBm in source) {
-                content.Append("# " + thisBm.Value.Id + "\n" 
-                    + "* Creator: \t" + thisBm.Value.Creator + "\n" 
-                    + "* Artist: \t" + thisBm.Value.Artist + "\n"
-                    + "* ID: " + "\t\t\t" + thisBm.Value.Id + "\n" 
-                    + "* Title: " + "\t\t" + thisBm.Value.Title + "\n\n");
-			}
-			return content.ToString();
-		}
-
-		public Dictionary<int, Beatmap> ConvertSavedJsonToBmList(JObject source) {
-			Dictionary<int, Beatmap> bmList = new Dictionary<int, Beatmap>();
+		public BeatmapDictionary ConvertSavedJsonToBmList(JObject source) {
+            BeatmapDictionary bmList = new BeatmapDictionary();
 
 			foreach(JToken thisToken in source.Values()) {
 				if(!thisToken.Path.StartsWith("_")) {
@@ -292,11 +152,11 @@ namespace osuSync {
 							System.Windows.Application.Current.Shutdown();
 							return;
 						} else {
-							MessageBox.Show(GlobalVar._e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+							MessageBox.Show(_e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 						}
 					}
-                    La_FooterWarn.Content = GlobalVar._e("MainWindow_noAccess");
-                    La_FooterWarn.ToolTip = GlobalVar._e("MainWindow_tt_noAccess");
+                    La_FooterWarn.Content = _e("MainWindow_noAccess");
+                    La_FooterWarn.ToolTip = _e("MainWindow_tt_noAccess");
 				}
 			}
 		}
@@ -308,10 +168,10 @@ namespace osuSync {
         /// <param name="destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
         /// <param name="lastUpdateTime">Only required when <paramref name="destination"/> = Installed</param>
         /// <remarks></remarks>
-        public void BmDisplayUpdate(Dictionary<int, Beatmap> bmList, UpdateBmDisplayDestinations destination = UpdateBmDisplayDestinations.Installed, string lastUpdateTime = null) {
+        public void BmDisplayUpdate(BeatmapDictionary bmList, UpdateBmDisplayDestinations destination = UpdateBmDisplayDestinations.Installed, string lastUpdateTime = null) {
 			switch(destination) {
 				case UpdateBmDisplayDestinations.Installed:
-                    La_FooterLastSync.Content = (lastUpdateTime == null ? GlobalVar._e("MainWindow_lastSync").Replace("%0", DateTime.Now.ToString(GlobalVar._e("MainWindow_dateFormat") + " " + GlobalVar._e("MainWindow_timeFormat"))) : GlobalVar._e("MainWindow_lastSync").Replace("%0", lastUpdateTime));
+                    La_FooterLastSync.Content = (lastUpdateTime == null ? _e("MainWindow_lastSync").Replace("%0", DateTime.Now.ToString(_e("MainWindow_dateFormat") + " " + _e("MainWindow_timeFormat"))) : _e("MainWindow_lastSync").Replace("%0", lastUpdateTime));
                     La_FooterLastSync.Tag = (lastUpdateTime ?? DateTime.Now.ToString("yyyyMMddHHmmss"));
 					BeatmapWrapper.Children.Clear();
 
@@ -327,7 +187,7 @@ namespace osuSync {
 
                             HorizontalAlignment = HorizontalAlignment.Center,
 							Margin = new Thickness(0, 86, 0, 0),
-							Text = GlobalVar._e("MainWindow_beatmapsFound").Replace("%0", "0"),
+							Text = _e("MainWindow_beatmapsFound").Replace("%0", "0"),
 							VerticalAlignment = VerticalAlignment.Center
 						};
 						TextBlock UI_TextBlock_SubTitle = new TextBlock {
@@ -335,13 +195,13 @@ namespace osuSync {
 							Foreground = (SolidColorBrush)FindResource("GreenLightBrush"),
 
                             HorizontalAlignment = HorizontalAlignment.Center,
-							Text = GlobalVar._e("MainWindow_thatsImpressiveIGuess"),
+							Text = _e("MainWindow_thatsImpressiveIGuess"),
 							VerticalAlignment = VerticalAlignment.Center
 						};
                         BeatmapWrapper.Children.Add(UI_TextBlock);
                         BeatmapWrapper.Children.Add(UI_TextBlock_SubTitle);
 					}
-					TB_BmCounter.Text = GlobalVar._e("MainWindow_beatmapsFound").Replace("%0", bmList.Count.ToString());
+					TB_BmCounter.Text = _e("MainWindow_beatmapsFound").Replace("%0", bmList.Count.ToString());
 					Bu_SyncRun.IsEnabled = true;
 					break;
 				case UpdateBmDisplayDestinations.Importer:
@@ -369,8 +229,8 @@ namespace osuSync {
 							FontSize = 24,
 							Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 							HorizontalAlignment = HorizontalAlignment.Center,
-							Text = GlobalVar._e("MainWindow_pleaseWait") + "\n" + 
-                                GlobalVar._e("MainWindow_syncing"),
+							Text = _e("MainWindow_pleaseWait") + "\n" + 
+                                _e("MainWindow_syncing"),
 							TextAlignment = TextAlignment.Center,
 							VerticalAlignment = VerticalAlignment.Center
 						};
@@ -399,7 +259,7 @@ namespace osuSync {
 					TB_ImporterInfo.ToolTip = TB_ImporterInfo.Text;
 					Bu_ImporterRun.IsEnabled = (importerHolder.BmList_TagsToInstall.Count != 0);
                     importerHolder.SetState();
-					TB_ImporterMirror.Text = GlobalVar._e("MainWindow_downloadMirror") + ": " + MirrorManager.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
+					TB_ImporterMirror.Text = _e("MainWindow_downloadMirror") + ": " + MirrorManager.app_mirrors[GlobalVar.appSettings.Tool_ChosenDownloadMirror].DisplayName;
 					break;
 				case UpdateBmDisplayDestinations.Exporter:
 					SP_ExporterWrapper.Children.Clear();
@@ -420,7 +280,7 @@ namespace osuSync {
 			BeatmapDetails_APIProgress.Visibility = Visibility.Collapsed;
 
 			if(e.Cancelled) {
-				UI_SetStatus(GlobalVar._e("MainWindow_aborted"));
+				UI_SetStatus(_e("MainWindow_aborted"));
 				GlobalVar.WriteToApiLog("/api/get_beatmaps", "{Cancelled}");
 			} else {
 				JArray JSON_Array = null;
@@ -463,17 +323,17 @@ namespace osuSync {
                         BeatmapDetails_APIPlayCount.ToolTip = sb_playCount.ToString();
 
                         BmDP_SetRankedStatus((Beatmap.OnlineApprovedStatuses)Enum.Parse(typeof(Beatmap.OnlineApprovedStatuses), JSON_Array.First.SelectToken("approved").ToString(), true));
-						UI_SetStatus(GlobalVar._e("MainWindow_finished"));
+						UI_SetStatus(_e("MainWindow_finished"));
 					} else {
-						UI_SetStatus(GlobalVar._e("MainWindow_failed"));
+						UI_SetStatus(_e("MainWindow_failed"));
                         GlobalVar.WriteToApiLog("/api/get_beatmaps", "{UnexpectedAnswer} " + e.Result);
-                        BeatmapDetails_APIWarn.Content = GlobalVar._e("MainWindow_detailsPanel_apiError");
+                        BeatmapDetails_APIWarn.Content = _e("MainWindow_detailsPanel_apiError");
                         BeatmapDetails_APIWarn.Visibility = Visibility.Visible;
 					}
 				} catch(Exception) {
-					UI_SetStatus(GlobalVar._e("MainWindow_failed"));
+					UI_SetStatus(_e("MainWindow_failed"));
                     GlobalVar.WriteToApiLog("/api/get_beatmaps");
-                    BeatmapDetails_APIWarn.Content = GlobalVar._e("MainWindow_detailsPanel_apiError");
+                    BeatmapDetails_APIWarn.Content = _e("MainWindow_detailsPanel_apiError");
                     BeatmapDetails_APIWarn.Visibility = Visibility.Visible;
 				}
 			}
@@ -484,15 +344,15 @@ namespace osuSync {
 				case Beatmap.OnlineApprovedStatuses.Ranked:
 				case Beatmap.OnlineApprovedStatuses.Approved:
                     BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GreenDarkBrush");
-                    BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_ranked");
+                    BeatmapDetails_RankedStatus.Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked");
 					break;
 				case Beatmap.OnlineApprovedStatuses.Pending:
                     BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("PurpleDarkBrush");
-                    BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_pending");
+                    BeatmapDetails_RankedStatus.Text = _e("MainWindow_detailsPanel_beatmapStatus_pending");
 					break;
 				default:
                     BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GrayLightBrush");
-                    BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_unranked");
+                    BeatmapDetails_RankedStatus.Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked");
 					break;
 			}
 		}
@@ -522,63 +382,63 @@ namespace osuSync {
 		}
 		#endregion
 
-		public void Exporter_ExportBmDialog(Dictionary<int, Beatmap> source, string dialogTitle = null) {
+		public void Exporter_ExportBmDialog(BeatmapDictionary source, string dialogTitle = null) {
             SaveFileDialog Dialog_SaveFile = new SaveFileDialog() {
                 AddExtension = true,
-                Filter = GlobalVar._e("MainWindow_fileext_osblx") + "     (*.nw520-osblx)|*.nw520-osblx|"
-                    + GlobalVar._e("MainWindow_fileext_osbl") + "     (*.nw520-osbl)|*.nw520-osbl|"
-                    + GlobalVar._e("MainWindow_fileext_zip") + "     (*.zip)|*.osblz.zip|"
-                    + GlobalVar._e("MainWindow_fileext_html") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.html)|*.html|"
-                    + GlobalVar._e("MainWindow_fileext_txt") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.txt)|*.txt|"
-                    + GlobalVar._e("MainWindow_fileext_json") + "     (*.json)|*.json|"
-                    + GlobalVar._e("MainWindow_fileext_csv") + "     [" + GlobalVar._e("MainWindow_notImportable") + "] (*.csv)|*.csv",
+                Filter = _e("MainWindow_fileext_osblx") + "     (*.nw520-osblx)|*.nw520-osblx|"
+                    + _e("MainWindow_fileext_osbl") + "     (*.nw520-osbl)|*.nw520-osbl|"
+                    + _e("MainWindow_fileext_zip") + "     (*.zip)|*.osblz.zip|"
+                    + _e("MainWindow_fileext_html") + "     [" + _e("MainWindow_notImportable") + "] (*.html)|*.html|"
+                    + _e("MainWindow_fileext_txt") + "     [" + _e("MainWindow_notImportable") + "] (*.txt)|*.txt|"
+                    + _e("MainWindow_fileext_json") + "     (*.json)|*.json|"
+                    + _e("MainWindow_fileext_csv") + "     [" + _e("MainWindow_notImportable") + "] (*.csv)|*.csv",
                 OverwritePrompt = true,
-                Title = (dialogTitle ?? GlobalVar._e("MainWindow_exportInstalledBeatmaps1")),
+                Title = (dialogTitle ?? _e("MainWindow_exportInstalledBeatmaps1")),
                 ValidateNames = true
             };
             Dialog_SaveFile.ShowDialog();
 			if(string.IsNullOrEmpty(Dialog_SaveFile.FileName)) {
-				OverlayShow(GlobalVar._e("MainWindow_exportAborted"), null);
+				OverlayShow(_e("MainWindow_exportAborted"), null);
 				OverlayFadeOut();
 				return;
 			}
 
 			switch(Dialog_SaveFile.FilterIndex) {
 				case 1: //.nw520-osblx
-					string[] content_osblx = ConvertBmListToJson(source);
+					string content_osblx = source.ConvertToJson(out string failMessageOsblx);
 					using(StreamWriter File = new StreamWriter(Dialog_SaveFile.FileName, false)) {
-						File.Write(GlobalVar.StringCompress(content_osblx[0]));
+						File.Write(GlobalVar.StringCompress(content_osblx));
 						File.Close();
 					}
 
-					if(!string.IsNullOrEmpty(content_osblx[1])) {
-						if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
-                            GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+					if(!string.IsNullOrEmpty(failMessageOsblx)) {
+						if(MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 							Window_MessageWindow Window_Message = new Window_MessageWindow();
-							Window_Message.SetMessage(content_osblx[1], GlobalVar._e("MainWindow_skippedBeatmaps"), "Export");
+							Window_Message.SetMessage(failMessageOsblx, _e("MainWindow_skippedBeatmaps"), "Export");
 							Window_Message.ShowDialog();
 						}
 					}
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "OSBLX"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBLX"));
 					OverlayFadeOut();
 					break;
 				case 2:
 					//.nw520-osbl
-					string[] content_osbl = ConvertBmListToJson(source);
+					string content_osbl = source.ConvertToJson(out string failMessageOsbl);
 					using(StreamWriter File = new StreamWriter(Dialog_SaveFile.FileName, false)) {
-						File.Write(content_osbl[0]);
+						File.Write(content_osbl);
 						File.Close();
 					}
 
-					if(!string.IsNullOrEmpty(content_osbl[1])) {
-						if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
-                            GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+					if(!string.IsNullOrEmpty(failMessageOsbl)) {
+						if(MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 							Window_MessageWindow Window_Message = new Window_MessageWindow();
-							Window_Message.SetMessage(content_osbl[1], GlobalVar._e("MainWindow_skippedBeatmaps"), "Export");
+							Window_Message.SetMessage(failMessageOsbl, _e("MainWindow_skippedBeatmaps"), "Export");
 							Window_Message.ShowDialog();
 						}
 					}
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "OSBL"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "OSBL"));
 					OverlayFadeOut();
 					break;
 				case 3:
@@ -586,128 +446,86 @@ namespace osuSync {
 					string directName = GlobalVar.appTempPath + "/Zipper/Exporter-".Replace('/', Path.DirectorySeparatorChar) + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
 					Directory.CreateDirectory(directName);
 
-					string[] contenz_osblz = ConvertBmListToJson(source);
+					string contenz_osblz = source.ConvertToJson(out string failMessageOsblz);
 					using(StreamWriter File = new StreamWriter(directName + "/00.nw520-osblx".Replace('/', Path.DirectorySeparatorChar), false)) {
-						File.Write(GlobalVar.StringCompress(contenz_osblz[0]));
+						File.Write(GlobalVar.StringCompress(contenz_osblz));
 						File.Close();
 					}
 
 					PackageDirectoryAsZIP(directName, Dialog_SaveFile.FileName);
 					Directory.Delete(directName, true);
-					if(!string.IsNullOrEmpty(contenz_osblz[1])) {
-						if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
-                            GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+					if(!string.IsNullOrEmpty(failMessageOsblz)) {
+						if(MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 							Window_MessageWindow Window_Message = new Window_MessageWindow();
-							Window_Message.SetMessage(contenz_osblz[1], GlobalVar._e("MainWindow_skippedBeatmaps"), "Export");
+							Window_Message.SetMessage(failMessageOsblz, _e("MainWindow_skippedBeatmaps"), "Export");
 							Window_Message.ShowDialog();
 						}
 					}
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "Zipped OSBLX"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "Zipped OSBLX"));
 					OverlayFadeOut();
 					break;
 				case 4:
 					//.html
-					string[] content_html = ConvertBmListToHtml(source);
+					string content_html = source.ConvertToHtml(out string failMessageHtml);
 					using(StreamWriter File = new StreamWriter(Dialog_SaveFile.FileName, false)) {
-						File.Write(content_html[0]);
+						File.Write(content_html);
 						File.Close();
 					}
 
-					if(!string.IsNullOrEmpty(content_html[1])) {
-                        content_html[1] = content_html[1].Insert(0, "# " + GlobalVar._e("MainWindow_unsubmittedBeatmapSets") + "\n" 
-                            + GlobalVar._e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") + "\n\n" 
-                            + "> " + GlobalVar._e("MainWindow_beatmaps") + ": ");
-						if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
-                            GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+					if(!string.IsNullOrEmpty(failMessageHtml)) {
+                        failMessageHtml = failMessageHtml.Insert(0, "# " + _e("MainWindow_unsubmittedBeatmapSets") + "\n" 
+                            + _e("MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat") + "\n\n" 
+                            + "> " + _e("MainWindow_beatmaps") + ": ");
+						if(MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 							Window_MessageWindow Window_Message = new Window_MessageWindow();
-							Window_Message.SetMessage(content_html[1], GlobalVar._e("MainWindow_skippedBeatmaps"), "Export");
+							Window_Message.SetMessage(failMessageHtml, _e("MainWindow_skippedBeatmaps"), "Export");
 							Window_Message.ShowDialog();
 						}
 					}
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "HTML"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "HTML"));
 					OverlayFadeOut();
 					break;
 				case 5:
 					//.txt
 					using(StreamWriter File = new StreamWriter(Dialog_SaveFile.FileName, false)) {
-						File.Write(ConvertBmListToTxt(source));
+						File.Write(source.ConvertToTxt());
 						File.Close();
 					}
 
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "TXT"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "TXT"));
 					OverlayFadeOut();
 					break;
 				case 6:
 					//.json
-					string[] content_json = ConvertBmListToJson(source);
+					string content_json = source.ConvertToJson(out string failMessageJson);
 					using(StreamWriter File = new StreamWriter(Dialog_SaveFile.FileName, false)) {
-						File.Write(content_json[0]);
+						File.Write(content_json);
 						File.Close();
 					}
 
-					if(!string.IsNullOrEmpty(content_json[1])) {
-						if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
-                            GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+					if(!string.IsNullOrEmpty(failMessageJson)) {
+						if(MessageBox.Show(_e("MainWindow_someBeatmapSetsHadntBeenExported") + "\n" +
+                            _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 							Window_MessageWindow Window_Message = new Window_MessageWindow();
-							Window_Message.SetMessage(content_json[1], GlobalVar._e("MainWindow_skippedBeatmaps"), "Export");
+							Window_Message.SetMessage(failMessageJson, _e("MainWindow_skippedBeatmaps"), "Export");
 							Window_Message.ShowDialog();
 						}
 					}
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "JSON"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "JSON"));
 					OverlayFadeOut();
 					break;
 				case 7:
 					//.csv
 					using(StreamWriter File = new StreamWriter(Dialog_SaveFile.FileName, false)) {
-						File.Write(ConvertBmListToCSV(source));
+						File.Write(source.ConvertToCsv());
 						File.Close();
 					}
 
-					OverlayShow(GlobalVar._e("MainWindow_exportCompleted"), GlobalVar._e("MainWindow_exportedAs").Replace("%0", "CSV"));
+					OverlayShow(_e("MainWindow_exportCompleted"), _e("MainWindow_exportedAs").Replace("%0", "CSV"));
 					OverlayFadeOut();
 					break;
-			}
-		}
-
-		/// <summary>
-		/// Checks osu!Sync's file associations and creates them if necessary.
-		/// </summary>
-		/// <remarks></remarks>
-		public void FileAssociationCheck() {
-			int fileExtensionCheck = 0;
-            // @TODO: ENUM
-			//0 = OK, 1 = Missing File Extension, 2 = Invalid/Outdated File Extension
-			foreach(FileExtensionDefinition thisExtension in app_fileExtensions) {
-				if(Registry.ClassesRoot.OpenSubKey(thisExtension.fileExtension) == null) {
-					if(fileExtensionCheck == 0) {
-                        fileExtensionCheck = 1;
-						break;
-					}
-				}
-			}
-			if(fileExtensionCheck != 1) {
-                foreach(FileExtensionDefinition thisExtension in app_fileExtensions) {
-                    string registryPath = Convert.ToString(Registry.ClassesRoot.OpenSubKey(thisExtension.className).OpenSubKey("DefaultIcon").GetValue(null, "", RegistryValueOptions.None));
-                    registryPath = registryPath.Substring(1, registryPath.Length - 3);
-					if(registryPath != System.Reflection.Assembly.GetExecutingAssembly().Location.ToString()) {
-                        fileExtensionCheck = 2;
-						break;
-					}
-
-                    registryPath = (Convert.ToString(Registry.ClassesRoot.OpenSubKey(thisExtension.className).OpenSubKey("shell").OpenSubKey("open").OpenSubKey("command").GetValue(null, "", RegistryValueOptions.None)));
-					if(registryPath != "\"" + System.Reflection.Assembly.GetExecutingAssembly().Location.ToString() + "\" -openFile=\"%1\"") {
-                        fileExtensionCheck = 2;
-						break;
-					}
-				}
-			}
-
-			if(fileExtensionCheck != 0) {
-				string msgBox_content = (fileExtensionCheck == 1 ? GlobalVar._e("MainWindow_extensionNotAssociated") + "\n" + 
-                    GlobalVar._e("MainWindow_doYouWantToFixThat") : GlobalVar._e("MainWindow_extensionWrong") + "\n" +
-                    GlobalVar._e("MainWindow_doYouWantToFixThat"));
-				if(MessageBox.Show(msgBox_content, GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-					FileAssociationsCreate();
 			}
 		}
 
@@ -769,7 +587,7 @@ namespace osuSync {
 					UpdateCheck();
 					break;
 				case 1:
-					La_FooterUpdater.Content = GlobalVar._e("MainWindow_updatesDisabled");
+					La_FooterUpdater.Content = _e("MainWindow_updatesDisabled");
 					break;
 				default:
 					int interval = 0;
@@ -788,7 +606,7 @@ namespace osuSync {
                     if(DateTime.ParseExact(GlobalVar.appSettings.Tool_LastCheckForUpdates, "yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo) - DateTime.Now > TimeSpan.FromDays(interval)) {
 						UpdateCheck();
 					} else {
-						La_FooterUpdater.Content = GlobalVar._e("MainWindow_updateCheckNotNecessary");
+						La_FooterUpdater.Content = _e("MainWindow_updateCheckNotNecessary");
 					}
 					break;
 			}
@@ -807,7 +625,7 @@ namespace osuSync {
 				if(File.Exists(importerHolder.FilePath)) {
 					Importer_ReadListFile(importerHolder.FilePath);
 				} else {
-					MessageBox.Show(GlobalVar._e("MainWindow_file404"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show(_e("MainWindow_file404"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 					if(GlobalVar.appSettings.Tool_SyncOnStartup)
 						Sync_GetIDs();
 				}
@@ -842,18 +660,18 @@ namespace osuSync {
                 AddExtension = true,
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = GlobalVar._e("MainWindow_allSupportedFileFormats") + "|*.json;*.nw520-osbl;*.nw520-osblx|"
-                    + GlobalVar._e("MainWindow_fileext_osblx") + "|*.nw520-osblx|"
-                    + GlobalVar._e("MainWindow_fileext_osbl") + "|*.nw520-osbl|"
-                    + GlobalVar._e("MainWindow_fileext_json") + "|*.json",
-                Title = GlobalVar._e("MainWindow_selectASupportedFileToConvert")
+                Filter = _e("MainWindow_allSupportedFileFormats") + "|*.json;*.nw520-osbl;*.nw520-osblx|"
+                    + _e("MainWindow_fileext_osblx") + "|*.nw520-osblx|"
+                    + _e("MainWindow_fileext_osbl") + "|*.nw520-osbl|"
+                    + _e("MainWindow_fileext_json") + "|*.json",
+                Title = _e("MainWindow_selectASupportedFileToConvert")
             };
             Dialog_OpenFile.ShowDialog();
 
             SaveFileDialog Dialog_SaveFile = new SaveFileDialog() {
                 AddExtension = true,
                 OverwritePrompt = true,
-                Title = GlobalVar._e("MainWindow_selectADestination"),
+                Title = _e("MainWindow_selectADestination"),
                 ValidateNames = true
             };
 
@@ -862,25 +680,25 @@ namespace osuSync {
                 content_osbl = File.ReadAllText(Dialog_OpenFile.FileName);
 				switch(Path.GetExtension(Dialog_OpenFile.FileName)) {
 					case ".nw520-osbl":
-						Exporter_ExportBmDialog(ConvertSavedJsonToBmList(JObject.Parse(content_osbl)), GlobalVar._e("MainWindow_convertSelectedFile"));
+						Exporter_ExportBmDialog(ConvertSavedJsonToBmList(JObject.Parse(content_osbl)), _e("MainWindow_convertSelectedFile"));
 						break;
 					case ".nw520-osblx":
 						try {
                             content_osbl = GlobalVar.StringDecompress(content_osbl);
 						} catch(FormatException) {
-							OverlayShow(GlobalVar._e("MainWindow_conversionFailed"), "System.FormatException");
+							OverlayShow(_e("MainWindow_conversionFailed"), "System.FormatException");
 							OverlayFadeOut();
 							return;
 						} catch(InvalidDataException) {
-							OverlayShow(GlobalVar._e("MainWindow_conversionFailed"), "System.IO.InvalidDataException");
+							OverlayShow(_e("MainWindow_conversionFailed"), "System.IO.InvalidDataException");
 							OverlayFadeOut();
 							return;
 						}
-						Exporter_ExportBmDialog(ConvertSavedJsonToBmList(JObject.Parse(content_osbl)), GlobalVar._e("MainWindow_convertSelectedFile"));
+						Exporter_ExportBmDialog(ConvertSavedJsonToBmList(JObject.Parse(content_osbl)), _e("MainWindow_convertSelectedFile"));
 						break;
 				}
 			} else {
-				OverlayShow(GlobalVar._e("MainWindow_conversionAborted"));
+				OverlayShow(_e("MainWindow_conversionAborted"));
 				OverlayFadeOut();
 				return;
 			}
@@ -888,7 +706,7 @@ namespace osuSync {
 
 		public void MI_FileExportAll_Click(object sender, RoutedEventArgs e) {
 			if(sync_isDone == false) {
-				MessageBox.Show(GlobalVar._e("MainWindow_youNeedToSyncFirst"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show(_e("MainWindow_youNeedToSyncFirst"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 				return;
 			}
 			Exporter_ExportBmDialog(bmDic_installed);
@@ -896,7 +714,7 @@ namespace osuSync {
 
 		public void MI_FileExportSelected_Click(object sender, RoutedEventArgs e) {
 			if(sync_isDone == false) {
-                MessageBox.Show(GlobalVar._e("MainWindow_youNeedToSyncFirst"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(_e("MainWindow_youNeedToSyncFirst"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
 			}
 			BmDisplayUpdate(bmDic_installed, UpdateBmDisplayDestinations.Exporter);
@@ -904,7 +722,7 @@ namespace osuSync {
 
 		public void MI_FileOpenBmList_Click(object sender, RoutedEventArgs e) {
 			if(sync_isDone == false) {
-				MessageBox.Show(GlobalVar._e("MainWindow_youNeedToSyncFirst"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show(_e("MainWindow_youNeedToSyncFirst"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 				return;
 			}
 
@@ -912,19 +730,19 @@ namespace osuSync {
                 AddExtension = true,
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = GlobalVar._e("MainWindow_allSupportedFileFormats") + "|*.json;*.nw520-osbl;*.nw520-osblx;*.zip|" +
-                    GlobalVar._e("MainWindow_fileext_osblx") + "|*.nw520-osblx|" +
-                    GlobalVar._e("MainWindow_fileext_osbl") + "|*.nw520-osbl|" +
-                    GlobalVar._e("MainWindow_fileext_zip") + "|*.zip|" +
-                    GlobalVar._e("MainWindow_fileext_json") + "|*.json",
-                Title = GlobalVar._e("MainWindow_openBeatmapList")
+                Filter = _e("MainWindow_allSupportedFileFormats") + "|*.json;*.nw520-osbl;*.nw520-osblx;*.zip|" +
+                    _e("MainWindow_fileext_osblx") + "|*.nw520-osblx|" +
+                    _e("MainWindow_fileext_osbl") + "|*.nw520-osbl|" +
+                    _e("MainWindow_fileext_zip") + "|*.zip|" +
+                    _e("MainWindow_fileext_json") + "|*.json",
+                Title = _e("MainWindow_openBeatmapList")
             };
             Dialog_OpenFile.ShowDialog();
 
 			if(!string.IsNullOrEmpty(Dialog_OpenFile.FileName)) {
 				Importer_ReadListFile(Dialog_OpenFile.FileName);
 			} else {
-				OverlayShow(GlobalVar._e("MainWindow_importAborted"));
+				OverlayShow(_e("MainWindow_importAborted"));
 				OverlayFadeOut();
 			}
 		}
@@ -994,7 +812,7 @@ namespace osuSync {
 				if(File.Exists(GlobalVar.appSettings.osu_Path + "/osu!.exe".Replace('/', Path.DirectorySeparatorChar)))
 					Process.Start(GlobalVar.appSettings.osu_Path + "/osu!.exe".Replace('/', Path.DirectorySeparatorChar));
 				else
-					MessageBox.Show(GlobalVar._e("MainWindow_unableToFindOsuExe"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+					MessageBox.Show(_e("MainWindow_unableToFindOsuExe"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 			} else {
 				foreach(Process ObjProcess in Process.GetProcessesByName("osu!")) {
                     Microsoft.VisualBasic.Interaction.AppActivate(ObjProcess.Id);   // @TODO: Find alternative
@@ -1009,8 +827,8 @@ namespace osuSync {
 		/// <remarks></remarks>
 		public void Sync_GetIDs() {
 			Bu_SyncRun.IsEnabled = false;
-			UI_SetLoader(GlobalVar._e("MainWindow_parsingInstalledBeatmapSets"));
-			La_FooterLastSync.Content = GlobalVar._e("MainWindow_syncing");
+			UI_SetLoader(_e("MainWindow_parsingInstalledBeatmapSets"));
+			La_FooterLastSync.Content = _e("MainWindow_syncing");
 			BGW_syncGetIds.RunWorkerAsync(new BGWcallback_SyncGetIDs());
 		}
 
@@ -1053,7 +871,7 @@ namespace osuSync {
 		#region "UI"
 		public void UI_SetLoader(string message = null) {
             if(message == null)
-                message = GlobalVar._e("MainWindow_pleaseWait");
+                message = _e("MainWindow_pleaseWait");
 
 			var UI_ProgressBar = new ProgressBar {
 				HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -1092,7 +910,7 @@ namespace osuSync {
 
             if(doRecord) {      // Keep previous statuses as tooltip
                 List<string> cTag = (La_FooterProg.Tag == null ? new List<string>() : (List<string>)La_FooterProg.Tag);
-				cTag.Add(DateTime.Now.ToString(GlobalVar._e("MainWindow_timeFormat")) + " | " + message);
+				cTag.Add(DateTime.Now.ToString(_e("MainWindow_timeFormat")) + " | " + message);
 				if(cTag.Count > 10)
 					cTag.RemoveRange(0, cTag.Count - 10);
 
@@ -1115,19 +933,19 @@ namespace osuSync {
 
 			// IsUnplayed status
             BeatmapDetails_IsUnplayed.Background = (bm.IsUnplayed ? (SolidColorBrush)FindResource("RedLightBrush") : (SolidColorBrush)FindResource("GreenDarkBrush"));
-            BeatmapDetails_IsUnplayed.Text = (bm.IsUnplayed ? GlobalVar._e("MainWindow_detailsPanel_playedStatus_unplayed") : GlobalVar._e("MainWindow_detailsPanel_playedStatus_played"));
+            BeatmapDetails_IsUnplayed.Text = (bm.IsUnplayed ? _e("MainWindow_detailsPanel_playedStatus_unplayed") : _e("MainWindow_detailsPanel_playedStatus_played"));
 
             // Ranked status
             if(bm.RankedStatus == Convert.ToByte(4)
                 || bm.RankedStatus == Convert.ToByte(5)) {
                 BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GreenDarkBrush");
-                BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_ranked");
+                BeatmapDetails_RankedStatus.Text = _e("MainWindow_detailsPanel_beatmapStatus_ranked");
             } else if(bm.RankedStatus == Convert.ToByte(6)) {
                 BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("PurpleDarkBrush");
-                BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_pending");
+                BeatmapDetails_RankedStatus.Text = _e("MainWindow_detailsPanel_beatmapStatus_pending");
             } else {
                 BeatmapDetails_RankedStatus.Background = (SolidColorBrush)FindResource("GrayLightBrush");
-                BeatmapDetails_RankedStatus.Text = GlobalVar._e("MainWindow_detailsPanel_beatmapStatus_unranked");
+                BeatmapDetails_RankedStatus.Text = _e("MainWindow_detailsPanel_beatmapStatus_unranked");
             }
 
 			// Thumbnail
@@ -1155,10 +973,10 @@ namespace osuSync {
 				BeatmapDetails_APIWarn.Visibility = Visibility.Collapsed;
 
 				try {
-					UI_SetStatus(GlobalVar._e("MainWindow_fetching").Replace("%0", Convert.ToString(bm.Id)), true);
+					UI_SetStatus(_e("MainWindow_fetching").Replace("%0", Convert.ToString(bm.Id)), true);
 					BmDP_client.DownloadStringAsync(new Uri(GlobalVar.webOsuApiRoot + "get_beatmaps?k=" + GlobalVar.appSettings.Api_Key + "&s=" + bm.Id));
 				} catch(NotSupportedException) {
-                    BeatmapDetails_APIWarn.Content = GlobalVar._e("MainWindow_detailsPanel_generalError");
+                    BeatmapDetails_APIWarn.Content = _e("MainWindow_detailsPanel_generalError");
                     BeatmapDetails_APIWarn.Visibility = Visibility.Visible;
 				}
 			} else {
@@ -1181,7 +999,7 @@ namespace osuSync {
 		#endregion
 
 		public void UpdateCheck() {
-			La_FooterUpdater.Content = GlobalVar._e("MainWindow_checkingForUpdates");
+			La_FooterUpdater.Content = _e("MainWindow_checkingForUpdates");
 			WebClient UpdateClient = new WebClient();
 			UpdateClient.DownloadStringAsync(new Uri(GlobalVar.webNw520ApiRoot + "/app/updater.latestVersion.json"));
 			UpdateClient.DownloadStringCompleted += UpdateClient_DownloadStringCompleted;
@@ -1195,29 +1013,29 @@ namespace osuSync {
 				Answer = JObject.Parse(e.Result);
 			} catch(JsonReaderException) {
 				if(GlobalVar.appSettings.Messages_Updater_UnableToCheckForUpdates) {
-					MessageBox.Show(GlobalVar._e("MainWindow_unableToCheckForUpdates") + "\n" 
-                        + "> " + GlobalVar._e("MainWindow_invalidServerResponse") + "\n\n" 
-                        + GlobalVar._e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), GlobalVar.msgTitleDisableable, MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show(_e("MainWindow_unableToCheckForUpdates") + "\n" 
+                        + "> " + _e("MainWindow_invalidServerResponse") + "\n\n" 
+                        + _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), GlobalVar.msgTitleDisableable, MessageBoxButton.OK, MessageBoxImage.Error);
 					MessageBox.Show(e.Result, "Debug | " + GlobalVar.appName, MessageBoxButton.OK);
 				}
-				La_FooterUpdater.Content = GlobalVar._e("MainWindow_unableToCheckForUpdates");
+				La_FooterUpdater.Content = _e("MainWindow_unableToCheckForUpdates");
 				return;
 			} catch(Exception) {
 				if(GlobalVar.appSettings.Messages_Updater_UnableToCheckForUpdates) {
-					MessageBox.Show(GlobalVar._e("MainWindow_unableToCheckForUpdates") + "\n" 
-                        + "> " + GlobalVar._e("MainWindow_cantConnectToServer") + "\n\n"
-                        + GlobalVar._e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), GlobalVar.msgTitleDisableable, MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show(_e("MainWindow_unableToCheckForUpdates") + "\n" 
+                        + "> " + _e("MainWindow_cantConnectToServer") + "\n\n"
+                        + _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), GlobalVar.msgTitleDisableable, MessageBoxButton.OK, MessageBoxImage.Error);
 				}
-				La_FooterUpdater.Content = GlobalVar._e("MainWindow_unableToCheckForUpdates");
+				La_FooterUpdater.Content = _e("MainWindow_unableToCheckForUpdates");
 				return;
 			}
 
 			string latestVer = Convert.ToString(Answer.SelectToken("latestRepoRelease").SelectToken("tag_name"));
 			if(latestVer == GlobalVar.AppVersion.ToString()) {
-				La_FooterUpdater.Content = GlobalVar._e("MainWindow_latestVersion");
+				La_FooterUpdater.Content = _e("MainWindow_latestVersion");
 			} else {
-				La_FooterUpdater.Content = GlobalVar._e("MainWindow_updateAvailable").Replace("%0", latestVer);
-				BalloonShow(GlobalVar._e("MainWindow_aNewVersionIsAvailable").Replace("%0", GlobalVar.AppVersion.ToString()).Replace("%1", latestVer), null, BalloonIcon.Info, new RoutedEventHandler(delegate (Object o, RoutedEventArgs a) {
+				La_FooterUpdater.Content = _e("MainWindow_updateAvailable").Replace("%0", latestVer);
+				BalloonShow(_e("MainWindow_aNewVersionIsAvailable").Replace("%0", GlobalVar.AppVersion.ToString()).Replace("%1", latestVer), null, BalloonIcon.Info, new RoutedEventHandler(delegate (Object o, RoutedEventArgs a) {
                     UI_ShowUpdaterWindow();
                 }));
 				if(GlobalVar.appSettings.Messages_Updater_OpenUpdater)
@@ -1251,14 +1069,14 @@ namespace osuSync {
 							try {
 								answer.Return__Sync_BmDic_Installed = ReadBmsFromDb(dbPath, true);
 							} catch(Exception) {
-								if(MessageBox.Show(GlobalVar._e("MainWindow_unableToReadBms") + " " + GlobalVar._e("MainWindow_fallback"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) == MessageBoxResult.Yes) {
+								if(MessageBox.Show(_e("MainWindow_unableToReadBms") + " " + _e("MainWindow_fallback"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) == MessageBoxResult.Yes) {
 									answer = ReadBmsFromDir(GlobalVar.appSettings.osu_SongsPath);
 								} else {
 									answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled;
 								}
 							}
 						} catch(Exception) {
-							if(MessageBox.Show(GlobalVar._e("MainWindow_unableToReadBms") + " " + GlobalVar._e("MainWindow_fallback"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) == MessageBoxResult.Yes) {
+							if(MessageBox.Show(_e("MainWindow_unableToReadBms") + " " + _e("MainWindow_fallback"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) == MessageBoxResult.Yes) {
 								answer = ReadBmsFromDir(GlobalVar.appSettings.osu_SongsPath);
 							} else {
 								answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled;
@@ -1266,7 +1084,7 @@ namespace osuSync {
 						}
 					} else {
 						if(Directory.Exists(GlobalVar.appSettings.osu_SongsPath)) {
-							if(MessageBox.Show(GlobalVar._e("MainWindow_unableToReadBms") + " " + GlobalVar._e("MainWindow_fallback"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) == MessageBoxResult.Yes) {
+							if(MessageBox.Show(_e("MainWindow_unableToReadBms") + " " + _e("MainWindow_fallback"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No) == MessageBoxResult.Yes) {
 								answer = ReadBmsFromDir(GlobalVar.appSettings.osu_SongsPath);
 							} else {
 								answer.Return__Status = BGWcallback_SyncGetIDs.ReturnStatuses.Cancelled;
@@ -1284,15 +1102,15 @@ namespace osuSync {
 			BGWcallback_SyncGetIDs Answer = (BGWcallback_SyncGetIDs)e.UserState;
 			switch(Answer.Progress__CurrentAction) {
 				case BGWcallback_SyncGetIDs.ProgressCurrentActions.Sync:
-					interface_loaderText.Text = GlobalVar._e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Progress__Current.ToString()) + "\n"
-                        + GlobalVar._e("MainWindow_andStillWorking");
+					interface_loaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", Answer.Progress__Current.ToString()) + "\n"
+                        + _e("MainWindow_andStillWorking");
 
                     interface_loaderProgressBar.Value = Answer.Progress__Current;
                     interface_loaderProgressBar.Visibility = Visibility.Visible;
 					break;
 				case BGWcallback_SyncGetIDs.ProgressCurrentActions.Done:
-                    interface_loaderText.Text = GlobalVar._e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString()) + "\n"
-                        + GlobalVar._e("MainWindow_generatingInterface");
+                    interface_loaderText.Text = _e("MainWindow_beatmapSetsInTotalParsed").Replace("%0", Answer.Progress__Current.ToString()) + "\n"
+                        + _e("MainWindow_generatingInterface");
 					break;
 				case BGWcallback_SyncGetIDs.ProgressCurrentActions.CountingTotalFolders:
                     interface_loaderProgressBar.Maximum = Answer.Progress__Current;
@@ -1304,12 +1122,12 @@ namespace osuSync {
 			BGWcallback_SyncGetIDs answer = e.Result as BGWcallback_SyncGetIDs;
 			switch(answer.Return__Status) {
 				case BGWcallback_SyncGetIDs.ReturnStatuses.Success:
-					interface_loaderText.Text = GlobalVar._e("MainWindow_beatmapSetsParsed").Replace("%0", answer.Return__Sync_BmDic_Installed.Count.ToString());
+					interface_loaderText.Text = _e("MainWindow_beatmapSetsParsed").Replace("%0", answer.Return__Sync_BmDic_Installed.Count.ToString());
 					if(!string.IsNullOrEmpty(answer.Return__Sync_Warnings)) {
-						if(MessageBox.Show(GlobalVar._e("MainWindow_someBeatmapsDifferFromNormal") + "\n"
-                            + GlobalVar._e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+						if(MessageBox.Show(_e("MainWindow_someBeatmapsDifferFromNormal") + "\n"
+                            + _e("MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 							Window_MessageWindow Window_Message = new Window_MessageWindow();
-                            Window_Message.SetMessage(answer.Return__Sync_Warnings, GlobalVar._e("MainWindow_exceptions"), "Sync");
+                            Window_Message.SetMessage(answer.Return__Sync_Warnings, _e("MainWindow_exceptions"), "Sync");
                             Window_Message.ShowDialog();
 						}
 					}
@@ -1317,7 +1135,7 @@ namespace osuSync {
 
 					sync_isDone = true;
 					BmDisplayUpdate(bmDic_installed);
-					OverlayShow(GlobalVar._e("MainWindow_syncCompleted"));
+					OverlayShow(_e("MainWindow_syncCompleted"));
 					OverlayFadeOut();
 
 					if(sync_isDone_importerRequest) {
@@ -1332,14 +1150,14 @@ namespace osuSync {
 						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Margin = new Thickness(0, 100, 0, 0),
-						Text = GlobalVar._e("MainWindow_lastSyncFailed"),
+						Text = _e("MainWindow_lastSyncFailed"),
 						VerticalAlignment = VerticalAlignment.Center
 					};
 					TextBlock UI_TextBlock_SubTitle = new TextBlock {
 						FontSize = 24,
 						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
-						Text = GlobalVar._e("MainWindow_pleaseRetry"),
+						Text = _e("MainWindow_pleaseRetry"),
 						VerticalAlignment = VerticalAlignment.Center
 					};
 
@@ -1355,14 +1173,14 @@ namespace osuSync {
 						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Margin = new Thickness(0, 100, 0, 0),
-						Text = GlobalVar._e("MainWindow_lastSyncFailed"),
+						Text = _e("MainWindow_lastSyncFailed"),
 						VerticalAlignment = VerticalAlignment.Center
 					};
 					TextBlock UI_TextBlock_SubTitle_ = new TextBlock {
 						FontSize = 24,
 						Foreground = (SolidColorBrush)FindResource("GrayLighterBrush"),
 						HorizontalAlignment = HorizontalAlignment.Center,
-						Text = GlobalVar._e("MainWindow_pleaseRetry"),
+						Text = _e("MainWindow_pleaseRetry"),
 						VerticalAlignment = VerticalAlignment.Center
 					};
 
@@ -1370,15 +1188,15 @@ namespace osuSync {
                     BeatmapWrapper.Children.Add(UI_TextBlock_);
                     BeatmapWrapper.Children.Add(UI_TextBlock_SubTitle_);
 
-					MessageBox.Show(GlobalVar._e("MainWindow_unableToFindOsuFolderPleaseSpecify"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show(_e("MainWindow_unableToFindOsuFolderPleaseSpecify"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 					UI_ShowSettingsWindow(1);
 					Bu_SyncRun.IsEnabled = true;
 					break;
 			}
 		}
 
-		public Dictionary<int, Beatmap> ReadBmsFromDb(string dbPath, bool legacy = false) {
-			Dictionary<int, Beatmap> foundBms = new Dictionary<int, Beatmap>();
+		public BeatmapDictionary ReadBmsFromDb(string dbPath, bool legacy = false) {
+            BeatmapDictionary foundBms = new BeatmapDictionary();
 			using(OsuReader Reader = new OsuReader(File.OpenRead(dbPath))) {    // More details: http://j.mp/1PIyjCY
 				Reader.ReadInt32();                                     // osu! version (e.g. 20150203) 
 				Reader.ReadInt32();                                     // Folder Count 
@@ -1518,9 +1336,9 @@ namespace osuSync {
 			}
 			if(answer.Func_Invalid.Count != 0) {
                 StringBuilder sb = new StringBuilder();
-				sb.Append("# " + GlobalVar._e("MainWindow_ignoredFolders") + "\n"
-                    + GlobalVar._e("MainWindow_folderCouldntBeParsed") + "\n\n"
-                    + "> " + GlobalVar._e("MainWindow_folders") + ":\n");
+				sb.Append("# " + _e("MainWindow_ignoredFolders") + "\n"
+                    + _e("MainWindow_folderCouldntBeParsed") + "\n\n"
+                    + "> " + _e("MainWindow_folders") + ":\n");
 				foreach(string thisItem in answer.Func_Invalid) {
 					sb.Append("* " + thisItem + "\n");
 				}
@@ -1529,9 +1347,9 @@ namespace osuSync {
 			}
 			if(answer.Func_InvalidId.Count != 0) {
                 StringBuilder sb = new StringBuilder();
-				sb.Append("# " + GlobalVar._e("MainWindow_unableToGetId") + "\n"
-                    + GlobalVar._e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") + "\n\n"
-                    + "> " + GlobalVar._e("MainWindow_beatmaps") + ":\n");
+				sb.Append("# " + _e("MainWindow_unableToGetId") + "\n"
+                    + _e("MainWindow_unableToGetIdOfSomeBeatmapsTheyllBeHandledAsUnsubmitted") + "\n\n"
+                    + "> " + _e("MainWindow_beatmaps") + ":\n");
 				foreach(string thisItem in answer.Func_InvalidId) {
 					sb.Append("* " + thisItem + "\n");
 				}
@@ -1568,11 +1386,11 @@ namespace osuSync {
 		}
 
 		public void Bu_ExporterRun_Click(object sender, RoutedEventArgs e) {
-			Dictionary<int, Beatmap> answer = new Dictionary<int, Beatmap>();
+            BeatmapDictionary answer = new BeatmapDictionary();
 			foreach(var Item in exporter_bmList_selectedTags) {
                 answer.Add(Item.Beatmap.Id, Item.Beatmap);
 			}
-            Exporter_ExportBmDialog(answer, GlobalVar._e("MainWindow_exportSelectedBeatmaps"));
+            Exporter_ExportBmDialog(answer, _e("MainWindow_exportSelectedBeatmaps"));
 			TI_Exporter.Visibility = Visibility.Collapsed;
 			TC_Main.SelectedIndex = 0;
 			SP_ExporterWrapper.Children.Clear();
@@ -1678,8 +1496,8 @@ namespace osuSync {
 						string File_Content = GlobalVar.StringDecompress(File.ReadAllText(filePath));
 						Importer_ShowRawOSBL(File_Content, filePath);
 					} catch(FormatException ex) {
-						MessageBox.Show(GlobalVar._e("MainWindow_unableToReadFile") + "\n\n" + 
-                            "> " + GlobalVar._e("MainWindow_details") + ":\n" + 
+						MessageBox.Show(_e("MainWindow_unableToReadFile") + "\n\n" + 
+                            "> " + _e("MainWindow_details") + ":\n" + 
                             ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 					}
 					break;
@@ -1702,13 +1520,13 @@ namespace osuSync {
 							}
 						}
 					} catch(ZipException ex) {
-						MessageBox.Show(GlobalVar._e("MainWindow_unableToReadFile") + "\n\n" + 
-                            "> " + GlobalVar._e("MainWindow_details") + ":\n" + 
+						MessageBox.Show(_e("MainWindow_unableToReadFile") + "\n\n" + 
+                            "> " + _e("MainWindow_details") + ":\n" + 
                             ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 					}
 					break;
 				default:
-					MessageBox.Show(GlobalVar._e("MainWindow_unknownFileExtension") + ":\n" + 
+					MessageBox.Show(_e("MainWindow_unknownFileExtension") + ":\n" + 
                         Path.GetExtension(filePath), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 					break;
 			}
@@ -1734,8 +1552,8 @@ namespace osuSync {
 				TB_ImporterInfo.Text = filePath;
 				BmDisplayUpdate(ConvertSavedJsonToBmList(fileContentJson), UpdateBmDisplayDestinations.Importer);
 			} catch(JsonReaderException ex) {
-				MessageBox.Show(GlobalVar._e("MainWindow_unableToReadFile") + "\n\n" +
-                    "> " + GlobalVar._e("MainWindow_details") + ":\n" +
+				MessageBox.Show(_e("MainWindow_unableToReadFile") + "\n\n" +
+                    "> " + _e("MainWindow_details") + ":\n" +
                     ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}

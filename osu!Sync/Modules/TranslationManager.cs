@@ -6,10 +6,32 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Xml;
 
-namespace osuSync.Models {
+namespace osuSync.Modules {
     static class TranslationManager {
+        public class Language {
+            public string Code { get; set; }
+            public string DisplayName { get; set; }
+            public string DisplayName_en { get; set; }
+            public string Path { get; set; }
+        }
+
         public static ResourceDictionary translationHolder;
         public static Dictionary<string, Language> translationList = new Dictionary<string, Language>();
+
+        /// <param name="text">English string to translate</param>
+        /// <returns>Translation of <paramref>Text</paramref></returns>
+        public static string _e(string text) {
+            try {
+                return System.Windows.Application.Current.FindResource(text).ToString();
+            } catch(ResourceReferenceKeyNotFoundException) {
+                MessageBox.Show("The application just tried to load a text (= string) which isn't registered.\n" +
+                    "Normally, this shouldn't happen.\n\n" +
+                    "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum.\n\n" +
+                    "// Additional information:\n" +
+                    text, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+                return "[Missing:" + text + "]";
+            }
+        }
 
         public static Language TranslationGetMeta(string filePath) {
             try {

@@ -10,14 +10,10 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Windows;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
-    class Language {
-        public string Code { get; set; }
-        public string DisplayName { get; set; }
-        public string DisplayName_en { get; set; }
-        public string Path { get; set; }
-    }
+
 
     static class GlobalVar {
         public static string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/naseweis520/osu!Sync".Replace('/', Path.DirectorySeparatorChar);
@@ -46,21 +42,6 @@ namespace osuSync {
         public static bool tool_hasWriteAccessToOsu = false;
         // Set in Application.xaml.vb\Application_Startup()
         public static bool tool_isElevated = false;
-
-        /// <param name="text">English string to translate</param>
-        /// <returns>Translation of <paramref>Text</paramref></returns>
-        public static string _e(string text) {
-            try {
-                return System.Windows.Application.Current.FindResource(text).ToString();
-            } catch(ResourceReferenceKeyNotFoundException) {
-                MessageBox.Show("The application just tried to load a text (= string) which isn't registered.\n" +
-                    "Normally, this shouldn't happen.\n\n" +
-                    "Please report this by using the Feedback-box in the settings, contacting me using the link in the about window, reporting an issue on GitHub, or contacting me on the osu!Forum.\n\n" +
-                    "// Additional information:\n" +
-                    text, appName, MessageBoxButton.OK, MessageBoxImage.Error);
-                return "[Missing:" + text + "]";
-            }
-        }
 
         public static void CompatibilityCheck(Version configVersion) {
             // Detect update

@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Documents;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
 
@@ -14,7 +15,7 @@ namespace osuSync {
 		}
 
 		public void SetMessage(string message, string title = null, string subTitle = null) {
-			TB_Title.Text = (title ?? GlobalVar._e("WindowMessage_message"));
+			TB_Title.Text = (title ?? _e("WindowMessage_message"));
             TB_SubTitle.Text = (subTitle ?? GlobalVar.appName);
 
             Paragraph Paragraph = new Paragraph();

@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace osuSync {
+namespace osuSync.Models {
     public class OsuReader : BinaryReader {
 
 		public OsuReader(Stream s) : base(s) {}

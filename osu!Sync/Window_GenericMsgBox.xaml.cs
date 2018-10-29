@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Drawing;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
 
@@ -23,31 +24,31 @@ namespace osuSync {
 			public MsgBoxButtonHolder(MsgBoxResult CoreButton) {
 				switch(CoreButton) {
 					case MsgBoxResult.Ok:
-						Label = GlobalVar._e("Global_buttons_ok");
+						Label = _e("Global_buttons_ok");
 						ResultId = (int)MsgBoxResult.Ok;
 						Action = ButtonAction.Ok;
 						break;
 					case MsgBoxResult.Cancel:
-						Label = GlobalVar._e("Global_buttons_cancel");
+						Label = _e("Global_buttons_cancel");
 						ResultId = (int)MsgBoxResult.Cancel;
 						Action = ButtonAction.Cancel;
 						break;
 					case MsgBoxResult.Yes:
-						Label = GlobalVar._e("Global_buttons_yes");
+						Label = _e("Global_buttons_yes");
 						ResultId = (int)MsgBoxResult.Yes;
 						Action = ButtonAction.Ok;
 						break;
 					case MsgBoxResult.YesAll:
-						Label = GlobalVar._e("Global_buttons_yesForAll");
+						Label = _e("Global_buttons_yesForAll");
 						ResultId = (int)MsgBoxResult.YesAll;
 						break;
 					case MsgBoxResult.No:
-						Label = GlobalVar._e("Global_buttons_no");
+						Label = _e("Global_buttons_no");
 						ResultId = (int)MsgBoxResult.No;
 						Action = ButtonAction.Cancel;
 						break;
 					case MsgBoxResult.NoAll:
-						Label = GlobalVar._e("Global_buttons_noForAll");
+						Label = _e("Global_buttons_noForAll");
 						ResultId = (int)MsgBoxResult.NoAll;
 						break;
 				}
@@ -130,12 +131,12 @@ namespace osuSync {
 			set {
 				switch (value) {
 					case SimpleMsgBoxButton.Ok:
-						Buttons = new List<MsgBoxButtonHolder> { new MsgBoxButtonHolder(GlobalVar._e("Global_buttons_ok"), (int)MessageBoxResult.OK) };
+						Buttons = new List<MsgBoxButtonHolder> { new MsgBoxButtonHolder(_e("Global_buttons_ok"), (int)MessageBoxResult.OK) };
 						break;
 					case SimpleMsgBoxButton.OkCancel:
 						Buttons = new List<MsgBoxButtonHolder> {
-							new MsgBoxButtonHolder(GlobalVar._e("Global_buttons_ok"), (int)MessageBoxResult.OK),
-							new MsgBoxButtonHolder(GlobalVar._e("Global_buttons_cancel"), (int)MessageBoxResult.Cancel)
+							new MsgBoxButtonHolder(_e("Global_buttons_ok"), (int)MessageBoxResult.OK),
+							new MsgBoxButtonHolder(_e("Global_buttons_cancel"), (int)MessageBoxResult.Cancel)
 						};
 						break;
 				}

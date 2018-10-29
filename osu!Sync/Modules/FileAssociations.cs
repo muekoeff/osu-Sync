@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using static osuSync.GlobalVar;
+using static osuSync.Modules.TranslationManager;
 
-namespace osuSync {
+namespace osuSync.Modules {
+
     static class FileExtensions {
         public class FileExtensionDefinition {
             public string fileExtension;
@@ -19,12 +23,18 @@ namespace osuSync {
             }
         }
 
+        public enum FileAssociationCheckResults {
+            OK = 0,
+            MissingFileExtension = 1,
+            InvalidOrOutdatedFileExtension = 2
+        }
+
         public static FileExtensionDefinition[] app_fileExtensions = {
             new FileExtensionDefinition(".nw520-osbl", "naseweis520.osuSync.osuBeatmapList", "MainWindow_fileext_osbl", "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\",2"),
             new FileExtensionDefinition(".nw520-osblx", "naseweis520.osuSync.compressedOsuBeatmapList", "MainWindow_fileext_osblx", "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\",1"),
         };
 
-        [System.Runtime.InteropServices.DllImport("shell32.dll")]
+        [DllImport("shell32.dll")]
         public static extern void SHChangeNotify(int wEventId, int uFlags, int dwItem1, int dwItem2);
 
         public static bool FileAssociationCreate(string extension, string className, string description, string iconPath, string exeProgram) {
@@ -80,6 +90,46 @@ namespace osuSync {
 
             SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
             return true;
+        }
+
+        /// <summary>
+		/// Checks osu!Sync's file associations and creates them if necessary.
+		/// </summary>
+		public static void FileAssociationCheck() {
+            FileAssociationCheckResults checkResult = FileAssociationCheckResults.OK;
+
+            foreach(FileExtensionDefinition thisExtension in app_fileExtensions) {
+                if(Registry.ClassesRoot.OpenSubKey(thisExtension.fileExtension) == null) {
+                    if(checkResult == FileAssociationCheckResults.OK) {
+                        checkResult = FileAssociationCheckResults.MissingFileExtension;
+                        break;
+                    }
+                }
+            }
+            if(checkResult != FileAssociationCheckResults.MissingFileExtension) {
+                foreach(FileExtensionDefinition thisExtension in app_fileExtensions) {
+                    string registryPath = Convert.ToString(Registry.ClassesRoot.OpenSubKey(thisExtension.className).OpenSubKey("DefaultIcon").GetValue(null, "", RegistryValueOptions.None));
+                    registryPath = registryPath.Substring(1, registryPath.Length - 3);
+                    if(registryPath != Assembly.GetExecutingAssembly().Location.ToString()) {
+                        checkResult = FileAssociationCheckResults.InvalidOrOutdatedFileExtension;
+                        break;
+                    }
+
+                    registryPath = (Convert.ToString(Registry.ClassesRoot.OpenSubKey(thisExtension.className).OpenSubKey("shell").OpenSubKey("open").OpenSubKey("command").GetValue(null, "", RegistryValueOptions.None)));
+                    if(registryPath != "\"" + Assembly.GetExecutingAssembly().Location.ToString() + "\" -openFile=\"%1\"") {
+                        checkResult = FileAssociationCheckResults.InvalidOrOutdatedFileExtension;
+                        break;
+                    }
+                }
+            }
+
+            if(checkResult != FileAssociationCheckResults.OK) {
+                string msgBox_content = (checkResult == FileAssociationCheckResults.MissingFileExtension ? _e("MainWindow_extensionNotAssociated") + "\n" +
+                    _e("MainWindow_doYouWantToFixThat") : _e("MainWindow_extensionWrong") + "\n" +
+                    _e("MainWindow_doYouWantToFixThat"));
+                if(MessageBox.Show(msgBox_content, appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                    FileAssociationsCreate();
+            }
         }
 
         public static bool FileAssociationsCreate() {

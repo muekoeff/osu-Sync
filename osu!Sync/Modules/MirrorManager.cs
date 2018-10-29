@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
-namespace osuSync.Models {
+namespace osuSync.Modules {
     class MirrorManager {
 
         public const string DEFAULT_MIRROR_ID = "osu.uu.gl";

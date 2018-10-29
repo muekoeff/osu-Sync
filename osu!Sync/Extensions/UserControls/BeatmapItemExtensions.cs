@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync.Extensions.UserControls {
 
@@ -29,11 +30,11 @@ namespace osuSync.Extensions.UserControls {
         }
 
         public void WebClient_DownloadThumbnailCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-            Host.UI_SetStatus(GlobalVar._e("MainWindow_finished"));
+            Host.UI_SetStatus(_e("MainWindow_finished"));
             if(File.Exists(GlobalVar.appTempPath + "/Cache/Thumbnails/".Replace('/', Path.DirectorySeparatorChar) + BmItem.Beatmap.Id + ".jpg") && (new FileInfo(GlobalVar.appTempPath + "/Cache/Thumbnails/".Replace('/', Path.DirectorySeparatorChar) + BmItem.Beatmap.Id + ".jpg")).Length >= 10) {
                 try {
                     Target.Source = new BitmapImage(new Uri(GlobalVar.appTempPath + "/Cache/Thumbnails/".Replace('/', Path.DirectorySeparatorChar) + BmItem.Beatmap.Id + ".jpg"));
-                    Target.ToolTip = GlobalVar._e("MainWindow_openBeatmapDetailPanel");
+                    Target.ToolTip = _e("MainWindow_openBeatmapDetailPanel");
                 } catch(NotSupportedException) {
                     Target.Source = new BitmapImage(new Uri("../Resources/NoThumbnail.png", UriKind.Relative));
                 }
@@ -50,7 +51,7 @@ namespace osuSync.Extensions.UserControls {
         public static void DownloadThumbnail(this IBeatmapItem bmItem, BeatmapItemExtensionHelper hmExHelp) {
             hmExHelp.Target.Source = new BitmapImage(new Uri("../Resources/ProgressThumbnail.png", UriKind.Relative));
             Directory.CreateDirectory(GlobalVar.appTempPath + "/Cache/Thumbnails".Replace('/', Path.DirectorySeparatorChar));
-            hmExHelp.Host.UI_SetStatus(GlobalVar._e("MainWindow_downloadingThumbnail").Replace("%0", Convert.ToString(bmItem.Beatmap.Id)), true);
+            hmExHelp.Host.UI_SetStatus(_e("MainWindow_downloadingThumbnail").Replace("%0", Convert.ToString(bmItem.Beatmap.Id)), true);
             WebClient thumbClient = new WebClient();
             thumbClient.DownloadFileCompleted += hmExHelp.WebClient_DownloadThumbnailCompleted;
             thumbClient.DownloadFileAsync(new Uri("https://b.ppy.sh/thumb/" + bmItem.Beatmap.Id + ".jpg"), GlobalVar.appTempPath + "/Cache/Thumbnails/".Replace('/', Path.DirectorySeparatorChar) + bmItem.Beatmap.Id + ".jpg");
@@ -62,7 +63,7 @@ namespace osuSync.Extensions.UserControls {
                     target.Source = new BitmapImage(new Uri(bmItem.Beatmap.ThumbnailPath));
 
                     if(enableBmdp) {
-                        target.ToolTip = GlobalVar._e("MainWindow_openBeatmapDetailPanel");
+                        target.ToolTip = _e("MainWindow_openBeatmapDetailPanel");
                         target.MouseDown += host.BmDP_Show;
                     }
                     return true;
@@ -73,7 +74,7 @@ namespace osuSync.Extensions.UserControls {
             // If successfull, already returned at this point
             if(enableThumbDownload) {
                 target.Source = new BitmapImage(new Uri("../../Resources/DownloadThumbnail.png", UriKind.Relative));
-                target.ToolTip = GlobalVar._e("MainWindow_downladThumbnail");
+                target.ToolTip = _e("MainWindow_downladThumbnail");
 
                 var bmExHelp = new BeatmapItemExtensionHelper(bmItem, target, host);
                 target.MouseLeftButtonUp += bmExHelp.EventHandler_DownloadThumb;
@@ -82,7 +83,7 @@ namespace osuSync.Extensions.UserControls {
                 target.Source = new BitmapImage(new Uri("../../Resources/NoThumbnail.png", UriKind.Relative));
 
                 if(enableBmdp) {
-                    target.ToolTip = GlobalVar._e("MainWindow_openBeatmapDetailPanel");
+                    target.ToolTip = _e("MainWindow_openBeatmapDetailPanel");
                     target.MouseDown += host.BmDP_Show;
                 }
             }

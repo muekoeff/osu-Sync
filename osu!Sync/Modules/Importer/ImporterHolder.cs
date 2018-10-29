@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync.Modules.Importer {
 
@@ -28,13 +29,13 @@ namespace osuSync.Modules.Importer {
             sb.Append(state);
 
             var setDoneCount = BmList_TagsDone.Count;
-            if(setsDone == true || setsDone == null && setDoneCount > 0) sb.Append(" | " + GlobalVar._e("MainWindow_setsDone").Replace("%0", setDoneCount.ToString()));
+            if(setsDone == true || setsDone == null && setDoneCount > 0) sb.Append(" | " + _e("MainWindow_setsDone").Replace("%0", setDoneCount.ToString()));
 
             var setsLeftoutCount = BmList_TagsLeftOut.Count;
-            if(setsLeftout == true || setsLeftout == null && setsLeftoutCount > 0) sb.Append(" | " + GlobalVar._e("MainWindow_leftOut").Replace("%0", setsLeftoutCount.ToString()));
+            if(setsLeftout == true || setsLeftout == null && setsLeftoutCount > 0) sb.Append(" | " + _e("MainWindow_leftOut").Replace("%0", setsLeftoutCount.ToString()));
 
             var setsTotalCount = BmTotal;
-            if(setsTotal == true || setsTotal == null && setsTotalCount > 0) sb.Append(" | " + GlobalVar._e("MainWindow_setsTotal").Replace("%0", setsTotalCount.ToString()));
+            if(setsTotal == true || setsTotal == null && setsTotalCount > 0) sb.Append(" | " + _e("MainWindow_setsTotal").Replace("%0", setsTotalCount.ToString()));
 
             window.TB_ImporterInfo.Text = sb.ToString();
         }

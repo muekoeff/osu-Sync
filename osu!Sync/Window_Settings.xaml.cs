@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osuSync.Models;
+using osuSync.Modules;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +9,8 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using static osuSync.FileExtensions;
+using static osuSync.Modules.FileExtensions;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
 
@@ -38,13 +40,13 @@ namespace osuSync {
             GlobalVar.appSettings.Tool_SyncOnStartup = Convert.ToBoolean(CB_ToolSyncOnStartup.IsChecked);
 			// Load Language
 			string LangCode = CB_ToolLanguages.Text.Substring(0, CB_ToolLanguages.Text.IndexOf(" "));
-			if(!string.IsNullOrEmpty(CB_ToolLanguages.Text) & !(GlobalVar.appSettings.Tool_Language == LangCode) & TranslationManager.translationList.ContainsKey(LangCode)) {
-				if(TranslationManager.TranslationLoad(TranslationManager.translationList[LangCode].Path))
-					MessageBox.Show(GlobalVar._e("WindowSettings_languageUpdated"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
-			} else if(LangCode == "en_US" & TranslationManager.translationHolder != null) {
+			if(!string.IsNullOrEmpty(CB_ToolLanguages.Text) & !(GlobalVar.appSettings.Tool_Language == LangCode) & translationList.ContainsKey(LangCode)) {
+				if(TranslationLoad(translationList[LangCode].Path))
+					MessageBox.Show(_e("WindowSettings_languageUpdated"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
+			} else if(LangCode == "en_US" & translationHolder != null) {
                 GlobalVar.appSettings.Tool_Language = "en_US";
-				System.Windows.Application.Current.Resources.MergedDictionaries.Remove(TranslationManager.translationHolder);
-                TranslationManager.translationHolder = null;
+				System.Windows.Application.Current.Resources.MergedDictionaries.Remove(translationHolder);
+                translationHolder = null;
 			}
 			GlobalVar.appSettings.Tool_RequestElevationOnStartup = Convert.ToBoolean(CB_ToolRequestElevationOnStartup.IsChecked);
 			GlobalVar.appSettings.Tool_Update_SavePath = TB_ToolUpdate_Path.Text;
@@ -62,7 +64,7 @@ namespace osuSync {
                 GlobalVar.WriteToApiLog("/api/get_beatmaps", e.Result);
 				JSON_Array = (JArray)JsonConvert.DeserializeObject(e.Result);
 				if(((JObject)JSON_Array.First).SelectToken("beatmapset_id") != null) {
-                    Bu_ApiKey_Validate.Content = GlobalVar._e("WindowSettings_valid");
+                    Bu_ApiKey_Validate.Content = _e("WindowSettings_valid");
                     Bu_ApiKey_Validate.IsEnabled = true;
 					TB_ApiKey.IsEnabled = true;
 				} else {
@@ -70,7 +72,7 @@ namespace osuSync {
 				}
 			} catch(Exception) {
                 GlobalVar.WriteToApiLog("/api/get_beatmaps");
-                Bu_ApiKey_Validate.Content = GlobalVar._e("WindowSettings_invalid");
+                Bu_ApiKey_Validate.Content = _e("WindowSettings_invalid");
                 Bu_ApiKey_Validate.IsEnabled = true;
 				TB_ApiKey.IsEnabled = true;
 			}
@@ -90,7 +92,7 @@ namespace osuSync {
 			if(File.Exists(GlobalVar.appDataPath + "/Logs/ApiAccess.txt".Replace('/', Path.DirectorySeparatorChar))) {
 				Process.Start(GlobalVar.appDataPath + "/Logs/ApiAccess.txt".Replace('/', Path.DirectorySeparatorChar));
 			} else {
-				MessageBox.Show(GlobalVar._e("WindowSettings_nopeDirectoryDoesNotExit"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+				MessageBox.Show(_e("WindowSettings_nopeDirectoryDoesNotExit"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
 		}
 
@@ -108,12 +110,12 @@ namespace osuSync {
 
 		public void Bu_CreateShortcut_Click(object sender, RoutedEventArgs e) {
 			if(!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/osu!Sync.lnk".Replace('/', Path.DirectorySeparatorChar))) {
-				if(CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/osu!Sync.lnk".Replace('/', Path.DirectorySeparatorChar), System.Reflection.Assembly.GetExecutingAssembly().Location.ToString(), "", GlobalVar._e("WindowSettings_launchOsuSync"))) {
+				if(CreateShortcut(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/osu!Sync.lnk".Replace('/', Path.DirectorySeparatorChar), System.Reflection.Assembly.GetExecutingAssembly().Location.ToString(), "", _e("WindowSettings_launchOsuSync"))) {
 				} else {
-                    MessageBox.Show(GlobalVar._e("WindowSettings_unableToCreateShortcut"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(_e("WindowSettings_unableToCreateShortcut"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 			} else {
-                MessageBox.Show(GlobalVar._e("WindowSettings_theresAlreadyAShortcut"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(_e("WindowSettings_theresAlreadyAShortcut"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 		}
 
@@ -127,23 +129,23 @@ namespace osuSync {
 		}
 
 		public void Bu_ToolDeleteConfiguration_Click(object sender, RoutedEventArgs e) {
-			if(MessageBox.Show(GlobalVar._e("WindowSettings_areYouSureYouWantToDeleteConfig"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes) {
+			if(MessageBox.Show(_e("WindowSettings_areYouSureYouWantToDeleteConfig"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes) {
 				if(File.Exists(GlobalVar.appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar))) {
 					File.Delete(GlobalVar.appDataPath + "/Settings/Settings.config".Replace('/', Path.DirectorySeparatorChar));
 
-					if(MessageBox.Show(GlobalVar._e("WindowSettings_okDoneDoYouWantToRestart"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+					if(MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
 						System.Windows.Forms.Application.Restart();
 					}
 					System.Windows.Application.Current.Shutdown();
 				} else {
-                    MessageBox.Show(GlobalVar._e("WindowSettings_nopeNoConfig"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(_e("WindowSettings_nopeNoConfig"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 				}
 			}
 		}
 
 		public void Bu_ToolDeleteFileAssociation_Click(object sender, RoutedEventArgs e) {
 			if(FileAssociationsDelete())
-                MessageBox.Show(GlobalVar._e("MainWindow_extensionDeleteDone"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(_e("MainWindow_extensionDeleteDone"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Information);
 		}
 
 		public void Bu_ToolImporterAutoInstallCounterDown_Click(object sender, RoutedEventArgs e) {
@@ -182,12 +184,12 @@ namespace osuSync {
 			if(Directory.Exists(GlobalVar.appDataPath)) {
 				Process.Start(GlobalVar.appDataPath);
 			} else {
-                MessageBox.Show(GlobalVar._e("WindowSettings_nopeDirectoryDoesNotExit"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(_e("WindowSettings_nopeDirectoryDoesNotExit"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
 		}
 
 		public void Bu_ToolReset_Click(object sender, RoutedEventArgs e) {
-			if(MessageBox.Show(GlobalVar._e("WindowSettings_areYouSureYouWantToReset"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes) {
+			if(MessageBox.Show(_e("WindowSettings_areYouSureYouWantToReset"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes) {
                 FileAssociationsDelete();
 				if(Directory.Exists(GlobalVar.appDataPath)) {
 					try {
@@ -199,7 +201,7 @@ namespace osuSync {
 						Directory.Delete(GlobalVar.appTempPath, true);
 					} catch (IOException) {}
 				}
-				if(MessageBox.Show(GlobalVar._e("WindowSettings_okDoneDoYouWantToRestart"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+				if(MessageBox.Show(_e("WindowSettings_okDoneDoYouWantToRestart"), GlobalVar.appName, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
 					System.Windows.Forms.Application.Restart();
 				System.Windows.Application.Current.Shutdown();
 			}
@@ -211,7 +213,7 @@ namespace osuSync {
 				System.Windows.Application.Current.Shutdown();
 				return;
 			} else {
-				MessageBox.Show(GlobalVar._e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(_e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 
@@ -261,7 +263,7 @@ namespace osuSync {
 
         #region "TB - TextBox"
         public void TB_ApiKey_TextChanged(object sender, TextChangedEventArgs e) {
-			Bu_ApiKey_Validate.Content = GlobalVar._e("WindowSettings_validate");
+			Bu_ApiKey_Validate.Content = _e("WindowSettings_validate");
 		}
 
 		public void TB_osu_Path_GotFocus(object sender, RoutedEventArgs e) {
@@ -270,23 +272,23 @@ namespace osuSync {
 				CheckPathExists = true,
 				DefaultExt = "exe",
 				FileName = "osu!",
-				Filter = GlobalVar._e("WindowSettings_executableFiles") + " (*.exe)|*.exe",
+				Filter = _e("WindowSettings_executableFiles") + " (*.exe)|*.exe",
 				InitialDirectory = Settings.OsuPathDetect(),
 				Multiselect = false,
-				Title = GlobalVar._e("WindowSettings_pleaseOpenOsu")
+				Title = _e("WindowSettings_pleaseOpenOsu")
 			};
 
 			if(!(SelectFile.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)) {
 				if(Path.GetFileName(SelectFile.FileName) == "osu!.exe") {
 					TB_osu_Path.Text = Path.GetDirectoryName(SelectFile.FileName);
 				} else {
-					MessageBox.Show(GlobalVar._e("WindowSettings_youSelectedTheWrongFile"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+					MessageBox.Show(_e("WindowSettings_youSelectedTheWrongFile"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
 				}
 			}
 		}
 
 		public void TB_osu_SongsPath_GotFocus(object sender, RoutedEventArgs e) {
-            System.Windows.Forms.FolderBrowserDialog SelectFile = new System.Windows.Forms.FolderBrowserDialog { Description = GlobalVar._e("WindowSettings_pleaseSelectSongsFolder") };
+            System.Windows.Forms.FolderBrowserDialog SelectFile = new System.Windows.Forms.FolderBrowserDialog { Description = _e("WindowSettings_pleaseSelectSongsFolder") };
 
 			if(SelectFile.ShowDialog() != System.Windows.Forms.DialogResult.Cancel)
 				TB_osu_SongsPath.Text = SelectFile.SelectedPath;
@@ -294,17 +296,17 @@ namespace osuSync {
 
 		public void TB_ToolImporterAutoInstallCounter_LostFocus(object sender, RoutedEventArgs e) {
             if(!int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int TB_ToolImporterAutoInstallCounter_value))
-                TB_ToolImporterAutoInstallCounter.Text = GlobalVar._e("WindowSettings_invalidValue");
+                TB_ToolImporterAutoInstallCounter.Text = _e("WindowSettings_invalidValue");
         }
 
 		public void TB_ToolInterface_BeatmapDetailPanelWidth_LostFocus(object sender, RoutedEventArgs e) {
             if(!int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out int TB_ToolInterface_BeatmapDetailPanelWidth_value) || TB_ToolInterface_BeatmapDetailPanelWidth_value < 5 || TB_ToolInterface_BeatmapDetailPanelWidth_value > 95)
-                TB_ToolInterface_BeatmapDetailPanelWidth.Text = GlobalVar._e("WindowSettings_invalidValue");
+                TB_ToolInterface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue");
         }
 
 		public void TB_ToolUpdate_Path_GotFocus(object sender, RoutedEventArgs e) {
             System.Windows.Forms.FolderBrowserDialog SelectDirectory = new System.Windows.Forms.FolderBrowserDialog {
-				Description = GlobalVar._e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
+				Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
 				ShowNewFolderButton = false
 			};
             SelectDirectory.SelectedPath = (Directory.Exists(GlobalVar.appSettings.Tool_Update_SavePath) ? GlobalVar.appSettings.Tool_Update_SavePath : Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
@@ -352,7 +354,7 @@ namespace osuSync {
 			int indexUserLanguage = -1;
 			List<string> AlreadyAdded = new List<string>();
 			CB_ToolLanguages.Items.Add("en_US | English/English");      // 0
-			foreach(var thisPair in TranslationManager.translationList.Values) {
+			foreach(var thisPair in translationList.Values) {
 				if(!AlreadyAdded.Contains(thisPair.Code)) {
 					AlreadyAdded.Add(thisPair.Code);
 					if(thisPair.Code == GlobalVar.appSettings.Tool_Language) {
@@ -375,7 +377,7 @@ namespace osuSync {
 			TB_ToolInterface_BeatmapDetailPanelWidth.Text = GlobalVar.appSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString();
 			TB_ToolUpdate_Path.Text = GlobalVar.appSettings.Tool_Update_SavePath;
 
-			Ex_Language.Header = GlobalVar._e("WindowSettings_language") + " / Language";
+			Ex_Language.Header = _e("WindowSettings_language") + " / Language";
 		}
 	}
 }

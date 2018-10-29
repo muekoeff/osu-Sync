@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
 
@@ -30,9 +31,9 @@ namespace osuSync {
 		
 		public void WindowAbout_Loaded(object sender, RoutedEventArgs e) {
 #if DEBUG
-			TB_Version.Text = GlobalVar._e("WindowAbout_version").Replace("%0", GlobalVar.AppVersion.ToString() + " (Dev)").Replace("%1", GlobalVar.appSettings.Tool_Language);
+			TB_Version.Text = _e("WindowAbout_version").Replace("%0", GlobalVar.AppVersion.ToString() + " (Dev)").Replace("%1", GlobalVar.appSettings.Tool_Language);
 #else
-            TB_Version.Text = GlobalVar._e("WindowAbout_version").Replace("%0", GlobalVar.AppVersion.ToString()).Replace("%1", GlobalVar.appSettings.Tool_Language);
+            TB_Version.Text = _e("WindowAbout_version").Replace("%0", GlobalVar.AppVersion.ToString()).Replace("%1", GlobalVar.appSettings.Tool_Language);
 #endif
         }
 	}

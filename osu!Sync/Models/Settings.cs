@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osuSync.Modules;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync.Models {
     class Settings {
@@ -58,7 +60,7 @@ namespace osuSync.Models {
                     if(File.Exists(GlobalVar.appSettings.Tool_LanguagePath)) {
                         TranslationManager.TranslationLoad(GlobalVar.appSettings.Tool_LanguagePath);
                     } else {
-                        MessageBox.Show(GlobalVar._e("GlobalVar_unableToFindTranslationPackage") + "\n\n"
+                        MessageBox.Show(_e("GlobalVar_unableToFindTranslationPackage") + "\n\n"
                             + "Details:\nPath: " + GlobalVar.appSettings.Tool_LanguagePath, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
 
@@ -68,15 +70,15 @@ namespace osuSync.Models {
                             GlobalVar.appSettings.Api_Key = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(GlobalVar.appSettings.Api_KeyEncrypted), GlobalVar.entropy, DataProtectionScope.CurrentUser));
                             GlobalVar.appSettings.Api_KeyEncrypted = "";
                         } catch(CryptographicException ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n"
+                            MessageBox.Show(_e("GlobalVar_unableToDecryptApi") + "\n\n"
                                 + ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                             SaveSettings();
                         } catch(FormatException ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n"
+                            MessageBox.Show(_e("GlobalVar_unableToDecryptApi") + "\n\n"
                                 + ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                             SaveSettings();
                         } catch(Exception ex) {
-                            MessageBox.Show(GlobalVar._e("GlobalVar_unableToDecryptApi") + "\n\n"
+                            MessageBox.Show(_e("GlobalVar_unableToDecryptApi") + "\n\n"
                                 + ex.Message, GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                             SaveSettings();
                         }
@@ -86,7 +88,7 @@ namespace osuSync.Models {
                     GlobalVar.CompatibilityCheck(new Version(GlobalVar.appSettings._version));
                     MirrorManager.CheckMirror();
                 } catch(Exception) {
-                    MessageBox.Show(GlobalVar._e("GlobalVar_invalidConfiguration"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(_e("GlobalVar_invalidConfiguration"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
                     File.Delete(GlobalVar.appDataPath + "/Settings/Settings.json".Replace('/', Path.DirectorySeparatorChar));
                     Process.Start(Assembly.GetExecutingAssembly().Location.ToString());
                     Environment.Exit(1);
@@ -102,7 +104,7 @@ namespace osuSync.Models {
                     GlobalVar.appSettings.Api_KeyEncrypted = Convert.ToBase64String(ProtectedData.Protect(Encoding.UTF8.GetBytes(GlobalVar.appSettings.Api_Key), GlobalVar.entropy, DataProtectionScope.CurrentUser));
                 } catch(CryptographicException) {
                     GlobalVar.appSettings.Api_KeyEncrypted = "";
-                    MessageBox.Show(GlobalVar._e("GlobalVar_unableToEncryptApi"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(_e("GlobalVar_unableToEncryptApi"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
 

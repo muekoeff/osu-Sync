@@ -1,5 +1,5 @@
 using Microsoft.VisualBasic;
-using osuSync.Models;
+using osuSync.Modules;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Windows;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync {
     partial class Application {
@@ -44,12 +45,12 @@ namespace osuSync {
 
 			// Load language package
 			if(Directory.Exists(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar))) {
-                TranslationManager.translationList = TranslationManager.TranslationMap(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar));
-				if(TranslationManager.translationList.ContainsKey(CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
-                    TranslationManager.TranslationLoad(TranslationManager.translationList[CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
-				} else if(TranslationManager.translationList.ContainsKey(CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {
+                translationList = TranslationMap(System.Windows.Forms.Application.StartupPath + "/data/l10n".Replace('/', Path.DirectorySeparatorChar));
+				if(translationList.ContainsKey(CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_"))) {
+                    TranslationLoad(translationList[CultureInfo.CurrentCulture.ToString().Substring(0, 5).Replace("-", "_")].Path);
+				} else if(translationList.ContainsKey(CultureInfo.CurrentCulture.ToString().Substring(0, 2)) & !(CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "en")) {
                     // Prevent loading of en_UD
-                    TranslationManager.TranslationLoad(TranslationManager.translationList[CultureInfo.CurrentCulture.ToString().Substring(0, 2)].Path);
+                    TranslationLoad(translationList[CultureInfo.CurrentCulture.ToString().Substring(0, 2)].Path);
                 }
             }
 

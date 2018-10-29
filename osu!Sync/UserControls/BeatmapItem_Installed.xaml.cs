@@ -3,6 +3,7 @@ using osuSync.Models;
 using System;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using static osuSync.Modules.TranslationManager;
 
 namespace osuSync.UserControls {
 
@@ -32,7 +33,7 @@ namespace osuSync.UserControls {
 
             Gr_Grid.Tag = bm;
             TBl_Title.Text = bm.Title;
-            TBl_Caption.Text = (bm.Id != -1 ? bm.Id.ToString() + " | " + bm.Artist : GlobalVar._e("MainWindow_unsubmitted") + " | " + bm.Artist);
+            TBl_Caption.Text = (bm.Id != -1 ? bm.Id.ToString() + " | " + bm.Artist : _e("MainWindow_unsubmitted") + " | " + bm.Artist);
             if(bm.Creator != "Unknown") {
                 TBl_Caption.Text += " | " + bm.Creator;
             }
