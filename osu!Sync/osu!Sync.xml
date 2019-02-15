@@ -19,7 +19,12 @@
             Application Entry Point.
             </summary>
         </member>
-        <member name="M:osuSync.GlobalVar._e(System.String)">
+        <member name="M:osuSync.Modules.FileExtensions.FileAssociationCheck">
+            <summary>
+            Checks osu!Sync's file associations and creates them if necessary.
+            </summary>
+        </member>
+        <member name="M:osuSync.Modules.TranslationManager._e(System.String)">
             <param name="text">English string to translate</param>
             <returns>Translation of <paramref>Text</paramref></returns>
         </member>
@@ -28,51 +33,13 @@
             MainWindow
             </summary>
         </member>
-        <member name="M:osuSync.MainWindow.ConvertBmListToCSV(System.Collections.Generic.Dictionary{System.Int32,osuSync.Models.Beatmap})">
-            <summary>
-            Converts the given <code>List(Of Beatmap)</code> to a CSV-String.
-            </summary>
-            <param name="source">List of beatmaps</param>
-            <returns><code>List(Of Beatmap)</code> as CSV-String.</returns>
-            <remarks></remarks>
-        </member>
-        <member name="M:osuSync.MainWindow.ConvertBmListToHtml(System.Collections.Generic.Dictionary{System.Int32,osuSync.Models.Beatmap})">
-            <summary>
-            Converts the given <code>List(Of Beatmap)</code> to HTML-Code.
-            </summary>
-            <param name="source">List of beatmaps</param>
-            <returns><code>List(Of Beatmap)</code> as HTML and possible warnings together in a String().</returns>
-            <remarks></remarks>
-        </member>
-        <member name="M:osuSync.MainWindow.ConvertBmListToJson(System.Collections.Generic.Dictionary{System.Int32,osuSync.Models.Beatmap})">
-            <summary>
-            Converts the given <code>List(Of Beatmap)</code> to OSBL.
-            </summary>
-            <param name="source">List of beatmaps</param>
-            <returns><code>List(Of Beatmap)</code> as OSBL and possible warnings together in a String().</returns>
-            <remarks></remarks>
-        </member>
-        <member name="M:osuSync.MainWindow.ConvertBmListToTxt(System.Collections.Generic.Dictionary{System.Int32,osuSync.Models.Beatmap})">
-            <summary>
-            Converts the given <code>List(Of Beatmap)</code> to a TXT-String.
-            </summary>
-            <param name="source">List of beatmaps</param>
-            <returns><code>List(Of Beatmap)</code> as TXT-String.</returns>
-            <remarks></remarks>
-        </member>
-        <member name="M:osuSync.MainWindow.BmDisplayUpdate(System.Collections.Generic.Dictionary{System.Int32,osuSync.Models.Beatmap},osuSync.UpdateBmDisplayDestinations,System.String)">
+        <member name="M:osuSync.MainWindow.BmDisplayUpdate(osuSync.Models.BeatmapDictionary,osuSync.UpdateBmDisplayDestinations,System.String)">
             <summary>
             Updates the beatmap list interface.
             </summary>
             <param name="bmList">List of Beatmaps to display</param>
             <param name="destination">Selects the list where to display the new list. Possible values <code>Installed</code>, <code>Importer</code>, <code>Exporter</code></param>
             <param name="lastUpdateTime">Only required when <paramref name="destination"/> = Installed</param>
-            <remarks></remarks>
-        </member>
-        <member name="M:osuSync.MainWindow.FileAssociationCheck">
-            <summary>
-            Checks osu!Sync's file associations and creates them if necessary.
-            </summary>
             <remarks></remarks>
         </member>
         <member name="M:osuSync.MainWindow.StartOrFocusOsu">
@@ -91,6 +58,32 @@
             <summary>
             InitializeComponent
             </summary>
+        </member>
+        <member name="M:osuSync.Models.BeatmapDictionary.ConvertToCsv">
+            <summary>
+            Converts the current beatmap list to CSV.
+            </summary>
+            <returns><code>BeatmapDictionary</code> as CSV.</returns>
+        </member>
+        <member name="M:osuSync.Models.BeatmapDictionary.ConvertToHtml(System.String@)">
+            <summary>
+            Converts the current beatmap dictionary to HTML-Code.
+            </summary>
+            <param name="failMessage">Potential error message</param>
+            <returns><code>BeatmapDictionary</code> as HTML.</returns>
+        </member>
+        <member name="M:osuSync.Models.BeatmapDictionary.ConvertToJson(System.String@)">
+            <summary>
+            Converts the current beatmap dictionary to JSON.
+            </summary>
+            <param name="failMessage">Potential error message</param>
+            <returns><code>BeatmapDictionary</code> as JSON.</returns>
+        </member>
+        <member name="M:osuSync.Models.BeatmapDictionary.ConvertToTxt">
+            <summary>
+            Converts the current beatmap dictionary to TXT.
+            </summary>
+            <returns><code>BeatmapDictionary</code> as TXT.</returns>
         </member>
         <member name="M:osuSync.Models.Settings.OsuPathDetect(System.Boolean)">
             <param name="allowConfig"></param> Enable on initialization to prevent System.TypeInitializationException
@@ -162,16 +155,6 @@
             </summary>
         </member>
         <member name="M:osuSync.Window_Settings.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:osuSync.Window_Updater">
-            <summary>
-            Window_Updater
-            </summary>
-        </member>
-        <member name="M:osuSync.Window_Updater.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
