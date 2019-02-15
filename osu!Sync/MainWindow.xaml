@@ -140,24 +140,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Background="{Binding Background, ElementName=Me_Menu}" Header="{DynamicResource MainWindow_help}">
-                    <MenuItem x:Name="MI_HelpUpdater" Click="MI_HelpUpdater_Click" Foreground="#333" Header="{DynamicResource MainWindow_openUpdater}">
-                        <MenuItem.Icon>
-                            <Path Data="F1M1332.17,1189.59L1349.06,1172.61 1349.06,1180.59C1382.85,1180.59 1385.5,1200.57 1385.5,1204.56 1378.21,1188.58 1349.06,1196.57 1349.06,1196.57L1349.06,1204.56 1332.17,1189.59z" Fill="#333" Height="16" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Width="16">
-                                <Path.RenderTransform>
-                                    <TransformGroup>
-                                        <RotateTransform Angle="90" />
-                                    </TransformGroup>
-                                </Path.RenderTransform>
-                            </Path>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem x:Name="MI_HelpAbout" Click="MI_HelpAbout_Click" Foreground="#333" Header="{DynamicResource MainWindow_about}">
-                        <MenuItem.Icon>
-                            <Path Data="M0.083000104,16.5L9.4169997,16.5 9.4169997,53.834 0.083000104,53.834z M4.7499999,0C7.3722199,0 9.4999999,2.1269503 9.4999999,4.75 9.4999999,7.3740196 7.3722199,9.5 4.7499999,9.5 2.12756,9.5 4.4703484E-08,7.3740196 0,4.75 4.4703484E-08,2.1269503 2.12756,0 4.7499999,0z" Fill="#333" Height="16" Stretch="Uniform" Width="16" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
+                <MenuItem x:Name="MI_About" Background="{Binding Background, ElementName=Me_Menu}" Click="MI_About_Click" Header="{DynamicResource MainWindow_about}" />
             </Menu>
         </DockPanel>
         <TextBlock x:Name="TB_BmCounter" FontFamily="Segoe UI Light" FontSize="22" Foreground="#DDD" HorizontalAlignment="Left" Margin="8,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" />
@@ -290,7 +273,6 @@
             <Grid Width="{Binding ActualWidth, ElementName=SB_Footer, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Label x:Name="La_FooterLastSync" Content="{DynamicResource MainWindow_lastSyncNever}" Foreground="{Binding Foreground, ElementName=SB_Footer}" Tag="Never" />
-                    <Label x:Name="La_FooterUpdater" Cursor="Hand" Foreground="{Binding Foreground, ElementName=SB_Footer}" MouseDown="La_FooterUpdater_MouseDown" ToolTip="{DynamicResource MainWindow_tt_openUpdater}" />
                     <Label x:Name="La_FooterProg" Foreground="{Binding Foreground, ElementName=SB_Footer}" />
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Margin="0,0,8,0" Orientation="Horizontal">

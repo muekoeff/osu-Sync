@@ -538,10 +538,6 @@ namespace osuSync {
 		}
 
 		#region "La - Label"
-		public void La_FooterUpdater_MouseDown(object sender, MouseButtonEventArgs e) {
-			UI_ShowUpdaterWindow();
-		}
-
 		public void La_FooterVer_MouseDown(object sender, MouseButtonEventArgs e) {
 			Window_About Window_About = new Window_About();
 			Window_About.ShowDialog();
@@ -580,36 +576,6 @@ namespace osuSync {
 			// Delete old downloaded beatmaps
 			if(Directory.Exists(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar)))
 				Directory.Delete(GlobalVar.appTempPath + "/Downloads/Beatmaps".Replace('/', Path.DirectorySeparatorChar), true);
-
-			// Check For Updates
-			switch(GlobalVar.appSettings.Tool_CheckForUpdates) {
-				case 0:
-					UpdateCheck();
-					break;
-				case 1:
-					La_FooterUpdater.Content = _e("MainWindow_updatesDisabled");
-					break;
-				default:
-					int interval = 0;
-					switch(GlobalVar.appSettings.Tool_CheckForUpdates) {
-						case 3:
-                            interval = 1;
-							break;
-						case 4:
-                            interval = 7;
-							break;
-						case 5:
-                            interval = 30;
-							break;
-					}
-
-                    if(DateTime.ParseExact(GlobalVar.appSettings.Tool_LastCheckForUpdates, "yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo) - DateTime.Now > TimeSpan.FromDays(interval)) {
-						UpdateCheck();
-					} else {
-						La_FooterUpdater.Content = _e("MainWindow_updateCheckNotNecessary");
-					}
-					break;
-			}
 
 			// Open File
 			if(GlobalVar.appStartArgs != null && Array.Exists(GlobalVar.appStartArgs, s => {
@@ -747,13 +713,9 @@ namespace osuSync {
 			}
 		}
 
-		public void MI_HelpAbout_Click(object sender, RoutedEventArgs e) {
+		public void MI_About_Click(object sender, RoutedEventArgs e) {
 			Window_About Window_About = new Window_About();
 			Window_About.ShowDialog();
-		}
-
-		public void MI_HelpUpdater_Click(object sender, RoutedEventArgs e) {
-			UI_ShowUpdaterWindow();
 		}
 
 		public void MI_NotifyAppShowHide_Click(object sender, RoutedEventArgs e) {
@@ -991,57 +953,7 @@ namespace osuSync {
 			Window_Settings.TC_Main.SelectedIndex = selectedIndex;
 			Window_Settings.ShowDialog();
 		}
-
-		public static void UI_ShowUpdaterWindow() {
-			Window_Updater Window_Updater = new Window_Updater();
-			Window_Updater.ShowDialog();
-		}
-		#endregion
-
-		public void UpdateCheck() {
-			La_FooterUpdater.Content = _e("MainWindow_checkingForUpdates");
-			WebClient UpdateClient = new WebClient();
-			UpdateClient.DownloadStringAsync(new Uri(GlobalVar.webNw520ApiRoot + "/app/updater.latestVersion.json"));
-			UpdateClient.DownloadStringCompleted += UpdateClient_DownloadStringCompleted;
-			GlobalVar.appSettings.Tool_LastCheckForUpdates = DateTime.Now.ToString("yyyyMMddhhmmss");
-			GlobalVar.appSettings.SaveSettings();
-		}
-
-		public void UpdateClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e) {
-			JObject Answer = null;
-			try {
-				Answer = JObject.Parse(e.Result);
-			} catch(JsonReaderException) {
-				if(GlobalVar.appSettings.Messages_Updater_UnableToCheckForUpdates) {
-					MessageBox.Show(_e("MainWindow_unableToCheckForUpdates") + "\n" 
-                        + "> " + _e("MainWindow_invalidServerResponse") + "\n\n" 
-                        + _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), GlobalVar.msgTitleDisableable, MessageBoxButton.OK, MessageBoxImage.Error);
-					MessageBox.Show(e.Result, "Debug | " + GlobalVar.appName, MessageBoxButton.OK);
-				}
-				La_FooterUpdater.Content = _e("MainWindow_unableToCheckForUpdates");
-				return;
-			} catch(Exception) {
-				if(GlobalVar.appSettings.Messages_Updater_UnableToCheckForUpdates) {
-					MessageBox.Show(_e("MainWindow_unableToCheckForUpdates") + "\n" 
-                        + "> " + _e("MainWindow_cantConnectToServer") + "\n\n"
-                        + _e("MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage"), GlobalVar.msgTitleDisableable, MessageBoxButton.OK, MessageBoxImage.Error);
-				}
-				La_FooterUpdater.Content = _e("MainWindow_unableToCheckForUpdates");
-				return;
-			}
-
-			string latestVer = Convert.ToString(Answer.SelectToken("latestRepoRelease").SelectToken("tag_name"));
-			if(latestVer == GlobalVar.AppVersion.ToString()) {
-				La_FooterUpdater.Content = _e("MainWindow_latestVersion");
-			} else {
-				La_FooterUpdater.Content = _e("MainWindow_updateAvailable").Replace("%0", latestVer);
-				BalloonShow(_e("MainWindow_aNewVersionIsAvailable").Replace("%0", GlobalVar.AppVersion.ToString()).Replace("%1", latestVer), null, BalloonIcon.Info, new RoutedEventHandler(delegate (Object o, RoutedEventArgs a) {
-                    UI_ShowUpdaterWindow();
-                }));
-				if(GlobalVar.appSettings.Messages_Updater_OpenUpdater)
-					UI_ShowUpdaterWindow();
-			}
-		}
+        #endregion
 
 		#region "BGW_syncGetIds"
 		public void BGW_syncGetIds_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {

@@ -12,24 +12,16 @@ namespace osuSync {
         }
 
         #region "TB - TextArea"
-        public void TB_Contact_MouseUp(object sender, MouseButtonEventArgs e) {
-			Process.Start("mailto:team@nw520.de?subject=Contact%20|%20osu!Sync");
-		}
-
 		public void TB_GitHub_MouseUp(object sender, MouseButtonEventArgs e) {
-			Process.Start("https://github.com/naseweis520/osu-Sync");
+			Process.Start("https://github.com/nw520/osu-Sync");
 		}
 
 		public void TB_osuForum_MouseUp(object sender, MouseEventArgs e) {
 			Process.Start("https://osu.ppy.sh/forum/t/270446");
 		}
+        #endregion
 
-		public void TB_Version_MouseUp(object sender, MouseButtonEventArgs e) {
-			MainWindow.UI_ShowUpdaterWindow();
-		}
-		#endregion
-		
-		public void WindowAbout_Loaded(object sender, RoutedEventArgs e) {
+        public void WindowAbout_Loaded(object sender, RoutedEventArgs e) {
 #if DEBUG
 			TB_Version.Text = _e("WindowAbout_version").Replace("%0", GlobalVar.AppVersion.ToString() + " (Dev)").Replace("%1", GlobalVar.appSettings.Tool_Language);
 #else

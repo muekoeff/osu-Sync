@@ -18,7 +18,6 @@ namespace osuSync.Models {
         public string Api_KeyEncrypted = "";
         public string osu_Path = OsuPathDetect(false);
         public string osu_SongsPath = OsuPathDetect(false) + "/Songs".Replace('/', Path.DirectorySeparatorChar);
-        public int Tool_CheckForUpdates = 3;
         public bool Tool_CheckFileAssociation = true;
         public String Tool_ChosenDownloadMirror = MirrorManager.DEFAULT_MIRROR_ID;
         public int Tool_EnableNotifyIcon = 0;
@@ -29,11 +28,7 @@ namespace osuSync.Models {
         public string Tool_LastCheckForUpdates = "20000101000000";
         public bool Tool_SyncOnStartup = false;
         public bool Tool_RequestElevationOnStartup = false;
-        public bool Tool_Update_DeleteFileAfter = true;
-        public string Tool_Update_SavePath = GlobalVar.appTempPath + "/Updater".Replace('/', Path.DirectorySeparatorChar);
-        public bool Tool_Update_UseDownloadPatcher = true;
         public bool Messages_Importer_AskOsu = true;
-        public bool Messages_Updater_OpenUpdater = true;
         public bool Messages_Updater_UnableToCheckForUpdates = true;
 
         /// <param name="allowConfig"></param> Enable on initialization to prevent System.TypeInitializationException

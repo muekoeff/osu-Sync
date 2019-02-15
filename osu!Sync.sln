@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu!Sync", "osu!Sync\osu!Sync.csproj", "{A5733D95-54F1-4850-B656-919F0D5DF4F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu!Sync UpdatePatcher", "osu!Sync UpdatePatcher\osu!Sync UpdatePatcher.csproj", "{696301D5-D13F-4BB1-94F4-B000B8D69849}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5733D95-54F1-4850-B656-919F0D5DF4F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{696301D5-D13F-4BB1-94F4-B000B8D69849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

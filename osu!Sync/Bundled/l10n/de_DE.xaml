@@ -10,7 +10,8 @@
     <system:String x:Key="Meta_langName">Deutsch</system:String>
     <!-- \/ Replace "English" with the language of your translation in English -->
     <system:String x:Key="Meta_langNameEn">German</system:String>
-    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
+    <!-- \/ Replace "
+    520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Übersetzung von: naseweis520</system:String>
 
     <!-- Global -->

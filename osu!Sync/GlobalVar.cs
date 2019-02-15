@@ -145,19 +145,15 @@ namespace osuSync {
                 {
                     "chosenDownloadMirror",
                     appSettings.Tool_ChosenDownloadMirror
-                },
-                {
-                    "updateInterval",
-                    appSettings.Tool_CheckForUpdates.ToString()
                 }
             }
                 },
                 {
                     "language",
                     new JObject { {
-                "code",
-                appSettings.Tool_Language
-            } }
+                        "code",
+                        appSettings.Tool_Language
+                    } }
                 },
                 {
                     "system",

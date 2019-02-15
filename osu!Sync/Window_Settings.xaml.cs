@@ -26,8 +26,7 @@ namespace osuSync {
 			GlobalVar.appSettings.osu_Path = TB_osu_Path.Text;
 			GlobalVar.appSettings.osu_SongsPath = TB_osu_SongsPath.Text;
 			GlobalVar.appSettings.Tool_CheckFileAssociation = Convert.ToBoolean(CB_ToolCheckFileAssociation.IsChecked);
-			GlobalVar.appSettings.Tool_CheckForUpdates = CB_ToolCheckForUpdates.SelectedIndex;
-			GlobalVar.appSettings.Tool_ChosenDownloadMirror = ((MirrorManager.DownloadMirror)CB_ToolDownloadMirror.SelectedItem).Id;
+            GlobalVar.appSettings.Tool_ChosenDownloadMirror = ((MirrorManager.DownloadMirror)CB_ToolDownloadMirror.SelectedItem).Id;
 			GlobalVar.appSettings.Tool_EnableNotifyIcon = CB_ToolEnableNotifyIcon.SelectedIndex;
 
             if(int.TryParse(TB_ToolImporterAutoInstallCounter.Text, out int val_TB_ToolImporterAutoInstallCounter))
@@ -49,12 +48,7 @@ namespace osuSync {
                 translationHolder = null;
 			}
 			GlobalVar.appSettings.Tool_RequestElevationOnStartup = Convert.ToBoolean(CB_ToolRequestElevationOnStartup.IsChecked);
-			GlobalVar.appSettings.Tool_Update_SavePath = TB_ToolUpdate_Path.Text;
-			GlobalVar.appSettings.Tool_Update_DeleteFileAfter = Convert.ToBoolean(CB_ToolUpdateDeleteFileAfter.IsChecked);
-			GlobalVar.appSettings.Tool_Update_UseDownloadPatcher = Convert.ToBoolean(CB_ToolUpdate_UseDownloadPatcher.IsChecked);
 			GlobalVar.appSettings.Messages_Importer_AskOsu = Convert.ToBoolean(CB_MessagesImporterAskOsu.IsChecked);
-			GlobalVar.appSettings.Messages_Updater_OpenUpdater = Convert.ToBoolean(CB_MessagesUpdaterOpenUpdater.IsChecked);
-			GlobalVar.appSettings.Messages_Updater_UnableToCheckForUpdates = Convert.ToBoolean(CB_MessagesUpdaterUnableToCheckForUpdates.IsChecked);
 			GlobalVar.appSettings.SaveSettings();
 		}
 
@@ -207,23 +201,19 @@ namespace osuSync {
 			}
 		}
 
-		public void Bu_ToolRestartElevated_Click(object sender, RoutedEventArgs e) {
-			if(GlobalVar.RequestElevation()) {
+        public void Bu_ToolRestartElevated_Click(object sender, RoutedEventArgs e) {
+            if(GlobalVar.RequestElevation()) {
                 GlobalVar.tool_dontApplySettings = true;
-				System.Windows.Application.Current.Shutdown();
-				return;
-			} else {
-				MessageBox.Show(_e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-		}
+                System.Windows.Application.Current.Shutdown();
+                return;
+            } else {
+                MessageBox.Show(_e("MainWindow_elevationFailed"), GlobalVar.appName, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-		public void Bu_ToolUpdateFileAssociation_Click(object sender, RoutedEventArgs e) {
+        public void Bu_ToolUpdateFileAssociation_Click(object sender, RoutedEventArgs e) {
             FileAssociationsCreate();
-		}
-
-		public void Bu_ToolUpdate_PathDefault_Click(object sender, RoutedEventArgs e) {
-			TB_ToolUpdate_Path.Text = GlobalVar.appTempPath + "/Updater".Replace('/', Path.DirectorySeparatorChar);
-		}
+        }
         #endregion
 
         public bool CreateShortcut(string sLinkFile, string sTargetFile, string sArguments = "", string sDescription = "", string sWorkingDir = "") {
@@ -303,17 +293,6 @@ namespace osuSync {
             if(!int.TryParse(TB_ToolInterface_BeatmapDetailPanelWidth.Text, out int TB_ToolInterface_BeatmapDetailPanelWidth_value) || TB_ToolInterface_BeatmapDetailPanelWidth_value < 5 || TB_ToolInterface_BeatmapDetailPanelWidth_value > 95)
                 TB_ToolInterface_BeatmapDetailPanelWidth.Text = _e("WindowSettings_invalidValue");
         }
-
-		public void TB_ToolUpdate_Path_GotFocus(object sender, RoutedEventArgs e) {
-            System.Windows.Forms.FolderBrowserDialog SelectDirectory = new System.Windows.Forms.FolderBrowserDialog {
-				Description = _e("WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates"),
-				ShowNewFolderButton = false
-			};
-            SelectDirectory.SelectedPath = (Directory.Exists(GlobalVar.appSettings.Tool_Update_SavePath) ? GlobalVar.appSettings.Tool_Update_SavePath : Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
-
-			if(SelectDirectory.ShowDialog() != System.Windows.Forms.DialogResult.Cancel)
-				TB_ToolUpdate_Path.Text = SelectDirectory.SelectedPath;
-		}
         #endregion
 
         public void WindowSettings_Loaded(object sender, RoutedEventArgs e) {
@@ -328,14 +307,9 @@ namespace osuSync {
 
 			CB_ApiEnableInBeatmapPanel.IsChecked = GlobalVar.appSettings.Api_Enabled_BeatmapPanel;
 			CB_MessagesImporterAskOsu.IsChecked = GlobalVar.appSettings.Messages_Importer_AskOsu;
-			CB_MessagesUpdaterOpenUpdater.IsChecked = GlobalVar.appSettings.Messages_Updater_OpenUpdater;
-			CB_MessagesUpdaterUnableToCheckForUpdates.IsChecked = GlobalVar.appSettings.Messages_Updater_UnableToCheckForUpdates;
 			CB_ToolCheckFileAssociation.IsChecked = GlobalVar.appSettings.Tool_CheckFileAssociation;
 			CB_ToolRequestElevationOnStartup.IsChecked = GlobalVar.appSettings.Tool_RequestElevationOnStartup;
 			CB_ToolSyncOnStartup.IsChecked = GlobalVar.appSettings.Tool_SyncOnStartup;
-			CB_ToolUpdateDeleteFileAfter.IsChecked = GlobalVar.appSettings.Tool_Update_DeleteFileAfter;
-			CB_ToolUpdate_UseDownloadPatcher.IsChecked = GlobalVar.appSettings.Tool_Update_UseDownloadPatcher;
-			CB_ToolCheckForUpdates.SelectedIndex = GlobalVar.appSettings.Tool_CheckForUpdates;
 
             // Load mirrors and select current one
             var i = 0;
@@ -375,7 +349,6 @@ namespace osuSync {
 			TB_osu_SongsPath.Text = GlobalVar.appSettings.osu_SongsPath;
 			TB_ToolImporterAutoInstallCounter.Text = GlobalVar.appSettings.Tool_Importer_AutoInstallCounter.ToString();
 			TB_ToolInterface_BeatmapDetailPanelWidth.Text = GlobalVar.appSettings.Tool_Interface_BeatmapDetailPanelWidth.ToString();
-			TB_ToolUpdate_Path.Text = GlobalVar.appSettings.Tool_Update_SavePath;
 
 			Ex_Language.Header = _e("WindowSettings_language") + " / Language";
 		}

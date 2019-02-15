@@ -37,30 +37,6 @@
                                 </ComboBox>
                             </StackPanel>
                         </Expander>
-                        <Expander Header="{DynamicResource WindowSettings_updater}" Margin="0">
-                            <StackPanel>
-                                <TextBlock Text="{DynamicResource WindowSettings_checkForUpdates}" />
-                                <ComboBox x:Name="CB_ToolCheckForUpdates">
-                                    <ComboBoxItem Content="{DynamicResource WindowSettings_everyLaunch}" />
-                                    <ComboBoxItem Content="{DynamicResource WindowSettings_never}" />
-                                    <Separator />
-                                    <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceADay}" />
-                                    <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAWeek}" />
-                                    <ComboBoxItem Content="{DynamicResource WindowSettings_maximumOnceAMonth}" />
-                                </ComboBox>
-                                <TextBlock Text="{DynamicResource WindowSettings_downloadUpdatePackageTo}" Margin="0,5,0,0" />
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="8*" />
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="TB_ToolUpdate_Path" GotFocus="TB_ToolUpdate_Path_GotFocus" Height="23" TextWrapping="Wrap" />
-                                    <Button x:Name="Bu_ToolUpdate_PathDefault" Click="Bu_ToolUpdate_PathDefault_Click" Content="{DynamicResource WindowSettings_default}" Margin="2,0,0,0" ToolTip="{DynamicResource WindowSettings_tt_useDefaultPath}" Grid.Column="1" />
-                                </Grid>
-                                <CheckBox x:Name="CB_ToolUpdate_UseDownloadPatcher" Content="{DynamicResource WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates}" Margin="0,5,0,0"/>
-                                <CheckBox x:Name="CB_ToolUpdateDeleteFileAfter" Content="{DynamicResource WindowSettings_deleteUpdatePackageAfterInstallation}" Margin="0,5,0,0"/>
-                            </StackPanel>
-                        </Expander>
                         <Expander x:Name="Ex_Language" Header="{DynamicResource WindowSettings_language}" Margin="0">
                             <StackPanel>
                                 <!-- [REF] Windows_Settings.xaml.vb/Window_Settings_Loaded() -->
@@ -134,9 +110,6 @@
                     <StackPanel Margin="5">
                         <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_importDownload}" />
                         <CheckBox x:Name="CB_MessagesImporterAskOsu" Content="{DynamicResource WindowSettings_importerAskOsu}" Margin="0,5,0,0" />
-                        <TextBlock FontSize="24" Foreground="#555" Margin="0,15,0,0" Text="{DynamicResource WindowSettings_updater}" />
-                        <CheckBox x:Name="CB_MessagesUpdaterOpenUpdater" Content="{DynamicResource WindowSettings_openUpdateWhenNewVersionAvailable}" Margin="0,5,0,0" />
-                        <CheckBox x:Name="CB_MessagesUpdaterUnableToCheckForUpdates" Content="{DynamicResource WindowSettings_showMessageWhenUpdateCheckFailed}" Margin="0,5,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

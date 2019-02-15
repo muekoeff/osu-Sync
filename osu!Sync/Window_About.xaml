@@ -34,8 +34,8 @@
                         <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="{x:Type TextBlock}" />
                     </Grid.Resources>
                     <StackPanel VerticalAlignment="Top">
-                        <TextBlock FontFamily="Fira Sans" FontSize="48" FontWeight="Light">osu!Sync</TextBlock>
-                        <TextBlock x:Name="TB_Version" Cursor="Hand" Margin="0,-5,0,0" MouseUp="TB_Version_MouseUp" Text="{DynamicResource WindowAbout_version}" ToolTip="{DynamicResource MainWindow_tt_openUpdater}" />
+                        <TextBlock FontFamily="Fira Sans" FontSize="38" FontWeight="Light">osu!Sync</TextBlock>
+                        <TextBlock x:Name="TB_Version" Text="{DynamicResource WindowAbout_version}" />
                         <TextBlock Margin="0,10,0,0" Text="{DynamicResource WindowAbout_message}" />
                     </StackPanel>
                     <TextBlock Text="{DynamicResource Meta_translators}" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="20" />
@@ -72,11 +72,9 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="TB_Contact" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#0088CC" MouseUp="TB_Contact_MouseUp" Text="{DynamicResource WindowAbout_email}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_email}" VerticalAlignment="Top" />
-                <TextBlock x:Name="TB_osuForum" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#0088CC" MouseUp="TB_osuForum_MouseUp" Text="{DynamicResource WindowAbout_osuForum}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_osuForum}" VerticalAlignment="Top" Grid.Column="1" />
-                <TextBlock x:Name="TB_GitHub" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#0088CC" MouseUp="TB_GitHub_MouseUp" Text="{DynamicResource WindowAbout_github}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_github}" VerticalAlignment="Top" Grid.Column="2" />
+                <TextBlock x:Name="TB_osuForum" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#0088CC" MouseUp="TB_osuForum_MouseUp" Text="{DynamicResource WindowAbout_osuForum}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_osuForum}" VerticalAlignment="Top" Grid.Column="0" />
+                <TextBlock x:Name="TB_GitHub" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Foreground="#0088CC" MouseUp="TB_GitHub_MouseUp" Text="{DynamicResource WindowAbout_github}" TextAlignment="Center" TextWrapping="Wrap" ToolTip="{DynamicResource WindowAbout_tt_github}" VerticalAlignment="Top" Grid.Column="1" />
             </Grid>
             <TextBlock FontSize="14" Foreground="#555" Margin="0,10,0,15" Text="{DynamicResource WindowAbout_copyright}" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" />
         </StackPanel>

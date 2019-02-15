@@ -170,9 +170,6 @@
     <Compile Include="Window_Settings.xaml.cs">
       <DependentUpon>Window_Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window_Updater.xaml.cs">
-      <DependentUpon>Window_Updater.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Window_Welcome.xaml.cs">
       <DependentUpon>Window_Welcome.xaml</DependentUpon>
     </Compile>
@@ -302,10 +299,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Window_Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Window_Updater.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
