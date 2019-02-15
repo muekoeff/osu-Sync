@@ -10,8 +10,8 @@
     <system:String x:Key="Meta_langName">Magyar</system:String>
     <!-- \/ Replace "English" with the language of your translation in English -->
     <system:String x:Key="Meta_langNameEn">Hungarian</system:String>
-    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
-    <system:String x:Key="Meta_translators">Fordította: KriszDev</system:String>
+    <!-- \/ Replace "nw520" with the username(s) of the translator(s) seperated by commas and translate -->
+    <system:String x:Key="Meta_translators">Fordította: Magyar Crowdin közösség</system:String>
 
     <!-- Global -->
     <!-- | A -->
@@ -50,7 +50,6 @@
     <system:String x:Key="MainWindow_about">_Rólunk</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Az összes támogatott fájlformátum</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Még dolgozik...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Új verzió érhető el. -- Jelenlegi %0 | Új: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmapok</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">%0 Beatmapet találtam.</system:String>
@@ -60,7 +59,6 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cantConnectToServer">Nem lehet kapcsolódni a szerverhez</system:String>
     <system:String x:Key="MainWindow_cantDownload">These beatmaps couldn't be downloaded. Possible reasons may be that the beatmap does not exist or that it isn't provided by this mirror.</system:String>
-    <system:String x:Key="MainWindow_checkingForUpdates">Frissítések keresése...</system:String>
     <system:String x:Key="MainWindow_conversionAborted">A konvertálás megszakadt</system:String>
     <system:String x:Key="MainWindow_conversionFailed">A konvertálás nem sikerült</system:String>
     <system:String x:Key="MainWindow_convertFile">_Fájl konvertálása</system:String>
@@ -140,11 +138,9 @@
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Felület lérehozása...</system:String>
     <!-- | H -->
-    <system:String x:Key="MainWindow_help">_Súgó</system:String>
     <system:String x:Key="MainWindow_hideInstalled">Hide already installed Beatmaps</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">Az azonosítót már felhasználták</system:String>
-    <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Ha a probléma továbbra is fennáll akkor kérjük hagyjon üzenetet a Visszajelzés lapon.</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">Ha a probléma állandó akkor a fórumon segítséget kaphatsz: http://bit.ly/1Bbmn6E (vágólapon van).</system:String>
     <system:String x:Key="MainWindow_ignoredFolders">Kizárt mappák</system:String>
     <system:String x:Key="MainWindow_import">Importálás</system:String>
@@ -153,14 +149,12 @@
     <system:String x:Key="MainWindow_installing">Telepítés</system:String>
     <system:String x:Key="MainWindow_installingFiles">Fájlok telepítése...</system:String>
     <system:String x:Key="MainWindow_insufficientPermissions">Nincsenek megfelelő jogosultságok</system:String>
-    <system:String x:Key="MainWindow_invalidServerResponse">Érvénytelen válasz a szervertől</system:String>
     <system:String x:Key="MainWindow_invertSelection">Kijelölés megfordítása</system:String>
     <system:String x:Key="MainWindow_isInstalled">Telepített?</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Utolsó szinkronizálás: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Az utolsó szinkronizálás sikertelen volt.</system:String>
     <system:String x:Key="MainWindow_lastSyncNever">Utolsó szinkronizáció: soha</system:String>
-    <system:String x:Key="MainWindow_latestVersion">Legújabb verzió</system:String>
     <system:String x:Key="MainWindow_leftOut">%0 kimaradt</system:String>
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">_Lecsukás tálcára</system:String>
@@ -171,7 +165,6 @@
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">Beatmap részleteinek megnyitása</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">Beatmap lista megnyitása</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Open Beatmap Listing page in Browser</system:String>
-    <system:String x:Key="MainWindow_openUpdater">Frissítő _Megnyitása</system:String>
     <system:String x:Key="MainWindow_overview">Áttekintés</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Telepített Beatmap csomagok keresése...</system:String>
@@ -206,7 +199,6 @@
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Ez... lenyűgöző, azt hiszem.</system:String>
     <system:String x:Key="MainWindow_timeFormat">HH:mm:ss</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Nem lehet ellenőrizni a frissítéseket.</system:String>
     <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Nem találom az osu!.exe-t.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Nem találom az osu! mappáját. Kérjük adja meg a következő ablakban.</system:String>
@@ -221,9 +213,6 @@
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">A be nem küldött Beatmap-okat nem lehet exportálni</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">A be nem küldött Beatmap csomagokat nem lehet ebbe a formátumba exportálni.</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapSets">Be nem küldött Beatmap csomagok</system:String>
-    <system:String x:Key="MainWindow_updateAvailable">Frissítés érhető el (%0)</system:String>
-    <system:String x:Key="MainWindow_updateCheckNotNecessary">A frissítések ellenőrzése nem szükséges</system:String>
-    <system:String x:Key="MainWindow_updatesDisabled">Frissítések kikapcsolva</system:String>
     <!-- | W -->
     <system:String x:Key="MainWindow_welcomeToOsuSync">Üdvözöllek az osu!Sync-ben.</system:String>
     <!-- | Y -->
@@ -235,16 +224,10 @@
     <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">Az összes észlelt Beatmap exprortálása.</system:String>
     <!-- || E-->
     <system:String x:Key="MainWindow_tt_noAccess">You may have to restart osu!Sync in elevated mode in order to let it write to your osu! directory</system:String>
-    <!-- || O -->
-    <system:String x:Key="MainWindow_tt_openUpdater">Frissítő megnyitása.</system:String>
 
     <!-- Window_About -->
     <!-- | C -->
-    <system:String x:Key="WindowAbout_copyright">Az osu!Sync egy nyílt forráskódú eszköz melyet naseweis520 készített.</system:String>
-    <!-- | E -->
-    <system:String x:Key="WindowAbout_email">e-Mail kapcsolat</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowAbout_feedback">Visszajelzés</system:String>
+    <system:String x:Key="WindowAbout_copyright">Az osu!Sync egy nyílt forráskódú eszköz melyet nw520 készített.</system:String>
     <!-- | G -->
     <system:String x:Key="WindowAbout_github">Forráskód GitHub-on</system:String>
     <!-- | L -->
@@ -259,10 +242,6 @@
     <!-- | V -->
     <system:String x:Key="WindowAbout_version">osu!Sync Verzió %0 | %1</system:String>
     <!-- |> Tooltip (tt) -->
-    <!-- |> E -->
-    <system:String x:Key="WindowAbout_tt_email">Kérdésed van? Írj egy levelet és válaszolunk. :)</system:String>
-    <!-- |> F -->
-    <system:String x:Key="WindowAbout_tt_feedback">Visszajelzés ablak megnyitása.</system:String>
     <!-- |> G -->
     <system:String x:Key="WindowAbout_tt_github">Segíts hogy az osu!Sync jobb legyen.</system:String>
     <!-- |> O -->
@@ -283,32 +262,21 @@
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Automatikusan importáljon X kész letöltés után (Szám)</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_beatmapPanelCall">Beatmap Panel call</system:String>
-    <system:String x:Key="WindowSettings_bug">Hiba</system:String>
     <!-- | C -->
-    <system:String x:Key="WindowSettings_category">Kategória</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Ellenőrizze a fájlkiterjesztéseket (Csak adminisztrátori jogokkal)</system:String>
-    <system:String x:Key="WindowSettings_checkForUpdates">Frissítés keresése...</system:String>
     <system:String x:Key="WindowSettings_configuration">Konfiguráció</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Parancsikon létrehozása az asztalon</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">Alapértelmezett</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">Konfiguráció törlése</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">Fájltípus hozzárendelés megszüntetése</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Frissítő csomagok törlése telepítésük után (Csak akkor működik ha a frissítés engedélyezve van)</system:String>
     <system:String x:Key="WindowSettings_disable">Letiltás</system:String>
-    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">A frissítések letöltésének helye...</system:String>
     <!-- | E -->
     <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">API hozzáférés engedélyezése a Beatmap panelen</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Enable notify icon in tray area...</system:String>
-    <system:String x:Key="WindowSettings_everyLaunch">Minden indítás.</system:String>
     <system:String x:Key="WindowSettings_executableFiles">Futtatható Fájlok</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowSettings_featureRequest">Funkció kérése</system:String>
-    <system:String x:Key="WindowSettings_feedback">Visszajelzés</system:String>
-    <system:String x:Key="WindowSettings_furtherInformation">További információk</system:String>
     <!-- | G -->
     <system:String x:Key="WindowSettings_general">Általános </system:String>
-    <system:String x:Key="WindowSettings_generalFeedback">Általános visszajelzés</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Importálás/Letöltés</system:String>
     <system:String x:Key="WindowSettings_importerAskOsu">Ask whether to start osu! after import process</system:String>
@@ -320,13 +288,8 @@
     <system:String x:Key="WindowSettings_languageUpdated">A nyelv megváltozott. Azonban néhány dolog még mindig a régi nyelven jelenik meg. Hogy ezt kijavítsa újra kell indítania az alkalmazást.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">osu!Sync indítása.</system:String>
     <!-- | M -->
-    <system:String x:Key="WindowSettings_maximumOnceADay">Maximum napi egyszer (ajánlott).</system:String>
-    <system:String x:Key="WindowSettings_maximumOnceAMonth">Maximum heti egyszer.</system:String>
-    <system:String x:Key="WindowSettings_maximumOnceAWeek">Maximum havi egyszer (Nem ajánlott).</system:String>
-    <system:String x:Key="WindowSettings_message">Üzenet</system:String>
     <system:String x:Key="WindowSettings_monitoring">Figyelés</system:String>
     <!-- | N -->
-    <system:String x:Key="WindowSettings_never">Soha ヽ(≧Д≦)ノ (Nem ajánlott).</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Nem, ez a könyvtár nem létezik... már.</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">Nem, nincs konfigurációs fájl...</system:String>
     <system:String x:Key="WindowSettings_notifications">Értesítések</system:String>
@@ -334,39 +297,27 @@
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">OK, kész. -- Szeretnéd újraindítani az osu!Sync-et?</system:String>
     <system:String x:Key="WindowSettings_openApiLog">API naplófájl megnyitása</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Adatmappa megnyitása</system:String>
-    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Frissítő megnyitása ha új frissítés érhető el</system:String>
-    <system:String x:Key="WindowSettings_other">Egyéb</system:String>
     <!-- | P -->
     <system:String x:Key="WindowSettings_pathToOsu">osu! mappája</system:String>
     <system:String x:Key="WindowSettings_pathToSongsFolder">A Beatmapok mappája</system:String>
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Kérjük nyissa meg az osu!.exe-t</system:String>
-    <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Kérjük válassza ki azt a mappát ahová a frissítéseket mentsem</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Válaszd ki a Beatmap-ok mappáját</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Kérjük próbája meg később vagy lépjen velünk kapcsolatba közvetlen: team@nw520.de .</system:String>
-    <!-- | Q -->
-    <system:String x:Key="WindowSettings_questionHelpRequest">Kérdés/Segítségkérés</system:String>
     <!-- | R -->
     <system:String x:Key="WindowSettings_requestElevationOnStartup">Ha szükséges akkor adminisztrátori jogok autómatikus kérése</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">osu!Sync visszaállítása (törli a konfigurációs fájlokat a fájltársításokat és a többit)</system:String>
     <system:String x:Key="WindowSettings_restartElevated">Újraindítás adminisztrátori jogokkal</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_serverSideAnswer">Szerver oldal válasza:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Mindig mutassa - Kikapcsolja a buborék értesítéseket</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Mindig mutassa - Bekapcsolja a buborék értesítéseket</system:String>
-    <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Mutassa az üzenetet ha a frissítés sikertelen</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Csak akkor mutassa ha az ablak nem látszik - Kikapcsolja a buborék értesítéseket</system:String>
-    <system:String x:Key="WindowSettings_submitting">Küldés...</system:String>
     <system:String x:Key="WindowSettings_sync">Szinkronizáció</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Szinkronizáció az alkalmazás indításakor</system:String>
     <!-- | T -->
     <system:String x:Key="WindowSettings_theresAlreadyAShortcut">Már van egy parancsikon az asztalon.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">Nem tudok parancsikont létrehozni!</system:String>
-    <system:String x:Key="WindowSettings_unableToSubmitFeedback">Nem tudom elküldeni a visszajelzést!</system:String>
-    <system:String x:Key="WindowSettings_updater">Frissítés</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">Fájlhozzárendelések frissítése/hozzárendelése</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Használja ezt az osu! Letöltési Tükröt...</system:String>
-    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Mindig autómatikusan telepítse a frissítések</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">Érvényes</system:String>
     <system:String x:Key="WindowSettings_validate">Érvényesítés</system:String>
@@ -374,12 +325,6 @@
     <system:String x:Key="WindowSettings_warnNotElevated">Néhány dolog ki van kapcsolva mert az alkalmazás nem adminisztrátori jogokkal fut.</system:String>
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">A Beatmap panel szélessége (Szám 5 és 95 között)</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowSettings_yourEmail">E-Mail címed</system:String>
-    <system:String x:Key="WindowSettings_yourEmailInvalid">Az E-Mail címed érvénytelennek tűnik.</system:String>
-    <system:String x:Key="WindowSettings_youHaveToSelectACategory">Ki kell választanod egy kategóriát.</system:String>
-    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Az üzeneted rövidnek tűnik. Próbáld meg kifejteni amennyire csak tudod.</system:String>
-    <system:String x:Key="WindowSettings_yourName">Neved/osu! Felhasználóneved</system:String>
-    <system:String x:Key="WindowSettings_yourNameIsTooShort">A neved/osu! Felhasználóneved túl rövid.</system:String>
     <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Rossz fájl választottál ki. -- Kérlek válaszd ki az "osz!.exe"-t.</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
@@ -421,5 +366,5 @@
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Üdvözöljük</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by nw520. It's not affiliated with osu! nor peppy.</system:String>
 </ResourceDictionary>

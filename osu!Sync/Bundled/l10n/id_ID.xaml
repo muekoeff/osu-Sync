@@ -10,7 +10,7 @@
     <system:String x:Key="Meta_langName">Indonesia</system:String>
     <!-- \/ Replace "English" with the language of your translation in English -->
     <system:String x:Key="Meta_langNameEn">Indonesian</system:String>
-    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
+    <!-- \/ Replace "nw520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">Diterjemahkan oleh: Kuuhaku722, -Troke-</system:String>
 
     <!-- Global -->
@@ -26,8 +26,8 @@
     <!-- | S -->
     <system:String x:Key="Global_buttons_save">_Simpan</system:String>
     <system:String x:Key="Global_buttons_skip">_Lewatkan</system:String>
-    <system:String x:Key="Global_buttons_skipAlways">Skip _always</system:String>
-    <system:String x:Key="Global_buttons_submit">Submit</system:String>
+    <system:String x:Key="Global_buttons_skipAlways">Skip sel_alu</system:String>
+    <system:String x:Key="Global_buttons_submit">Ajukan</system:String>
     <!-- | Y -->
     <system:String x:Key="Global_buttons_yes">_Ya</system:String>
     <system:String x:Key="Global_buttons_yesForAll">Ya, untuk semua</system:String>
@@ -40,9 +40,9 @@
     <!-- | S -->
     <system:String x:Key="GlobalVar_sorrySomethingWentWrong">Maaf, ada sesuatu yang tidak beres.</system:String>
     <!-- | U -->
-    <system:String x:Key="GlobalVar_unableToDecryptApi">Unable to decrypt API key. Normally this occures when you've copied your configuration file from one computer to another.</system:String>
+    <system:String x:Key="GlobalVar_unableToDecryptApi">Tidak dapat untuk mendeskripsi kunci API. Biasanya ini terjadi ketika anda menyalin file konfigurasi dari satu komputer ke komputer lain.</system:String>
     <system:String x:Key="GlobalVar_unableToEncryptApi">Tidak dapat mengenkripsi kunci API.</system:String>
-    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Unable to find translation package.</system:String>
+    <system:String x:Key="GlobalVar_unableToFindTranslationPackage">Tidak dapat menemukan paket terjemahan.</system:String>
 
     <!-- MainWindow -->
     <!-- | A -->
@@ -50,34 +50,32 @@
     <system:String x:Key="MainWindow_about">_Tentang</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">Semua format file yang di dukung</system:String>
     <system:String x:Key="MainWindow_andStillWorking">Dan masih bekerja...</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">Versi Terbaru telah tersedia. -- Sekarang: %0 | Terbaru: %1</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">Beatmap</system:String>
-    <system:String x:Key="MainWindow_beatmapsFound">%0 Beatmap ditemukan.</system:String>
-    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">Beatmap-ID hanya bisa digunakan sekali.</system:String>
-    <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 total beatmap set yang di uraikan.</system:String>
-    <system:String x:Key="MainWindow_beatmapSetsParsed">%0 beatmap set di uraikan.</system:String>
+    <system:String x:Key="MainWindow_beatmapsFound">%0 beatmap ditemukan.</system:String>
+    <system:String x:Key="MainWindow_beatmapsIdsCanBeUsedOnlyOnce">ID Beatmap hanya dapat digunakan sekali.</system:String>
+    <system:String x:Key="MainWindow_beatmapSetsInTotalParsed">%0 total set beatmap yang diuraikan.</system:String>
+    <system:String x:Key="MainWindow_beatmapSetsParsed">%0 set beatmap diuraikan.</system:String>
     <!-- | C -->
-    <system:String x:Key="MainWindow_cantConnectToServer">Tidak dapat menyambung ke server</system:String>
-    <system:String x:Key="MainWindow_cantDownload">Beatmap ini tidak bisa di unduh. Kemungkinan karena beatmap tersebut tidak ada atau tidak disediakan oleh penyedia lain.</system:String>
-    <system:String x:Key="MainWindow_checkingForUpdates">Memeriksa pembaruan...</system:String>
-    <system:String x:Key="MainWindow_conversionAborted">Pengubahan di batalkan</system:String>
+    <system:String x:Key="MainWindow_cantConnectToServer">Tidak dapat terhubung ke server</system:String>
+    <system:String x:Key="MainWindow_cantDownload">Beatmap ini tidak bisa diunduh. Kemungkinan karena beatmap tersebut tidak ada atau tidak disediakan oleh penyedia lain.</system:String>
+    <system:String x:Key="MainWindow_conversionAborted">Pengubahan dibatalkan</system:String>
     <system:String x:Key="MainWindow_conversionFailed">Pengubahan gagal</system:String>
     <system:String x:Key="MainWindow_convertFile">_Ubah file</system:String>
-    <system:String x:Key="MainWindow_convertSelectedFile">Ubah file yang di pilih</system:String>
+    <system:String x:Key="MainWindow_convertSelectedFile">Ubah file yang dipilih</system:String>
     <system:String x:Key="MainWindow_creator">Pembuat</system:String>
     <!-- | D -->
     <system:String x:Key="MainWindow_dateFormat">Bulan/hari/tahun</system:String>
     <system:String x:Key="MainWindow_details">Rincian</system:String>
     <system:String x:Key="MainWindow_downloadAndInstall">Unduh dan pasang</system:String>
-    <system:String x:Key="MainWindow_downloadBeatmaps">_Unduh Beatmap</system:String>
-    <system:String x:Key="MainWindow_downloadFailed">Download Gagal</system:String>
+    <system:String x:Key="MainWindow_downloadBeatmaps">_Unduh beatmap</system:String>
+    <system:String x:Key="MainWindow_downloadFailed">Download gagal</system:String>
     <system:String x:Key="MainWindow_downloadMirror">Download Mirror</system:String>
-    <system:String x:Key="MainWindow_downloading">Mendownload %0...</system:String>
-    <system:String x:Key="MainWindow_downloading1">Mendownload</system:String>
+    <system:String x:Key="MainWindow_downloading">Mengunduh %0...</system:String>
+    <system:String x:Key="MainWindow_downloading1">Mengunduh</system:String>
     <system:String x:Key="MainWindow_downloadingThumbnail">Mengunduh thumbnail %0...</system:String>
-    <system:String x:Key="MainWindow_downladThumbnail">Mengunduh Beatmap thumbnail</system:String>
-    <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Apakah Anda ingin mengecek Beatmap set mana yang terpengaruh?</system:String>
+    <system:String x:Key="MainWindow_downladThumbnail">Mengunduh thumbnail beatmap</system:String>
+    <system:String x:Key="MainWindow_doYouWantToCheckWhichBeatmapSetsAreAffected">Apakah Anda ingin memeriksa set beatmap yang terpengaruh?</system:String>
     <system:String x:Key="MainWindow_doYouWantToFixThat">Apakah Anda ingin memperbaikinya?</system:String>
     <system:String x:Key="MainWindow_doYouWantToStartOsuNow">Apakah Anda ingin menjalankan osu! sekarang?</system:String>
     <!-- | |> Beatmap Details Panel -->
@@ -130,21 +128,19 @@
     <system:String x:Key="MainWindow_folderCouldntBeParsed">Setidaknya satu folder tidak dapat diuraikan. Folder akan di ignore.</system:String>
     <system:String x:Key="MainWindow_folders">Folder</system:String>
     <!-- >| FileExt -->
-    <system:String x:Key="MainWindow_fileext_csv">CSV file/Character-Separated Values</system:String>
+    <system:String x:Key="MainWindow_fileext_csv">CSV file/Karakter-Nilai yang Dipisahkan</system:String>
     <system:String x:Key="MainWindow_fileext_html">file HTML</system:String>
-    <system:String x:Key="MainWindow_fileext_json">JSON file/JavaScript Object Notation</system:String>
+    <system:String x:Key="MainWindow_fileext_json">File JSON/JavaScript Object Notation</system:String>
     <system:String x:Key="MainWindow_fileext_osbl">Daftar Beatmap osu!Sync</system:String>
     <system:String x:Key="MainWindow_fileext_osblx">Daftar Beatmap osu!Sync terkompres</system:String>
     <system:String x:Key="MainWindow_fileext_txt">File teks</system:String>
-    <system:String x:Key="MainWindow_fileext_zip">Zipped OSBLX files</system:String>
+    <system:String x:Key="MainWindow_fileext_zip">Zip file OSBLX</system:String>
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">Membangun antarmuka...</system:String>
     <!-- | H -->
-    <system:String x:Key="MainWindow_help">_Bantuan</system:String>
     <system:String x:Key="MainWindow_hideInstalled">Sembunyikan Beatmap yang telah dipasang</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">ID sudah di tetapkan</system:String>
-    <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">Jika masalah ini berlanjut silahkan tinggalkan pesan melalui tab umpan balik dalam pengaturan.</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">Jika masalah ini berlanjut, Anda dapat mengunjungi osu! Forum: http://bit.ly/1Bbmn6E (dalam clipboard Anda).</system:String>
     <system:String x:Key="MainWindow_ignoredFolders">Folder di abaikan</system:String>
     <system:String x:Key="MainWindow_import">Impor</system:String>
@@ -153,14 +149,12 @@
     <system:String x:Key="MainWindow_installing">Memasang</system:String>
     <system:String x:Key="MainWindow_installingFiles">Menginstall file...</system:String>
     <system:String x:Key="MainWindow_insufficientPermissions">Izin tidak mencukupi</system:String>
-    <system:String x:Key="MainWindow_invalidServerResponse">Jawaban server tidak valid</system:String>
     <system:String x:Key="MainWindow_invertSelection">Balik Pilihan</system:String>
     <system:String x:Key="MainWindow_isInstalled">Terinstall?</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">Terakhir menyinkron: %0</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">Terakhir gagal menyinkron.</system:String>
     <system:String x:Key="MainWindow_lastSyncNever">Terakhir menyinkron: Tidak pernah</system:String>
-    <system:String x:Key="MainWindow_latestVersion">Versi terbaru</system:String>
     <system:String x:Key="MainWindow_leftOut">%0 tertinggal</system:String>
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">_Minimize ke tray</system:String>
@@ -171,14 +165,13 @@
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">Buka panel rincian Beatmap</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">Buka daftar Beatmap</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">Buka halaman daftar Beatmap di browser</system:String>
-    <system:String x:Key="MainWindow_openUpdater">Buka _Pembaruan</system:String>
     <system:String x:Key="MainWindow_overview">Pratinjau</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">Menguraikan beatmap set terinstall...</system:String>
     <system:String x:Key="MainWindow_pleaseRetry">Silakan coba lagi.</system:String>
     <system:String x:Key="MainWindow_pleaseSync">Silakan sinkron.</system:String>
     <system:String x:Key="MainWindow_pleaseWait">Harap menunggu...</system:String>
-    <system:String x:Key="MainWindow_pressF5">Press F5 in osu! or go back to the main menu to reload your beatmaps.</system:String>
+    <system:String x:Key="MainWindow_pressF5">Tekan F5 dalam osu! atau kembali ke main menu untuk reload beatmaps anda.</system:String>
     <system:String x:Key="MainWindow_program">_Program</system:String>
     <!-- | R -->
     <system:String x:Key="MainWindow_requestElevation">osu!Sync tidak dapat mengakses folder osu! songs. Silakan restart osu!Sync dalam mode Elevated untuk meng impor. -- Apakah kamu ingin melakukannya?</system:String>
@@ -206,8 +199,7 @@
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">Itu mengesankan, menurut saya.</system:String>
     <system:String x:Key="MainWindow_timeFormat">Jam:Menit:Detik</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">Tidak dapat memeriksa updates.</system:String>
-    <system:String x:Key="MainWindow_unableToFetchMirrorData">The application is unable to fetch required data from the selected mirror. A possible cause is that it's currently down. In order to fix this issue, try to select another mirror in the settings window. If you want to skip this file press 'Skip', to automatically skip a file if this error occures again press 'Skip always', to abort the whole download press 'Cancel'.</system:String>
+    <system:String x:Key="MainWindow_unableToFetchMirrorData">Aplikasi ini dapat mengambil data yang diperlukan dari mirror yang dipilih. Penyebab yang mungkin adalah bahwa server mirror sedang down. Dalam rangka untuk memperbaiki masalah ini, cobalah untuk memilih mirror lain di pengaturan. Jika anda ingin melewati file ini tekan tombol 'Skip', untuk melewati file secara otomatis bila muncul masalah seperti ini lagi tekan tombol 'Skip Always', untuk membatalkan semua proses download tekan tombol 'Cancel'.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">Tidak bisa menemukan osu!.exe.</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">Tidak dapat menemukan folder osu!. Tolong tentukan lokasi file tersebut.</system:String>
     <system:String x:Key="MainWindow_unableToGetId">Tidak bisa mendapatkan ID</system:String>
@@ -221,9 +213,6 @@
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">Beatmap set yang belum di ajukan/unsubmitted tidak bisa di ekspor</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">Beatmap set yang belum di ajukan/unsubmitted tidak bisa di ekspor ke format ini.</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapSets">Beatmap set yang belum di ajukan/unsubmitted</system:String>
-    <system:String x:Key="MainWindow_updateAvailable">Pembaruan tersedia (%0)</system:String>
-    <system:String x:Key="MainWindow_updateCheckNotNecessary">Pengecekan pembaruan tidak di perlukan</system:String>
-    <system:String x:Key="MainWindow_updatesDisabled">Pembaruan di nonaktifkan</system:String>
     <!-- | W -->
     <system:String x:Key="MainWindow_welcomeToOsuSync">Selamat datang di osu!Sync.</system:String>
     <!-- | Y -->
@@ -235,16 +224,10 @@
     <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">Ekspor semua beatmap yang terdeteksi.</system:String>
     <!-- || E-->
     <system:String x:Key="MainWindow_tt_noAccess">Kamu harus merestart osu!Sync dalam mode Elevated untuk memberikan akses ke direktori osu! kamu</system:String>
-    <!-- || O -->
-    <system:String x:Key="MainWindow_tt_openUpdater">Buka Pembaruan.</system:String>
 
     <!-- Window_About -->
     <!-- | C -->
-    <system:String x:Key="WindowAbout_copyright">osu!Sync adalah sebuah open-source tool. di buat oleh naseweis520.</system:String>
-    <!-- | E -->
-    <system:String x:Key="WindowAbout_email">Hubungi eMail</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowAbout_feedback">Umpan balik</system:String>
+    <system:String x:Key="WindowAbout_copyright">osu!Sync adalah sebuah open-source tool. di buat oleh nw520.</system:String>
     <!-- | G -->
     <system:String x:Key="WindowAbout_github">Source Code di GitHub</system:String>
     <!-- | L -->
@@ -259,10 +242,6 @@
     <!-- | V -->
     <system:String x:Key="WindowAbout_version">Versi osu!Sync %0 | %1</system:String>
     <!-- |> Tooltip (tt) -->
-    <!-- |> E -->
-    <system:String x:Key="WindowAbout_tt_email">Ada Pertanyaan? Kirim pesan ke kami dan kami akan membalasnya. :)</system:String>
-    <!-- |> F -->
-    <system:String x:Key="WindowAbout_tt_feedback">Buka Jendela Umpan balik.</system:String>
     <!-- |> G -->
     <system:String x:Key="WindowAbout_tt_github">Bantu kami membuat osu!Sync lebih baik.</system:String>
     <!-- |> O -->
@@ -275,7 +254,7 @@
     <!-- | A -->
     <system:String x:Key="WindowSettings_activation">Aktivasi</system:String>
     <system:String x:Key="WindowSettings_api">API</system:String>
-    <system:String x:Key="WindowSettings_apiIntro">osu!Sync is able to load additional details of beatmaps using the osu!api 1.0. In order to get access, an API key is required.</system:String>
+    <system:String x:Key="WindowSettings_apiIntro">osu!Sync dapat memuat rincian tambahan tentang beatmap dengan menggunakan osu!api 1.0. Untuk mendapatkan aksesnya, diperlukan API key.</system:String>
     <system:String x:Key="WindowSettings_apiKey">Kunci API</system:String>
     <system:String x:Key="WindowSettings_apiRequest">Jika kamu tidak mendapatkan API Key, kamu dapat membuatnya di osu! website</system:String>
     <system:String x:Key="WindowSettings_areYouSureYouWantToDeleteConfig">Apa Anda yakin ingin menghapus file konfigurasi (tidak bisa di kembalikan)?</system:String>
@@ -283,32 +262,21 @@
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">Autoimport downloaded beatmaps sesudah x beatmaps (Numeric)</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_beatmapPanelCall">Membuka panel beatmap</system:String>
-    <system:String x:Key="WindowSettings_bug">Bug</system:String>
     <!-- | C -->
-    <system:String x:Key="WindowSettings_category">Kategori</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">Periksa asosiasi file setiap sync (Hanya jika elevated)</system:String>
-    <system:String x:Key="WindowSettings_checkForUpdates">Periksa pembaruan...</system:String>
     <system:String x:Key="WindowSettings_configuration">Konfigurasi</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">Buat shortcut di desktop</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">Standar</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">Hapus konfigurasi</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">Hapus/Unregister file asosiasi</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">Delete update package sesudah instalasi (Hanya bisa jika update patcher dihidupkan)</system:String>
     <system:String x:Key="WindowSettings_disable">Matikan</system:String>
-    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">Download paket pembaruan ke...</system:String>
     <!-- | E -->
     <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">Hidupkan API akses di Beatmap Panel</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">Aktifkan Notifyicon di system tray...</system:String>
-    <system:String x:Key="WindowSettings_everyLaunch">Setiap peluncuran program.</system:String>
     <system:String x:Key="WindowSettings_executableFiles">File yang bisa di jalankan</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowSettings_featureRequest">Permintaan fitur</system:String>
-    <system:String x:Key="WindowSettings_feedback">Umpan balik</system:String>
-    <system:String x:Key="WindowSettings_furtherInformation">Informasi lebih lanjut</system:String>
     <!-- | G -->
     <system:String x:Key="WindowSettings_general">Umum</system:String>
-    <system:String x:Key="WindowSettings_generalFeedback">Umpan balik umum</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">Impor/Download</system:String>
     <system:String x:Key="WindowSettings_importerAskOsu">Tanyakan untuk membuka osu bila sesudah impor</system:String>
@@ -320,13 +288,8 @@
     <system:String x:Key="WindowSettings_languageUpdated">Bahasa telah diubah. Namun beberapa text akan tetap dalam bahasa default. silakan restart untuk memperbaiki.</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">Jalankan osu!Sync.</system:String>
     <!-- | M -->
-    <system:String x:Key="WindowSettings_maximumOnceADay">Maximum sekali sehari (Di sarankan).</system:String>
-    <system:String x:Key="WindowSettings_maximumOnceAMonth">Maximum sekali seminggu.</system:String>
-    <system:String x:Key="WindowSettings_maximumOnceAWeek">Maximum sekali sebulan (Tidak di sarankan).</system:String>
-    <system:String x:Key="WindowSettings_message">Pesan</system:String>
     <system:String x:Key="WindowSettings_monitoring">Pengawasan</system:String>
     <!-- | N -->
-    <system:String x:Key="WindowSettings_never">Tidak pernah ヽ(≧Д≦)ノ (Sangat tidak di sarankan).</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">Tidak, direktori ini belum di buat.</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">Tidak, di situ tidak ada file konfigurasi...</system:String>
     <system:String x:Key="WindowSettings_notifications">Pemberitahuan</system:String>
@@ -334,52 +297,34 @@
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">Ok, Itu selesai. -- Apa kamu mau restart osu!Sync sekarang?</system:String>
     <system:String x:Key="WindowSettings_openApiLog">Buka API log file</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">Buka data folder</system:String>
-    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">Buka Pembaruan ketika versi baru tersedia</system:String>
-    <system:String x:Key="WindowSettings_other">Lainnya</system:String>
     <!-- | P -->
     <system:String x:Key="WindowSettings_pathToOsu">Jalur ke osu!</system:String>
     <system:String x:Key="WindowSettings_pathToSongsFolder">Jalur ke folder songs</system:String>
     <system:String x:Key="WindowSettings_pleaseOpenOsu">Mohon buka osu!.exe</system:String>
-    <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">Mohon pilih direktori untuk menyimpan pembaruan</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">Mohon pilih folder songs Anda</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">Tolong coba lagi atau silakan kontak via: team@nw520.de .</system:String>
-    <!-- | Q -->
-    <system:String x:Key="WindowSettings_questionHelpRequest">Permintaan Pertanyaan/Bantuan</system:String>
     <!-- | R -->
     <system:String x:Key="WindowSettings_requestElevationOnStartup">Jika diperlukan, Silakan request elevated mode pada startup</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">Reset osu!Sync (hapus konfigurasi, file asosiasi, dll.)</system:String>
-    <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync elevated</system:String>
+    <system:String x:Key="WindowSettings_restartElevated">Restart osu!Sync tinggi</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_serverSideAnswer">Jawaban Pihak-Server:</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">Tampilkan selalu - Matikan NotifyBalloons</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">Tampilkan selalu - Hidupkan NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">Tampilkan pesan saat pengecekan pembaruan gagal</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">Tampilkan bila sedang sembunyi - Matikan NotifyBalloons</system:String>
-    <system:String x:Key="WindowSettings_submitting">Mengajukan...</system:String>
     <system:String x:Key="WindowSettings_sync">Sinkron</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">Sync pada aplikasi startup</system:String>
     <!-- | T -->
     <system:String x:Key="WindowSettings_theresAlreadyAShortcut">Sudah ada shortcut di desktop kamu.</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">Tidak bisa membuat shortcut!</system:String>
-    <system:String x:Key="WindowSettings_unableToSubmitFeedback">Tidak bisa mengajukan umpan balik!</system:String>
-    <system:String x:Key="WindowSettings_updater">Pembaruan</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">Perbarui/Reregister file asosiasi</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">Gunakan osu! Download Mirror ini...</system:String>
-    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">Gunakan Pembaruan patcher untuk menginstall update otomatis</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">Berlaku</system:String>
     <system:String x:Key="WindowSettings_validate">Validasi</system:String>
     <!-- | W -->
     <system:String x:Key="WindowSettings_warnNotElevated">Beberapa pilihan mungkin dimatikan karena sekarang aplikasi tidak berjalan pada prioritas tinggi.</system:String>
-    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Width of beatmap detail panel (Numeric, between 5 and 95)</system:String>
+    <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">Lebar panel beatmap (Numerik, antara 5 hingga 95)</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowSettings_yourEmail">eMail Anda</system:String>
-    <system:String x:Key="WindowSettings_yourEmailInvalid">eMail tidak valid.</system:String>
-    <system:String x:Key="WindowSettings_youHaveToSelectACategory">Pilih kategori.</system:String>
-    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">Pesan Anda tampaknya cukup singkat. Mohon jelaskan sedetail mungkin.</system:String>
-    <system:String x:Key="WindowSettings_yourName">Nama Anda/osu!Username</system:String>
-    <system:String x:Key="WindowSettings_yourNameIsTooShort">Nama Anda/osu!Username terlalu singkat.</system:String>
     <system:String x:Key="WindowSettings_youSelectedTheWrongFile">Anda salah memilih file. -- Pastikan Anda memilih "osu!.exe".</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
@@ -421,5 +366,5 @@
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">Selamat datang</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">Please keep in mind that this is an unofficial community-made tool, maintained by naseweis520. It's not affiliated with osu! nor peppy.</system:String>
+    <system:String x:Key="WindowWelcome_warning">Harap diingat bahwa ini adalah alat non-resmi buatan komunitas. Dikelola oleh nw520. Ini tidak berafiliasi dengan osu! maupun peppy.</system:String>
 </ResourceDictionary>

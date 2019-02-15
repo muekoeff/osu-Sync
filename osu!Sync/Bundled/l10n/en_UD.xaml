@@ -10,7 +10,7 @@
     <system:String x:Key="Meta_langName">(uʍop ǝpᴉsd∩) ɥsᴉlƃuƎ</system:String>
     <!-- \/ Replace "English" with the language of your translation in English -->
     <system:String x:Key="Meta_langNameEn">English (Upside down)</system:String>
-    <!-- \/ Replace "naseweis520" with the username(s) of the translator(s) seperated by commas and translate -->
+    <!-- \/ Replace "nw520" with the username(s) of the translator(s) seperated by commas and translate -->
     <system:String x:Key="Meta_translators">naseweis520 :ʎq uoıʇɐןsuɐɹʇ</system:String>
 
     <!-- Global -->
@@ -50,7 +50,6 @@
     <system:String x:Key="MainWindow_about">ʇnoqɐ (_A)</system:String>
     <system:String x:Key="MainWindow_allSupportedFileFormats">sʇɐɯɹoɟ ǝןıɟ pǝʇɹoddns ןןɐ</system:String>
     <system:String x:Key="MainWindow_andStillWorking">˙˙˙ƃuıʞɹoʍ ןןıʇs puɐ</system:String>
-    <system:String x:Key="MainWindow_aNewVersionIsAvailable">%1 :ʇsǝʇɐl | %0 :ʇuǝɹɹnɔ -- ˙ǝlqɐlıɐʌɐ sı uoısɹǝʌ ʍǝu ɐ</system:String>
     <!-- | B -->
     <system:String x:Key="MainWindow_beatmaps">sdɐɯʇɐǝq</system:String>
     <system:String x:Key="MainWindow_beatmapsFound">˙punoɟ sdɐɯʇɐǝq %0</system:String>
@@ -60,7 +59,6 @@
     <!-- | C -->
     <system:String x:Key="MainWindow_cantConnectToServer">ɹǝʌɹǝs oʇ ʇɔǝuuoɔ ʇ,uɐɔ</system:String>
     <system:String x:Key="MainWindow_cantDownload">˙ɹoɹɹıɯ sıɥʇ ʎq pǝpıʌoɹd ʇ,usı ʇı ʇɐɥʇ ɹo ʇsıxǝ ʇou sǝop dɐɯʇɐǝq ǝɥʇ ʇɐɥʇ ǝq ʎɐɯ suosɐǝɹ ǝןqıssod ˙pǝpɐoןuʍop ǝq ʇ,upןnoɔ sdɐɯʇɐǝq ǝsǝɥʇ</system:String>
-    <system:String x:Key="MainWindow_checkingForUpdates">˙˙˙sǝʇɐpdn ɹoɟ ƃuıʞɔǝɥɔ</system:String>
     <system:String x:Key="MainWindow_conversionAborted">pǝʇɹoqɐ uoısɹǝʌuoɔ</system:String>
     <system:String x:Key="MainWindow_conversionFailed">pǝןıɐɟ uoısɹǝʌuoɔ</system:String>
     <system:String x:Key="MainWindow_convertFile">ǝןıɟ ʇɹǝʌuoɔ (_C)</system:String>
@@ -140,11 +138,9 @@
     <!-- | G -->
     <system:String x:Key="MainWindow_generatingInterface">˙˙˙ǝɔɐɟɹǝʇuı ƃuıʇɐɹǝuǝƃ</system:String>
     <!-- | H -->
-    <system:String x:Key="MainWindow_help">dןǝɥ (_H)</system:String>
     <system:String x:Key="MainWindow_hideInstalled">sdɐɯʇɐǝq pǝןןɐʇsuı ʎpɐǝɹןɐ ǝpıɥ</system:String>
     <!-- | I -->
     <system:String x:Key="MainWindow_idAlreadyAssigned">pǝuƃıssɐ ʎpɐǝɹןɐ pı</system:String>
-    <system:String x:Key="MainWindow_ifThisProblemPersistsPleaseLaveAFeedbackMessage">˙sƃuıʇʇǝs ǝɥʇ uı qɐʇ ʞɔɐqpǝǝɟ ǝɥʇ ɐıʌ ǝƃɐssǝɯ ɐ sn ǝʌɐǝן ǝsɐǝןd sʇsısɹǝd ɯǝןqoɹd sıɥʇ ɟı</system:String>
     <system:String x:Key="MainWindow_ifThisProblemPersistsVisitTheOsuForum">˙(pɹɐoqdıןɔ ɹnoʎ uı)  http://bit.ly/1Bbmn6E :ɯnɹoɟ ¡nso ǝɥʇ ʇısıʌ uɐɔ noʎ sʇsısɹǝd ɯǝןqoɹd sıɥʇ ɟı</system:String>
     <system:String x:Key="MainWindow_ignoredFolders">sɹǝpןoɟ pǝɹouƃı</system:String>
     <system:String x:Key="MainWindow_import">ʇɹodɯı</system:String>
@@ -153,14 +149,12 @@
     <system:String x:Key="MainWindow_installing">ƃuıןןɐʇsuı</system:String>
     <system:String x:Key="MainWindow_installingFiles">˙˙˙sǝןıɟ ƃuıןןɐʇsuı</system:String>
     <system:String x:Key="MainWindow_insufficientPermissions">suoıssıɯɹǝd ʇuǝıɔıɟɟnsuı</system:String>
-    <system:String x:Key="MainWindow_invalidServerResponse">ǝsuodsǝɹ ɹǝʌɹǝs pıןɐʌuı</system:String>
     <system:String x:Key="MainWindow_invertSelection">uoıʇɔǝןǝs ʇɹǝʌuı</system:String>
     <system:String x:Key="MainWindow_isInstalled">¿pǝןןɐʇsuı</system:String>
     <!-- | L -->
     <system:String x:Key="MainWindow_lastSync">%0 :ɔuʎs ʇsɐן</system:String>
     <system:String x:Key="MainWindow_lastSyncFailed">˙pǝןıɐɟ ɔuʎs ʇsɐן</system:String>
     <system:String x:Key="MainWindow_lastSyncNever">ɹǝʌǝu :ɔuʎs ʇsɐן</system:String>
-    <system:String x:Key="MainWindow_latestVersion">uoısɹǝʌ ʇsǝʇɐן</system:String>
     <system:String x:Key="MainWindow_leftOut">ʇno ʇɟǝl %0</system:String>
     <!-- | M -->
     <system:String x:Key="MainWindow_minimizeToTray">ʎɐɹʇ oʇ ǝzıɯıuıɯ (M)</system:String>
@@ -171,7 +165,6 @@
     <system:String x:Key="MainWindow_openBeatmapDetailPanel">ןǝuɐd ןıɐʇǝp dɐɯʇɐǝq uǝdo</system:String>
     <system:String x:Key="MainWindow_openBeatmapList">ʇsıן dɐɯʇɐǝq uǝdo</system:String>
     <system:String x:Key="MainWindow_openBeatmapListingPageInBrowser">ɹǝsʍoɹq uı ǝƃɐd ƃuıʇsıן dɐɯʇɐǝq uǝdo</system:String>
-    <system:String x:Key="MainWindow_openUpdater">ɹǝʇɐpdn uǝdo (_U)</system:String>
     <system:String x:Key="MainWindow_overview">ʍǝıʌɹǝʌo</system:String>
     <!-- | P -->
     <system:String x:Key="MainWindow_parsingInstalledBeatmapSets">˙˙˙sʇǝs dɐɯʇɐǝq pǝןןɐʇsuı ƃuısɹɐd</system:String>
@@ -206,7 +199,6 @@
     <system:String x:Key="MainWindow_thatsImpressiveIGuess">˙ssǝnƃ ı 'ǝʌıssǝɹdɯı ˙˙˙s,ʇɐɥʇ</system:String>
     <system:String x:Key="MainWindow_timeFormat">ss:mm:HH</system:String>
     <!-- | U -->
-    <system:String x:Key="MainWindow_unableToCheckForUpdates">˙sǝʇɐpdn ɹoɟ ʞɔǝɥɔ oʇ ǝןqɐun.</system:String>
     <system:String x:Key="MainWindow_unableToFetchMirrorData">˙,ןǝɔuɐɔ, ssǝɹd pɐoןuʍop ǝןoɥʍ ǝɥʇ ʇɹoqɐ oʇ ',sʎɐʍןɐ dıʞs, ssǝɹd uıɐƃɐ sǝɹnɔɔo ɹoɹɹǝ sıɥʇ ɟı ǝןıɟ ɐ dıʞs ʎןןɐɔıʇɐɯoʇnɐ oʇ ',dıʞs, ssǝɹd ǝןıɟ sıɥʇ dıʞs oʇ ʇuɐʍ noʎ ɟı ˙ʍopuıʍ sƃuıʇʇǝs ǝɥʇ uı ɹoɹɹıɯ ɹǝɥʇouɐ ʇɔǝןǝs oʇ ʎɹʇ 'ǝnssı sıɥʇ xıɟ oʇ ɹǝpɹo uı ˙uʍop ʎןʇuǝɹɹnɔ s,ʇı ʇɐɥʇ sı ǝsnɐɔ ǝןqıssod ɐ ˙ɹoɹɹıɯ pǝʇɔǝןǝs ǝɥʇ ɯoɹɟ ɐʇɐp pǝɹınbǝɹ ɥɔʇǝɟ oʇ ǝןqɐun sı uoıʇɐɔıןddɐ ǝɥʇ</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuExe">˙ǝxǝ˙¡nso puıɟ oʇ ǝןqɐun</system:String>
     <system:String x:Key="MainWindow_unableToFindOsuFolderPleaseSpecify">˙ʍopuıʍ ƃuıʍoןןoɟ ǝɥʇ uı ¡nso oʇ ɥʇɐd ǝɥʇ ʎɟıɔǝds ǝsɐǝןd ˙ɹǝpןoɟ ¡nso puıɟ oʇ ǝןqɐun</system:String>
@@ -221,9 +213,6 @@
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExported">pǝʇɹodxǝ ǝq ʇ,uɐɔ sʇǝs dɐɯʇɐǝq pǝʇʇıɯqnsun</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapCantBeExportedToThisFormat">˙ʇɐɯɹoɟ sıɥʇ oʇ pǝʇɹodxǝ ǝq ʇ,uɐɔ sʇǝs dɐɯʇɐǝq pǝʇʇıɯqnsun</system:String>
     <system:String x:Key="MainWindow_unsubmittedBeatmapSets">sʇǝs dɐɯʇɐǝq pǝʇʇıɯqnsun</system:String>
-    <system:String x:Key="MainWindow_updateAvailable">(%0) ǝןqɐןıɐʌɐ ǝʇɐpdn</system:String>
-    <system:String x:Key="MainWindow_updateCheckNotNecessary">ʎɹɐssǝɔǝu ʇou ʞɔǝɥɔ ǝʇɐpdn</system:String>
-    <system:String x:Key="MainWindow_updatesDisabled">pǝןqɐsıp sǝʇɐpdn</system:String>
     <!-- | W -->
     <system:String x:Key="MainWindow_welcomeToOsuSync">˙ɔuʎs¡nso oʇ ǝɯoɔןǝʍ</system:String>
     <!-- | Y -->
@@ -235,16 +224,10 @@
     <system:String x:Key="MainWindow_tt_exportAllDetectedBeatmaps">˙sdɐɯʇɐǝq pǝʇɔǝʇǝp ןןɐ ʇɹodxǝ</system:String>
     <!-- || E-->
     <system:String x:Key="MainWindow_tt_noAccess">ʎɹoʇɔǝɹıp ¡nso ɹnoʎ oʇ ǝʇıɹʍ ʇı ʇǝן oʇ ɹǝpɹo uı ǝpoɯ pǝʇɐʌǝןǝ uı ɔuʎs¡nso ʇɹɐʇsǝɹ oʇ ǝʌɐɥ ʎɐɯ noʎ</system:String>
-    <!-- || O -->
-    <system:String x:Key="MainWindow_tt_openUpdater">˙ɹǝʇɐpdn uǝdo</system:String>
 
     <!-- Window_About -->
     <!-- | C -->
-    <system:String x:Key="WindowAbout_copyright">˙naseweis520 ʎq pǝʇɐǝɹɔ ןooʇ ǝɔɹnos-uǝdo uɐ sı ɔuʎs¡nso</system:String>
-    <!-- | E -->
-    <system:String x:Key="WindowAbout_email">ʇɔɐʇuoɔ ןıɐɯǝ</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowAbout_feedback">ʞɔɐqpǝǝɟ</system:String>
+    <system:String x:Key="WindowAbout_copyright">˙nw520 ʎq pǝʇɐǝɹɔ ןooʇ ǝɔɹnos-uǝdo uɐ sı ɔuʎs¡nso</system:String>
     <!-- | G -->
     <system:String x:Key="WindowAbout_github">qnɥʇıƃ uo ǝpoɔ ǝɔɹnos</system:String>
     <!-- | L -->
@@ -259,10 +242,6 @@
     <!-- | V -->
     <system:String x:Key="WindowAbout_version">%1 | %0 uoısɹǝʌ ɔuʎs¡nso</system:String>
     <!-- |> Tooltip (tt) -->
-    <!-- |> E -->
-    <system:String x:Key="WindowAbout_tt_email">(: ˙ɹǝʍsuɐ ןן,ǝʍ puɐ ןıɐɯ ɐ sn ǝʇıɹʍ ʇsnɾ ¿suoıʇsǝnb</system:String>
-    <!-- |> F -->
-    <system:String x:Key="WindowAbout_tt_feedback">˙ʍopuıʍ ʞɔɐqpǝǝɟ uǝdo</system:String>
     <!-- |> G -->
     <system:String x:Key="WindowAbout_tt_github">˙ɹǝʇʇǝq ɔuʎs¡nso ƃuıʞɐɯ sn dןǝɥ</system:String>
     <!-- |> O -->
@@ -283,32 +262,21 @@
     <system:String x:Key="WindowSettings_autoimportDownloadedBeatmapsAfterXBeatmaps">(ɔıɹǝɯnu) sdɐɯʇɐǝq x ɹǝʇɟɐ sdɐɯʇɐǝq pǝpɐoןuʍop ʇɹodɯıoʇnɐ</system:String>
     <!-- | B -->
     <system:String x:Key="WindowSettings_beatmapPanelCall">ןןɐɔ ןǝuɐd dɐɯʇɐǝq</system:String>
-    <system:String x:Key="WindowSettings_bug">ƃnq</system:String>
     <!-- | C -->
-    <system:String x:Key="WindowSettings_category">ʎɹoƃǝʇɐɔ</system:String>
     <system:String x:Key="WindowSettings_checkFileAssociationsEverySync">(pǝʇɐʌǝןǝ ɟı ʎןuo) ɔuʎs ʎɹǝʌǝ suoıʇɐıɔossɐ ǝןıɟ ʞɔǝɥɔ</system:String>
-    <system:String x:Key="WindowSettings_checkForUpdates">˙˙˙sǝʇɐpdn ɹoɟ ʞɔǝɥɔ</system:String>
     <system:String x:Key="WindowSettings_configuration">uoıʇɐɹnƃıɟuoɔ</system:String>
     <system:String x:Key="WindowSettings_createShortcutOnDesktop">doʇʞsǝp uo ʇnɔʇɹoɥs ǝʇɐǝɹɔ</system:String>
     <!-- | D -->
     <system:String x:Key="WindowSettings_default">ʇןnɐɟǝp</system:String>
     <system:String x:Key="WindowSettings_deleteConfiguration">uoıʇɐɹnƃıɟuoɔ ǝʇǝןǝp</system:String>
     <system:String x:Key="WindowSettings_deleteFileAssociation">suoıʇɐıɔossɐ ǝןıɟ ɹǝʇsıƃǝɹun/ǝʇǝןǝp</system:String>
-    <system:String x:Key="WindowSettings_deleteUpdatePackageAfterInstallation">(pǝןqɐuǝ ɹǝɥɔʇɐd ǝʇɐpdn ɟı sʇɔǝɟɟɐ ʎןuo) uoıʇɐןןɐʇsuı ɹǝʇɟɐ ǝƃɐʞɔɐd ǝʇɐpdn ǝʇǝןǝp</system:String>
     <system:String x:Key="WindowSettings_disable">ǝןqɐsıp</system:String>
-    <system:String x:Key="WindowSettings_downloadUpdatePackageTo">˙˙˙oʇ ǝƃɐʞɔɐd ǝʇɐpdn pɐoןuʍop</system:String>
     <!-- | E -->
     <system:String x:Key="WindowSettings_EnableApiInBeatmapPanel">ןǝuɐd dɐɯʇɐǝq uı ssǝɔɔɐ ıdɐ ǝןqɐuǝ</system:String>
     <system:String x:Key="WindowSettings_enableNotifyIconInTrayArea">˙˙˙ɐǝɹɐ ʎɐɹʇ uı uoɔı ʎɟıʇou ǝןqɐuǝ</system:String>
-    <system:String x:Key="WindowSettings_everyLaunch">˙ɥɔunɐן ʎɹǝʌǝ</system:String>
     <system:String x:Key="WindowSettings_executableFiles">sǝןıɟ ǝןqɐʇnɔǝxǝ</system:String>
-    <!-- | F -->
-    <system:String x:Key="WindowSettings_featureRequest">ʇsǝnbǝɹ ǝɹnʇɐǝɟ</system:String>
-    <system:String x:Key="WindowSettings_feedback">ʞɔɐqpǝǝɟ</system:String>
-    <system:String x:Key="WindowSettings_furtherInformation">uoıʇɐɯɹoɟuı ɹǝɥʇɹnɟ</system:String>
     <!-- | G -->
     <system:String x:Key="WindowSettings_general">ןɐɹǝuǝƃ</system:String>
-    <system:String x:Key="WindowSettings_generalFeedback">ʞɔɐqpǝǝɟ ןɐɹǝuǝƃ</system:String>
     <!-- | I -->
     <system:String x:Key="WindowSettings_importDownload">pɐoןuʍop/ʇɹodɯı</system:String>
     <system:String x:Key="WindowSettings_importerAskOsu">ssǝɔoɹd ʇɹodɯı ɹǝʇɟɐ ¡nso ʇɹɐʇs oʇ ɹǝɥʇǝɥʍ ʞsɐ</system:String>
@@ -320,13 +288,8 @@
     <system:String x:Key="WindowSettings_languageUpdated">˙pǝɹınbǝɹ sı ʇɹɐʇsǝɹ ɐ ʇɐɥʇ ʇɔǝɹɹoɔ oʇ ɹǝpɹo uı ˙ǝƃɐnƃuɐן pǝʇɔǝןǝs snoıʌǝɹd ǝɥʇ uı uıɐɯǝɹ ןןıʍ sʇuǝɯǝןǝ ǝɯos 'ɹǝʌǝʍoɥ ˙pǝƃuɐɥɔ uǝǝq sɐɥ ǝƃɐnƃuɐן ǝɥʇ</system:String>
     <system:String x:Key="WindowSettings_launchOsuSync">˙ɔuʎs¡nso ɥɔunɐן</system:String>
     <!-- | M -->
-    <system:String x:Key="WindowSettings_maximumOnceADay">˙(pǝpuǝɯɯoɔǝɹ) ʎɐp ɐ ǝɔuo ɯnɯıxɐɯ</system:String>
-    <system:String x:Key="WindowSettings_maximumOnceAMonth">˙ʞǝǝʍ ɐ ǝɔuo ɯnɯıxɐɯ</system:String>
-    <system:String x:Key="WindowSettings_maximumOnceAWeek">˙(pǝpuǝɯɯoɔǝɹ ʇou) ɥʇuoɯ ɐ ǝɔuo ɯnɯıxɐɯ</system:String>
-    <system:String x:Key="WindowSettings_message">ǝƃɐssǝɯ</system:String>
     <system:String x:Key="WindowSettings_monitoring">ƃuıɹoʇıuoɯ</system:String>
     <!-- | N -->
-    <system:String x:Key="WindowSettings_never">˙(pǝpuǝɯɯoɔǝɹ ʇou) ヽ(≧Д≦)ノ ɹɐoʌǝu</system:String>
     <system:String x:Key="WindowSettings_nopeDirectoryDoesNotExit">˙ʇǝʎ ˙˙˙ʇsıxǝ ʇ,usǝop ʎɹoʇɔǝɹıp sıɥʇ 'ǝdou</system:String>
     <system:String x:Key="WindowSettings_nopeNoConfig">˙˙˙ǝןıɟ uoıʇɐɹnƃıɟuoɔ ou s,ǝɹǝɥʇ 'ǝdou</system:String>
     <system:String x:Key="WindowSettings_notifications">suoıʇɐɔıɟıʇou</system:String>
@@ -334,39 +297,27 @@
     <system:String x:Key="WindowSettings_okDoneDoYouWantToRestart">¿ʍou ɔuʎs¡nso ʇɹɐʇsǝɹ oʇ ʇuɐʍ noʎ op -- ˙ǝuop s,ʇɐɥʇ 'ʞo</system:String>
     <system:String x:Key="WindowSettings_openApiLog">ǝןıɟ ƃoן ıdɐ uǝdo</system:String>
     <system:String x:Key="WindowSettings_openDataFolder">ɹǝpןoɟ ɐʇɐp uǝdo</system:String>
-    <system:String x:Key="WindowSettings_openUpdateWhenNewVersionAvailable">ǝןqɐןıɐʌɐ sı uoısɹǝʌ ʍǝu uǝɥʍ ɹǝʇɐpdn uǝdo</system:String>
-    <system:String x:Key="WindowSettings_other">ɹǝɥʇo</system:String>
     <!-- | P -->
     <system:String x:Key="WindowSettings_pathToOsu">¡nso oʇ ɥʇɐd</system:String>
     <system:String x:Key="WindowSettings_pathToSongsFolder">ɹǝpןoɟ sƃuos oʇ ɥʇɐd</system:String>
     <system:String x:Key="WindowSettings_pleaseOpenOsu">ǝxǝ˙¡nso ǝɥʇ uǝdo ǝsɐǝןd</system:String>
-    <system:String x:Key="WindowSettings_pleaseSelectDirectoryWhereToSaveUpdates">sǝʇɐpdn ǝʌɐs oʇ ǝɹǝɥʍ ʎɹoʇɔǝɹıp ǝɥʇ ʇɔǝןǝs ǝsɐǝןd</system:String>
     <system:String x:Key="WindowSettings_pleaseSelectSongsFolder">ɹǝpןoɟ sƃuos ɹnoʎ ʇɔǝןǝs ǝsɐǝןd</system:String>
-    <system:String x:Key="WindowSettings_pleaseTryAgainLaterOrContactUs">˙ team@nw520.de :ʎןʇɔǝɹıp sn ʇɔɐʇuoɔ ɹo ɹǝʇɐן uıɐƃɐ ʎɹʇ ǝsɐǝןd</system:String>
-    <!-- | Q -->
-    <system:String x:Key="WindowSettings_questionHelpRequest">ʇsǝnbǝɹ dןǝɥ/uoıʇsǝnb</system:String>
     <!-- | R -->
     <system:String x:Key="WindowSettings_requestElevationOnStartup">puɐɯǝp ɟo pɐǝʇsuı dnʇɹɐʇs uo uoıʇɐʌǝןǝ ʇsǝnbǝɹ 'pǝɹınbǝɹ ǝq ʇɥƃıɯ ʇı ɟı</system:String>
     <system:String x:Key="WindowSettings_resetOsuSync">(˙ɔʇǝ 'suoıʇɐıɔossɐ ǝןıɟ 'uoıʇɐɹnƃıɟuoɔ ǝʇǝןǝp) ɔuʎs¡nso ʇǝsǝɹ</system:String>
     <system:String x:Key="WindowSettings_restartElevated">pǝʇɐʌǝןǝ ɔuʎs¡nso ʇɹɐʇsǝɹ</system:String>
     <!-- | S -->
-    <system:String x:Key="WindowSettings_serverSideAnswer">:ɹǝʍsuɐ ǝpıs-ɹǝʌɹǝs</system:String>
     <system:String x:Key="WindowSettings_showAlwaysDisableNotifyBalloons">suooןןɐqʎɟıʇou ǝןqɐsıp - sʎɐʍןɐ ʍoɥs</system:String>
     <system:String x:Key="WindowSettings_showAlwaysEnableNotifyBalloons">suooןןɐqʎɟıʇou ǝןqɐuǝ - sʎɐʍןɐ ʍoɥs</system:String>
-    <system:String x:Key="WindowSettings_showMessageWhenUpdateCheckFailed">pǝןıɐɟ ʞɔǝɥɔ ǝʇɐpdn uǝɥʍ ǝƃɐssǝɯ ʍoɥs</system:String>
     <system:String x:Key="WindowSettings_showOnlyWhenOsuSyncIsHiddenDisableNotifyBalloons">suooןןɐqʎɟıʇou ǝןqɐsıp - uǝppıɥ sı ʍopuıʍ uǝɥʍ ʎןuo ʍoɥs</system:String>
-    <system:String x:Key="WindowSettings_submitting">˙˙˙ƃuıʇʇıɯqns</system:String>
     <system:String x:Key="WindowSettings_sync">ɔuʎs</system:String>
     <system:String x:Key="WindowSettings_syncOnStartup">dnʇɹɐʇs uoıʇɐɔıןddɐ uo ɔuʎs</system:String>
     <!-- | T -->
     <system:String x:Key="WindowSettings_theresAlreadyAShortcut">˙doʇʞsǝp ɹnoʎ uo ʇnɔʇɹoɥs ɐ ʎpɐǝɹןɐ s,ǝɹǝɥʇ</system:String>
     <!-- | U -->
     <system:String x:Key="WindowSettings_unableToCreateShortcut">¡ʇnɔʇɹoɥs ǝʇɐǝɹɔ oʇ ǝןqɐun</system:String>
-    <system:String x:Key="WindowSettings_unableToSubmitFeedback">¡ʞɔɐqpǝǝɟ ʇıɯqns oʇ ǝןqɐun</system:String>
-    <system:String x:Key="WindowSettings_updater">ɹǝʇɐpdn</system:String>
     <system:String x:Key="WindowSettings_updateFileAssocations">suoıʇɐıɔossɐ ǝןıɟ ɹǝʇsıƃǝɹǝɹ/ǝʇɐpdn</system:String>
     <system:String x:Key="WindowSettings_useThisDownloadMirror">˙˙˙ɹoɹɹıɯ pɐoןuʍop ¡nso sıɥʇ ǝsn</system:String>
-    <system:String x:Key="WindowSettings_useUpdatePatcherToAutomaticallyInstallUpdates">sǝʇɐpdn ǝɥʇ ןןɐʇsuı ʎןןɐɔıʇɐɯoʇnɐ oʇ ɹǝɥɔʇɐd ǝʇɐpdn ǝsn</system:String>
     <!-- | V -->
     <system:String x:Key="WindowSettings_valid">pıןɐʌ</system:String>
     <system:String x:Key="WindowSettings_validate">ǝʇɐpıןɐʌ</system:String>
@@ -374,12 +325,6 @@
     <system:String x:Key="WindowSettings_warnNotElevated">˙pǝʇɐʌǝןǝ ʇou ʎןʇuǝɹɹnɔ sı uoıʇɐɔıןddɐ ǝɥʇ ǝsnɐɔǝq pǝןqɐsıp ǝq ʎɐɯ suoıʇdo ǝɯos</system:String>
     <system:String x:Key="WindowSettings_widthOfBeatmapDetailPanel">(59 puɐ 5 uǝǝʍʇǝq 'ɔıɹǝɯnu) ןǝuɐd ןıɐʇǝp dɐɯʇɐǝq ɟo ɥʇpıʍ</system:String>
     <!-- | Y -->
-    <system:String x:Key="WindowSettings_yourEmail">ןıɐɯǝ ɹnoʎ</system:String>
-    <system:String x:Key="WindowSettings_yourEmailInvalid">˙pıןɐʌuı ǝq oʇ sɯǝǝs ןıɐɯǝ ɹnoʎ</system:String>
-    <system:String x:Key="WindowSettings_youHaveToSelectACategory">˙ʎɹoƃǝʇɐɔ ɐ ʇɔǝןǝs oʇ ǝʌɐɥ noʎ</system:String>
-    <system:String x:Key="WindowSettings_yourMessageSeemsToBeQuiteShort">˙ǝןqıssod sɐ pǝןıɐʇǝp sɐ uıɐןdxǝ oʇ ʎɹʇ ǝsɐǝןd ˙ʇɹoɥs ǝʇınb ǝq oʇ sɯǝǝs ǝƃɐssǝɯ ɹnoʎ</system:String>
-    <system:String x:Key="WindowSettings_yourName">ǝɯɐuɹǝsn¡nso/ǝɯɐu ɹnoʎ</system:String>
-    <system:String x:Key="WindowSettings_yourNameIsTooShort">˙ʇɹoɥs ooʇ sı ǝɯɐuɹǝsn¡nso/ǝɯɐu ɹnoʎ</system:String>
     <system:String x:Key="WindowSettings_youSelectedTheWrongFile">˙„ǝxǝ˙¡nso„ ǝɥʇ ʇɔǝןǝs ǝsɐǝןd -- ˙ǝןıɟ ƃuoɹʍ ǝɥʇ pǝʇɔǝןǝs noʎ</system:String>
     <!-- |> Tooltip (tt) -->
     <!-- | E -->
@@ -421,5 +366,5 @@
     <!-- | T -->
     <system:String x:Key="WindowWelcome_title">ǝɯoɔןǝʍ</system:String>
     <!-- | W -->
-    <system:String x:Key="WindowWelcome_warning">˙ʎddǝd ɹou ¡nso ɥʇıʍ pǝʇɐıןıɟɟɐ ʇou s,ʇı ˙025sıǝʍǝsɐu ʎq pǝuıɐʇuıɐɯ 'ןooʇ ǝpɐɯ-ʎʇıunɯɯoɔ ןɐıɔıɟɟoun uɐ sı sıɥʇ ʇɐɥʇ puıɯ uı dǝǝʞ ǝsɐǝןd</system:String>
+    <system:String x:Key="WindowWelcome_warning">˙ʎddǝd ɹou ¡nso ɥʇıʍ pǝʇɐıןıɟɟɐ ʇou s,ʇı ˙nw520 ʎq pǝuıɐʇuıɐɯ 'ןooʇ ǝpɐɯ-ʎʇıunɯɯoɔ ןɐıɔıɟɟoun uɐ sı sıɥʇ ʇɐɥʇ puıɯ uı dǝǝʞ ǝsɐǝןd</system:String>
 </ResourceDictionary>
