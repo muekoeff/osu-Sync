@@ -43,6 +43,12 @@
                                 <ComboBox x:Name="CB_ToolLanguages" />
                             </StackPanel>
                         </Expander>
+                        <Expander Header="{DynamicResource WindowSettings_notifications}" Margin="0">
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource WindowSettings_importDownload}" />
+                                <CheckBox x:Name="CB_MessagesImporterAskOsu" Content="{DynamicResource WindowSettings_importerAskOsu}" Margin="0,5,0,0" />
+                            </StackPanel>
+                        </Expander>
                         <Expander Header="{DynamicResource WindowSettings_importDownload}" Margin="0">
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource WindowSettings_useThisDownloadMirror}" />
@@ -102,14 +108,6 @@
                             <TextBox x:Name="TB_osu_SongsPath" GotFocus="TB_osu_SongsPath_GotFocus" />
                             <Button x:Name="Bu_osuSongPathDefault" Click="Bu_osuSongPathDefault_Click" Content="{DynamicResource WindowSettings_default}" Margin="2,0,0,0" Grid.Column="1" />
                         </Grid>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="{DynamicResource WindowSettings_notifications}">
-                <ScrollViewer Background="#E5E5E5">
-                    <StackPanel Margin="5">
-                        <TextBlock FontSize="24" Foreground="#555" Text="{DynamicResource WindowSettings_importDownload}" />
-                        <CheckBox x:Name="CB_MessagesImporterAskOsu" Content="{DynamicResource WindowSettings_importerAskOsu}" Margin="0,5,0,0" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
